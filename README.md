@@ -1,6 +1,7 @@
 # Arena (WIP)
 
-This dapp allows users to easily create and interact with [personal economies](https://ipfs.io/ipfs/QmaWwL9MbaECKAvFwxX8cZaLpgbPKyqczqCW2DrjLQcJTF) within the [Convergent](https://convergent.cx/) ecosystem.
+Arena is the DApp component of the [Convergent](https://convergent.cx) ecosystem.
+It facilitates the creation and discovery of [personal economies](https://ipfs.io/ipfs/QmYDfuvC5yDLSRJWcZNfVnSMLSBgPkaKoWjgEYKjwXZrA3).
 
 ## Features
 
@@ -15,31 +16,33 @@ This is an MVP which will contain the essential features of a  personal economy 
 
 ## Install
 
-In the root directory as well as in the client directory, run:
+First install dependencies and compile the contracts in the root directory.
 
 ```
-npm install
+$ yarn
 ```
 
-Make sure you are installing openzeppelin-solidity version 1.12.0 (the next update will include openzeppelin 2.0).
+Start ganache from the command line in one window (alternatively using the UI application):
 
-Start ganache from the command line (alternatively using the UI application):
 ```
-ganache-cli
+$ yarn ganache
 ```
 
-Compile and deploy contracts:
+In another window run to compile and deploy the contracts:
+
 ```
-truffle compile
-truffle migrate --reset
+$ yarn deploy
 ```
 
 ## Run
 
-Start the dapp from the client directory:
+Enter the `client/` directory and install dependencies then run development server of the DApp:
+
 ```
-npm start
+$ yarn
+$ yarn start
 ```
+
 Connect MetaMask to your private ganache blockchain and import your account to make sure you have enough funds for transactions.
 
 If re-deploying the contracts within the same dev session, you might have to reset your MetaMask account (click on the MetaMask extension, then on your account/gravatar, and then go all the way down to the second last button).

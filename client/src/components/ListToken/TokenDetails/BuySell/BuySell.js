@@ -86,7 +86,7 @@ class BuySell extends Component {
                         </Form>
                         <div className="buyBtnBox">
                             <Button className="buyBtn" onClick={this.onBuyHandler}>
-                                {`Buy ${this.state.token_amount} GEEK on Testnet`}
+                                {`Buy ${this.state.token_amount} token on Testnet`}
                             </Button>
                         </div>
                     </div>

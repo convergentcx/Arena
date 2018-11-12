@@ -1,5 +1,4 @@
 
-// import "tokens/eip20/EIP20.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 

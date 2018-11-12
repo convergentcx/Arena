@@ -1,0 +1,29 @@
+{
+  "name": "arena",
+  "version": "0.0.1",
+  "description": "Personal economy platform.",
+  "main": "truffle.js",
+  "scripts": {
+    "deploy": "truffle compile && truffle migrate --reset",
+    "ganache": "ganache-cli",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/convergentcx/Arena.git"
+  },
+  "keywords": [
+    "ethereum",
+    "tokens"
+  ],
+  "author": "convergentcx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/convergentcx/Arena/issues"
+  },
+  "homepage": "https://github.com/convergentcx/Arena#readme",
+  "dependencies": {
+    "ganache-cli": "6.1.8",
+    "openzeppelin-solidity": "1.12.0"
+  }
+}
