@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button } from 'reactstrap';
-import Modal from '../Layout/Modal/Modal'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Col, Row, Form, FormGroup, Label, FormText } from 'reactstrap';
 // import "./LaunchToken.css";
 import withContext from '../../hoc/withContext';
 
@@ -42,11 +43,16 @@ class LaunchToken extends React.Component {
   }
 
   handleRemoveAction = () => {
-    this.setState({
-      actionCount: this.state.actionCount - 1,
-      actions: this.state.actions.slice(0, -1),
-      prices: this.state.prices.slice(0, -1)
-    });
+    if (this.state.actionCount <= 1) {
+      alert('For this early test version, the number of services you can offer is limited to 3')
+    }
+    else {
+      this.setState({
+        actionCount: this.state.actionCount - 1,
+        actions: this.state.actions.slice(0, -1),
+        prices: this.state.prices.slice(0, -1)
+      });
+    }
   }
 
   handleAddAction = () => {
@@ -109,58 +115,73 @@ class LaunchToken extends React.Component {
   render() {
     const { name, symbol, actionCount, actions, prices } = this.state;
     let Actions = [];
-    for (let i = 0; i < actionCount; i++) {
+    for (let i = 1; i < actionCount; i++) {
       Actions.push(
-        <div key={i}>
-          <input
-            name={`action${i}`}
-            placeholder="Action"
-            value={actions[i]}
-            onChange={e => this.handleInputChange(e, i)}
-          />
-          <input
-            name={`cost${i}`}
-            placeholder="Cost"
-            value={prices[i]}
-            onChange={e => this.handleInputChange(e, i)}
-          />
-        </div>
+        <Row form key={i}>
+          <Col md={8}>
+            <FormGroup>
+              <Input type="text" name={`action${i}`} placeholder="think of something fun" id="exampleCity" value={actions[i]} onChange={e => this.handleInputChange(e, i)} />
+            </FormGroup>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input type="text" name={`cost${i}`} placeholder="prices can be updated" id="exampleZip" value={prices[i]} onChange={e => this.handleInputChange(e, i)} />
+            </FormGroup>
+          </Col>
+        </Row>
       );
     }
     return (
-      <Modal modalClosed={this.closeModal}>
-        <div className="launch">
-          <div className="launch-personal">
-            <h4>Enter token details</h4>
-            <div>
-              <Input
-                name="name"
-                placeholder="Your name.."
-                value={name}
-                onChange={this.handleInputChange}
-              />
-              <Input
-                name="symbol"
-                placeholder="Teh token's symbol (no vowels)"
-                value={symbol}
-                onChange={this.handleInputChange}
-              />
-            </div>
-          </div>
-          <h4>What services do you commit to offer in exchange for token payment?</h4>
-          <div className="launch-permissions">
+      <Modal isOpen={true} toggle={this.closeModal}>
+        <ModalHeader toggle={this.closeModal}>Launch your personal economy</ModalHeader>
+        <ModalBody>
+
+          <Form>
+            <Row form>
+              <Col md={8}>
+                <FormGroup>
+                  <Label for="exampleEmail">Your name / project</Label>
+                  <Input type="text" name="name" id="exampleEmail" placeholder="whatever you wanna call this" onChange={this.handleInputChange} />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="examplePassword">Token symbol</Label>
+                  <Input type="text" name="symbol" id="examplePassword" placeholder="make it shill" onChange={this.handleInputChange} />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row form>
+              <Col md={8}>
+                <FormGroup>
+                  <Label for="exampleCity">Service</Label>
+                  <Input type="text" name={`action${1}`} placeholder="something you can do for the world" id="exampleCity" value={actions[1]} onChange={e => this.handleInputChange(e, 1)} />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="exampleZip">Price</Label>
+                  <Input type="text" name={`action${1}`} placeholder="what you want in exchange" id="exampleCity" value={prices[1]} onChange={e => this.handleInputChange(e, 1)} />
+                </FormGroup>
+              </Col>
+            </Row>
             {Actions}
-            {actionCount !== 0 && (
-              <button onClick={() => this.handleRemoveAction()}>-</button>
-            )}
-            <button onClick={() => this.handleAddAction()}>+</button>
-          </div>
+            <FormGroup check>
+              <Input type="checkbox" name="check" id="exampleCheck" />
+              <Label for="exampleCheck" check>I commit to providing the above services at the specified prices for the foreseeable future</Label>
+            </FormGroup>
+          </Form>
 
-        </div>
+          {actionCount !== 0 && (
+            <button onClick={() => this.handleRemoveAction()}>-</button>
+          )}
+          <button onClick={() => this.handleAddAction()}>+</button>
 
-        <Button onClick={this.onDeployHandler}>Launch your personal attention token</Button>
-
-        <div>{this.getTxStatus()}</div>
+        </ModalBody>
+        <ModalFooter>
+          <Button color='primary' onClick={this.onDeployHandler}>Deploy personal token</Button>
+          <div>{this.getTxStatus()}</div>
+        </ModalFooter>
 
       </Modal>
     );

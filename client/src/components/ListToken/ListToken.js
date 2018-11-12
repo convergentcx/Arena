@@ -48,7 +48,7 @@ class ListToken extends Component {
         return (
             <Container className="text-center">
 
-                <Table hover>
+                <Table borderless hover>
                     <thead>
                         <tr>
                             <th>Name</th>
