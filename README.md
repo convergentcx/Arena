@@ -15,23 +15,22 @@ This is an MVP which will contain the essential features of a  personal economy 
 
 ## Install
 
-In the root directory as well as in the client directory, run:
+First install dependencies and compile the contracts in the root directory.
 
 ```
-npm install
+$ yarn
 ```
 
-Make sure you are installing openzeppelin-solidity version 1.12.0 (the next update will include openzeppelin 2.0).
+Start ganache from the command line in one window (alternatively using the UI application):
 
-Start ganache from the command line (alternatively using the UI application):
 ```
-ganache-cli
+$ yarn ganache
 ```
 
-Compile and deploy contracts:
+In another window run to compile and deploy the contracts:
+
 ```
-truffle compile
-truffle migrate --reset
+$ yarn deploy
 ```
 
 ## Run
