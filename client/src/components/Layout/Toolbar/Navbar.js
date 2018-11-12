@@ -34,7 +34,7 @@ export default class Example extends React.Component {
                 <NavLink tag={Link} to="/about">About</NavLink>
               </NavItem>
             <NavItem>
-                <NavLink tag={Link} to="/">List</NavLink>
+                <NavLink tag={Link} to="/">Browse</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} to="/dashboard">Dashboard</NavLink>
@@ -43,7 +43,7 @@ export default class Example extends React.Component {
                 <NavLink>Chat</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink>Sign In</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

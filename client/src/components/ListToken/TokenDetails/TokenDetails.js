@@ -10,13 +10,16 @@ import {
     Form,
     FormGroup,
     Input,
-    Button
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
 } from 'reactstrap';
 import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
 import withContext from '../../../hoc/withContext';
-import Modal from '../../Layout/Modal/Modal';
 
 
 //const multiplier = 10 ** 18;
@@ -31,7 +34,7 @@ class ListCard extends Component {
         reward: null
     }
 
-    
+
     componentDidMount = async () => {
         const { drizzle } = this.props;
         const address = this.props.match.params.tokenAddress;
@@ -41,16 +44,16 @@ class ListCard extends Component {
                 EthPolynomialCurvedToken['abi'],
                 address
             )
-          };
-          //TODO: should listen to Minted, Burned events and update component when they get fired
-          let events = ['Minted', 'Burned'];
-          await drizzle.addContract(contractConfig, events);
-          const contract = drizzle.contracts[address];
-          this.setState({drizzleContract: contract})
-        
+        };
+        //TODO: should listen to Minted, Burned events and update component when they get fired
+        let events = ['Minted', 'Burned'];
+        await drizzle.addContract(contractConfig, events);
+        const contract = drizzle.contracts[address];
+        this.setState({ drizzleContract: contract })
+
         // WITHOUT DRIZZLE / USING PLAIN WEB3
         // try {
-        
+
         // var web3 = await new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
         // const contract_instance = await new web3.eth.Contract(abi, this.props.address);
         // this.setState({tokenContract: contract_instance});
@@ -68,11 +71,18 @@ class ListCard extends Component {
     }
 
     render() {
-        
+
         return (
-            <Modal modalClosed={this.closeModal}>
-                    <ContractInfo contract={this.state.drizzleContract} drizzleState={this.props.drizzleState} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]}/>
-                    <BuySell contract={this.state.drizzleContract} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]}/>
+            <Modal size="lg" isOpen={true} toggle={this.closeModal}>
+                <ModalHeader toggle={this.closeModal}>
+                    Details
+                </ModalHeader>
+                <ModalBody>
+                    <ContractInfo contract={this.state.drizzleContract} drizzleState={this.props.drizzleState} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]} />
+                </ModalBody>
+                <BuySell contract={this.state.drizzleContract} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]} />
+                <ModalFooter>
+                </ModalFooter>
             </Modal>
         )
     }

@@ -132,7 +132,7 @@ class LaunchToken extends React.Component {
       );
     }
     return (
-      <Modal isOpen={true} toggle={this.closeModal}>
+      <Modal size="lg" isOpen={true} toggle={this.closeModal}>
         <ModalHeader toggle={this.closeModal}>Launch your personal economy</ModalHeader>
         <ModalBody>
 
