@@ -155,13 +155,13 @@ class LaunchToken extends React.Component {
               <Col md={8}>
                 <FormGroup>
                   <Label for="exampleCity">Service</Label>
-                  <Input type="text" name={`action${1}`} placeholder="something you can do for the world" value={actions[0]} onChange={e => this.handleInputChange(e, 1)} />
+                  <Input type="text" name={`action${1}`} placeholder="something you can do for the world" value={actions[0]} onChange={e => this.handleInputChange(e, 0)} />
                 </FormGroup>
               </Col>
               <Col md={4}>
                 <FormGroup>
                   <Label for="exampleZip">Price</Label>
-                  <Input type="text" name={`price${1}`} placeholder="what you want in exchange" value={prices[0]} onChange={e => this.handleInputChange(e, 1)} />
+                  <Input type="text" name={`price${1}`} placeholder="what you want in exchange" value={prices[0]} onChange={e => this.handleInputChange(e, 0)} />
                 </FormGroup>
               </Col>
             </Row>
