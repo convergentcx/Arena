@@ -78,10 +78,17 @@ contract EthPolynomialCurvedToken is EthBondingCurvedToken {
         return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
     }
 
-    function request(string message, uint256 numTokens) public payable {
+    function requestWithEth(string message, uint256 numTokens) public payable {
         mint(numTokens);
         balances[msg.sender] -= numTokens;
         balances[owner] += numTokens;
+        emit Requested(message);
+    }
+
+    function requestWithToken(string message) public {
+        require(balances[msg.sender] >= prices[0]*10^decimals);
+        balances[msg.sender] -= prices[0]*10^decimals;
+        balances[owner] += prices[0]*10^decimals;
         emit Requested(message);
     }
 }

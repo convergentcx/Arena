@@ -94,11 +94,12 @@ class RequestService extends React.Component {
             this.setState({ prices })
         });
     }
-    // @dev TODO: SHOULD INCLUDE WHICH SERVICE IS BEING REQUESTED
-    onRequestHandler = () => {
+    // @dev TODO: SHOULD INCLUDE WHICH SERVICE IS BEING REQUESTED 
+    // NOW ONLY WORKING FOR FIRST SERVICE
+    onRequestWithEthHandler = () => {
         const { contract, account } = this.props;
         const stackId =
-            contract && contract.methods["request"].cacheSend(
+            contract && contract.methods["requestWithEth"].cacheSend(
                 `${this.state.message}`,
                 `${this.state.prices.price1 * multiplier}`,
                 {
@@ -110,6 +111,21 @@ class RequestService extends React.Component {
         this.setState({ stackId });
     }
 
+    onRequestWithTokenHandler = () => {
+        const { contract, account } = this.props;
+        const stackId =
+            contract && contract.methods["requestWithToken"].cacheSend(
+                `${this.state.message}`,
+                {
+                    from: account,
+                });
+
+        // save the `stackId` for later reference
+        this.setState({ stackId });
+    }
+
+
+    
     render() {
         let actions = Object.entries(this.state.actions);
         let prices = Object.entries(this.state.prices);
@@ -130,8 +146,8 @@ class RequestService extends React.Component {
                         <td>{action[1]}</td>
                         <td>{prices[i][1]}</td>
                         <td> <Input value={this.state.message} onChange={this.inputChangedHandler} /></td>
-                        <td><Button color="danger" onClick={this.onRequestHandler}>Request with {this.state.requestPrices[requestPriceAttribute]} ETH</Button></td>
-                        <td><Button color="success" onClick={this.onPayHandler}>Request with {this.state.prices[priceAttribute]} SMBL</Button></td>
+                        <td><Button color="danger" onClick={this.onRequestWithEthHandler}>Request with {this.state.requestPrices[requestPriceAttribute]} ETH</Button></td>
+                        <td><Button color="success" onClick={this.onRequestWithTokenHandler}>Request with {this.state.prices[priceAttribute]} SMBL</Button></td>
                     </tr>
                 )
             }
