@@ -12,8 +12,8 @@ class BuySell extends Component {
         stackId: null,
         showBuy: true,
         token_amount: '0',
-        priceInEther: null,
-        rewardInEther: null,
+        priceInEther: 0,
+        rewardInEther: 0,
         buyTokenAmount: null,
         sellTokenAmount: null
     }
@@ -40,9 +40,8 @@ class BuySell extends Component {
     }
 
     onBuyHandler = () => {
-        //this.props.contract && this.props.contract.methods.mint(`${this.state.token_amount*multiplier}`).send({ from: this.props.account, value: this.state.priceInEther*multiplier });
         this.props.contract.methods["mint"].cacheSend(
-            `${this.state.token_amount * multiplier}`,
+            `${this.state.buyTokenAmount * multiplier}`,
             {
                 from: this.props.account,
                 value: this.state.priceInEther * multiplier
@@ -52,7 +51,7 @@ class BuySell extends Component {
 
     onSellHandler = () => {
         this.props.contract.methods["burn"].cacheSend(
-            `${this.state.token_amount * multiplier}`,
+            `${this.state.sellTokenAmount * multiplier}`,
             {
                 from: this.props.account,
             });
@@ -67,9 +66,9 @@ class BuySell extends Component {
                     <Row>
                         <Col md={6}>
                             <InputGroup>
-                                <InputGroupAddon addonType="prepend">{`${this.state.priceInEther && this.state.priceInEther.toFixed(3)} ETH`}</InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">{`With ${this.state.priceInEther.toFixed(3)} ETH`}</InputGroupAddon>
                                 <Input
-                                    placeholder='Buy amount'
+                                    placeholder={`Buy ${this.props.symbol}`}
                                     name="token_buy_amount"
                                     type="number"
                                     value={this.state.buyTokenAmount}
@@ -82,9 +81,9 @@ class BuySell extends Component {
                         </Col>
                         <Col md={6}>
                             <InputGroup>
-                                <InputGroupAddon addonType="prepend">{`${this.state.rewardInEther} ETH`}</InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">{`For ${this.state.rewardInEther.toFixed(3)} ETH`}</InputGroupAddon>
                                 <Input
-                                    placeholder='Buy amount'
+                                    placeholder={`Sell ${this.props.symbol}`}
                                     name="token_sell_amount"
                                     type="number"
                                     value={this.state.sellTokenAmount}

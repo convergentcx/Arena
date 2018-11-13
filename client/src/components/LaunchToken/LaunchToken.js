@@ -1,8 +1,5 @@
 import React from 'react';
-import { Input, Button } from 'reactstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import { Col, Row, Form, FormGroup, Label, FormText, Alert } from 'reactstrap';
-// import "./LaunchToken.css";
+import { Input, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Col, Row, Form, FormGroup, Label, FormText, Alert } from 'reactstrap'
 import withContext from '../../hoc/withContext';
 
 class LaunchToken extends React.Component {
@@ -46,7 +43,7 @@ class LaunchToken extends React.Component {
 
   handleRemoveAction = () => {
     if (this.state.actionCount <= 1) {
-      this.setState({tooFew: true})
+      this.setState({ tooFew: true })
     }
     else {
       this.setState({
@@ -60,7 +57,7 @@ class LaunchToken extends React.Component {
 
   handleAddAction = () => {
     if (this.state.actionCount >= 3) {
-      this.setState({tooMany: true})
+      this.setState({ tooMany: true })
     }
     else {
       this.setState({ actionCount: this.state.actionCount + 1, tooFew: false });
@@ -75,7 +72,7 @@ class LaunchToken extends React.Component {
   createToken = () => {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.MyTokenFactory;
-    console.log(this.state.actions[0], this.state.actions[1], this.state.actions[2], this.state.prices )
+    console.log(this.state.actions[0], this.state.actions[1], this.state.actions[2], this.state.prices)
     // let drizzle know we want to call the `set` method with `value`
     const stackId =
       contract.methods["create"].cacheSend(
@@ -169,6 +166,10 @@ class LaunchToken extends React.Component {
               </Col>
             </Row>
             {Actions}
+            <ButtonGroup>
+            <Button onClick={() => this.handleRemoveAction()}>-</Button>
+            <Button onClick={() => this.handleAddAction()}>+</Button> {/* could also do disabled={actionCount === 3} instead of alert below*/}
+          </ButtonGroup>
             {this.state.tooMany ? <Alert color="warning"> For now, the number of services you can offer under one token is limited to 3</Alert> : null}
             {this.state.tooFew ? <Alert color="warning"> For your token economy to work, you need to offer at least one service</Alert> : null}
             <FormGroup check>
@@ -176,12 +177,7 @@ class LaunchToken extends React.Component {
               <Label for="exampleCheck" check>I commit to providing the above services at the specified prices for the foreseeable future</Label>
             </FormGroup>
           </Form>
-
-          {actionCount !== 0 && (
-            <button onClick={() => this.handleRemoveAction()}>-</button>
-          )}
-          <button onClick={() => this.handleAddAction()}>+</button>
-
+         
         </ModalBody>
         <ModalFooter>
           <Button color='primary' onClick={this.onDeployHandler}>Deploy personal token</Button>

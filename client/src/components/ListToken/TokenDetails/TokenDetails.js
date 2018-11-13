@@ -112,9 +112,9 @@ class TokenDetails extends Component {
         const account = this.props.drizzleState.accounts[0];
         const address = this.props.match.params.tokenAddress;
         const contract = this.props.drizzleState && this.props.drizzleState.contracts[address];
-
         const totalSupplyRes = contract && contract.totalSupply[this.state.dataKeyTotalSupply];
         const poolBalanceRes = contract && contract.poolBalance[this.state.dataKeyPoolBalance];
+        console.log(poolBalanceRes);
         const tokenBalanceRes = contract && contract.balanceOf[this.state.dataKeyTokenBalance];
 
         const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
