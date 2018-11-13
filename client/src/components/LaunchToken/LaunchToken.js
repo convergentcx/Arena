@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Button } from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import { Col, Row, Form, FormGroup, Label, FormText } from 'reactstrap';
+import { Col, Row, Form, FormGroup, Label, FormText, Alert } from 'reactstrap';
 // import "./LaunchToken.css";
 import withContext from '../../hoc/withContext';
 
@@ -12,8 +12,10 @@ class LaunchToken extends React.Component {
     symbol: '',
     actions: ['Email me'],
     actionCount: 1,
-    prices: [10],
-    transactionStatus: null
+    prices: [1],
+    transactionStatus: null,
+    tooFew: false,
+    tooMany: false
   }
 
 
@@ -44,23 +46,24 @@ class LaunchToken extends React.Component {
 
   handleRemoveAction = () => {
     if (this.state.actionCount <= 1) {
-      alert('For this early test version, the number of services you can offer is limited to 3')
+      this.setState({tooFew: true})
     }
     else {
       this.setState({
         actionCount: this.state.actionCount - 1,
         actions: this.state.actions.slice(0, -1),
-        prices: this.state.prices.slice(0, -1)
+        prices: this.state.prices.slice(0, -1),
+        tooMany: false
       });
     }
   }
 
   handleAddAction = () => {
     if (this.state.actionCount >= 3) {
-      alert('For this early test version, the number of services you can offer is limited to 3')
+      this.setState({tooMany: true})
     }
     else {
-      this.setState({ actionCount: this.state.actionCount + 1 });
+      this.setState({ actionCount: this.state.actionCount + 1, tooFew: false });
       this.state.actions.push();
     };
   }
@@ -113,7 +116,7 @@ class LaunchToken extends React.Component {
   }
 
   render() {
-    const { name, symbol, actionCount, actions, prices } = this.state;
+    const { actionCount, actions, prices } = this.state;
     let Actions = [];
     for (let i = 1; i < actionCount; i++) {
       Actions.push(
@@ -140,7 +143,7 @@ class LaunchToken extends React.Component {
             <Row form>
               <Col md={8}>
                 <FormGroup>
-                  <Label for="exampleEmail">Your name / project</Label>
+                  <Label for="exampleEmail">Your name / Project name</Label>
                   <Input type="text" name="name" id="exampleEmail" placeholder="whatever you wanna call this" onChange={this.handleInputChange} />
                 </FormGroup>
               </Col>
@@ -166,6 +169,8 @@ class LaunchToken extends React.Component {
               </Col>
             </Row>
             {Actions}
+            {this.state.tooMany ? <Alert color="warning"> For now, the number of services you can offer under one token is limited to 3</Alert> : null}
+            {this.state.tooFew ? <Alert color="warning"> For your token economy to work, you need to offer at least one service</Alert> : null}
             <FormGroup check>
               <Input type="checkbox" name="check" id="exampleCheck" />
               <Label for="exampleCheck" check>I commit to providing the above services at the specified prices for the foreseeable future</Label>

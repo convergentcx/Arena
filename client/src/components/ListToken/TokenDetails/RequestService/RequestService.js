@@ -129,14 +129,10 @@ class RequestService extends React.Component {
     render() {
         let actions = Object.entries(this.state.actions);
         let prices = Object.entries(this.state.prices);
-        console.log(actions, prices);
 
         const menu = actions.map((action, i) => {
             let requestPriceAttribute = `requestPrice${i + 1}`;
-            let priceAttribute = `price${i + 1}`;
-
-            
-            console.log(action[1])
+            let priceAttribute = `price${i + 1}`;            
             if (action[1] === '') {
                 return null;
             }
@@ -147,7 +143,7 @@ class RequestService extends React.Component {
                         <td>{prices[i][1]}</td>
                         <td> <Input value={this.state.message} onChange={this.inputChangedHandler} /></td>
                         <td><Button color="danger" onClick={this.onRequestWithEthHandler}>Request with {this.state.requestPrices[requestPriceAttribute]} ETH</Button></td>
-                        <td><Button color="success" onClick={this.onRequestWithTokenHandler}>Request with {this.state.prices[priceAttribute]} SMBL</Button></td>
+                        <td><Button color="success" onClick={this.onRequestWithTokenHandler}>Request with {this.state.prices[priceAttribute]} {this.props.symbol}</Button></td>
                     </tr>
                 )
             }

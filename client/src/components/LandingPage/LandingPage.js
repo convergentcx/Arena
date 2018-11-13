@@ -9,17 +9,22 @@ class LandingPage extends Component {
         return (
             <div className={classes.LandingPage}>
                   <Jumbotron>
-                <h1 className="display-5">
+                <h1 className="display-4">
                     Unlock your personal economy.
                 </h1>
-                <h6>
+                <br></br>
+
+                <h5>
                     Launch your own cryptocurrency within seconds and tokenize your future.
-                </h6>
+                </h5>
+                <br></br>
+                <br></br>
+
                 <NavLink to={'/launch'}>
-                    <Button color="warning"> Launch </Button>
+                    <Button color="warning" size="lg"> Launch </Button>
                 </NavLink>
                 <NavLink to={{ hash: '#browse' }}>
-                    <Button> Browse </Button>
+                    <Button outline size="lg"> Browse </Button>
                 </NavLink>
             </Jumbotron>
 
