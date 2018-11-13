@@ -7,6 +7,8 @@ import "./EthBondingCurvedToken.sol";
 ///         implementation that is backed by ether.
 contract EthPolynomialCurvedToken is EthBondingCurvedToken {
 
+    event Requested(string message);
+
     // uint256 constant private PRECISION = 10000000000;
     string public name;
     string public symbol;
@@ -74,5 +76,19 @@ contract EthPolynomialCurvedToken is EthBondingCurvedToken {
 
     function rewardForBurn(uint256 numTokens) public returns(uint256) {
         return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
+    }
+
+    function requestWithEth(string message, uint256 numTokens) public payable {
+        mint(numTokens);
+        balances[msg.sender] -= numTokens;
+        balances[owner] += numTokens;
+        emit Requested(message);
+    }
+
+    function requestWithToken(string message) public {
+        require(balances[msg.sender] >= prices[0]*10^decimals);
+        balances[msg.sender] -= prices[0]*10^decimals;
+        balances[owner] += prices[0]*10^decimals;
+        emit Requested(message);
     }
 }

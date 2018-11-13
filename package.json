@@ -5,7 +5,7 @@
   "main": "truffle.js",
   "scripts": {
     "deploy": "truffle compile && truffle migrate --reset",
-    "ganache": "ganache-cli",
+    "ganache": "ganache-cli --account='0x8ca64cb3d877a1d04badfa0292fc208f16379cb103d4b65a5a626b579ae054e3,100000000000000000000' --account='0x881b89ced6a55f80a66647ae401f10c3208b89e75d353c4fb4ee93f7ebb0d694,100000000000000000000'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -3,7 +3,6 @@ import TokenSummary from './TokenSummary/TokenSummary';
 
 import withContext from '../../hoc/withContext';
 import { Container, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import classes from './ListToken.module.css';
 
 class ListToken extends Component {
