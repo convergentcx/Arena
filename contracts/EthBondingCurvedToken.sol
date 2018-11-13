@@ -10,6 +10,7 @@ contract EthBondingCurvedToken is StandardToken {
     event Minted(uint256 amount, uint256 totalCost);
     event Burned(uint256 amount, uint256 reward);
 
+
     using SafeMath for uint256;
 
     uint256 public poolBalance;
@@ -65,4 +66,5 @@ contract EthBondingCurvedToken is StandardToken {
 
         emit Burned(numTokens, ethToReturn);
     }
+
 }

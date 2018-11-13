@@ -19,8 +19,11 @@ import {
 import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
+import RequestService from './RequestService/RequestService';
+
 import withContext from '../../../hoc/withContext';
 
+// @dev: this should become a container component that passes all necessary props down to the various presenter components
 
 //const multiplier = 10 ** 18;
 
@@ -80,6 +83,7 @@ class ListCard extends Component {
                 <ModalBody>
                     <ContractInfo contract={this.state.drizzleContract} drizzleState={this.props.drizzleState} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]} />
                 </ModalBody>
+                <RequestService contract={this.state.drizzleContract} account={this.props.drizzleState.accounts[0]}/>
                 <BuySell contract={this.state.drizzleContract} address={this.props.match.params.tokenAddress} account={this.props.drizzleState.accounts[0]} />
                 <ModalFooter>
                 </ModalFooter>

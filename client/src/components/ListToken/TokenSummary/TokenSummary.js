@@ -127,7 +127,7 @@ class TokenSummary extends Component {
                 <td>{currentPrice}</td>
                 <td>{currentPrice * totalSupply}</td>
                 <td>{this.state.action1}, {this.state.action2}, {this.state.action3}</td>
-                <td><Button color="danger" onClick={this.showDetails}>Invest</Button></td>
+                <td><Button color="success" onClick={this.showDetails}>Invest</Button></td>
                 <td><Button color="info" onClick={this.showDetails}>Chat</Button></td>
             </tr>
 

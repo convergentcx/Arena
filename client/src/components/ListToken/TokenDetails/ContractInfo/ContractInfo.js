@@ -17,12 +17,6 @@ class ContractInfo extends Component {
         dataKeyTokenBalance: null,
         currentPrice: null,
         marketCap: null,
-        action1: '',
-        action2: '',
-        action3: '',
-        price1: null,
-        price2: null,
-        price3: null,
     }
 
     componentDidUpdate(prevProps) {
@@ -58,16 +52,6 @@ class ContractInfo extends Component {
         let name;
         let exponent;
         let invSlope;
-        //     let totalSupply;
-        //     let poolBalance;
-        //     let tokenBalance;
-        let action1 = '';
-        let action2 = '';
-        let action3 = '';
-        let price1 = null;
-        let price2 = null;
-        let price3 = null;
-
 
         await contract && contract.methods.owner().call({ from: this.props.account }, (error, result) => {
             owner = result;
@@ -107,37 +91,6 @@ class ContractInfo extends Component {
         //         tokenBalance = result/multiplier;
         //         this.setState({ tokenBalance: tokenBalance })
         //     });
-
-        await contract && contract.methods.action1().call({ from: this.props.account }, (error, result) => {
-            action1 = result;
-            this.setState({ action1: action1 })
-        });
-
-        await contract && contract.methods.action2().call({ from: this.props.account }, (error, result) => {
-            action2 = result;
-            this.setState({ action2: action2 })
-        });
-
-        await contract && contract.methods.action3().call({ from: this.props.account }, (error, result) => {
-            action3 = result;
-            this.setState({ action3: action3 })
-        });
-
-
-        await contract && contract.methods.prices(0).call({ from: this.props.account }, (error, result) => {
-            price1 = result;
-            this.setState({ price1: price1 })
-        });
-
-        await contract && contract.methods.prices(1).call({ from: this.props.account }, (error, result) => {
-            price2 = result;
-            this.setState({ price2: price2 })
-        });
-
-        await contract && contract.methods.prices(2).call({ from: this.props.account }, (error, result) => {
-            price3 = result;
-            this.setState({ price3: price3 })
-        });
     }
 
     render() {
@@ -167,9 +120,6 @@ class ContractInfo extends Component {
                 <p> Total Supply: {totalSupply}</p>
                 <p> Current Price: {currentPrice}</p>
                 <p> Market Cap: {totalSupply * currentPrice}</p>
-                <p> 1: {this.state.action1}, {this.state.price1}</p>
-                <p> 2: {this.state.action2}, {this.state.price2}</p>
-                <p> 3: {this.state.action3}, {this.state.price3}</p>
 
                 <CurveChart curveData={{
                     totalSupply: totalSupply,

@@ -10,7 +10,7 @@ class LaunchToken extends React.Component {
     stackId: null,
     name: '',
     symbol: '',
-    actions: ["Email me"],
+    actions: ['Email me'],
     actionCount: 1,
     prices: [10],
     transactionStatus: null
@@ -72,7 +72,7 @@ class LaunchToken extends React.Component {
   createToken = () => {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.MyTokenFactory;
-
+    console.log(this.state.actions[0], this.state.actions[1], this.state.actions[2], this.state.prices )
     // let drizzle know we want to call the `set` method with `value`
     const stackId =
       contract.methods["create"].cacheSend(
@@ -125,7 +125,7 @@ class LaunchToken extends React.Component {
           </Col>
           <Col md={4}>
             <FormGroup>
-              <Input type="text" name={`cost${i}`} placeholder="prices can be updated" id="exampleZip" value={prices[i]} onChange={e => this.handleInputChange(e, i)} />
+              <Input type="text" name={`price${i}`} placeholder="prices can be updated" id="exampleZip" value={prices[i]} onChange={e => this.handleInputChange(e, i)} />
             </FormGroup>
           </Col>
         </Row>
@@ -155,13 +155,13 @@ class LaunchToken extends React.Component {
               <Col md={8}>
                 <FormGroup>
                   <Label for="exampleCity">Service</Label>
-                  <Input type="text" name={`action${1}`} placeholder="something you can do for the world" id="exampleCity" value={actions[1]} onChange={e => this.handleInputChange(e, 1)} />
+                  <Input type="text" name={`action${1}`} placeholder="something you can do for the world" value={actions[0]} onChange={e => this.handleInputChange(e, 1)} />
                 </FormGroup>
               </Col>
               <Col md={4}>
                 <FormGroup>
                   <Label for="exampleZip">Price</Label>
-                  <Input type="text" name={`action${1}`} placeholder="what you want in exchange" id="exampleCity" value={prices[1]} onChange={e => this.handleInputChange(e, 1)} />
+                  <Input type="text" name={`price${1}`} placeholder="what you want in exchange" value={prices[0]} onChange={e => this.handleInputChange(e, 1)} />
                 </FormGroup>
               </Col>
             </Row>
