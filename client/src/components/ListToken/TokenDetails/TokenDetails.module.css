@@ -1,0 +1,11 @@
+.Row {
+    margin-bottom: 20px;
+}
+
+.PopOverButton {
+    text-align: right;
+    margin: 0px; 
+    padding: 0px;
+    display: inline-block;
+    float: right;
+}

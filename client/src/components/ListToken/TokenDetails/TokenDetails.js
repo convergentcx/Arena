@@ -3,13 +3,27 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
-    ModalFooter
+    ModalFooter,
+    Card,
+    CardHeader,
+    CardBody,
+    CardText,
+    Button,
+    Container,
+    Row,
+    Col,
+    Popover,
+    PopoverHeader,
+    PopoverBody
 } from 'reactstrap';
+
 import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
 import RequestService from './RequestService/RequestService';
 import CurveChart from './Chart/Chart';
+
+import classes from './TokenDetails.module.css';
 
 
 import withContext from '../../../hoc/withContext';
@@ -17,6 +31,7 @@ import withContext from '../../../hoc/withContext';
 // @dev: this should become a container component that passes all necessary props down to the various presenter components
 
 const multiplier = 10 ** 18;
+
 
 
 class TokenDetails extends Component {
@@ -34,8 +49,20 @@ class TokenDetails extends Component {
         dataKeyTotalSupply: null,
         dataKeyPoolBalance: null,
         dataKeyTokenBalance: null,
+        dataKeyRequestPrice1: null,
         currentPrice: null,
         marketCap: null,
+        actions: {
+            action1: '',
+            action2: '',
+            action3: ''
+        },
+        prices: {
+            price1: '',
+            price2: '',
+            price3: '',
+        },
+        popoverOpen: false
     }
 
 
@@ -52,29 +79,39 @@ class TokenDetails extends Component {
         let events = ['Minted', 'Burned'];
         await drizzle.addContract(contractConfig, events);
         const contract = drizzle.contracts[address];
-        this.setState({ drizzleContract: contract })
-
-        const dataKeyTotalSupply = contract && contract.methods["totalSupply"].cacheCall()
-        const dataKeyPoolBalance = contract && contract.methods["poolBalance"].cacheCall()
-        const dataKeyTokenBalance = contract && contract.methods["balanceOf"].cacheCall(this.props.drizzleState.accounts[0])
-
-        this.setState({
-            dataKeyTotalSupply,
-            dataKeyPoolBalance,
-            dataKeyTokenBalance,
-        });
+        this.setState({ drizzleContract: contract }, () => {
+            this.getMenu();
+        })
     }
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevProps !== this.props) {
             this.getContractData();
         }
+        if (prevState.prices !== this.state.prices) {
+            const contract = this.state.drizzleContract;
+            const dataKeyTotalSupply = contract && contract.methods["totalSupply"].cacheCall();
+            const dataKeyPoolBalance = contract && contract.methods["poolBalance"].cacheCall();
+            const dataKeyTokenBalance = contract && contract.methods["balanceOf"].cacheCall(this.props.drizzleState.accounts[0]);
+            const dataKeyRequestPrice1 = contract && contract.methods["priceToMint"].cacheCall(`${this.state.prices.price1 * multiplier}`);
+            const dataKeyRequestPrice2 = contract && contract.methods["priceToMint"].cacheCall(`${this.state.prices.price2 * multiplier}`);
+            const dataKeyRequestPrice3 = contract && contract.methods["priceToMint"].cacheCall(`${this.state.prices.price3 * multiplier}`);
+
+
+            this.setState({
+                dataKeyTotalSupply,
+                dataKeyPoolBalance,
+                dataKeyTokenBalance,
+                dataKeyRequestPrice1,
+                dataKeyRequestPrice2,
+                dataKeyRequestPrice3
+            });
+        }
     }
 
     getContractData = async () => {
 
         const contract = this.state.drizzleContract;
-        console.log(contract)
         const account = this.props.drizzleState.accounts[0];
         let owner;
         let symbol;
@@ -104,8 +141,55 @@ class TokenDetails extends Component {
         });
     }
 
+
+    getMenu = async () => {
+        const contract = this.state.drizzleContract;
+
+        await contract && contract.methods.action1().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action1 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.action2().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action2 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.action3().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action3 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.prices(0).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }
+            prices.price1 = result;
+            this.setState({ prices })
+        });
+
+        await contract && contract.methods.prices(1).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }
+            prices.price2 = result;
+            this.setState({ prices })
+        });
+
+        await contract && contract.methods.prices(2).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }
+            prices.price3 = result;
+            this.setState({ prices })
+        });
+    }
+
     closeModal = () => {
         this.props.history.goBack()
+    }
+
+    toggle = () => {
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        });
     }
 
     render() {
@@ -114,8 +198,14 @@ class TokenDetails extends Component {
         const contract = this.props.drizzleState && this.props.drizzleState.contracts[address];
         const totalSupplyRes = contract && contract.totalSupply[this.state.dataKeyTotalSupply];
         const poolBalanceRes = contract && contract.poolBalance[this.state.dataKeyPoolBalance];
-        console.log(poolBalanceRes);
         const tokenBalanceRes = contract && contract.balanceOf[this.state.dataKeyTokenBalance];
+        const requestPrice1Res = contract && contract.priceToMint[this.state.dataKeyRequestPrice1];
+        const requestPrice1 = requestPrice1Res && (requestPrice1Res.value / multiplier).toFixed(3);
+        const requestPrice2Res = contract && contract.priceToMint[this.state.dataKeyRequestPrice2];
+        const requestPrice2 = requestPrice2Res && (requestPrice2Res.value / multiplier).toFixed(3);
+        const requestPrice3Res = contract && contract.priceToMint[this.state.dataKeyRequestPrice3];
+        const requestPrice3 = requestPrice3Res && (requestPrice3Res.value / multiplier).toFixed(3);
+
 
         const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
         const poolBalance = poolBalanceRes && poolBalanceRes.value / multiplier;
@@ -125,53 +215,90 @@ class TokenDetails extends Component {
         return (
             <Modal size="lg" isOpen={true} toggle={this.closeModal}>
                 <ModalHeader toggle={this.closeModal}>
-                    {this.state.name} ({this.state.symbol})
+                    Personal Economy of {this.state.name} ({this.state.symbol}) {}
                 </ModalHeader>
                 <ModalBody>
-                    <BuySell
-                        contract={this.state.drizzleContract}
-                        address={this.props.match.params.tokenAddress}
-                        account={this.props.drizzleState.accounts[0]}
-                        symbol={this.state.symbol}
-                    />
+                    <Container>
+                        <BuySell
+                            contract={this.state.drizzleContract}
+                            address={this.props.match.params.tokenAddress}
+                            account={this.props.drizzleState.accounts[0]}
+                            symbol={this.state.symbol}
+                        />
+                        <Row className={classes.Row}>
+                            <Col md="6">
+                                <ContractInfo
+                                    address={this.props.match.params.tokenAddress}
+                                    account={account}
+                                    owner={this.state.owner}
+                                    symbol={this.state.symbol}
+                                    name={this.state.name}
+                                    exponent={this.state.exponent}
+                                    invSlope={this.state.invSlope}
+                                    totalSupply={totalSupply}
+                                    poolBalance={poolBalance}
+                                    tokenBalance={tokenBalance}
+                                    currentPrice={currentPrice}
+                                    marketCap={currentPrice * totalSupply}
+                                />
+                            </Col>
+                            <Col md="6">
 
-                    <ContractInfo
-                        address={this.props.match.params.tokenAddress}
-                        account={account}
-                        owner={this.state.owner}
-                        symbol={this.state.symbol}
-                        name={this.state.name}
-                        exponent={this.state.exponent}
-                        invSlope={this.state.invSlope}
-                        totalSupply={totalSupply}
-                        poolBalance={poolBalance}
-                        tokenBalance={tokenBalance}
-                        currentPrice={currentPrice}
-                        marketCap={currentPrice * totalSupply}
-                    />
+                                <Card>
+                                    <CardHeader> Bonding Curve Contract
+                                        <div className={classes.PopOverButton}>
+                                            <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
+                                                Details
+                                            </Button>
+                                        </div>
+                                        <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+                                            <PopoverHeader>Economic key indicators</PopoverHeader>
+                                            <PopoverBody>
+                                                <p>Current Price: {currentPrice} ETH</p>
+                                                <p>Reserve Pool: {poolBalance} ETH </p>
+                                                <p>Total Supply: {totalSupply} ETH</p>
+                                                <p>Contract Address: {address} </p>
+                                                <p>Owner Address: {this.state.owner}</p>
+                                            </PopoverBody>
+                                        </Popover>
+                                    </CardHeader>
 
-                    <CurveChart curveData={{
-                        totalSupply: totalSupply,
-                        poolBalance: poolBalance,
-                        invSlope: this.state.invSlope,
-                        exponent: this.state.exponent,
-                        currentPrice: currentPrice
-                    }}
-                        margin={{
-                            top: 30,
-                            right: 30,
-                            bottom: 50,
-                            left: 70,
-                        }}
-                        width={500}
-                        height={400}
-                    />
+                                    <CurveChart curveData={{
+                                        totalSupply: totalSupply,
+                                        poolBalance: poolBalance,
+                                        invSlope: this.state.invSlope,
+                                        exponent: this.state.exponent,
+                                        currentPrice: currentPrice
+                                    }}
+                                        margin={{
+                                            top: 30,
+                                            right: 10,
+                                            bottom: 30,
+                                            left: 10,
+                                        }}
+                                        width={300}
+                                        height={300}
+                                    />
+                                </Card>
+                            </Col>
+                        </Row>
+                        <RequestService
+                            contract={this.state.drizzleContract}
+                            account={account}
+                            symbol={this.state.symbol}
+                            requestPrices={{
+                                requestPrice1: requestPrice1,
+                                requestPrice2: requestPrice2,
+                                requestPrice3: requestPrice3
+                            }}
+                            prices={this.state.prices}
+                            actions={this.state.actions}
+                        />
+                    </Container>
+
+
                 </ModalBody>
-                <RequestService
-                    contract={this.state.drizzleContract}
-                    account={account}
-                    symbol={this.state.symbol}
-                />
+
                 <ModalFooter>
                 </ModalFooter>
             </Modal>

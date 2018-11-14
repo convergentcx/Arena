@@ -3,6 +3,8 @@ import {
     Form, FormGroup, Input, Label, Button, Row, Col, InputGroup, InputGroupAddon
 } from 'reactstrap';
 
+import classes from './BuySell.module.css';
+
 const multiplier = 10 ** 18;
 
 
@@ -61,44 +63,41 @@ class BuySell extends Component {
     render() {
 
         return (
-            <div>
-                <Form>
-                    <Row>
+            <Row className={classes.Row}>
                         <Col md={6}>
                             <InputGroup>
-                                <InputGroupAddon addonType="prepend">{`With ${this.state.priceInEther.toFixed(3)} ETH`}</InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">
+                                    <Button color="success" onClick={this.onBuyHandler}>Buy</Button>
+                                </InputGroupAddon>
                                 <Input
-                                    placeholder={`Buy ${this.props.symbol}`}
+                                    placeholder={`${this.props.symbol}`}
                                     name="token_buy_amount"
                                     type="number"
                                     value={this.state.buyTokenAmount}
                                     onChange={this.buyAmountChangeHandler}
                                 />
-                                <InputGroupAddon addonType="append">
-                                    <Button color="success" onClick={this.onBuyHandler}>Buy</Button>
-                                </InputGroupAddon>
+                                <InputGroupAddon addonType="append">{`With ${this.state.priceInEther.toFixed(3)} ETH`}</InputGroupAddon>
+
+
                             </InputGroup>
                         </Col>
                         <Col md={6}>
                             <InputGroup>
-                                <InputGroupAddon addonType="prepend">{`For ${this.state.rewardInEther.toFixed(3)} ETH`}</InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">
+                                    <Button color="danger" onClick={this.onSellHandler}>Sell</Button>
+                                </InputGroupAddon>
                                 <Input
-                                    placeholder={`Sell ${this.props.symbol}`}
+                                    placeholder={`${this.props.symbol}`}
                                     name="token_sell_amount"
                                     type="number"
                                     value={this.state.sellTokenAmount}
                                     onChange={this.sellAmountChangeHandler}
                                 />
-                                <InputGroupAddon addonType="append">
-                                    <Button color="danger" onClick={this.onSellHandler}>Sell</Button>
-                                </InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">{`For ${this.state.rewardInEther.toFixed(3)} ETH`}</InputGroupAddon>
                             </InputGroup>
                         </Col>
 
-                    </Row>
-                </Form>
-
-            </div >
+            </Row >
         )
     }
 
