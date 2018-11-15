@@ -53,10 +53,10 @@ class CurveChart extends React.Component {
         >
           <CartesianGrid strokeDasharray="3 3"/>
           <XAxis dataKey="supply" type={'number'}>
-          <Label value="Token Supply" position = "insideBottomRight" dy={20}/>
+          {/* <Label value="Token Supply" position = "insideBottomRight" dy={20}/> */}
           </XAxis>
           <YAxis dataKey="value" type={'number'}>
-          <Label value="Token Price" position="insideTopLeft" style={{ textAnchor: 'right' }} angle={270} dy={100} offset={-20} />
+          {/* <Label value="Token Price" position="insideTopLeft" style={{ textAnchor: 'right' }} angle={270} dy={100} offset={-20} /> */}
           </YAxis>
           <Tooltip/>
 

@@ -2,13 +2,24 @@ import React, { Component } from 'react';
 import { Button, Jumbotron } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classes from './LandingPage.module.css';
+import Background from '../../assets/curves.jpg'
 
 class LandingPage extends Component {
 
     render() {
+
+        let styles = {
+            backgroundImage: "url(" + Background + ")",
+            backgroundSize: 'cover',
+            webkitBackgroundSize: 'cover',
+            MozBackgroundSize: 'cover',
+            oBackgroundSize: 'cover',
+            height: '90vh',
+            padding: '10%'
+          };
+
         return (
-            <div className={classes.LandingPage}>
-                  <Jumbotron>
+            <div className={classes.LandingPage} style={styles}>
                 <h1 className="display-4">
                     Unlock your personal economy.
                 </h1>
@@ -26,7 +37,6 @@ class LandingPage extends Component {
                 <NavLink to={{ hash: '#browse' }}>
                     <Button outline size="lg"> Browse </Button>
                 </NavLink>
-            </Jumbotron>
 
             </div>
         );

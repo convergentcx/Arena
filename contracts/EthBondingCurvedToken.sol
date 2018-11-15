@@ -31,7 +31,7 @@ contract EthBondingCurvedToken is StandardToken {
 
     /// @dev                Get the price in ether to mint tokens
     /// @param numTokens    The number of tokens to calculate price for
-    function priceToMint(uint256 numTokens) public returns(uint256);
+    function priceToMint(uint256 numTokens) view public returns(uint256);
 
     /// @dev                Get the reward in ether to burn tokens
     /// @param numTokens    The number of tokens to calculate reward for

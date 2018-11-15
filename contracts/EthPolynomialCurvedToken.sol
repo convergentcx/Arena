@@ -70,7 +70,7 @@ contract EthPolynomialCurvedToken is EthBondingCurvedToken {
         return (t ** nexp).div(nexp).div(invSlope).div((10 ** (uint256(decimals) * uint256(exponent))));
     }
 
-    function priceToMint(uint256 numTokens) public returns(uint256) {
+    function priceToMint(uint256 numTokens) view public returns(uint256) {
         return curveIntegral(totalSupply_.add(numTokens)).sub(poolBalance);
     }
 
@@ -86,9 +86,9 @@ contract EthPolynomialCurvedToken is EthBondingCurvedToken {
     }
 
     function requestWithToken(string message) public {
-        require(balances[msg.sender] >= prices[0]*10^decimals);
-        balances[msg.sender] -= prices[0]*10^decimals;
-        balances[owner] += prices[0]*10^decimals;
+        require(balances[msg.sender] >= prices[0]*10 ** (uint256(decimals)));
+        balances[msg.sender] -= prices[0]*(uint256(decimals));
+        balances[owner] += prices[0]*(uint256(decimals));
         emit Requested(message);
     }
 }
