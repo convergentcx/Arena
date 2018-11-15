@@ -72,7 +72,7 @@ class ListToken extends Component {
                 <Table borderless hover>
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th className={classes.th}> Name</th>
                             <th>Price</th>
                             <th>Market Cap</th>
                             <th>Services</th>

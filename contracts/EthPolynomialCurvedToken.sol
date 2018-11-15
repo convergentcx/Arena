@@ -86,9 +86,9 @@ contract EthPolynomialCurvedToken is EthBondingCurvedToken {
     }
 
     function requestWithToken(string message) public {
-        require(balances[msg.sender] >= prices[0]*10^decimals);
-        balances[msg.sender] -= prices[0]*10^decimals;
-        balances[owner] += prices[0]*10^decimals;
+        require(balances[msg.sender] >= prices[0]*10 ** (uint256(decimals)));
+        balances[msg.sender] -= prices[0]*(uint256(decimals));
+        balances[owner] += prices[0]*(uint256(decimals));
         emit Requested(message);
     }
 }

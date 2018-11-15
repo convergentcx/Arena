@@ -15,7 +15,7 @@ class RequestService extends React.Component {
 
     // @dev TODO: SHOULD INCLUDE WHICH SERVICE IS BEING REQUESTED 
     // NOW ONLY WORKING FOR FIRST SERVICE
-    onRequestWithEthHandler = () => {
+    onRequestWithEthHandler = (serviceIndex) => {
         const { contract, account } = this.props;
         const stackId =
             contract && contract.methods["requestWithEth"].cacheSend(
@@ -23,7 +23,7 @@ class RequestService extends React.Component {
                 `${this.props.prices.price1 * multiplier}`,
                 {
                     from: account,
-                    value: this.state.requestPrices.requestPrice1 * multiplier
+                    value: this.props.requestPrices.requestPrice1 * multiplier
                 });
 
         // save the `stackId` for later reference
@@ -60,7 +60,7 @@ class RequestService extends React.Component {
                         <td>{action[1]}</td>
                         <td>{prices[i][1]}</td>
                         <td> <Input value={this.state.message} onChange={this.inputChangedHandler} /></td>
-                        <td><Button color="danger" onClick={this.onRequestWithEthHandler}>Request with {this.props.requestPrices[requestPriceAttribute]} ETH</Button></td>
+                        <td><Button color="danger" onClick={() => this.onRequestWithEthHandler(i+1)}>Request with {this.props.requestPrices[requestPriceAttribute]} ETH</Button></td>
                         <td><Button color="success" onClick={this.onRequestWithTokenHandler}>Request with {this.props.prices[priceAttribute]} {this.props.symbol}</Button></td>
                     </tr>
                 )

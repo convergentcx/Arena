@@ -13,13 +13,13 @@ class ContractInfo extends Component {
                     <Col md={6}>
                         <Card>
                             <CardHeader>Market Cap</CardHeader>
-                            <p>{this.props.marketCap} ETH</p>
+                            <CardBody>{this.props.marketCap} ETH</CardBody>
                         </Card>
                     </Col>
                     <Col md={6}>
                         <Card>
                             <CardHeader>You own</CardHeader>
-                            <p> {this.props.tokenBalance}</p>
+                            <CardBody> {this.props.tokenBalance} {this.props.symbol}</CardBody>
                         </Card>
                     </Col>
                 </Row>

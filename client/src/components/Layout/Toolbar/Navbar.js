@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import classes from './Navbar.module.css';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class Example extends React.Component {
   }
   render() {
     return (
-        <Navbar sticky={'top'} color="light" light expand="md">
+        <Navbar sticky={'top'} color="light" light expand="md" className={classes.Navbar}>
           <NavbarBrand href="/">arena</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

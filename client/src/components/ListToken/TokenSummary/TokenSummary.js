@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
 import { withRouter } from 'react-router-dom';
-import { Button } from 'reactstrap';
-
+import { Button, Row } from 'reactstrap';
+import classes from './TokenSummary.module.css'
 const multiplier = 10 ** 18;
 
 
@@ -122,11 +122,21 @@ class TokenSummary extends Component {
         const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
         const currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
         return (
-            <tr onClick={this.showDetails}>
+            <tr onClick={this.showDetails} className={classes.th}>
                 <td>{this.state.name}</td>
-                <td>{currentPrice}</td>
-                <td>{currentPrice * totalSupply}</td>
-                <td>{this.state.action1}, {this.state.action2}, {this.state.action3}</td>
+                <td>{currentPrice.toFixed(3)}</td>
+                <td>{(currentPrice * totalSupply).toFixed(3)}</td>
+                <td>
+                    <Row>
+                        {this.state.action1}
+                    </Row>
+                    <Row>
+                        {this.state.action2}
+                    </Row>
+                    <Row>
+                        {this.state.action3}
+                    </Row>
+                </td>
                 <td><Button color="success" onClick={this.showDetails}>Invest</Button></td>
                 <td><Button color="info" onClick={this.showDetails}>Chat</Button></td>
             </tr>

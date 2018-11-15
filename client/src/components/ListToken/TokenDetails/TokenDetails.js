@@ -14,7 +14,9 @@ import {
     Col,
     Popover,
     PopoverHeader,
-    PopoverBody
+    PopoverBody,
+    FormGroup,
+    Label
 } from 'reactstrap';
 
 import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
@@ -245,20 +247,44 @@ class TokenDetails extends Component {
                             <Col md="6">
 
                                 <Card>
-                                    <CardHeader> Bonding Curve Contract
+                                    <CardHeader> Bonding Curve
                                         <div className={classes.PopOverButton}>
                                             <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
                                                 Details
                                             </Button>
                                         </div>
                                         <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-                                            <PopoverHeader>Economic key indicators</PopoverHeader>
+                                            <PopoverHeader>Contract Information</PopoverHeader>
                                             <PopoverBody>
-                                                <p>Current Price: {currentPrice} ETH</p>
-                                                <p>Reserve Pool: {poolBalance} ETH </p>
-                                                <p>Total Supply: {totalSupply} ETH</p>
-                                                <p>Contract Address: {address} </p>
-                                                <p>Owner Address: {this.state.owner}</p>
+                                                <Row>
+                                                <Col md={12}>
+                                                <FormGroup>
+                                                <Label size="sm" className={classes.Label}>Contract Address</Label>
+                                                <p> {address} </p>
+                                                </FormGroup>
+                                                </Col>
+                                                </Row>
+                                                <Row>
+                                                <Col md={12}>
+                                                <Label size="sm" className={classes.Label}>Owner Address</Label>
+                                                <p>{this.state.owner}</p>
+                                                </Col>
+                                                </Row>
+                                                <Row>
+                                                <Col md={4}>
+                                                <Label size="sm" className={classes.Label}>Price</Label>
+                                                <p>{currentPrice} ETH</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                <Label size="sm" className={classes.Label}>Reserve Pool</Label>
+                                                <p>{poolBalance} ETH </p>
+                                                </Col>
+                                                <Col md={4}>
+                                                <Label size="sm" className={classes.Label}>Total Supply</Label>
+                                                <p>{totalSupply} {this.state.symbol}</p>
+                                                </Col>
+                                                </Row>
+
                                             </PopoverBody>
                                         </Popover>
                                     </CardHeader>

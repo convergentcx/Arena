@@ -1,5 +1,13 @@
 .ListToken {
     height: 90vh;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
 }
+
+/* .th {
+    padding-left: 0px;
+    margin: 0px;
+    text-align: left;
+    vertical-align: bottom;
+    border-top: 1px solid #dee2e6;
+} */
