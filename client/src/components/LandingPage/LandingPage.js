@@ -11,9 +11,9 @@ class LandingPage extends Component {
         let styles = {
             backgroundImage: "url(" + Background + ")",
             backgroundSize: 'cover',
-            webkitBackgroundSize: 'cover',
+            WebkitBackgroundSize: 'cover',
             MozBackgroundSize: 'cover',
-            oBackgroundSize: 'cover',
+            OBackgroundSize: 'cover',
             height: '90vh',
             padding: '10%'
           };

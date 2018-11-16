@@ -56,7 +56,7 @@ class RequestService extends React.Component {
             }
             else {
                 return (
-                    <tr>
+                    <tr key={i}>
                         <td>{action[1]}</td>
                         <td>{prices[i][1]}</td>
                         <td> <Input value={this.state.message} onChange={this.inputChangedHandler} /></td>

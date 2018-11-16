@@ -140,6 +140,7 @@ class TokenDetails extends Component {
         await contract && contract.methods.invSlope().call({ from: account }, (error, result) => {
             invSlope = result;
             this.setState({ invSlope: invSlope })
+            console.log(contract)
         });
     }
 

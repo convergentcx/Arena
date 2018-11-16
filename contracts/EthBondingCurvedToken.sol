@@ -7,8 +7,8 @@ import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 ///         implementation that is backed by ether.
 contract EthBondingCurvedToken is StandardToken {
 
-    event Minted(uint256 amount, uint256 totalCost);
-    event Burned(uint256 amount, uint256 reward);
+    event Minted(uint256 amount, uint256 totalCost, uint256 time);
+    event Burned(uint256 amount, uint256 reward, uint256 time);
 
 
     using SafeMath for uint256;
@@ -50,7 +50,7 @@ contract EthBondingCurvedToken is StandardToken {
             msg.sender.transfer(msg.value - priceForTokens);
         }
 
-        emit Minted(numTokens, priceForTokens);
+        emit Minted(numTokens, priceForTokens, now);
     }
 
     /// @dev                Burn tokens to receive ether
@@ -64,7 +64,7 @@ contract EthBondingCurvedToken is StandardToken {
         poolBalance = poolBalance.sub(ethToReturn);
         msg.sender.transfer(ethToReturn);
 
-        emit Burned(numTokens, ethToReturn);
+        emit Burned(numTokens, ethToReturn, now);
     }
 
 }

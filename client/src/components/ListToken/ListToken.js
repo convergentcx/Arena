@@ -10,8 +10,6 @@ class ListToken extends Component {
 
         super();
 
-        // create data set of random length
-
         this.state = {
             currentPage: 0,
             dataKey: null,
@@ -57,6 +55,7 @@ class ListToken extends Component {
             return (
                 // <Link to={'/' + address} key={address} style={{ color: 'black', textDecoration: 'none' }}>
                 <TokenSummary
+                    key={address}
                     address={address}
                     account={this.props.drizzleState.accounts[0]}
                     drizzle={this.props.drizzle}
@@ -83,14 +82,6 @@ class ListToken extends Component {
                     </tbody>
                 </Table>
             </div >
-
-            // <Container className="text-center">
-            //     {/* <Row>
-            //         <Col md="12"> */}
-            //     {contracts}
-            //     {/* </Col>
-            //     </Row> */}
-            // </Container>
         )
     }
 }

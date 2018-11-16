@@ -16,8 +16,8 @@ class BuySell extends Component {
         token_amount: '0',
         priceInEther: 0,
         rewardInEther: 0,
-        buyTokenAmount: null,
-        sellTokenAmount: null
+        buyTokenAmount: '',
+        sellTokenAmount: ''
     }
 
     changeTokenView = (showBuy) => {
