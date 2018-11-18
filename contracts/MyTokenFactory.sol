@@ -8,6 +8,8 @@ import "./EthPolynomialCurvedToken.sol";
 
 contract MyTokenFactory is Factory {
 
+    event Created(address indexed token_address, address indexed owner_address);
+
     /*
      * Public functions
      */
@@ -21,5 +23,7 @@ contract MyTokenFactory is Factory {
     {
         tokenAddress = new EthPolynomialCurvedToken(_name, _symbol, msg.sender, _action1, _action2, _action3, _prices);
         register(tokenAddress);
+        emit Created(tokenAddress, msg.sender);
+
     }
 }

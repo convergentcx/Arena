@@ -22,6 +22,7 @@ import {
 } from 'reactstrap';
 
 import EthPolynomialCurvedToken from '../../contracts/EthPolynomialCurvedToken.json';
+import MyTokenFactory from "../../contracts/MyTokenFactory.json";
 import ContractInfo from '../ListToken/TokenDetails/ContractInfo/ContractInfo';
 import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
 import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';
@@ -41,7 +42,7 @@ const multiplier = 10 ** 18;
 class Dashboard extends Component {
 
     state = {
-        address: '0xf31e78FCc8f38135D02B3b3D372e4a7f949ec41C', // THIS IS NOT  DYNAMIC, NEED A WAY TO FIND WHICH TOKEN BELONGS TO CURRENT USER!
+        address: null,
         web3Contract: null,
         tokenContract: null,
         events: null,
@@ -74,27 +75,51 @@ class Dashboard extends Component {
 
 
     componentDidMount = async () => {
-        const { drizzle } = this.props;
-        const { address } = this.state;
-        const contractConfig = {
-            contractName: address,
-            web3Contract: new drizzle.web3.eth.Contract(
-                EthPolynomialCurvedToken['abi'],
-                address
-            )
-        };
-        let events = ['Minted', 'Burned'];
-        await drizzle.addContract(contractConfig, events);
-        const contract = drizzle.contracts[address];
-        this.setState({ drizzleContract: contract }, () => {
-            this.getMenu();
-            console.log(this.state.drizzleContract)
-
-        })
+        const { drizzle, drizzleState } = this.props;
+        const factoryAddress = drizzle.contracts.MyTokenFactory.address
         var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-        const web3Contract = new web3.eth.Contract(EthPolynomialCurvedToken['abi'], "0xf31e78FCc8f38135D02B3b3D372e4a7f949ec41C");
-        this.setState({ web3Contract });
-        web3Contract.getPastEvents("allEvents", { fromBlock: 0, toBlock: "latest" }, (err, events) => { this.setState({ events })});
+        const factoryContract = new web3.eth.Contract(MyTokenFactory['abi'], factoryAddress);
+
+
+        // WEB3 WAY OF GETTING CURRENTLY ACTIVE ACCOUNTS AND TOKEN ADDRESSES
+
+        // web3.eth.getAccounts().then(e => { // which addresses does this really return??
+        //     let tokens = e.map((address) => { 
+        //         let filter =  {'owner_address': address};
+        //         factoryContract.getPastEvents("Created", { fromBlock: 0, toBlock: "latest", filter}, (err, events) => { console.log(events)});
+        //      })
+        //     console.log(tokens)
+
+        // })
+
+        let filter = { 'owner_address': drizzleState.accounts[0] };
+        let tokens;
+        factoryContract.getPastEvents("Created", { fromBlock: 0, toBlock: "latest", filter }, (err, events) => {
+            events.forEach(token => {
+                let address = token.returnValues.token_address;
+                this.setState({address})
+                const contractConfig = {
+                    contractName: address,
+                    web3Contract: new drizzle.web3.eth.Contract(
+                        EthPolynomialCurvedToken['abi'],
+                        address
+                    )
+                };
+                    let events= ['Minted', 'Burned'];
+                drizzle.addContract(contractConfig, events);
+                const web3Contract = new web3.eth.Contract(EthPolynomialCurvedToken['abi'], address);
+                web3Contract.getPastEvents("allEvents", { fromBlock: 0, toBlock: "latest" }, (err, events) => { console.log(events)  }) });
+            })
+
+            
+            // const contract = drizzle.contracts[address];
+            // this.setState({ drizzleContract: contract }, () => {
+            //     this.getMenu();
+            //     console.log(this.state.drizzleContract)
+
+            // })
+            // this.setState({ web3Contract });
+
     }
 
     componentDidUpdate = (prevProps, prevState) => {
@@ -123,7 +148,7 @@ class Dashboard extends Component {
     }
 
     getContractData = async () => {
-        
+
         const contract = this.state.drizzleContract;
         const account = this.props.drizzleState.accounts[0];
         let owner;
@@ -223,10 +248,10 @@ class Dashboard extends Component {
         const tokenBalance = tokenBalanceRes && tokenBalanceRes.value / multiplier;
         const currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
 
-        const rows = this.state.events && this.state.events.map(event=> (
+        const rows = this.state.events && this.state.events.map(event => (
             <tr>
                 <td>{event.event}</td>
-                <td>{(new Date(event.returnValues.time*1000)).toDateString()}</td>
+                <td>{(new Date(event.returnValues.time * 1000)).toDateString()}</td>
                 <td>{event.returnValues.message}</td>
                 <td>{event.returnValues.price}</td>
 
@@ -236,8 +261,8 @@ class Dashboard extends Component {
         return (
             <div>
                 <Table>
-                {rows}
-            </Table>
+                    {rows}
+                </Table>
                 <div>
                     <Container>
                         <BuySell
@@ -276,32 +301,32 @@ class Dashboard extends Component {
                                             <PopoverHeader>Contract Information</PopoverHeader>
                                             <PopoverBody>
                                                 <Row>
-                                                <Col md={12}>
-                                                <FormGroup>
-                                                <Label size="sm" className={classes.Label}>Contract Address</Label>
-                                                <p> {address} </p>
-                                                </FormGroup>
-                                                </Col>
+                                                    <Col md={12}>
+                                                        <FormGroup>
+                                                            <Label size="sm" className={classes.Label}>Contract Address</Label>
+                                                            <p> {address} </p>
+                                                        </FormGroup>
+                                                    </Col>
                                                 </Row>
                                                 <Row>
-                                                <Col md={12}>
-                                                <Label size="sm" className={classes.Label}>Owner Address</Label>
-                                                <p>{this.state.owner}</p>
-                                                </Col>
+                                                    <Col md={12}>
+                                                        <Label size="sm" className={classes.Label}>Owner Address</Label>
+                                                        <p>{this.state.owner}</p>
+                                                    </Col>
                                                 </Row>
                                                 <Row>
-                                                <Col md={4}>
-                                                <Label size="sm" className={classes.Label}>Price</Label>
-                                                <p>{currentPrice} ETH</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                <Label size="sm" className={classes.Label}>Reserve Pool</Label>
-                                                <p>{poolBalance} ETH </p>
-                                                </Col>
-                                                <Col md={4}>
-                                                <Label size="sm" className={classes.Label}>Total Supply</Label>
-                                                <p>{totalSupply} {this.state.symbol}</p>
-                                                </Col>
+                                                    <Col md={4}>
+                                                        <Label size="sm" className={classes.Label}>Price</Label>
+                                                        <p>{currentPrice} ETH</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                        <Label size="sm" className={classes.Label}>Reserve Pool</Label>
+                                                        <p>{poolBalance} ETH </p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                        <Label size="sm" className={classes.Label}>Total Supply</Label>
+                                                        <p>{totalSupply} {this.state.symbol}</p>
+                                                    </Col>
                                                 </Row>
 
                                             </PopoverBody>
