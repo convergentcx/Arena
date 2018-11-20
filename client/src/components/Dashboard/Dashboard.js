@@ -22,7 +22,7 @@ import {
 } from 'reactstrap';
 import MyTokenFactory from "../../contracts/MyTokenFactory.json";
 
-import MyTokens from './MyTokens/MyTokens'
+import MyToken from './MyToken/MyToken'
 
 import withContext from '../../hoc/withContext';
 
@@ -88,18 +88,19 @@ class Dashboard extends Component {
             events.forEach(token => {
                 let address = token.returnValues.token_address;
                 tokens.push(address);
-                console.log(tokens)
-                this.setState({tokens})
+                this.setState({ tokens })
             });
         });
-            
-            // const contract = drizzle.contracts[address];
-            // this.setState({ drizzleContract: contract }, () => {
-            //     this.getMenu();
-            //     console.log(this.state.drizzleContract)
 
-            // })
-            // this.setState({ web3Contract });
+
+
+        // const contract = drizzle.contracts[address];
+        // this.setState({ drizzleContract: contract }, () => {
+        //     this.getMenu();
+        //     console.log(this.state.drizzleContract)
+
+        // })
+        // this.setState({ web3Contract });
 
     }
 
@@ -231,129 +232,20 @@ class Dashboard extends Component {
 
 
 
-        const tokens = this.state.tokens && this.state.tokens.map((token)=> {
-            return(<MyTokens 
+        const tokens = this.state.tokens && this.state.tokens.map((token) => {
+            return (<MyToken
                 address={token}
-                />
+                key = {token}
+            />
             )
         });
 
         return (
 
 
-            <div>
-                {tokens}
-                
-            </div>
-            // <div>
-            //     <Table>
-            //         {rows}
-            //     </Table>
-            //     <div>
-            //         <Container>
-            //             <BuySell
-            //                 contract={this.state.drizzleContract}
-            //                 address={this.props.match.params.tokenAddress}
-            //                 account={this.props.drizzleState.accounts[0]}
-            //                 symbol={this.state.symbol}
-            //             />
-            //             <Row className={classes.Row}>
-            //                 <Col md="6">
-            //                     <ContractInfo
-            //                         address={this.props.match.params.tokenAddress}
-            //                         account={account}
-            //                         owner={this.state.owner}
-            //                         symbol={this.state.symbol}
-            //                         name={this.state.name}
-            //                         exponent={this.state.exponent}
-            //                         invSlope={this.state.invSlope}
-            //                         totalSupply={totalSupply}
-            //                         poolBalance={poolBalance}
-            //                         tokenBalance={tokenBalance}
-            //                         currentPrice={currentPrice}
-            //                         marketCap={currentPrice * totalSupply}
-            //                     />
-            //                 </Col>
-            //                 <Col md="6">
-
-            //                     <Card>
-            //                         <CardHeader> Bonding Curve
-            //                             <div className={classes.PopOverButton}>
-            //                                 <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
-            //                                     Details
-            //                                 </Button>
-            //                             </div>
-            //                             <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-            //                                 <PopoverHeader>Contract Information</PopoverHeader>
-            //                                 <PopoverBody>
-            //                                     <Row>
-            //                                         <Col md={12}>
-            //                                             <FormGroup>
-            //                                                 <Label size="sm" className={classes.Label}>Contract Address</Label>
-            //                                                 <p> {address} </p>
-            //                                             </FormGroup>
-            //                                         </Col>
-            //                                     </Row>
-            //                                     <Row>
-            //                                         <Col md={12}>
-            //                                             <Label size="sm" className={classes.Label}>Owner Address</Label>
-            //                                             <p>{this.state.owner}</p>
-            //                                         </Col>
-            //                                     </Row>
-            //                                     <Row>
-            //                                         <Col md={4}>
-            //                                             <Label size="sm" className={classes.Label}>Price</Label>
-            //                                             <p>{currentPrice} ETH</p>
-            //                                         </Col>
-            //                                         <Col md={4}>
-            //                                             <Label size="sm" className={classes.Label}>Reserve Pool</Label>
-            //                                             <p>{poolBalance} ETH </p>
-            //                                         </Col>
-            //                                         <Col md={4}>
-            //                                             <Label size="sm" className={classes.Label}>Total Supply</Label>
-            //                                             <p>{totalSupply} {this.state.symbol}</p>
-            //                                         </Col>
-            //                                     </Row>
-
-            //                                 </PopoverBody>
-            //                             </Popover>
-            //                         </CardHeader>
-
-            //                         <CurveChart curveData={{
-            //                             totalSupply: totalSupply,
-            //                             poolBalance: poolBalance,
-            //                             invSlope: this.state.invSlope,
-            //                             exponent: this.state.exponent,
-            //                             currentPrice: currentPrice
-            //                         }}
-            //                             margin={{
-            //                                 top: 30,
-            //                                 right: 10,
-            //                                 bottom: 30,
-            //                                 left: 10,
-            //                             }}
-            //                             width={300}
-            //                             height={300}
-            //                         />
-            //                     </Card>
-            //                 </Col>
-            //             </Row>
-            //             <RequestService
-            //                 contract={this.state.drizzleContract}
-            //                 account={account}
-            //                 symbol={this.state.symbol}
-            //                 requestPrices={{
-            //                     requestPrice1: requestPrice1,
-            //                     requestPrice2: requestPrice2,
-            //                     requestPrice3: requestPrice3
-            //                 }}
-            //                 prices={this.state.prices}
-            //                 actions={this.state.actions}
-            //             />
-            //         </Container>
-
-            //     </div>
-            // </div>
+            <Container>
+                    {tokens}
+            </Container>
         )
     }
 }
