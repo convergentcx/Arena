@@ -42,22 +42,40 @@ class BuySell extends Component {
     }
 
     onBuyHandler = () => {
-        this.props.contract.methods["mint"].cacheSend(
+        const buyStackId = this.props.contract.methods["mint"].cacheSend(
             `${this.state.buyTokenAmount * multiplier}`,
             {
                 from: this.props.account,
                 value: this.state.priceInEther * multiplier
             });
+        this.setState({ buyStackId });
+
     }
 
 
     onSellHandler = () => {
-        this.props.contract.methods["burn"].cacheSend(
+        const sellStackId = this.props.contract.methods["burn"].cacheSend(
             `${this.state.sellTokenAmount * multiplier}`,
             {
                 from: this.props.account,
             });
+        this.setState({ sellStackId });
     }
+
+    getTxStatus = (transactionStackId) => {
+        // get the transaction states from the drizzle state
+        const { transactions, transactionStack } = this.props.drizzleState;
+    
+        // get the transaction hash using our saved `stackId`
+        const txHash = transactionStack[this.state[transactionStackId]];
+    
+        // if transaction hash does not exist, don't display anything
+        if (!txHash) return null;
+    
+        // otherwise, return the transaction status
+        return `Transaction status: ${transactions[txHash].status}`;
+      };
+    
 
 
     render() {
@@ -80,6 +98,7 @@ class BuySell extends Component {
 
 
                             </InputGroup>
+                            <div>{this.getTxStatus('buyStackId')}</div>
                         </Col>
                         <Col md={6}>
                             <InputGroup>
@@ -95,6 +114,7 @@ class BuySell extends Component {
                                 />
                                 <InputGroupAddon addonType="prepend">{`For ${this.state.rewardInEther.toFixed(3)} ETH`}</InputGroupAddon>
                             </InputGroup>
+                            {this.getTxStatus('sellStackId')}
                         </Col>
 
             </Row >

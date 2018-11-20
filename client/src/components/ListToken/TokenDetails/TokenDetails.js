@@ -112,7 +112,7 @@ class TokenDetails extends Component {
     }
 
     getContractData = async () => {
-
+        console.log(this.props.drizzleState)
         const contract = this.state.drizzleContract;
         const account = this.props.drizzleState.accounts[0];
         let owner;
@@ -224,6 +224,7 @@ class TokenDetails extends Component {
                     <Container>
                         <BuySell
                             contract={this.state.drizzleContract}
+                            drizzleState={this.props.drizzleState}
                             address={this.props.match.params.tokenAddress}
                             account={this.props.drizzleState.accounts[0]}
                             symbol={this.state.symbol}
