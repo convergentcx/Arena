@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 // import drizzle functions and contract artifact
 import { Drizzle, generateStore } from "drizzle";
 import { DrizzleContext } from "drizzle-react";
-import MyTokenFactory from "./contracts/MyTokenFactory.json";
+import MyTokenFactory from "./build/contracts/MyTokenFactory.json";
 
 
 // let drizzle know what contracts we want

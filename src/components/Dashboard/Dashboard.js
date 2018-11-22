@@ -20,7 +20,7 @@ import {
     Label,
     Table
 } from 'reactstrap';
-import MyTokenFactory from "../../contracts/MyTokenFactory.json";
+import MyTokenFactory from "../../build/contracts/MyTokenFactory.json";
 
 import MyToken from './MyToken/MyToken'
 

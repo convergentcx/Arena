@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
+import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
 import { withRouter } from 'react-router-dom';
 import { Button, Row } from 'reactstrap';
 import classes from './TokenSummary.module.css'

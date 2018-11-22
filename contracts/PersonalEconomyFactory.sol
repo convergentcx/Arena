@@ -1,12 +1,9 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.24;
 
 import "./Factory.sol";
-import "./EthPolynomialCurvedToken.sol";
+import "./PersonalEconomy.sol";
 
-/// @title MyToken Factory - Allows creation of custom token.
-/// @author Nicolas frega - <nicolas.frega@srax.com>
-
-contract MyTokenFactory is Factory {
+contract PersonalEconomyFactory is Factory {
 
     event Created(address indexed token_address, address indexed owner_address);
 
@@ -21,9 +18,17 @@ contract MyTokenFactory is Factory {
         public
         returns (address tokenAddress)
     {
-        tokenAddress = new EthPolynomialCurvedToken(_name, _symbol, msg.sender, _action1, _action2, _action3, _prices);
+        tokenAddress = new PersonalEconomy(
+            _name,
+            _symbol,
+            _action1,
+            _action2,
+            _action3,
+            _prices
+        
+        );
+        
         register(tokenAddress);
         emit Created(tokenAddress, msg.sender);
-
     }
 }

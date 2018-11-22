@@ -19,7 +19,7 @@ import {
     Label
 } from 'reactstrap';
 
-import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
+import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
 import RequestService from './RequestService/RequestService';
@@ -173,9 +173,7 @@ class TokenDetails extends Component {
         });
 
         await contract && contract.methods.prices(1).call({ from: this.props.account }, (error, result) => {
-            let prices = { ...this.state.prices }<<<<<<< dashboard
-269
- 
+            let prices = { ...this.state.prices }
 
             prices.price2 = result;
             this.setState({ prices })

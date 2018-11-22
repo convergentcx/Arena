@@ -4,7 +4,7 @@ import { Card } from 'reactstrap';
 import withContext from '../../../hoc/withContext';
 
 import Events from './Events/Events';
-import EthPolynomialCurvedToken from '../../../contracts/EthPolynomialCurvedToken.json';
+import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
 import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
 // import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
 // import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';

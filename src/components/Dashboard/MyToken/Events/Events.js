@@ -1,7 +1,7 @@
 
 import Web3 from 'web3';
 import React, { Component } from 'react';
-import EthPolynomialCurvedToken from '../../../../contracts/EthPolynomialCurvedToken.json';
+import EthPolynomialCurvedToken from '../../../../build/contracts/EthPolynomialCurvedToken.json';
 
 
 class Events extends Component {
