@@ -173,6 +173,50 @@ class TokenDetails extends Component {
         });
 
         await contract && contract.methods.prices(1).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }<<<<<<< dashboard
+269
+ 
+
+            prices.price2 = result;
+            this.setState({ prices })
+        });
+
+        await contract && contract.methods.prices(2).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }
+            prices.price3 = result;
+            this.setState({ prices })
+        });
+    }
+
+
+    getMenu = async () => {
+        const contract = this.state.drizzleContract;
+
+        await contract && contract.methods.action1().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action1 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.action2().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action2 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.action3().call({ from: this.props.account }, (error, result) => {
+            let actions = { ...this.state.actions }
+            actions.action3 = result;
+            this.setState({ actions })
+        });
+
+        await contract && contract.methods.prices(0).call({ from: this.props.account }, (error, result) => {
+            let prices = { ...this.state.prices }
+            prices.price1 = result;
+            this.setState({ prices })
+        });
+
+        await contract && contract.methods.prices(1).call({ from: this.props.account }, (error, result) => {
             let prices = { ...this.state.prices }
             prices.price2 = result;
             this.setState({ prices })
