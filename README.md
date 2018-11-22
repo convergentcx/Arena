@@ -36,10 +36,7 @@ $ yarn deploy
 
 ## Run
 
-Enter the `client/` directory and install dependencies then run development server of the DApp:
-
 ```
-$ yarn
 $ yarn start
 ```
 
