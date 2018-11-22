@@ -3,7 +3,7 @@ import { DrizzleContext } from 'drizzle-react';
 
 const withContext = (WrappedComponent) =>  {
 
-return(props) => (
+return (props) => (
       <DrizzleContext.Consumer>
         {drizzleContext => {
           const { drizzle, drizzleState, initialized } = drizzleContext;
