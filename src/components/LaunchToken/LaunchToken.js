@@ -71,7 +71,8 @@ class LaunchToken extends React.Component {
 
   createToken = () => {
     const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.MyTokenFactory;
+    const contract = drizzle.contracts.PersonalEconomyFactory;
+    console.log(drizzle)
     // let drizzle know we want to call the `set` method with `value`
     const stackId =
       contract.methods["create"].cacheSend(

@@ -9,21 +9,20 @@ import { BrowserRouter } from 'react-router-dom';
 // import drizzle functions and contract artifact
 import { Drizzle, generateStore } from "drizzle";
 import { DrizzleContext } from "drizzle-react";
-import MyTokenFactory from "./build/contracts/MyTokenFactory.json";
+import PersonalEconomyFactory from "./build/contracts/PersonalEconomyFactory.json";
 
 
 // let drizzle know what contracts we want
-const options = { contracts: [MyTokenFactory] };
-
+const options = { contracts: [PersonalEconomyFactory] };
+console.log(options)
 // setup the drizzle store and drizzle
 const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, drizzleStore);
-
 ReactDOM.render(
     <DrizzleContext.Provider drizzle={drizzle}>
-	<BrowserRouter>
-        <App />
-	</BrowserRouter>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </DrizzleContext.Provider>,
     document.getElementById('root')
 );

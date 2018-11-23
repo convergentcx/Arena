@@ -20,7 +20,7 @@ import {
     Label,
     Table
 } from 'reactstrap';
-import MyTokenFactory from "../../build/contracts/MyTokenFactory.json";
+import PersonalEconomyFactory from "../../build/contracts/PersonalEconomyFactory.json";
 
 import MyToken from './MyToken/MyToken'
 
@@ -66,9 +66,9 @@ class Dashboard extends Component {
 
     componentDidMount = async () => {
         const { drizzle, drizzleState } = this.props;
-        const factoryAddress = drizzle.contracts.MyTokenFactory.address
+        const factoryAddress = drizzle.contracts.PersonalEconomyFactory.address
         var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-        const factoryContract = new web3.eth.Contract(MyTokenFactory['abi'], factoryAddress);
+        const factoryContract = new web3.eth.Contract(PersonalEconomyFactory['abi'], factoryAddress);
 
 
         // WEB3 WAY OF GETTING CURRENTLY ACTIVE ACCOUNTS AND TOKEN ADDRESSES

@@ -79,7 +79,7 @@ class TokenSummary extends Component {
             exponent = result;
             this.setState({ exponent: exponent })
         });
-        await contract && contract.methods.invSlope().call({ from: this.props.account }, (error, result) => {
+        await contract && contract.methods.inverseSlope().call({ from: this.props.account }, (error, result) => {
             invSlope = result;
             this.setState({ invSlope: invSlope })
         });

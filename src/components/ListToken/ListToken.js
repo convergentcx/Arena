@@ -20,7 +20,7 @@ class ListToken extends Component {
 
     componentDidMount() {
         const { drizzle } = this.props;
-        const contract = drizzle.contracts.MyTokenFactory;
+        const contract = drizzle.contracts.PersonalEconomyFactory;
         const dataKey = contract.methods["getInstantiations"].cacheCall()
         this.setState({ dataKey });
     }
@@ -38,8 +38,9 @@ class ListToken extends Component {
 
 
     render() {
-        const { MyTokenFactory } = this.props.drizzleState.contracts;
-        const instantiations = MyTokenFactory.getInstantiations[this.state.dataKey];
+
+        const { PersonalEconomyFactory } = this.props.drizzleState.contracts;
+        const instantiations = PersonalEconomyFactory.getInstantiations[this.state.dataKey];
         const text = JSON.stringify(instantiations);
         let inst = null;
         if (text) {
