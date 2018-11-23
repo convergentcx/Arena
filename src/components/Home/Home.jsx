@@ -7,14 +7,14 @@ import Dashboard from '../Dashboard/Dashboard';
 import { Route, Switch } from 'react-router-dom';
 
 const home = () => (
-    <div>
+  <div>
     <LandingPage/>
     <Switch>
-    <Route path="/" exact component={ListToken}/>
-    <Route path="/about" component={About}/>
-    <Route path="/dashboard" component={Dashboard}/>
+      <Route path="/" exact component={ListToken}/>
+      <Route path="/about" component={About}/>
+      <Route path="/dashboard" component={Dashboard}/>
     </Switch>
-    </div>
-)
+  </div>
+);
 
-export default home
+export default home;

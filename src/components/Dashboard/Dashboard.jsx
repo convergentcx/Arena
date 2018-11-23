@@ -20,7 +20,7 @@ import {
     Label,
     Table
 } from 'reactstrap';
-import MyTokenFactory from "../../build/contracts/MyTokenFactory.json";
+import PersonalEconomyFactory from "../../build/contracts/PersonalEconomyFactory.json";
 
 import MyToken from './MyToken/MyToken'
 
@@ -43,7 +43,7 @@ class Dashboard extends Component {
         symbol: '',
         name: '',
         exponent: null,
-        invSlope: null,
+        inverseSlope: null,
         dataKeyTotalSupply: null,
         dataKeyPoolBalance: null,
         dataKeyTokenBalance: null,
@@ -66,9 +66,9 @@ class Dashboard extends Component {
 
     componentDidMount = async () => {
         const { drizzle, drizzleState } = this.props;
-        const factoryAddress = drizzle.contracts.MyTokenFactory.address
+        const factoryAddress = drizzle.contracts.PersonalEconomyFactory.address
         var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-        const factoryContract = new web3.eth.Contract(MyTokenFactory['abi'], factoryAddress);
+        const factoryContract = new web3.eth.Contract(PersonalEconomyFactory['abi'], factoryAddress);
 
 
         // WEB3 WAY OF GETTING CURRENTLY ACTIVE ACCOUNTS AND TOKEN ADDRESSES
@@ -137,7 +137,7 @@ class Dashboard extends Component {
     //     let symbol;
     //     let name;
     //     let exponent;
-    //     let invSlope;
+    //     let inverseSlope;
 
     //     await contract && contract.methods.owner().call({ from: account }, (error, result) => {
     //         owner = result;
@@ -155,9 +155,9 @@ class Dashboard extends Component {
     //         exponent = result;
     //         this.setState({ exponent: exponent })
     //     });
-    //     await contract && contract.methods.invSlope().call({ from: account }, (error, result) => {
-    //         invSlope = result;
-    //         this.setState({ invSlope: invSlope })
+    //     await contract && contract.methods.inverseSlope().call({ from: account }, (error, result) => {
+    //         inverseSlope = result;
+    //         this.setState({ inverseSlope: inverseSlope })
     //         console.log(contract)
     //     });
     // }
@@ -228,7 +228,7 @@ class Dashboard extends Component {
         // const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
         // const poolBalance = poolBalanceRes && poolBalanceRes.value / multiplier;
         // const tokenBalance = tokenBalanceRes && tokenBalanceRes.value / multiplier;
-        // const currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
+        // const currentPrice = (1 / this.state.inverseSlope) * (totalSupply) ** this.state.exponent;
 
 
 

@@ -31,7 +31,7 @@ $ yarn ganache
 In another window run to compile and deploy the contracts:
 
 ```
-$ yarn deploy
+$ yarn deploy:dev
 ```
 
 ## Run

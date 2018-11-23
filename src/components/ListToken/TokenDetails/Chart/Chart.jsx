@@ -17,7 +17,7 @@ const {
 class CurveChart extends React.Component {
   
   getChartData() {
-    let { totalSupply, poolBalance, invSlope, exponent, currentPrice } = this.props.curveData;
+    let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
     poolBalance = parseFloat(poolBalance) || 0;
     totalSupply = parseFloat(totalSupply) || 0;
 
@@ -28,7 +28,7 @@ class CurveChart extends React.Component {
 
 
     for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
-      let price = 1 / invSlope * (i ** exponent);
+      let price = 1 / inverseSlope * (i ** exponent);
       if (i < totalSupply) {
         data.push({ supply: i, sell: price.toFixed(4), value: parseFloat(price.toFixed(4)) });
       } else if (i >= totalSupply) {
@@ -53,10 +53,10 @@ class CurveChart extends React.Component {
         >
           <CartesianGrid strokeDasharray="3 3"/>
           <XAxis dataKey="supply" type={'number'}>
-          {/* <Label value="Token Supply" position = "insideBottomRight" dy={20}/> */}
+            {/* <Label value="Token Supply" position = "insideBottomRight" dy={20}/> */}
           </XAxis>
           <YAxis dataKey="value" type={'number'}>
-          {/* <Label value="Token Price" position="insideTopLeft" style={{ textAnchor: 'right' }} angle={270} dy={100} offset={-20} /> */}
+            {/* <Label value="Token Price" position="insideTopLeft" style={{ textAnchor: 'right' }} angle={270} dy={100} offset={-20} /> */}
           </YAxis>
           <Tooltip/>
 
@@ -79,7 +79,7 @@ class CurveChart extends React.Component {
 
 
       </div>
-    )
+    );
   }
 }
 

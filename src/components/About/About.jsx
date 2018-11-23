@@ -1,9 +1,9 @@
 import React from 'react';
 
 const about = () => (
-    <div>
+  <div>
         Here is how this works!
-    </div>
-)
+  </div>
+);
 
-export default about
+export default about;

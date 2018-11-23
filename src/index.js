@@ -1,31 +1,39 @@
+/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
-// import drizzle functions and contract artifact
-import { Drizzle, generateStore } from "drizzle";
-import { DrizzleContext } from "drizzle-react";
-import MyTokenFactory from "./build/contracts/MyTokenFactory.json";
+/// Drizzle
+import { Drizzle, generateStore } from 'drizzle';
+import { DrizzleContext } from 'drizzle-react';
 
+/// Styles
+import './styles/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// let drizzle know what contracts we want
-const options = { contracts: [MyTokenFactory] };
+/// Our components
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-// setup the drizzle store and drizzle
+/// Contract artifacts
+import PersonalEconomyFactory from './build/contracts/PersonalEconomyFactory.json';
+
+const options = { 
+  contracts: [
+    PersonalEconomyFactory,
+  ]
+};
+
 const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, drizzleStore);
 
 ReactDOM.render(
-    <DrizzleContext.Provider drizzle={drizzle}>
-	<BrowserRouter>
-        <App />
-	</BrowserRouter>
-    </DrizzleContext.Provider>,
-    document.getElementById('root')
+  <DrizzleContext.Provider drizzle={drizzle}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </DrizzleContext.Provider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

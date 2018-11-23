@@ -1,5 +1,5 @@
-const MyTokenFactory = artifacts.require('./MyTokenFactory.sol')
+const PersonalEconomyFactory = artifacts.require('./PersonalEconomyFactory.sol')
 
 module.exports = function(deployer) {
-    deployer.deploy(MyTokenFactory)
+    deployer.deploy(PersonalEconomyFactory)
 }
