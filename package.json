@@ -21,9 +21,11 @@
   },
   "devDependencies": {
     "@convergent/arc": "0.0.3",
+    "babel-eslint": "9.0.0",
     "eslint": "5.6.0",
     "eslint-plugin-react": "7.11.1",
     "openzeppelin-solidity": "2.0.0",
+    "prettier-eslint-cli": "4.7.1",
     "truffle": "5.0.0-next.15"
   },
   "scripts": {
@@ -31,8 +33,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint -c .eslintrc.js src/**/*.js",
-    "lint:fix": "eslint src/**/*.js --fix",
+    "lint": "eslint 'src/**/*.js' 'src/**/*.jsx'",
+    "lint:fix": "eslint --fix 'src/**/*.js' 'src/**/*.jsx'",
+    "format": "prettier-eslint --write 'src/**/*.js' 'src/**/*.jsx'",
     "truffle:build": "truffle compile",
     "deploy:dev": "yarn truffle:build && truffle migrate --reset --network=development && cp -R build src",
     "ganache": "ganache-cli --account='0x8ca64cb3d877a1d04badfa0292fc208f16379cb103d4b65a5a626b579ae054e3,100000000000000000000' --account='0x881b89ced6a55f80a66647ae401f10c3208b89e75d353c4fb4ee93f7ebb0d694,100000000000000000000'"

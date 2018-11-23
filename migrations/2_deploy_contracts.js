@@ -1,5 +1,5 @@
-const PersonalEconomyFactory = artifacts.require('./PersonalEconomyFactory.sol')
+const PersonalEconomyFactory = artifacts.require('./PersonalEconomyFactory.sol');
 
 module.exports = function(deployer) {
-    deployer.deploy(PersonalEconomyFactory)
-}
+  deployer.deploy(PersonalEconomyFactory);
+};

@@ -18,10 +18,8 @@ import * as serviceWorker from './serviceWorker';
 /// Contract artifacts
 import PersonalEconomyFactory from './build/contracts/PersonalEconomyFactory.json';
 
-const options = { 
-  contracts: [
-    PersonalEconomyFactory,
-  ]
+const options = {
+  contracts: [PersonalEconomyFactory]
 };
 
 const drizzleStore = generateStore(options);

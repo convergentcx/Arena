@@ -11,7 +11,7 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     string public action1;
     string public action2;
     string public action3;
-    uint[] public prices;
+    uint256[] public prices;
     
     constructor(
         string _name,
@@ -29,6 +29,8 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     )
         public
     {
+        name = _name;
+        symbol = _symbol;
         action1 = _action1;
         action2 = _action2;
         action3 = _action3;

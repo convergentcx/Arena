@@ -15,7 +15,6 @@ const {
 } = Recharts;
 
 class CurveChart extends React.Component {
-  
   getChartData() {
     let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
     poolBalance = parseFloat(poolBalance) || 0;
@@ -26,24 +25,30 @@ class CurveChart extends React.Component {
     let data = [];
     let step = (totalSupply || 50) / 100;
 
-
     for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
-      let price = 1 / inverseSlope * (i ** exponent);
+      let price = (1 / inverseSlope) * i ** exponent;
       if (i < totalSupply) {
-        data.push({ supply: i, sell: price.toFixed(4), value: parseFloat(price.toFixed(4)) });
+        data.push({
+          supply: i,
+          sell: price.toFixed(4),
+          value: parseFloat(price.toFixed(4))
+        });
       } else if (i >= totalSupply) {
-        data.push({ supply: i, buy: price.toFixed(4), value: parseFloat(price.toFixed(4)) });
+        data.push({
+          supply: i,
+          buy: price.toFixed(4),
+          value: parseFloat(price.toFixed(4))
+        });
       }
     }
     return { data, currentPoint };
   }
 
-  render () {
+  render() {
     let { data, currentPoint } = this.getChartData();
 
     return (
-      <div >
-
+      <div>
         <ComposedChart
           style={{ margin: 'auto' }}
           width={this.props.width}
@@ -51,18 +56,33 @@ class CurveChart extends React.Component {
           data={data}
           margin={this.props.margin}
         >
-          <CartesianGrid strokeDasharray="3 3"/>
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="supply" type={'number'}>
             {/* <Label value="Token Supply" position = "insideBottomRight" dy={20}/> */}
           </XAxis>
           <YAxis dataKey="value" type={'number'}>
             {/* <Label value="Token Price" position="insideTopLeft" style={{ textAnchor: 'right' }} angle={270} dy={100} offset={-20} /> */}
           </YAxis>
-          <Tooltip/>
+          <Tooltip />
 
-          <Area isAnimationActive={false} dots={false} stackOffset={'none'} dataKey="value" name={'price'} key={'price'} stroke='#0095b3' fill='none'/>
+          <Area
+            isAnimationActive={false}
+            dots={false}
+            stackOffset={'none'}
+            dataKey="value"
+            name={'price'}
+            key={'price'}
+            stroke="#0095b3"
+            fill="none"
+          />
 
-          <Area isAnimationActive={false} stackOffset={'none'} dataKey="sell" stroke="#0095b3" fill='#0095b3' />
+          <Area
+            isAnimationActive={false}
+            stackOffset={'none'}
+            dataKey="sell"
+            stroke="#0095b3"
+            fill="#0095b3"
+          />
 
           <ReferenceDot
             isFront={true}
@@ -74,10 +94,7 @@ class CurveChart extends React.Component {
             stroke="#0095b3"
             label={currentPoint.value.toFixed(2)}
           />
-
         </ComposedChart>
-
-
       </div>
     );
   }
