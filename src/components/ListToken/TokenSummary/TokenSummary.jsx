@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
 import { withRouter } from 'react-router-dom';
 import { Button, Row } from 'reactstrap';
+
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
+
 import classes from './TokenSummary.module.css'
+
 const multiplier = 10 ** 18;
 
-
 class TokenSummary extends Component {
-
 
     state = {
         drizzleContract: null,
@@ -25,7 +26,7 @@ class TokenSummary extends Component {
         const contractConfig = {
             contractName: address,
             web3Contract: new drizzle.web3.eth.Contract(
-                EthPolynomialCurvedToken['abi'],
+                PersonalEconomy['abi'],
                 address
             )
         };
@@ -64,7 +65,7 @@ class TokenSummary extends Component {
 
         let name;
         let exponent;
-        let invSlope;
+        let inverseSlope;
         let totalSupply;
         let tokenBalance;
         let action1 = '';
@@ -79,14 +80,14 @@ class TokenSummary extends Component {
             exponent = result;
             this.setState({ exponent: exponent })
         });
-        await contract && contract.methods.invSlope().call({ from: this.props.account }, (error, result) => {
-            invSlope = result;
-            this.setState({ invSlope: invSlope })
+        await contract && contract.methods.inverseSlope().call({ from: this.props.account }, (error, result) => {
+            inverseSlope = result;
+            this.setState({ inverseSlope: inverseSlope })
         });
 
         await contract && contract.methods.totalSupply().call({ from: this.props.account }, (error, result) => {
             totalSupply = result / multiplier;
-            let currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
+            let currentPrice = (1 / this.state.inverseSlope) * (totalSupply) ** this.state.exponent;
             this.setState({ totalSupply: totalSupply, currentPrice: currentPrice })
         });
 
@@ -120,7 +121,7 @@ class TokenSummary extends Component {
         const contract = this.props.drizzleState.contracts[this.props.address];
         const totalSupplyRes = contract && contract.totalSupply[this.state.dataKeyTotalSupply];
         const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
-        const currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
+        const currentPrice = (1 / this.state.inverseSlope) * (totalSupply) ** this.state.exponent;
         return (
             <tr onClick={this.showDetails} className={classes.th}>
                 <td>{this.state.name}</td>

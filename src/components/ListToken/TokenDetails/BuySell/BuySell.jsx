@@ -26,8 +26,9 @@ class BuySell extends Component {
 
     buyAmountChangeHandler = (event) => {
         // get buy price
-        this.props.contract && this.props.contract.methods.priceToMint(`${event.target.value * multiplier}`).call({ from: this.props.account }, (error, result) => {
-            this.setState({ priceInEther: result / multiplier });
+        console.log(event.target.value * multiplier);
+        this.props.contract && this.props.contract.methods.priceToMint(`${String(event.target.value * multiplier)}`).call({ from: this.props.account }, (error, result) => {
+            this.setState({ priceInEther: result });
         });
         this.setState({ buyTokenAmount: event.target.value });
 
@@ -42,11 +43,12 @@ class BuySell extends Component {
     }
 
     onBuyHandler = () => {
+        console.log(this.state.priceInEther * multiplier)
         const buyStackId = this.props.contract.methods["mint"].cacheSend(
             `${this.state.buyTokenAmount * multiplier}`,
             {
                 from: this.props.account,
-                value: this.state.priceInEther * multiplier
+                value: String(this.state.priceInEther)
             });
         this.setState({ buyStackId });
 
@@ -94,7 +96,7 @@ class BuySell extends Component {
                                     value={this.state.buyTokenAmount}
                                     onChange={this.buyAmountChangeHandler}
                                 />
-                                <InputGroupAddon addonType="append">{`With ${this.state.priceInEther.toFixed(3)} ETH`}</InputGroupAddon>
+                                <InputGroupAddon addonType="append">{`With ${(this.state.priceInEther/ multiplier).toFixed(3)} ETH`}</InputGroupAddon>
 
 
                             </InputGroup>

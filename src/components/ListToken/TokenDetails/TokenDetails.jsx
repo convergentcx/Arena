@@ -19,14 +19,13 @@ import {
     Label
 } from 'reactstrap';
 
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
 import RequestService from './RequestService/RequestService';
 import CurveChart from './Chart/Chart';
 
 import classes from './TokenDetails.module.css';
-
 
 import withContext from '../../../hoc/withContext';
 
@@ -47,7 +46,7 @@ class TokenDetails extends Component {
         symbol: '',
         name: '',
         exponent: null,
-        invSlope: null,
+        inverseSlope: null,
         dataKeyTotalSupply: null,
         dataKeyPoolBalance: null,
         dataKeyTokenBalance: null,
@@ -74,7 +73,7 @@ class TokenDetails extends Component {
         const contractConfig = {
             contractName: address,
             web3Contract: new drizzle.web3.eth.Contract(
-                EthPolynomialCurvedToken['abi'],
+                PersonalEconomy['abi'],
                 address
             )
         };
@@ -112,14 +111,14 @@ class TokenDetails extends Component {
     }
 
     getContractData = async () => {
-        console.log(this.props.drizzleState)
+        // console.log(this.props.drizzleState)
         const contract = this.state.drizzleContract;
         const account = this.props.drizzleState.accounts[0];
         let owner;
         let symbol;
         let name;
         let exponent;
-        let invSlope;
+        let inverseSlope;
 
         await contract && contract.methods.owner().call({ from: account }, (error, result) => {
             owner = result;
@@ -137,10 +136,10 @@ class TokenDetails extends Component {
             exponent = result;
             this.setState({ exponent: exponent })
         });
-        await contract && contract.methods.invSlope().call({ from: account }, (error, result) => {
-            invSlope = result;
-            this.setState({ invSlope: invSlope })
-            console.log(contract)
+        await contract && contract.methods.inverseSlope().call({ from: account }, (error, result) => {
+            inverseSlope = result;
+            this.setState({ inverseSlope: inverseSlope })
+            // console.log(contract)
         });
     }
 
@@ -255,7 +254,7 @@ class TokenDetails extends Component {
         const totalSupply = totalSupplyRes && totalSupplyRes.value / multiplier;
         const poolBalance = poolBalanceRes && poolBalanceRes.value / multiplier;
         const tokenBalance = tokenBalanceRes && tokenBalanceRes.value / multiplier;
-        const currentPrice = (1 / this.state.invSlope) * (totalSupply) ** this.state.exponent;
+        const currentPrice = (1 / this.state.inverseSlope) * (totalSupply) ** this.state.exponent;
 
         return (
             <Modal size="lg" isOpen={true} toggle={this.closeModal}>
@@ -280,7 +279,7 @@ class TokenDetails extends Component {
                                     symbol={this.state.symbol}
                                     name={this.state.name}
                                     exponent={this.state.exponent}
-                                    invSlope={this.state.invSlope}
+                                    inverseSlope={this.state.inverseSlope}
                                     totalSupply={totalSupply}
                                     poolBalance={poolBalance}
                                     tokenBalance={tokenBalance}
@@ -336,7 +335,7 @@ class TokenDetails extends Component {
                                     <CurveChart curveData={{
                                         totalSupply: totalSupply,
                                         poolBalance: poolBalance,
-                                        invSlope: this.state.invSlope,
+                                        inverseSlope: this.state.inverseSlope,
                                         exponent: this.state.exponent,
                                         currentPrice: currentPrice
                                     }}
