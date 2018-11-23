@@ -12,8 +12,13 @@ import {
   ModalHeader,
   Row
 } from 'reactstrap';
+import ipfsApi from 'ipfs-api'
 
 import withContext from '../../hoc/withContext';
+
+import { getBytes32FromMultihash, getMultihashFromBytes32 } from '../../Util';
+
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -33,13 +38,19 @@ class LaunchForm extends Component {
       : this.setState({ rows: this.state.rows + 1 });
   };
 
-  deploy = () => {
+  deploy = async () => {
     const {
       drizzle: {
         contracts: { PersonalEconomyFactory }
       },
       drizzleState
     } = this.props;
+
+    const personalHash = this.submitHash(JSON.stringify({
+      one: 'one',
+      two: 'two',
+      three: 'three',
+    }));
     const stackId = PersonalEconomyFactory.methods.create.cacheSend('', '', '', '', '', [0, 0, 0], {
       from: drizzleState.accounts[0]
     });
@@ -51,6 +62,11 @@ class LaunchForm extends Component {
       ? this.setState({ tooFew: true })
       : this.setState({ rows: this.state.rows - 1 });
   };
+
+  submitHash = async (data) => {
+    const result = await ipfs.add(Buffer.from(data));
+    return result;
+  }
 
   waitUntilMined = () => {
     const { transactions, transactionStack } = this.props.drizzleState;
