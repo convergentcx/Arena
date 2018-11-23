@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import { withRouter } from 'react-router-dom';
 import { Button, Row } from 'reactstrap';
 import classes from './TokenSummary.module.css'
@@ -25,7 +25,7 @@ class TokenSummary extends Component {
         const contractConfig = {
             contractName: address,
             web3Contract: new drizzle.web3.eth.Contract(
-                EthPolynomialCurvedToken['abi'],
+                PersonalEconomy['abi'],
                 address
             )
         };
@@ -70,7 +70,7 @@ class TokenSummary extends Component {
         let action1 = '';
         let action2 = '';
         let action3 = '';
-
+        console.log(contract);
         await contract && contract.methods.name().call({ from: this.props.account }, (error, result) => {
             name = result;
             this.setState({ name: name })

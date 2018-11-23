@@ -14,10 +14,11 @@ import PersonalEconomyFactory from "./build/contracts/PersonalEconomyFactory.jso
 
 // let drizzle know what contracts we want
 const options = { contracts: [PersonalEconomyFactory] };
-console.log(options)
 // setup the drizzle store and drizzle
 const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, drizzleStore);
+console.log(drizzle)
+
 ReactDOM.render(
     <DrizzleContext.Provider drizzle={drizzle}>
         <BrowserRouter>

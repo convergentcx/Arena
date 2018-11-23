@@ -19,7 +19,7 @@ import {
     Label
 } from 'reactstrap';
 
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import ContractInfo from './ContractInfo/ContractInfo';
 import BuySell from './BuySell/BuySell';
 import RequestService from './RequestService/RequestService';
@@ -74,7 +74,7 @@ class TokenDetails extends Component {
         const contractConfig = {
             contractName: address,
             web3Contract: new drizzle.web3.eth.Contract(
-                EthPolynomialCurvedToken['abi'],
+                PersonalEconomy['abi'],
                 address
             )
         };
@@ -137,7 +137,7 @@ class TokenDetails extends Component {
             exponent = result;
             this.setState({ exponent: exponent })
         });
-        await contract && contract.methods.invSlope().call({ from: account }, (error, result) => {
+        await contract && contract.methods.inverseSlope().call({ from: account }, (error, result) => {
             invSlope = result;
             this.setState({ invSlope: invSlope })
             console.log(contract)
