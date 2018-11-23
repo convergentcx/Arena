@@ -2,7 +2,8 @@
 import Web3 from 'web3';
 import React, { Component } from 'react';
 import PersonalEconomy from '../../../../build/contracts/PersonalEconomy.json';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import classes from './Events.module.css';
+import { Row, Col, Tooltip } from 'reactstrap';
 
 const multiplier = 10 ** 18
 
@@ -10,7 +11,8 @@ class Events extends Component {
 
 
     state = {
-        eventsArray: []
+        eventsArray: [],
+        tooltipOpen: false,
     }
 
     componentDidMount() {
@@ -27,15 +29,22 @@ class Events extends Component {
         })
     }
 
+    toggle = () => {
+        this.setState({
+            tooltipOpen: !this.state.tooltipOpen
+        });
+    }
+
     render() {
         const rows = this.state.eventsArray[0] && this.state.eventsArray[0].map(event => {
             return (
                 <tr key={event.transactionHash}>
+                    <td>{event.returnValues.time && (new Date(event.returnValues.time * 1000)).toDateString()}</td>
                     <td>{event.event}</td>
-                    <td>{event.returnValues && (new Date(event.returnValues.time * 1000)).toDateString()}</td>
-                    <td>{event.returnValues && event.returnValues.message}</td>
-                    <td>{event.returnValues && event.returnValues.amount / multiplier}</td>
-                    <td>{event.returnValues && event.returnValues.totalCost / multiplier}</td>
+                    <td>{event.returnValues.who && event.returnValues.who}</td>
+                    <td>{event.returnValues.message ? event.returnValues.message : ''}</td>
+                    <td>{event.returnValues.amount ? event.returnValues.amount / multiplier : ''}</td>
+                    <td>{event.returnValues.totalCost ? event.returnValues.totalCost / multiplier : ''}</td>
                 </tr>
             )
         })
@@ -43,7 +52,21 @@ class Events extends Component {
 
         return (
 
-            <table>
+            <table className={classes.events}>
+                <tr>
+                    <th className={classes.rowDate}> Date </th>
+                    <th className={classes.rowEvent}> Event </th>
+                    <th className={classes.rowAddress}> From </th>
+                    <th className={classes.rowMessage}> Message </th>
+                    <th className={classes.rowAmount}> Token Amount </th>
+                    <th className={classes.rowAmount}> Ether Amount </th>
+                </tr>
+                <tr>
+                    <td>{(new Date(this.props.date * 1000)).toDateString()}</td>
+                    <td>Created</td>
+
+                </tr>
+
                 {rows}
             </table>
 

@@ -1,30 +1,28 @@
 import React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Nav, NavItem } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { NavHashLink } from 'react-router-hash-link'
+import classes from './Sidebar.module.css';
 
 export default class Example extends React.Component {
   render() {
+
+    const links = this.props.tokens && this.props.tokens.map((token)=> {
+        return (
+        // <NavLink to={`/dashboard/#${token.address}`}>{token.name}</NavLink>
+        <NavHashLink smooth to={`/dashboard/#${token.address}`} className={classes.NavHashLink}>
+        {token.name}
+      </NavHashLink>
+        )
+    })
+
     return (
       <div>
-        <p>List Based</p>
-        <Nav vertical >
-          <NavItem>
-            <NavLink href="#">Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Another Link</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink disabled href="#">Disabled Link</NavLink>
-          </NavItem>
-        </Nav>
-        <hr />
-        <p>Link based</p>
+        <p>My Economies</p>
         <Nav vertical>
-          <NavLink href="#">Link</NavLink> <NavLink href="#">Link</NavLink> <NavLink href="#">Another Link</NavLink> <NavLink disabled href="#">Disabled Link</NavLink>
+            {links}
         </Nav>
+        
       </div>
     );
   }

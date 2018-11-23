@@ -6,4 +6,49 @@
     float: right,
 }
 
-.rowC{display:flex; flex-direction:row;}
+.rowC{
+    display:flex; 
+    flex-direction:row;
+    padding-left: 200px;
+    padding-right:200px;
+}
+
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+
+}
+
+
+.dashboardContainer {
+    display: flex;
+    width: 100%;
+    margin-top: 6em;
+    padding-right: 238px;
+    padding-left: 52px;
+    @media (max-width: 900px) {
+      padding-right: 3em;
+      padding-left: 3em;
+    }
+    @media (max-width: 500px) {
+      padding-right: 1.5em;
+      padding-left: 1.5em;
+    }
+  }
+  
+  .menuBox {
+    display: flex;
+    flex-direction: column;
+    padding-right: 3em;
+    position: fixed;
+    @media (max-width: 900px) {
+      display: none;
+    }
+  }

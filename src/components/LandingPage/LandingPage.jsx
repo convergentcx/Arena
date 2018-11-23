@@ -15,7 +15,6 @@ class LandingPage extends Component {
       MozBackgroundSize: 'cover',
       OBackgroundSize: 'cover',
       height: '90vh',
-      padding: '10%'
     };
 
     return (
@@ -34,7 +33,7 @@ class LandingPage extends Component {
         <NavLink to={'/launch'}>
           <Button color="warning" size="lg"> Launch </Button>
         </NavLink>
-        <NavLink to={{ hash: '#browse' }}>
+        <NavLink to={'/'}>
           <Button outline size="lg"> Browse </Button>
         </NavLink>
 

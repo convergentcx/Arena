@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
-import { Card } from 'reactstrap';
+import { Card, CardHeader, Button, CardBody, Row, Col } from 'reactstrap';
+import classes from './MyToken.module.css';
 import withContext from '../../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
 
@@ -32,7 +33,7 @@ class MyTokens extends Component {
 
   showDetails = () => {
     this.props.history.push('/tokens/' + this.props.address);
-}
+  }
 
   render() {
 
@@ -56,10 +57,19 @@ class MyTokens extends Component {
     // })
 
     return (
-      <Card onClick={this.showDetails}>
-        {this.props.name} {(new Date(this.props.date * 1000)).toDateString()}
-        <Events address={this.props.address}/>
-      </Card>
+          <Card id={this.props.address} className={classes.tokenBox}>
+            <CardHeader>
+              {this.props.name}
+              <div className={classes.DetailsButton}>
+                <Button color="secondary" size="sm" onClick={this.showDetails}>
+                  Details
+            </Button>
+              </div>
+            </CardHeader>
+            <CardBody>
+              <Events date={this.props.date} address={this.props.address} />
+            </CardBody>
+          </Card>
     );
   }
 }
