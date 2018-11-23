@@ -21,8 +21,9 @@ import {
     Table
 } from 'reactstrap';
 import PersonalEconomyFactory from "../../build/contracts/PersonalEconomyFactory.json";
-
+import Sidebar from './Sidebar/Sidebar'
 import MyToken from './MyToken/MyToken'
+import classes from './Dashboard.module.css';
 
 import withContext from '../../hoc/withContext';
 
@@ -87,7 +88,9 @@ class Dashboard extends Component {
         factoryContract.getPastEvents("Created", { fromBlock: 0, toBlock: "latest", filter }, (err, events) => {
             events.forEach(token => {
                 let address = token.returnValues.token_address;
-                tokens.push(address);
+                let date = token.returnValues.time;
+                let name = token.returnValues.name;
+                tokens.push({ address, date, name });
                 this.setState({ tokens })
             });
         });
@@ -234,18 +237,21 @@ class Dashboard extends Component {
 
         const tokens = this.state.tokens && this.state.tokens.map((token) => {
             return (<MyToken
-                address={token}
-                key = {token}
+                address={token.address}
+                date={token.date}
+                name={token.name}
+                key={token.address}
             />
             )
         });
 
         return (
-
-
-            <Container>
+            <div className={classes.rowC}>
+                <Sidebar/>
+                <Container>
                     {tokens}
-            </Container>
+                </Container>
+            </div>
         )
     }
 }

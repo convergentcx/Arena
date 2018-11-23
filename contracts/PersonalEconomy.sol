@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 import "@convergent/arc/contracts/EthPolynomialCurvedToken.sol";
 
 contract PersonalEconomy is EthPolynomialCurvedToken {
-    event Requested(string message, uint256 time);
+    event Requested(string message, uint256 time, address who);
 
     string public name;
     string public symbol;
@@ -40,7 +40,12 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
         uint256 _price
     )   public
         payable
-    {}
+    {
+        emit Requested(_msg, now, msg.sender);
+    }
 
-    function requestWithToken(string _msg) {}
+    function requestWithToken(string _msg) public {
+        emit Requested(_msg, now, msg.sender);
+    }
+
 }

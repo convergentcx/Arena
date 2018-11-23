@@ -3856,7 +3856,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.0-beta.1",
-  "updatedAt": "2018-11-23T12:11:49.544Z",
+  "updatedAt": "2018-11-23T11:34:16.854Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {

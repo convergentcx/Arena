@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import withContext from '../../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
+
 
 import Events from './Events/Events';
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
 // import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
 // import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';
@@ -20,14 +22,17 @@ class MyTokens extends Component {
     const contractConfig = {
       contractName: this.props.address,
       web3Contract: new drizzle.web3.eth.Contract(
-        EthPolynomialCurvedToken['abi'],
+        PersonalEconomy['abi'],
         this.props.address
       )
     };
     let drizzleEvents = ['Minted', 'Burned', 'Requested'];
     drizzle.addContract(contractConfig, drizzleEvents);
-
   }
+
+  showDetails = () => {
+    this.props.history.push('/tokens/' + this.props.address);
+}
 
   render() {
 
@@ -51,15 +56,15 @@ class MyTokens extends Component {
     // })
 
     return (
-      <Card>
-        {this.props.address}
+      <Card onClick={this.showDetails}>
+        {this.props.name} {(new Date(this.props.date * 1000)).toDateString()}
         <Events address={this.props.address}/>
       </Card>
     );
   }
 }
 
-export default withContext(MyTokens);
+export default withContext(withRouter(MyTokens));
 
 
 
