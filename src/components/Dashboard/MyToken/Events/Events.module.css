@@ -1,0 +1,29 @@
+.events {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+  .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+.rowDate {
+    width: 10%;
+  }
+  .rowEvent {
+    width: 10%;
+  }
+  .rowMessage {
+    width: 30%;
+  }
+  .rowAddress {
+    width: 30%;
+  }
+
+  .rowAmount {
+    width: 10%;
+  }
+  

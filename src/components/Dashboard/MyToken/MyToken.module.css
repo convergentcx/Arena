@@ -1,0 +1,18 @@
+.DetailsButton {
+    text-align: right;
+    margin: 0px; 
+    padding: 0px;
+    display: inline-block;
+    float: right;
+}
+
+
+.tokenBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    margin-bottom: 1.5em;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(33, 44, 48, 0.15);
+  }
