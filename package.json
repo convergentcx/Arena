@@ -22,7 +22,7 @@
   "devDependencies": {
     "@convergent/arc": "0.0.3",
     "babel-eslint": "9.0.0",
-    "base58": "2.0.1",
+    "bs58": "^4.0.1",
     "eslint": "5.6.0",
     "eslint-plugin-react": "7.11.1",
     "ipfs-api": "26.1.2",

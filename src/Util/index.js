@@ -1,7 +1,7 @@
-import bs58 from 'base58';
+import bs58 from 'bs58';
 
 export const getBytes32FromMultihash = (mhash) => {
-  const decoded = bs58.decode(mhash);
+  const decoded = Buffer.from(bs58.decode(mhash));
 
   return {
     digest: `0x${decoded.slice(2).toString('hex')}`,
