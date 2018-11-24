@@ -85,7 +85,6 @@ class LaunchForm extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state);
   }
 
   waitUntilMined = () => {
