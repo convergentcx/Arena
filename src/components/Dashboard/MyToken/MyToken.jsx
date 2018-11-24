@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import withContext from '../../../hoc/withContext';
@@ -12,9 +11,7 @@ import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo
 
 // import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
 
-
 class MyTokens extends Component {
-
   componentDidMount() {
     const { drizzle } = this.props;
     const contractConfig = {
@@ -26,11 +23,9 @@ class MyTokens extends Component {
     };
     let drizzleEvents = ['Minted', 'Burned', 'Requested'];
     drizzle.addContract(contractConfig, drizzleEvents);
-
   }
 
   render() {
-
     // const rows = this.state.eventsArray && this.state.eventsArray.map(tokenEvents => (
     //     <table>
     //         {tokenEvents.map(event => (
@@ -53,19 +48,10 @@ class MyTokens extends Component {
     return (
       <Card>
         {this.props.address}
-        <Events address={this.props.address}/>
+        <Events address={this.props.address} />
       </Card>
     );
   }
 }
 
 export default withContext(MyTokens);
-
-
-
-
-
-
-
-
-

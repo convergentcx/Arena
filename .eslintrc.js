@@ -4,6 +4,7 @@ module.exports = {
     "es6": true
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -30,6 +31,13 @@ module.exports = {
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "max-len": [
+      "error",
+      100,
+    ],
+    "no-unused-vars": [
+      "warn",
+    ],
   }
 };
