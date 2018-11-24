@@ -14,19 +14,11 @@ contract PersonalEconomyFactory is Factory {
     /// @param _name String for token name.
     /// @param _symbol String for token symbol.
     /// @return Returns token address.
-    function create(string _name, string _symbol, string _action1, string _action2, string _action3, uint[] _prices)
+    function create(bytes32 _mhash, string _name, string _symbol)
         public
         returns (address tokenAddress)
     {
-        tokenAddress = new PersonalEconomy(
-            _name,
-            _symbol,
-            _action1,
-            _action2,
-            _action3,
-            _prices
-        
-        );
+        tokenAddress = new PersonalEconomy(_mhash, _name, _symbol);
         
         register(tokenAddress);
         emit Created(tokenAddress, msg.sender, now, _name);

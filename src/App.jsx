@@ -3,10 +3,12 @@ import { Route, Switch } from 'react-router-dom';
 
 import './styles/App.css';
 
-import Home from './components/Home/Home';
-import LaunchToken from './components/LaunchToken/LaunchToken';
-import Layout from './components/Layout/Layout';
-import TokenDetails from './components/ListToken/TokenDetails/TokenDetails'; // probably should be renamed to TokenDetails
+import AppContainer from './components/AppContainer';
+
+import Landing from './pages/Landing';
+import Launch from './pages/Launch';
+
+import TokenDetails from './components/ListToken/TokenDetails/TokenDetails';
 
 /**
 
@@ -21,15 +23,13 @@ import {
  */
 
 const App = () => (
-  <div className="App">
-    <Layout>
-      <Route path='/' component={Home} />
-      <Switch>
-        <Route path='/launch' component={LaunchToken} />
-        <Route path='/tokens/:tokenAddress' exact component={TokenDetails} />
-      </Switch>
-    </Layout>
-  </div>
+  <AppContainer>
+    <Route path="/" component={Landing} />
+    <Switch>
+      <Route path="/launch" component={Launch} />
+      <Route path="/tokens/:tokenAddress" exact component={TokenDetails} />
+    </Switch>
+  </AppContainer>
 );
 
 export default App;

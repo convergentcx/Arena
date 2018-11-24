@@ -7,15 +7,13 @@ import classes from './ListToken.module.css';
 
 class ListToken extends Component {
   constructor() {
-
     super();
 
     this.state = {
       currentPage: 0,
       dataKey: null,
-      instantiations: [],
+      instantiations: []
     };
-
   }
 
   componentDidMount() {
@@ -25,17 +23,13 @@ class ListToken extends Component {
     this.setState({ dataKey });
   }
 
-
   handleClick(e, index) {
-
     e.preventDefault();
 
     this.setState({
       currentPage: index
     });
-
   }
-
 
   render() {
     const { PersonalEconomyFactory } = this.props.drizzleState.contracts;
@@ -46,28 +40,27 @@ class ListToken extends Component {
       inst = JSON.parse(text).value;
     }
 
-
     // @dev
     // extracting the individual contract data should be done here,
     // rather than having to carry down the entire drizzle objects to each contract's TokenSummary
-    const contracts = inst && inst.map(address => {
-
-      return (
-      // <Link to={'/' + address} key={address} style={{ color: 'black', textDecoration: 'none' }}>
-        <TokenSummary
-          key={address}
-          address={address}
-          account={this.props.drizzleState.accounts[0]}
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
-        />
-      // </Link>
-      );
-    });
+    const contracts =
+      inst &&
+      inst.map(address => {
+        return (
+          // <Link to={'/' + address} key={address} style={{ color: 'black', textDecoration: 'none' }}>
+          <TokenSummary
+            key={address}
+            address={address}
+            account={this.props.drizzleState.accounts[0]}
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+          />
+          // </Link>
+        );
+      });
 
     return (
       <div className={classes.ListToken} id="browse">
-
         <Table borderless hover>
           <thead>
             <tr>
@@ -77,11 +70,9 @@ class ListToken extends Component {
               <th>Services</th>
             </tr>
           </thead>
-          <tbody>
-            {contracts}
-          </tbody>
+          <tbody>{contracts}</tbody>
         </Table>
-      </div >
+      </div>
     );
   }
 }
