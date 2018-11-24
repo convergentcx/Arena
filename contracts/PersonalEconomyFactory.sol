@@ -5,7 +5,7 @@ import "./PersonalEconomy.sol";
 
 contract PersonalEconomyFactory is Factory {
 
-    event Created(address indexed token_address, address indexed owner_address);
+    event Created(address token_address, address indexed owner_address, uint256 time, string name);
 
     /*
      * Public functions
@@ -21,6 +21,6 @@ contract PersonalEconomyFactory is Factory {
         tokenAddress = new PersonalEconomy(_mhash, _name, _symbol);
         
         register(tokenAddress);
-        emit Created(tokenAddress, msg.sender);
+        emit Created(tokenAddress, msg.sender, now, _name);
     }
 }

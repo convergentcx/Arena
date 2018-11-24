@@ -12,7 +12,7 @@ import {
   ModalHeader,
   Row
 } from 'reactstrap';
-import ipfsApi from 'ipfs-api'
+import ipfsApi from 'ipfs-api';
 
 import withContext from '../../hoc/withContext';
 
@@ -49,8 +49,8 @@ class LaunchForm extends Component {
     const dataJson = {
       name: this.state.name,
       symbol: this.state.symbol,
-      services: [],
-    }
+      services: []
+    };
 
     for (let i = 0; i <= this.state.rows; i++) {
       dataJson.services.push({ what: this.state[`service-${i}`], price: this.state[`price-${i}`] });
@@ -63,9 +63,14 @@ class LaunchForm extends Component {
 
     const mhash = getBytes32FromMultihash(ipfsHash[0].path);
     // console.log(mhash)
-    const stackId = PersonalEconomyFactory.methods.create.cacheSend(mhash.digest, this.state.name, this.state.symbol, {
-      from: drizzleState.accounts[0]
-    });
+    const stackId = PersonalEconomyFactory.methods.create.cacheSend(
+      mhash.digest,
+      this.state.name,
+      this.state.symbol,
+      {
+        from: drizzleState.accounts[0]
+      }
+    );
     this.setState({ stackId });
   };
 
@@ -75,15 +80,15 @@ class LaunchForm extends Component {
       : this.setState({ rows: this.state.rows - 1, tooMany: false });
   };
 
-  submitHash = async (data) => {
+  submitHash = async data => {
     const result = await ipfs.add(Buffer.from(data));
     return result;
-  }
+  };
 
-  inputUpdate = (event) => {
+  inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card } from 'reactstrap';
+import { Card, CardHeader, Button, CardBody, Row, Col } from 'reactstrap';
+import classes from './MyToken.module.css';
 import withContext from '../../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
 
 import Events from './Events/Events';
-import EthPolynomialCurvedToken from '../../../build/contracts/EthPolynomialCurvedToken.json';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
 // import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
 // import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';
@@ -16,14 +18,15 @@ class MyTokens extends Component {
     const { drizzle } = this.props;
     const contractConfig = {
       contractName: this.props.address,
-      web3Contract: new drizzle.web3.eth.Contract(
-        EthPolynomialCurvedToken['abi'],
-        this.props.address
-      )
+      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], this.props.address)
     };
     let drizzleEvents = ['Minted', 'Burned', 'Requested'];
     drizzle.addContract(contractConfig, drizzleEvents);
   }
+
+  showDetails = () => {
+    this.props.history.push('/tokens/' + this.props.address);
+  };
 
   render() {
     // const rows = this.state.eventsArray && this.state.eventsArray.map(tokenEvents => (
@@ -46,12 +49,21 @@ class MyTokens extends Component {
     // })
 
     return (
-      <Card>
-        {this.props.address}
-        <Events address={this.props.address} />
+      <Card id={this.props.address} className={classes.tokenBox}>
+        <CardHeader>
+          {this.props.name}
+          <div className={classes.DetailsButton}>
+            <Button color="secondary" size="sm" onClick={this.showDetails}>
+              Details
+            </Button>
+          </div>
+        </CardHeader>
+        <CardBody>
+          <Events date={this.props.date} address={this.props.address} />
+        </CardBody>
       </Card>
     );
   }
 }
 
-export default withContext(MyTokens);
+export default withContext(withRouter(MyTokens));
