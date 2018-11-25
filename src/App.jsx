@@ -7,6 +7,7 @@ import AppContainer from './components/AppContainer';
 
 import Landing from './pages/Landing';
 import Launch from './pages/Launch';
+import Profile from './pages/Profile';
 
 import TokenDetails from './components/ListToken/TokenDetails/TokenDetails';
 
@@ -27,7 +28,7 @@ const App = () => (
     <Route path="/" component={Landing} />
     <Switch>
       <Route path="/launch" component={Launch} />
-      <Route path="/tokens/:tokenAddress" exact component={TokenDetails} />
+      <Route path="/tokens/:tokenAddress" exact component={Profile} />
     </Switch>
   </AppContainer>
 );

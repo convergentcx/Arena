@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Table } from 'reactstrap';
 
 import withContext from '../../hoc/withContext';
@@ -43,6 +44,7 @@ class LeaderboardList extends Component {
         const dataJson = JSON.parse(raw[0].content.toString());
         const totalSupply = await personalEconomy.methods.totalSupply().call();
         const newEconomy = {
+          address: event.returnValues.token_address,
           name: dataJson.name,
           services: dataJson.services,
           totalSupply,
@@ -75,7 +77,7 @@ class LeaderboardList extends Component {
 
         tableRows.push(
           <tr key={i}>
-            <td>{personalEconomy.name}</td>
+            <td><Link to={`tokens/${personalEconomy.address}`}>{personalEconomy.name}</Link></td>
             <td>{personalEconomy.totalSupply}</td>
             <td>Dos</td>
             <td>Tres</td>
