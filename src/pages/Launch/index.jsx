@@ -90,8 +90,7 @@ class LaunchForm extends Component {
     this.setState({
       [name]: value
     });
-    console.log(this.state);
-  };
+  }
 
   waitUntilMined = () => {
     const { transactions, transactionStack } = this.props.drizzleState;

@@ -3,7 +3,6 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 import Leaderboard from '../Leaderboard';
-import Launch from '../Launch';
 
 import Background from '../../assets/curves.jpg';
 
