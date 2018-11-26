@@ -4,10 +4,10 @@ import { Button } from 'reactstrap';
 
 import Leaderboard from '../Leaderboard';
 
-import Background from '../../assets/curves.jpg';
+// import Background from '../../assets/curves.jpg';
 
 const heroStyle = {
-  backgroundImage: 'url(' + Background + ')',
+  // backgroundImage: 'url(' + Background + ')',
   backgroundSize: 'cover',
   WebkitBackgroundSize: 'cover',
   MozBackgroundSize: 'cover',

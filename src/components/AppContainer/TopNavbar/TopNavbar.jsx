@@ -18,7 +18,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Settings from '@material-ui/icons/Settings';
+import Money from '@material-ui/icons/AttachMoney';
 import Button from '@material-ui/core/Button';
+
+import { NavLink } from 'react-router-dom';
 
 
 import Logo from '../../../assets/logo.png';
@@ -50,7 +54,7 @@ const styles = theme => ({
     marginRight: 20,
   },
   signInButton: {
-    float: 'right'
+    float: 'right',
   },
   hide: {
     display: 'none',
@@ -145,18 +149,28 @@ class PersistentDrawerLeft extends React.Component {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+              <NavLink to={'/'}>
+              <ListItem button>
+                <ListItemIcon><Money /></ListItemIcon>
+                <ListItemText primary={'Market'} />
               </ListItem>
-            ))}
+              </NavLink>
+              <ListItem button>
+                <ListItemIcon><InboxIcon /></ListItemIcon>
+                <ListItemText primary={'Profile'} />
+              </ListItem>
+              <NavLink to={'/dashboard'}>
+              <ListItem button>
+                <ListItemIcon><MailIcon /></ListItemIcon>
+                <ListItemText primary={'Economy Dashboard'} />
+              </ListItem>
+              </NavLink>
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['Settings', 'Impressum'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{index % 2 === 0 ? <Settings /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -168,6 +182,9 @@ class PersistentDrawerLeft extends React.Component {
           })}
         >
           {/* <div className={classes.drawerHeader} /> */}
+          <div>
+            {this.props.content }
+          </div>
         </main>
       </div>
     );
