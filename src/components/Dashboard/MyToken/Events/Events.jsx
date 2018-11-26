@@ -22,7 +22,7 @@ class Events extends Component {
     web3Contract.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' }, (err, events) => {
       eventsArray.push(events);
       this.setState({ eventsArray });
-      console.log(eventsArray);
+      // console.log(eventsArray);
     });
   }
 

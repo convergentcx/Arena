@@ -6,7 +6,7 @@ import withContext from '../../hoc/withContext';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
-import { getMultihashFromBytes32 } from '../../Util';
+import { getMultihashFromBytes32 } from '../../util';
 
 import ipfsApi from 'ipfs-api';
 

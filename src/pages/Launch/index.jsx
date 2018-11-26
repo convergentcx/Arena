@@ -16,7 +16,7 @@ import ipfsApi from 'ipfs-api';
 
 import withContext from '../../hoc/withContext';
 
-import { getBytes32FromMultihash } from '../../Util';
+import { getBytes32FromMultihash } from '../../util';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -56,13 +56,9 @@ class LaunchForm extends Component {
       dataJson.services.push({ what: this.state[`service-${i}`], price: this.state[`price-${i}`] });
     }
 
-    // console.log(dataJson);
-
     const ipfsHash = await this.submitHash(JSON.stringify(dataJson));
-    // console.log(ipfsHash[0])
 
     const mhash = getBytes32FromMultihash(ipfsHash[0].path);
-    // console.log(mhash)
     const stackId = PersonalEconomyFactory.methods.create.cacheSend(
       mhash.digest,
       this.state.name,
