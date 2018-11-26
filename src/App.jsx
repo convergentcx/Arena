@@ -10,7 +10,6 @@ import Launch from './pages/Launch';
 import Profile from './pages/Profile';
 import Dashboard from './components/Dashboard/Dashboard';
 
-import TokenDetails from './components/ListToken/TokenDetails/TokenDetails';
 /**
 
 import {
