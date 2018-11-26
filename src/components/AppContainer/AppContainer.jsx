@@ -1,11 +1,10 @@
 import React from 'react';
 
-import TopNavbar from './TopNavbar';
+import TopNavbar from './TopNavbar/TopNavbar';
 
 const AppContainer = props => (
   <div>
-    <TopNavbar />
-    <main>{props.children}</main>
+    <TopNavbar content={props.children}/>
   </div>
 );
 
