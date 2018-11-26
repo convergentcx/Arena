@@ -6,6 +6,7 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     event Requested(string message, uint256 time, address who);
 
     bytes32 public mhash;
+    address public owner;
     
     constructor(
         bytes32 _mhash,
@@ -21,6 +22,7 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
         public
     {
         mhash = _mhash;
+        owner = msg.sender;
     }
 
     function requestWithEth(

@@ -9,8 +9,6 @@ import Landing from './pages/Landing';
 import Launch from './pages/Launch';
 import Profile from './pages/Profile';
 
-import TokenDetails from './components/ListToken/TokenDetails/TokenDetails';
-
 /**
 
 import {
