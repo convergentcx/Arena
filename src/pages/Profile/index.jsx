@@ -2,7 +2,28 @@ import React, { Component } from 'react';
 import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
 import ipfsApi from 'ipfs-api';
 
-import { Button, Card, CardBody, CardHeader, CardImg, Container, Col, FormGroup, Input, InputGroup, InputGroupAddon, Label, Modal, ModalBody, ModalHeader, Popover, PopoverHeader, PopoverBody, Row, Table } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardImg,
+  Container,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
+  Row,
+  Table
+} from 'reactstrap';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
@@ -12,66 +33,62 @@ import { getMultihashFromBytes32 } from '../../util';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
-const multiplier = 10**18;
+const multiplier = 10 ** 18;
 
 class BuySell extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       priceInEther: 0,
-      rewardInEther: 0,
+      rewardInEther: 0
     };
   }
 
   buyHandler = () => {
-    const buyStackId = this.props.contract.methods.mint.cacheSend(
-      String(10**18),
-      {
-        from: this.props.drizzleState.accounts[0],
-        value: String(this.state.priceInEther),
-      }
-    );
+    const buyStackId = this.props.contract.methods.mint.cacheSend(String(10 ** 18), {
+      from: this.props.drizzleState.accounts[0],
+      value: String(this.state.priceInEther)
+    });
     this.setState({ buyStackId });
   };
 
-  getStatus = (txStackId) => {
+  getStatus = txStackId => {
     const { transactions, transactionStack } = this.props.drizzleState;
     const txHash = transactionStack[this.state[txStackId]];
     if (!txHash) return null;
     return `Transaction status: ${transactions[txHash].status}`;
   };
 
-  inputUpdate = async (event) => {
+  inputUpdate = async event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value,
-    })
+      [name]: value
+    });
 
     // Update price
     if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(String(10**18)).call();
+      const priceInEther = await this.props.contract.methods.priceToMint(String(10 ** 18)).call();
       this.setState({
-        priceInEther,
+        priceInEther
       });
     }
 
     // Update reward
     if (name === 'sellAmt') {
-      const rewardInEther = await this.props.contract.methods.rewardForBurn(String(10**18)).call();
+      const rewardInEther = await this.props.contract.methods
+        .rewardForBurn(String(10 ** 18))
+        .call();
       this.setState({
-        rewardInEther,
+        rewardInEther
       });
     }
-  }
+  };
 
   sellHandler = () => {
-    const sellStackId = this.props.contract.methods.burn.cacheSend(
-      String(10**18),
-      {
-        from: this.props.drizzleState.accounts[0],
-      }
-    );
+    const sellStackId = this.props.contract.methods.burn.cacheSend(String(10 ** 18), {
+      from: this.props.drizzleState.accounts[0]
+    });
     this.setState({ sellStackId });
   };
 
@@ -85,7 +102,12 @@ class BuySell extends Component {
                 Buy
               </Button>
             </InputGroupAddon>
-            <Input type="number" name="buyAmt" onChange={this.inputUpdate} placeholder={this.props.symbol} />
+            <Input
+              type="number"
+              name="buyAmt"
+              onChange={this.inputUpdate}
+              placeholder={this.props.symbol}
+            />
             <InputGroupAddon addonType="append">
               With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
             </InputGroupAddon>
@@ -99,7 +121,12 @@ class BuySell extends Component {
                 Sell
               </Button>
             </InputGroupAddon>
-            <Input type="number" name="sellAmt" onChange={this.inputUpdate} placeholder={this.state.symbol} />
+            <Input
+              type="number"
+              name="sellAmt"
+              onChange={this.inputUpdate}
+              placeholder={this.state.symbol}
+            />
             <InputGroupAddon addonType="prepend">
               For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
             </InputGroupAddon>
@@ -192,10 +219,8 @@ class CurveChart extends Component {
           margin={this.props.margin}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="supply" type={'number'}>
-          </XAxis>
-          <YAxis dataKey="value" type={'number'}>
-          </YAxis>
+          <XAxis dataKey="supply" type={'number'} />
+          <YAxis dataKey="value" type={'number'} />
           <Tooltip />
 
           <Area
@@ -243,23 +268,23 @@ class RequestService extends Component {
     const contentAddress = getMultihashFromBytes32({
       digest: this.props.mhash,
       hashFunction: 18,
-      size: 32,
+      size: 32
     });
 
     const result = await ipfs.get('/ipfs/' + contentAddress);
     const contentString = result[0].content.toString();
     const jsonData = JSON.parse(contentString);
     this.setState({
-      jsonData,
-    })
+      jsonData
+    });
   }
 
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value,
+      [name]: value
     });
-  }
+  };
 
   requestWithEth = serviceIndex => {
     const { contract, account } = this.props;
@@ -267,27 +292,24 @@ class RequestService extends Component {
       this.state.message,
       String(this.state.jsonData.services[serviceIndex].price * multiplier),
       {
-        from: account,
+        from: account
         // value: this.state.jsonData.services[serviceIndex].price * multiplier,
       }
     );
-    this.setState({ stackId })
-  }
+    this.setState({ stackId });
+  };
 
   requestWithToken = serviceIndex => {
     const { contract, account } = this.props;
-    const stackId = contract.methods.requestWithToken.cacheSend(
-      this.state.message,
-      {
-        from: account,
-      }
-    );
+    const stackId = contract.methods.requestWithToken.cacheSend(this.state.message, {
+      from: account
+    });
     this.setState({ stackId });
-  }
+  };
 
   render() {
     if (!this.state.jsonData.services) {
-      return <div>Still Loading...</div>
+      return <div>Still Loading...</div>;
     }
 
     let items = this.state.jsonData.services.map((serviceObj, i) => {
@@ -334,8 +356,8 @@ class RequestService extends Component {
 const labelStyle = {
   margin: 0,
   padding: 0,
-  fontSize: '10px',
-}
+  fontSize: '10px'
+};
 
 class ProfileDetails extends Component {
   constructor(props) {
@@ -344,7 +366,7 @@ class ProfileDetails extends Component {
     this.state = {
       dataKeys: {
         totalSupplyKey: '',
-        yourBalanceKey: '',
+        yourBalanceKey: ''
       },
       exponent: 0,
       inverseSlope: 0,
@@ -353,22 +375,24 @@ class ProfileDetails extends Component {
       owner: '',
       poolBalance: '',
       symbol: '',
-      popover: false,
-    }
+      popover: false
+    };
   }
 
   async componentDidMount() {
     const { addr, drizzle } = this.props;
     const contractConfig = {
       contractName: addr,
-      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr),
+      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr)
     };
     const events = ['Minted', 'Burned'];
     await drizzle.addContract(contractConfig, events);
     const contract = this.props.drizzle.contracts[this.props.addr];
 
     const totalSupplyKey = contract.methods.totalSupply.cacheCall();
-    const yourBalanceKey = contract.methods.balanceOf.cacheCall(this.props.drizzleState.accounts[0]);
+    const yourBalanceKey = contract.methods.balanceOf.cacheCall(
+      this.props.drizzleState.accounts[0]
+    );
 
     const exponent = await contract.methods.exponent().call();
     const inverseSlope = await contract.methods.inverseSlope().call();
@@ -383,7 +407,7 @@ class ProfileDetails extends Component {
     this.setState({
       dataKeys: {
         totalSupplyKey,
-        yourBalanceKey,
+        yourBalanceKey
       },
       exponent,
       inverseSlope,
@@ -391,30 +415,32 @@ class ProfileDetails extends Component {
       name,
       owner,
       poolBalance,
-      symbol,
+      symbol
     });
   }
 
   toggle = () => {
     this.setState({
-      popover: !this.state.popover,
-    })
-  }
+      popover: !this.state.popover
+    });
+  };
 
   render() {
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
-    if (!contract
-      || !(this.state.dataKeys.yourBalanceKey in contract.balanceOf)
-      || !(this.state.dataKeys.totalSupplyKey in contract.totalSupply)
+    if (
+      !contract ||
+      !(this.state.dataKeys.yourBalanceKey in contract.balanceOf) ||
+      !(this.state.dataKeys.totalSupplyKey in contract.totalSupply)
     ) {
-      return <div>Still Loading...</div>
+      return <div>Still Loading...</div>;
     }
 
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
     const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice = (1 / this.state.inverseSlope) * (totalSupply/multiplier) ** this.state.exponent;
+    const currentPrice =
+      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
       <div>
@@ -424,14 +450,14 @@ class ProfileDetails extends Component {
         <ModalBody>
           <Container>
             <BuySell
-              contract={this.props.drizzle.contracts[this.props.addr]} 
+              contract={this.props.drizzle.contracts[this.props.addr]}
               drizzleState={this.props.drizzleState}
               symbol={this.state.symbol}
             />
             <Row>
               <Col md="6">
                 <ContractInfo
-                  marketCap={currentPrice * (totalSupply/ multiplier)}
+                  marketCap={currentPrice * (totalSupply / multiplier)}
                   name={this.state.name}
                   symbol={this.state.symbol}
                   tokenBalance={yourBalance / multiplier}
@@ -439,11 +465,7 @@ class ProfileDetails extends Component {
               </Col>
 
               <Col md="6">
-
-
                 <Card>
-
-
                   <CardHeader>
                     Bonding Curve
                     <div>
@@ -530,17 +552,16 @@ class ProfileDetails extends Component {
               mhash={this.state.mhash}
               symbol={this.state.symbol}
             />
-
           </Container>
         </ModalBody>
       </div>
-    )
+    );
   }
 }
 
 const ProfileDetailsContextualized = withContext(ProfileDetails);
 
-const Profile = (props) => (
+const Profile = props => (
   <Modal size="lg" isOpen={true} toggle={() => props.history.goBack()}>
     <ProfileDetailsContextualized addr={props.match.params.tokenAddress} history={props.history} />
   </Modal>
