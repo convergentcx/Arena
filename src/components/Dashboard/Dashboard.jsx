@@ -23,7 +23,7 @@ import {
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
 import Sidebar from './Sidebar/Sidebar';
 import MyToken from './MyToken/MyToken';
-import Events from './Events/Events';
+import Events from './MyToken/Events/Events';
 import classes from './Dashboard.module.css';
 import { Route, Switch } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
