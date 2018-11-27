@@ -3,12 +3,9 @@ import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis
 import ipfsApi from 'ipfs-api';
 
 import {
-  CardImg,
   Col,
   FormGroup,
   Input,
-  InputGroup,
-  InputGroupAddon,
   Label,
   Popover,
   PopoverHeader,
@@ -17,7 +14,7 @@ import {
   Table
 } from 'reactstrap';
 
-import { Button, Card, CardContent, CardHeader, IconButton, Grid, Typography } from '@material-ui/core';
+import { Button, Card, IconButton, Grid, Typography } from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
@@ -26,154 +23,12 @@ import withContext from '../../hoc/withContext';
 
 import { getMultihashFromBytes32 } from '../../util';
 
+import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
+import Details from '../../components/Profile/Details.jsx';
+
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
-
-class BuySell extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      priceInEther: 0,
-      rewardInEther: 0
-    };
-  }
-
-  buyHandler = () => {
-    const buyStackId = this.props.contract.methods.mint.cacheSend(String(10 ** 18), {
-      from: this.props.drizzleState.accounts[0],
-      value: String(this.state.priceInEther)
-    });
-    this.setState({ buyStackId });
-  };
-
-  getStatus = txStackId => {
-    const { transactions, transactionStack } = this.props.drizzleState;
-    const txHash = transactionStack[this.state[txStackId]];
-    if (!txHash) return null;
-    return `Transaction status: ${transactions[txHash].status}`;
-  };
-
-  inputUpdate = async event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-
-    // Update price
-    if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(String(10 ** 18)).call();
-      this.setState({
-        priceInEther
-      });
-    }
-
-    // Update reward
-    if (name === 'sellAmt') {
-      const rewardInEther = await this.props.contract.methods
-        .rewardForBurn(String(10 ** 18))
-        .call();
-      this.setState({
-        rewardInEther
-      });
-    }
-  };
-
-  sellHandler = () => {
-    const sellStackId = this.props.contract.methods.burn.cacheSend(String(10 ** 18), {
-      from: this.props.drizzleState.accounts[0]
-    });
-    this.setState({ sellStackId });
-  };
-
-  render() {
-    return (
-      <Grid container>
-
-        <Grid item md={6}>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <Button color="primary" onClick={this.buyHandler}>
-                Buy
-              </Button>
-            </InputGroupAddon>
-            <Input
-              type="number"
-              name="buyAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <InputGroupAddon addonType="append">
-              With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
-            </InputGroupAddon>
-          </InputGroup>
-          <div>{this.getStatus('buyStackId')}</div>
-        </Grid>
-
-        <Grid item md={6}>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <Button color="primary" onClick={this.sellHandler}>
-                Sell
-              </Button>
-            </InputGroupAddon>
-            <Input
-              type="number"
-              name="sellAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <InputGroupAddon addonType="prepend">
-              For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
-            </InputGroupAddon>
-          </InputGroup>
-          <div>{this.getStatus('sellStackId')}</div>
-        </Grid>
-
-      </Grid>
-    );
-  }
-}
-
-const ContractInfo = props => (
-  <div>
-    <Grid container>
-      <Grid item md={6}>
-        <Card>
-          <CardHeader>Market Cap</CardHeader>
-          <CardContent>{props.marketCap} ETH</CardContent>
-        </Card>
-      </Grid>
-      <Grid item md={6}>
-        <Card>
-          <CardHeader>You own</CardHeader>
-          <CardContent>
-            {props.tokenBalance} {props.symbol}
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-
-    <Grid container style={{ paddingTop: '2%' }}>
-      <Grid item md={12}>
-        <Card>
-          <CardHeader>About {props.name}</CardHeader>
-          <CardContent>
-            Hi I am Hanna - I like to get paid when someone wants something from me..
-          </CardContent>
-          <CardImg
-            top
-            width="100%"
-            height="20%"
-            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=100"
-            alt="Card image cap"
-          />
-        </Card>
-      </Grid>
-    </Grid>
-  </div>
-);
 
 class CurveChart extends Component {
   getChartData() {
@@ -456,7 +311,7 @@ class ProfileDetails extends Component {
 
 
         <Grid container style={{ paddingTop: '2%' }}>
-          <BuySell
+          <BuyAndSellButtons
             contract={this.props.drizzle.contracts[this.props.addr]}
             drizzleState={this.props.drizzleState}
             symbol={this.state.symbol}
@@ -464,7 +319,7 @@ class ProfileDetails extends Component {
           <Grid container style={{ paddingTop: '2%' }}>
 
             <Grid item md={6}>
-              <ContractInfo
+              <Details
                 marketCap={currentPrice * (totalSupply / multiplier)}
                 name={this.state.name}
                 symbol={this.state.symbol}
