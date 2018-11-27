@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
-import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
+// import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
 // import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
 // import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';
 // import CurveChart from '../ListToken/TokenDetails/Chart/Chart';

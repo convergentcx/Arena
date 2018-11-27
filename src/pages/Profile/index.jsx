@@ -3,27 +3,22 @@ import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis
 import ipfsApi from 'ipfs-api';
 
 import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
   CardImg,
-  Container,
   Col,
   FormGroup,
   Input,
   InputGroup,
   InputGroupAddon,
   Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
   Popover,
   PopoverHeader,
   PopoverBody,
   Row,
   Table
 } from 'reactstrap';
+
+import { Button, Card, CardContent, CardHeader, IconButton, Grid, Typography } from '@material-ui/core';
+import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
@@ -94,11 +89,12 @@ class BuySell extends Component {
 
   render() {
     return (
-      <Row>
-        <Col md={6}>
+      <Grid container>
+
+        <Grid item md={6}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
-              <Button color="success" onClick={this.buyHandler}>
+              <Button color="primary" onClick={this.buyHandler}>
                 Buy
               </Button>
             </InputGroupAddon>
@@ -113,11 +109,12 @@ class BuySell extends Component {
             </InputGroupAddon>
           </InputGroup>
           <div>{this.getStatus('buyStackId')}</div>
-        </Col>
-        <Col md={6}>
+        </Grid>
+
+        <Grid item md={6}>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
-              <Button color="danger" onClick={this.sellHandler}>
+              <Button color="primary" onClick={this.sellHandler}>
                 Sell
               </Button>
             </InputGroupAddon>
@@ -125,44 +122,46 @@ class BuySell extends Component {
               type="number"
               name="sellAmt"
               onChange={this.inputUpdate}
-              placeholder={this.state.symbol}
+              placeholder={this.props.symbol}
             />
             <InputGroupAddon addonType="prepend">
               For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
             </InputGroupAddon>
           </InputGroup>
           <div>{this.getStatus('sellStackId')}</div>
-        </Col>
-      </Row>
+        </Grid>
+
+      </Grid>
     );
   }
 }
 
 const ContractInfo = props => (
   <div>
-    <Row>
-      <Col md={6}>
+    <Grid container>
+      <Grid item md={6}>
         <Card>
           <CardHeader>Market Cap</CardHeader>
-          <CardBody>{props.marketCap} ETH</CardBody>
+          <CardContent>{props.marketCap} ETH</CardContent>
         </Card>
-      </Col>
-      <Col md={6}>
+      </Grid>
+      <Grid item md={6}>
         <Card>
           <CardHeader>You own</CardHeader>
-          <CardBody>
+          <CardContent>
             {props.tokenBalance} {props.symbol}
-          </CardBody>
+          </CardContent>
         </Card>
-      </Col>
-    </Row>
-    <Row>
-      <Col md={12}>
+      </Grid>
+    </Grid>
+
+    <Grid container style={{ paddingTop: '2%' }}>
+      <Grid item md={12}>
         <Card>
           <CardHeader>About {props.name}</CardHeader>
-          <CardBody>
+          <CardContent>
             Hi I am Hanna - I like to get paid when someone wants something from me..
-          </CardBody>
+          </CardContent>
           <CardImg
             top
             width="100%"
@@ -171,8 +170,8 @@ const ContractInfo = props => (
             alt="Card image cap"
           />
         </Card>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   </div>
 );
 
@@ -443,117 +442,125 @@ class ProfileDetails extends Component {
       (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
-      <div>
-        <ModalHeader toggle={() => this.props.history.goBack()}>
-          Personal Economy of {this.props.addr}
-        </ModalHeader>
-        <ModalBody>
-          <Container>
-            <BuySell
-              contract={this.props.drizzle.contracts[this.props.addr]}
-              drizzleState={this.props.drizzleState}
-              symbol={this.state.symbol}
-            />
-            <Row>
-              <Col md="6">
-                <ContractInfo
-                  marketCap={currentPrice * (totalSupply / multiplier)}
-                  name={this.state.name}
-                  symbol={this.state.symbol}
-                  tokenBalance={yourBalance / multiplier}
+      <div style={{ padding: '5%' }}>
+
+        <Grid container style={{ alignItems: 'center' }}>
+          <IconButton onClick={() => this.props.history.goBack()}>
+            <KeyboardBackspace />
+          </IconButton>
+          <div style={{ flexGrow: 1 }} />
+          <Typography variant="title">
+            Personal Economy of {this.props.addr}
+          </Typography>
+        </Grid>
+
+
+        <Grid container style={{ paddingTop: '2%' }}>
+          <BuySell
+            contract={this.props.drizzle.contracts[this.props.addr]}
+            drizzleState={this.props.drizzleState}
+            symbol={this.state.symbol}
+          />
+          <Grid container style={{ paddingTop: '2%' }}>
+
+            <Grid item md={6}>
+              <ContractInfo
+                marketCap={currentPrice * (totalSupply / multiplier)}
+                name={this.state.name}
+                symbol={this.state.symbol}
+                tokenBalance={yourBalance / multiplier}
+              />
+            </Grid>
+
+            <Grid item md={6}>
+              <Card>
+                <div style={{ padding: '15px', }}>
+                  Bonding Curve
+                  <div>
+                    <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
+                      Details
+                    </Button>
+                  </div>
+                  <Popover
+                    placement="bottom"
+                    isOpen={this.state.popover}
+                    target="Popover1"
+                    toggle={this.toggle}
+                  >
+                    <PopoverHeader>Contract Information</PopoverHeader>
+                    <PopoverBody>
+                      <Row>
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label size="sm" style={labelStyle}>
+                              Contract Address
+                            </Label>
+                            <p> {this.props.addr} </p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={12}>
+                          <Label size="sm" style={labelStyle}>
+                            Owner Address
+                          </Label>
+                          <p>{this.state.owner}</p>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={4}>
+                          <Label size="sm" style={labelStyle}>
+                            Price
+                          </Label>
+                          <p>{currentPrice} ETH</p>
+                        </Col>
+                        <Col md={4}>
+                          <Label size="sm" style={labelStyle}>
+                            Reserve Pool
+                          </Label>
+                          <p>{this.state.poolBalance} ETH </p>
+                        </Col>
+                        <Col md={4}>
+                          <Label size="sm" style={labelStyle}>
+                            Total Supply
+                          </Label>
+                          <p>
+                            {totalSupply} {this.state.symbol}
+                          </p>
+                        </Col>
+                      </Row>
+                    </PopoverBody>
+                  </Popover>
+                </div>
+
+                <CurveChart
+                  curveData={{
+                    totalSupply: totalSupply,
+                    poolBalance: this.state.poolBalance,
+                    inverseSlope: this.state.inverseSlope,
+                    exponent: this.state.exponent,
+                    currentPrice: currentPrice
+                  }}
+                  margin={{
+                    top: 30,
+                    right: 10,
+                    bottom: 30,
+                    left: 10
+                  }}
+                  width={300}
+                  height={300}
                 />
-              </Col>
+              </Card>
+            </Grid>
+          </Grid>
 
-              <Col md="6">
-                <Card>
-                  <CardHeader>
-                    Bonding Curve
-                    <div>
-                      <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
-                        Details
-                      </Button>
-                    </div>
-                    <Popover
-                      placement="bottom"
-                      isOpen={this.state.popover}
-                      target="Popover1"
-                      toggle={this.toggle}
-                    >
-                      <PopoverHeader>Contract Information</PopoverHeader>
-                      <PopoverBody>
-                        <Row>
-                          <Col md={12}>
-                            <FormGroup>
-                              <Label size="sm" style={labelStyle}>
-                                Contract Address
-                              </Label>
-                              <p> {this.props.addr} </p>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={12}>
-                            <Label size="sm" style={labelStyle}>
-                              Owner Address
-                            </Label>
-                            <p>{this.state.owner}</p>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={4}>
-                            <Label size="sm" style={labelStyle}>
-                              Price
-                            </Label>
-                            <p>{currentPrice} ETH</p>
-                          </Col>
-                          <Col md={4}>
-                            <Label size="sm" style={labelStyle}>
-                              Reserve Pool
-                            </Label>
-                            <p>{this.state.poolBalance} ETH </p>
-                          </Col>
-                          <Col md={4}>
-                            <Label size="sm" style={labelStyle}>
-                              Total Supply
-                            </Label>
-                            <p>
-                              {totalSupply} {this.state.symbol}
-                            </p>
-                          </Col>
-                        </Row>
-                      </PopoverBody>
-                    </Popover>
-                  </CardHeader>
-
-                  <CurveChart
-                    curveData={{
-                      totalSupply: totalSupply,
-                      poolBalance: this.state.poolBalance,
-                      inverseSlope: this.state.inverseSlope,
-                      exponent: this.state.exponent,
-                      currentPrice: currentPrice
-                    }}
-                    margin={{
-                      top: 30,
-                      right: 10,
-                      bottom: 30,
-                      left: 10
-                    }}
-                    width={300}
-                    height={300}
-                  />
-                </Card>
-              </Col>
-            </Row>
-
-            <RequestService
-              account={this.props.drizzleState.accounts[0]}
-              contract={this.props.drizzle.contracts[this.props.addr]}
-              mhash={this.state.mhash}
-              symbol={this.state.symbol}
-            />
-          </Container>
-        </ModalBody>
+          <RequestService
+            account={this.props.drizzleState.accounts[0]}
+            contract={this.props.drizzle.contracts[this.props.addr]}
+            mhash={this.state.mhash}
+            symbol={this.state.symbol}
+          />
+        </Grid>
       </div>
     );
   }
@@ -562,9 +569,9 @@ class ProfileDetails extends Component {
 const ProfileDetailsContextualized = withContext(ProfileDetails);
 
 const Profile = props => (
-  <Modal size="lg" isOpen={true} toggle={() => props.history.goBack()}>
+  <div style={{ padding: '' }}>
     <ProfileDetailsContextualized addr={props.match.params.tokenAddress} history={props.history} />
-  </Modal>
+  </div>
 );
 
 export default Profile;

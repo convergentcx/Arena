@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {
   Alert,
-  Button,
   ButtonGroup,
   Col,
   Form,
   FormGroup,
   Input,
   Label,
-  Modal,
-  ModalHeader,
   Row
 } from 'reactstrap';
+
+import { Button } from '@material-ui/core';
+
 import ipfsApi from 'ipfs-api';
 
 import withContext from '../../hoc/withContext';
@@ -162,15 +162,15 @@ class LaunchForm extends Component {
         <br />
         {this.state.tooMany && (
           <Alert color="warning" style={{ marginBottom: '10px' }}>
-            For now, the number of services you can offer under one token is limited to 3
+            While we build 🛠 only 3 services will be available in your economy 💸 
           </Alert>
         )}
         {this.state.tooFew && (
           <Alert color="warning" style={{ marginBottom: '10px' }}>
-            For your token economy to work, you need to offer at least one service
+            For your economy to work 👨‍💼 you need to offer at least one service 🗳
           </Alert>
         )}
-        <Button color="primary" onClick={this.deploy}>
+        <Button size="medium" variant="contained" onClick={this.deploy}>
           Deploy
         </Button>
         <div>{this.waitUntilMined()}</div>
@@ -182,12 +182,9 @@ class LaunchForm extends Component {
 const LaunchFormContextualized = withContext(LaunchForm);
 
 const Launch = props => (
-  <Modal size="lg" isOpen toggle={() => props.history.goBack()}>
-    <ModalHeader>Launch</ModalHeader>
-    <div style={{ padding: '6px' }}>
-      <LaunchFormContextualized history={props.history} />
-    </div>
-  </Modal>
+  <div style={{ padding: '10%' }}>
+    <LaunchFormContextualized history={props.history} />
+  </div>
 );
 
 export default Launch;

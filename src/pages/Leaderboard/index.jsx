@@ -106,7 +106,7 @@ class LeaderboardList extends Component {
 const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
-  <div style={{ marginLeft: '200px', marginRight: '200px' }}>
+  <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
     <Table borderless hover>
       <thead>
         <tr>

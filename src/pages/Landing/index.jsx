@@ -1,13 +1,9 @@
 import React from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
-import Leaderboard from '../Leaderboard';
-
-// import Background from '../../assets/curves.jpg';
+import { Button } from '@material-ui/core';
 
 const heroStyle = {
-  // backgroundImage: 'url(' + Background + ')',
   backgroundSize: 'cover',
   WebkitBackgroundSize: 'cover',
   MozBackgroundSize: 'cover',
@@ -20,17 +16,17 @@ const Hero = () => (
   <div style={heroStyle}>
     <h1 className="display-4">Unlock your personal economy</h1>
     <br />
-    <h5>Launch your own cryptocurrency within seconds and tokenize your future.</h5>
+    <h5>Launch your own cryptocurrency, tokenize your future, and regain your freedom.</h5>
     <br />
     <br />
     <NavLink to={'/launch'}>
-      <Button color="warning" size="lg">
+      <Button size="large" variant="outlined" style={{ color: '#000000', borderColor: '#0044FF'}}>
         Launch
       </Button>
     </NavLink>
     &nbsp;&nbsp;
-    <NavLink to={{ hash: '#browse' }}>
-      <Button outline size="lg">
+    <NavLink to={'/leaderboard'}>
+      <Button color='secondary' size="large" variant="outlined" style={{ color: '#000000' }}>
         Browse
       </Button>
     </NavLink>
@@ -40,10 +36,6 @@ const Hero = () => (
 const Landing = () => (
   <div>
     <Hero />
-    <Switch>
-      <Route path="/" exact component={Leaderboard} />
-      {/* <Route path="/dashboard" component={Dashboard} /> */}
-    </Switch>
   </div>
 );
 

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 
 import Web3 from 'web3';
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
@@ -11,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
 
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
 
   state = {
         tokens: null,

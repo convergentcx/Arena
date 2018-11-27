@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TopNavbar from './TopNavbar/TopNavbar';
+import TopNavbar from './TopNavbar';
 
 const AppContainer = props => (
   <div>
