@@ -96,10 +96,10 @@ class Dashboard extends Component {
     return (
       <div>
         <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
-        <Switch>
-          {/* <Route path='/dashboard' component={} /> */}
+        {/* <Switch>
+          <Route path='/dashboard' component={} />
           <Route path="/dashboard/:tokenAddress" exact component={Events} />
-        </Switch>
+        </Switch> */}
         
         {tokens}
         </div>

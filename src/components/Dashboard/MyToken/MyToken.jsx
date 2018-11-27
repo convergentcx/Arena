@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, Button, CardBody, Row, Col } from 'reactstrap';
 import classes from './MyToken.module.css';
 import withContext from '../../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
@@ -23,6 +22,12 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Money from '@material-ui/icons/AttachMoney';
 
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -30,8 +35,17 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  card: {
+    minWidth: 275,
+    height: '100%'
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
   },
 });
 
@@ -130,84 +144,116 @@ class MyTokens extends Component {
 
     return (
       <div id={this.props.address} className={classes.root}>
+        <h3>{this.props.name}</h3>
+      
         <Grid container spacing={24}>
           <Grid item xs={6}>
-            <Paper className={classes.paper} style={{ fontWeight: 'bold', textAlign: 'left' }}>{this.props.name}
-              <div className={classes.DetailsButton}>
+          <Card className={classes.card}>
+              <CardContent>
                 <Button color="secondary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                  Details
+                  See Market Page
             </Button>
-              </div>
-            </Paper>
+            </CardContent>
+            </Card>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper} style={{ fontWeight: 'bold', textAlign: 'left' }}>
-              <p> Market Cap </p>
-              <Money />
-              <h4>{currentPrice * (totalSupply / multiplier)}</h4>
-            </Paper>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Market Cap
+                </Typography>
+                <Typography variant="h2" component="h2">
+                  {currentPrice * (totalSupply / multiplier)} Ξ
+                </Typography>
+              </CardContent>
+            </Card>
+
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper} style={{ fontWeight: 'bold', textAlign: 'left' }}>
-              <p>You hold</p>
-              <Money />
-              <h4>{yourBalance / multiplier.toFixed(3)}</h4>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Your Balance
+                </Typography>
+                <Typography variant="h2" component="h2">
+                  {yourBalance / multiplier.toFixed(3)} {this.state.symbol}
+                </Typography>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Current Value
+                </Typography>
+                <Typography variant="h2" component="h2">
+                  {(yourBalance / multiplier.toFixed(3)) * currentPrice} Ξ
+                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
 
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <p>Current Price</p>
-              <Money />
-              <h4>{currentPrice}</h4>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <p>Current token supply</p>
-              <Money />
-              <h4>{totalSupply / multiplier}</h4>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <p>Reserve pool</p>
-              <Money />
-              <h4>{this.state.poolBalance / multiplier}</h4>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-            <p>Bonding curve formula</p>
-              <Money />
-              <h4>{`p = 1 / ${this.state.inverseSlope} * x ^ ${this.state.exponent}`} </h4>
-            </Paper>
-          </Grid>
+                </Typography>
+              </CardContent>
+            </Card>
 
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Current Price
+                </Typography>
+                <Typography variant="h5" component="h2">
+                  {currentPrice} Ξ
+                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Current Token Supply
+                </Typography>
+                <Typography variant="h5" component="h2">
+                  {totalSupply / multiplier} {this.state.symbol}
+                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Reserve Pool
+                </Typography>
+                <Typography variant="h5" component="h2">
+                  {this.state.poolBalance / multiplier} Ξ
+                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Price formula
+                </Typography>
+                <Typography variant="h5" component="h2">
+                  {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}                </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <Card className={classes.card}>
+              <CardContent>
                 <CurveChart
-                  curveData={{
-                    totalSupply: totalSupply/multiplier,
-                    poolBalance: this.state.poolBalance/multiplier,
-                    inverseSlope: this.state.inverseSlope,
-                    exponent: this.state.exponent,
-                    currentPrice: currentPrice
-                  }}
-                  margin={{
-                    top: 30,
-                    right: 10,
-                    bottom: 30,
-                    left: 10
-                  }}
-                  width={300}
-                  height={300}
-                />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>
-            <CurveChart
                   curveData={{
                     totalSupply: 0,
                     poolBalance: 0,
@@ -224,19 +270,45 @@ class MyTokens extends Component {
                   width={300}
                   height={300}
                 />
-            {/* 
+                {/* 
             Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
             the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
             so we can look how it works there exactly.
             <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
-            </Paper>
+              </CardContent>
+            </Card>
           </Grid>
+          <Grid item xs={6} sm={6}>
+            <Card className={classes.card}>
+              <CardContent>
+                <CurveChart
+                  curveData={{
+                    totalSupply: totalSupply / multiplier,
+                    poolBalance: this.state.poolBalance / multiplier,
+                    inverseSlope: this.state.inverseSlope,
+                    exponent: this.state.exponent,
+                    currentPrice: currentPrice
+                  }}
+                  margin={{
+                    top: 30,
+                    right: 10,
+                    bottom: 30,
+                    left: 10
+                  }}
+                  width={300}
+                  height={300}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+
           <Grid item xs={12}>
             <Events date={this.props.date} address={this.props.address} />
           </Grid>
 
 
         </Grid>
+        <hr />
       </div>
     );
   }
