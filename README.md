@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/convergentcx/Arena.svg?branch=master)](https://travis-ci.org/convergentcx/Arena)
+
 # Arena (WIP)
 
 Arena is the DApp component of the [Convergent](https://convergent.cx) ecosystem.
