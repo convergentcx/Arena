@@ -5,13 +5,11 @@ import ipfsApi from 'ipfs-api';
 import {
   Col,
   FormGroup,
-  Input,
   Label,
   Popover,
   PopoverHeader,
   PopoverBody,
   Row,
-  Table
 } from 'reactstrap';
 
 import { Button, Card, IconButton, Grid, Typography } from '@material-ui/core';
@@ -21,10 +19,9 @@ import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
-import { getMultihashFromBytes32 } from '../../util';
-
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
+import Services from '../../components/Profile/Services.jsx';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -107,101 +104,6 @@ class CurveChart extends Component {
             label={currentPoint.value.toFixed(2)}
           />
         </ComposedChart>
-      </div>
-    );
-  }
-}
-
-class RequestService extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { jsonData: {}, message: '', stackId: '' };
-  }
-
-  async componentDidMount() {
-    const contentAddress = getMultihashFromBytes32({
-      digest: this.props.mhash,
-      hashFunction: 18,
-      size: 32
-    });
-
-    const result = await ipfs.get('/ipfs/' + contentAddress);
-    const contentString = result[0].content.toString();
-    const jsonData = JSON.parse(contentString);
-    this.setState({
-      jsonData
-    });
-  }
-
-  inputUpdate = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  requestWithEth = serviceIndex => {
-    const { contract, account } = this.props;
-    const stackId = contract.methods.requestWithEth.cacheSend(
-      this.state.message,
-      String(this.state.jsonData.services[serviceIndex].price * multiplier),
-      {
-        from: account
-        // value: this.state.jsonData.services[serviceIndex].price * multiplier,
-      }
-    );
-    this.setState({ stackId });
-  };
-
-  requestWithToken = serviceIndex => {
-    const { contract, account } = this.props;
-    const stackId = contract.methods.requestWithToken.cacheSend(this.state.message, {
-      from: account
-    });
-    this.setState({ stackId });
-  };
-
-  render() {
-    if (!this.state.jsonData.services) {
-      return <div>Still Loading...</div>;
-    }
-
-    let items = this.state.jsonData.services.map((serviceObj, i) => {
-      return (
-        <tr key={i}>
-          <td>{serviceObj.what}</td>
-          <td>{serviceObj.price}</td>
-          <td>
-            <Input name="message" onChange={this.inputUpdate} />
-          </td>
-          <td>
-            <Button color="danger" onClick={() => this.requestWithEth(i)}>
-              Request with ETH
-            </Button>
-          </td>
-          <td>
-            <Button color="success" onClick={() => this.requestWithToken(i)}>
-              Request with {this.props.symbol}
-            </Button>
-          </td>
-        </tr>
-      );
-    });
-
-    return (
-      <div>
-        <Table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th>Price</th>
-              <th>Message</th>
-              <th />
-              <th />
-            </tr>
-          </thead>
-          <tbody>{items}</tbody>
-        </Table>
       </div>
     );
   }
@@ -409,7 +311,7 @@ class ProfileDetails extends Component {
             </Grid>
           </Grid>
 
-          <RequestService
+          <Services
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
             mhash={this.state.mhash}
