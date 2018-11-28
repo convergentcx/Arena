@@ -101,8 +101,8 @@ class LeaderboardList extends Component {
               <Link to={`tokens/${personalEconomy.address}`}>{personalEconomy.name}</Link>
             </td>
             <td>{removeDecimals(removeDecimals(personalEconomy.marketCap))} ETH</td>
-            <td>Dos</td>
-            <td>Tres</td>
+            <td>TODO</td>
+            <td>TODO</td>
           </tr>
         );
         i++;
