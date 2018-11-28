@@ -8,6 +8,7 @@ import Events from './MyToken/Events/Events';
 import classes from './Dashboard.module.css';
 import { Route, Switch } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
+import ScrollableTabsButtonAuto from './Tab/Tab'
 
 
 class Dashboard extends Component {
@@ -94,8 +95,10 @@ class Dashboard extends Component {
       });
 
     return (
-      <div>
-        <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
+      <div className={classes.main}>
+        <ScrollableTabsButtonAuto  />
+
+        {/* <Sidebar tokens={this.state.tokens} className={classes.menuBox} /> */}
         {/* <Switch>
           <Route path='/dashboard' component={} />
           <Route path="/dashboard/:tokenAddress" exact component={Events} />

@@ -32,7 +32,6 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -42,8 +41,7 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   card: {
-    minWidth: 275,
-    height: '100%'
+    minWidth: 200,
   },
   title: {
     fontSize: 14,
@@ -207,7 +205,7 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Card className={classes.card}>
               <CardHeader
                 avatar={
@@ -228,7 +226,7 @@ class MyTokens extends Component {
                 title={
                   <TextField
                     id="standard-read-only-input"
-                    defaultValue="Hello World"
+                    defaultValue="Token display name"
                     className={classes.textField}
                     margin="normal"
                     InputProps={{
@@ -250,7 +248,7 @@ class MyTokens extends Component {
                     id="standard-full-width"
                     value={this.state.multiline}
                     onChange={this.handleChange('multiline')}
-                    label="Label"
+                    label="Description"
                     style={{ margin: 8 }}
                     placeholder="My token will give you .."
                     helperText="Tell your investors why you are going to the moon"
@@ -268,26 +266,69 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={3}>
-            <Card className={classes.card}>
 
-              <CardContent>
 
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Market Cap
-                </Typography>
-                <Typography variant="h2" component="h2">
-                  {currentPrice * (totalSupply / multiplier)} Ξ
-                </Typography>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Value
-                </Typography>
-                <Typography variant="h2" component="h2">
-                  {currentPrice * (totalSupply / multiplier) * 500} $
-                </Typography>
 
-              </CardContent>
-            </Card>
+
+
+          <Grid item xs={5}>
+            <Grid container sm={12}>
+
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Current Price
+                </Typography>
+                  <Typography variant="h6" component="h2">
+                    {currentPrice} Ξ
+                </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Current Token Supply
+                </Typography>
+                  <Typography variant="h6" component="h2">
+                    {totalSupply / multiplier} {this.state.symbol}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Reserve Pool
+                </Typography>
+                  <Typography variant="h6" component="h2">
+                    {this.state.poolBalance / multiplier} Ξ
+                </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Price formula
+                </Typography>
+                  <Typography variant="h6" component="h2">
+                    {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}                </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
 
           </Grid>
           <Grid item xs={3}>
@@ -300,74 +341,40 @@ class MyTokens extends Component {
                   {yourBalance / multiplier.toFixed(3)} {this.state.symbol}
                 </Typography>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Value
+                  Current Value: {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
+                </Typography>
+
+              </CardContent>
+            </Card>
+
+
+
+
+            <Card className={classes.card}>
+
+              <CardContent>
+
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Market Cap
                 </Typography>
                 <Typography variant="h2" component="h2">
-                  {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
+                  {currentPrice * (totalSupply / multiplier)} Ξ
                 </Typography>
-              </CardContent>
-            </Card>
-
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card className={classes.card}>
-              <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Price
+                  Current Value: {currentPrice * (totalSupply / multiplier) * 500} $
                 </Typography>
-                <Typography variant="h5" component="h2">
-                  {currentPrice} Ξ
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
 
-                </Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Token Supply
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  {totalSupply / multiplier} {this.state.symbol}
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
+        </Grid>
 
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Reserve Pool
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  {this.state.poolBalance / multiplier} Ξ
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
 
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Price formula
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
 
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+        <Grid container spacing={24}>
+
+
+
           <Grid item xs={6} sm={6}>
             <Card className={classes.card}>
               <CardContent>
@@ -419,78 +426,106 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={4}>
 
-          <Grid item xs={9}>
-            <Events date={this.props.date} address={this.props.address} />
+
+            <Card className={classes.card}>
+              <CardHeader
+
+                action={
+                  <div>
+                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
+                      Edit
+                  </Button>
+                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
+                      Market Page
+                  </Button> */}
+                  </div>
+                }
+                title={"Your services"}
+                subheader={"What can people get with your token?"}
+              />
+              <CardContent>
+                <form className={classes.container} noValidate autoComplete="off">
+
+                  <Grid container sm={12}>
+                    <Grid item sm={4}>
+                      <TextField
+                        required
+                        id="standard-required"
+                        label="req"
+                        defaultValue="Service 1"
+                        className={classes.textField}
+                        margin="normal"
+                      />
+
+                    </Grid>
+                    <Grid item sm={4}>
+
+                      <TextField
+                        id="standard-select-currency"
+                        select
+                        label="Select"
+                        className={classes.textField}
+                        value={this.state.currency}
+                        onChange={this.handleChange('currency')}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select a category"
+                        margin="normal"
+                      >
+                        {currencies.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item sm={4}>
+                      <TextField
+                        id="standard-number"
+                        label="Number"
+                        value={this.state.age}
+                        onChange={this.handleChange('age')}
+                        type="number"
+                        className={classes.textField}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        margin="normal"
+                      />
+                    </Grid>
+                  </Grid>
+
+                </form>
+
+
+              </CardContent>
+            </Card>
           </Grid>
 
-          <Grid item xs={3}>
-
-            <Grid container sm={12}>
-              <Grid item sm={6}>
-
-              </Grid>
-              <Grid item sm={6}>
-
-              </Grid>
-            </Grid>
-            <TextField
-              id="standard-name"
-              label="Name"
-              className={classes.textField}
-              value={this.state.name}
-              onChange={this.handleChange('name')}
-              margin="normal"
-            />
-
-            <TextField
-              required
-              id="standard-required"
-              label="req"
-              defaultValue="Hello World"
-              className={classes.textField}
-              margin="normal"
-            />
+          <Grid item xs={8}>
+            <Card className={classes.card}>
+              <CardHeader
+                title={"Requests and investments"}
+                subheader={"Honor your token"}
+              />
+              <CardContent>
 
 
-            <TextField
-              id="standard-number"
-              label="Number"
-              value={this.state.age}
-              onChange={this.handleChange('age')}
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin="normal"
-            />
-
-            <TextField
-              id="standard-select-currency"
-              select
-              label="Select"
-              className={classes.textField}
-              value={this.state.currency}
-              onChange={this.handleChange('currency')}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Please select a category"
-              margin="normal"
-            >
-              {currencies.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+                <Events date={this.props.date} address={this.props.address} />
+              </CardContent>
+            </Card>
           </Grid>
-
 
         </Grid>
+
+
         <hr />
       </div>
     );
