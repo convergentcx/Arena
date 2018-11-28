@@ -6,8 +6,10 @@ import {
   TextField,
 } from '@material-ui/core';
 
-const multiplier = 10 ** 18;
-
+import {
+  addDecimals,
+  removeDecimals,
+} from '../../util';
 export default class BuyAndSellButtons extends Component {
   constructor(props) {
     super(props);
@@ -19,9 +21,9 @@ export default class BuyAndSellButtons extends Component {
   }
 
   buyHandler = () => {
-    const buyStackId = this.props.contract.methods.mint.cacheSend(String(10 ** 18), {
+    const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
-      value: String(this.state.priceInEther)
+      value: this.state.priceInEther,
     });
     this.setState({ buyStackId });
   };
@@ -41,7 +43,7 @@ export default class BuyAndSellButtons extends Component {
 
     // Update price
     if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(String(10 ** 18)).call();
+      const priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
       this.setState({
         priceInEther
       });
@@ -50,7 +52,7 @@ export default class BuyAndSellButtons extends Component {
     // Update reward
     if (name === 'sellAmt') {
       const rewardInEther = await this.props.contract.methods
-        .rewardForBurn(String(10 ** 18))
+        .rewardForBurn(addDecimals(value))
         .call();
       this.setState({
         rewardInEther
@@ -59,7 +61,7 @@ export default class BuyAndSellButtons extends Component {
   };
 
   sellHandler = () => {
-    const sellStackId = this.props.contract.methods.burn.cacheSend(String(10 ** 18), {
+    const sellStackId = this.props.contract.methods.burn.cacheSend(addDecimals(this.state.sellAmt), {
       from: this.props.drizzleState.accounts[0]
     });
     this.setState({ sellStackId });
@@ -76,7 +78,7 @@ export default class BuyAndSellButtons extends Component {
             placeholder={this.props.symbol}
           />
           <div addonType="append">
-            With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
+            With {removeDecimals(this.state.priceInEther)} ETH
           </div>
         </Grid>
 
@@ -85,7 +87,7 @@ export default class BuyAndSellButtons extends Component {
               Buy
           </Button>
         </Grid>
-        {/* <div>{this.getStatus('buyStackId')}</div> */}
+        <div>{this.getStatus('buyStackId')}</div>
 
         <Grid item md={4}>
           <TextField
@@ -95,7 +97,7 @@ export default class BuyAndSellButtons extends Component {
             placeholder={this.props.symbol}
           />
           <div addonType="append">
-            For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
+            For {removeDecimals(this.state.rewardInEther)} ETH
           </div>
         </Grid>
 
@@ -104,7 +106,7 @@ export default class BuyAndSellButtons extends Component {
             Sell
           </Button>
         </Grid>
-        {/* <div>{this.getStatus('sellStackId')}</div> */}
+        <div>{this.getStatus('sellStackId')}</div>
 
       </Grid>
     );

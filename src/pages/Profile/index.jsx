@@ -13,44 +13,95 @@ import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
 import Services from '../../components/Profile/Services.jsx';
 
-
 import { CardMedia } from '@material-ui/core';
 import Hannah from '../../assets/hannah.jpg';
 
+import {
+  addDecimals,
+  getPrice,
+  removeDecimals
+} from '../../util';
+
+import { utils } from 'web3';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
 class CurveChart extends Component {
-  getChartData() {
-    let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
-    poolBalance = parseFloat(poolBalance) || 0;
-    totalSupply = parseFloat(totalSupply) || 0;
+  getChartData = () => {
+    let { 
+      currentPrice,
+      exponent,
+      inverseSlope,
+      poolBalance,
+      totalSupply,
+    } = this.props.curveData;
 
-    let currentPoint = { supply: totalSupply, value: currentPrice };
+    poolBalance = utils.toBN(poolBalance);
+    totalSupply = utils.toBN(totalSupply);
 
-    let data = [];
-    let step = (totalSupply || 50) / 100;
+    const currentPoint = {
+      x: parseFloat(removeDecimals(totalSupply.toString())).toFixed(4),
+      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4),
+    };
 
-    for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
-      let price = (1 / inverseSlope) * i ** exponent;
-      if (i < totalSupply) {
-        data.push({
-          supply: i,
-          sell: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+    let data = [
+      {supply: 0, sell: 0, value: 0}
+    ];
+
+    const step = utils.toBN(10**17);
+    for (let i = step; i.lte(utils.toBN(750).mul(step)); i = i.add(step)) {
+      const price = getPrice(inverseSlope, i, exponent);
+      if (i.lte(totalSupply)) {
+        data.push({ 
+          supply: parseFloat(removeDecimals(i)).toFixed(4), 
+          sell: parseFloat(removeDecimals(price)).toFixed(4), 
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
-      } else if (i >= totalSupply) {
+      } else if (i.gt(totalSupply)) {
         data.push({
-          supply: i,
-          buy: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          supply: parseFloat(removeDecimals(i)).toFixed(4), 
+          buy: parseFloat(removeDecimals(price)).toFixed(4), 
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
       }
     }
-    return { data, currentPoint };
+
+    return {
+      data, 
+      currentPoint,
+    };
   }
+
+  // getChartData() {
+  //   let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
+  //   poolBalance = parseFloat(poolBalance) || 0;
+  //   totalSupply = parseFloat(totalSupply) || 0;
+
+  //   let currentPoint = { supply: totalSupply, value: currentPrice };
+
+  //   let data = [];
+  //   let step = (totalSupply || 50) / 100;
+
+  //   for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
+  //     let price = (1 / inverseSlope) * i ** exponent;
+  //     if (i < totalSupply) {
+  //       data.push({
+  //         supply: i,
+  //         sell: price.toFixed(4),
+  //         value: parseFloat(price.toFixed(4))
+  //       });
+  //     } else if (i >= totalSupply) {
+  //       data.push({
+  //         supply: i,
+  //         buy: price.toFixed(4),
+  //         value: parseFloat(price.toFixed(4))
+  //       });
+  //     }
+  //   }
+  //   return { data, currentPoint };
+  // }
 
   render() {
     let { data, currentPoint } = this.getChartData();
@@ -91,12 +142,12 @@ class CurveChart extends Component {
           <ReferenceDot
             isFront={true}
             ifOverflow="extendDomain"
-            x={currentPoint.supply}
-            y={currentPoint.value}
+            x={currentPoint.x}
+            y={currentPoint.y}
             r={16}
             // fill="blue"
             stroke="#0095b3"
-            label={currentPoint.value.toFixed(2)}
+            label={currentPoint.y}
           />
         </ComposedChart>
       </div>
@@ -190,8 +241,11 @@ class ProfileDetails extends Component {
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
     const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice =
-      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
+    const currentPrice = getPrice(
+      this.state.inverseSlope,
+      utils.toBN(totalSupply).toString(),
+      this.state.exponent
+    );
 
     return (
       <div style={{ padding: '5%' }}>
@@ -274,7 +328,7 @@ class ProfileDetails extends Component {
 
             <Grid item md={6}>
               <Details
-                marketCap={currentPrice * (totalSupply / multiplier)}
+                marketCap={currentPrice.mul(utils.toBN(totalSupply))}
                 name={this.state.name}
                 symbol={this.state.symbol}
                 tokenBalance={yourBalance / multiplier}
