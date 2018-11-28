@@ -17,7 +17,6 @@ import { CardMedia } from '@material-ui/core';
 import Hannah from '../../assets/hannah.jpg';
 
 import {
-  addDecimals,
   getPrice,
   removeDecimals
 } from '../../util';
@@ -73,35 +72,6 @@ class CurveChart extends Component {
       currentPoint,
     };
   }
-
-  // getChartData() {
-  //   let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
-  //   poolBalance = parseFloat(poolBalance) || 0;
-  //   totalSupply = parseFloat(totalSupply) || 0;
-
-  //   let currentPoint = { supply: totalSupply, value: currentPrice };
-
-  //   let data = [];
-  //   let step = (totalSupply || 50) / 100;
-
-  //   for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
-  //     let price = (1 / inverseSlope) * i ** exponent;
-  //     if (i < totalSupply) {
-  //       data.push({
-  //         supply: i,
-  //         sell: price.toFixed(4),
-  //         value: parseFloat(price.toFixed(4))
-  //       });
-  //     } else if (i >= totalSupply) {
-  //       data.push({
-  //         supply: i,
-  //         buy: price.toFixed(4),
-  //         value: parseFloat(price.toFixed(4))
-  //       });
-  //     }
-  //   }
-  //   return { data, currentPoint };
-  // }
 
   render() {
     let { data, currentPoint } = this.getChartData();
@@ -366,16 +336,16 @@ class ProfileDetails extends Component {
                   </Grid>
                   <Grid item md={4}>
                     Price
-                    <p>{currentPrice} ETH</p>
+                    <p>{removeDecimals(currentPrice)} ETH</p>
                   </Grid>
                   <Grid item md={4}>
                     Reserve Pool
-                    <p>{this.state.poolBalance} ETH </p>
+                    <p>{removeDecimals(this.state.poolBalance)} ETH </p>
                   </Grid>
                   <Grid item md={4}>
                     Total Supply
                     <p>
-                      {totalSupply} {this.state.symbol}
+                      {removeDecimals(totalSupply)} {this.state.symbol}
                     </p>
                   </Grid>
                 </Grid>
@@ -387,10 +357,12 @@ class ProfileDetails extends Component {
           <Services
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
+            drizzleState={this.props.drizzleState}
             mhash={this.state.mhash}
             symbol={this.state.symbol}
           />
         </Grid>
+
       </div>
     );
   }

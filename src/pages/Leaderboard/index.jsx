@@ -6,7 +6,9 @@ import withContext from '../../hoc/withContext';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
-import { getMultihashFromBytes32 } from '../../util';
+import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
+
+import { utils as w3utils } from 'web3';
 
 import ipfsApi from 'ipfs-api';
 
@@ -50,10 +52,20 @@ class LeaderboardList extends Component {
           });
           const raw = await ipfs.get(contentAddress);
           const dataJson = JSON.parse(raw[0].content.toString());
+          const inverseSlope = await personalEconomy.methods.inverseSlope().call();
+          const exponent = await personalEconomy.methods.exponent().call();
           const totalSupply = await personalEconomy.methods.totalSupply().call();
+          const currentPrice= getPrice(
+            inverseSlope,
+            totalSupply,
+            exponent,
+          );
+          // console.log(currentPrice.mul(w3utils.toBN(totalSupply)))
           const newEconomy = {
             address: event.returnValues.token_address,
+            currentPrice,
             name: dataJson.name,
+            marketCap: currentPrice.mul(w3utils.toBN(totalSupply)),
             services: dataJson.services,
             totalSupply
           };
@@ -88,7 +100,7 @@ class LeaderboardList extends Component {
             <td>
               <Link to={`tokens/${personalEconomy.address}`}>{personalEconomy.name}</Link>
             </td>
-            <td>{personalEconomy.totalSupply}</td>
+            <td>{removeDecimals(removeDecimals(personalEconomy.marketCap))} ETH</td>
             <td>Dos</td>
             <td>Tres</td>
           </tr>

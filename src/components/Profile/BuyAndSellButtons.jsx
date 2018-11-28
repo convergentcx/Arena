@@ -10,13 +10,19 @@ import {
   addDecimals,
   removeDecimals,
 } from '../../util';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './toast.css'
 export default class BuyAndSellButtons extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      interval: null,
       priceInEther: 0,
-      rewardInEther: 0
+      rewardInEther: 0,
+      txStatus: null,
     };
   }
 
@@ -25,14 +31,14 @@ export default class BuyAndSellButtons extends Component {
       from: this.props.drizzleState.accounts[0],
       value: this.state.priceInEther,
     });
-    this.setState({ buyStackId });
+    this.waitForMined(buyStackId);
   };
 
   getStatus = txStackId => {
     const { transactions, transactionStack } = this.props.drizzleState;
-    const txHash = transactionStack[this.state[txStackId]];
+    const txHash = transactionStack[txStackId];
     if (!txHash) return null;
-    return `Transaction status: ${transactions[txHash].status}`;
+    return transactions[txHash].status;
   };
 
   inputUpdate = async event => {
@@ -64,8 +70,30 @@ export default class BuyAndSellButtons extends Component {
     const sellStackId = this.props.contract.methods.burn.cacheSend(addDecimals(this.state.sellAmt), {
       from: this.props.drizzleState.accounts[0]
     });
-    this.setState({ sellStackId });
+    this.waitForMined(sellStackId);
   };
+
+  waitForMined = stackId => {
+    const interval = setInterval(() => {
+      const status = this.getStatus(stackId);
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' })
+        this.setState({
+          txStatus: 'pending',
+        })
+      }
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        toast.success('Transaction mined!', { className: 'green-background' });
+        clearInterval(this.state.interval);
+        this.setState({
+          txStatus: 'success',
+        })
+      }
+    }, 100);
+    this.setState({
+      interval,
+    });
+  }
 
   render() {
     return (
@@ -87,7 +115,7 @@ export default class BuyAndSellButtons extends Component {
               Buy
           </Button>
         </Grid>
-        <div>{this.getStatus('buyStackId')}</div>
+        {/* <div>{this.getStatus('buyStackId')}</div> */}
 
         <Grid item md={4}>
           <TextField
@@ -106,7 +134,9 @@ export default class BuyAndSellButtons extends Component {
             Sell
           </Button>
         </Grid>
-        <div>{this.getStatus('sellStackId')}</div>
+        {/* <div>{this.getStatus('sellStackId')}</div> */}
+
+        <ToastContainer autoClose={false} closeOnClick />
 
       </Grid>
     );

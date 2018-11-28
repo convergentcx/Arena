@@ -5,6 +5,10 @@ import ipfsApi from 'ipfs-api';
 
 import { getMultihashFromBytes32 } from '../../util';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './toast.css'
+
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
@@ -12,7 +16,7 @@ const multiplier = 10 ** 18;
 export default class Services extends Component {
   constructor(props) {
     super(props);
-    this.state = { jsonData: {}, message: '', stackId: '' };
+    this.state = { interval: null, jsonData: {}, message: '', txStatus: null };
   }
 
   async componentDidMount() {
@@ -37,6 +41,13 @@ export default class Services extends Component {
     });
   };
 
+  getStatus = txStackId => {
+    const { transactions, transactionStack } = this.props.drizzleState;
+    const txHash = transactionStack[txStackId];
+    if (!txHash) return null;
+    return transactions[txHash].status;
+  };
+
   requestWithEth = serviceIndex => {
     const { contract, account } = this.props;
     const stackId = contract.methods.requestWithEth.cacheSend(
@@ -47,7 +58,7 @@ export default class Services extends Component {
         // value: this.state.jsonData.services[serviceIndex].price * multiplier,
       }
     );
-    this.setState({ stackId });
+    this.waitForMined(stackId);
   };
 
   requestWithToken = serviceIndex => {
@@ -55,8 +66,30 @@ export default class Services extends Component {
     const stackId = contract.methods.requestWithToken.cacheSend(this.state.message, {
       from: account
     });
-    this.setState({ stackId });
+    this.waitForMined(stackId);
   };
+
+  waitForMined = stackId => {
+    const interval = setInterval(() => {
+      const status = this.getStatus(stackId);
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' })
+        this.setState({
+          txStatus: 'pending',
+        })
+      }
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        toast.success('Transaction mined!', { className: 'green-background' });
+        clearInterval(this.state.interval);
+        this.setState({
+          txStatus: 'success',
+        })
+      }
+    }, 100);
+    this.setState({
+      interval,
+    });
+  }
 
   render() {
     if (!this.state.jsonData.services) {
