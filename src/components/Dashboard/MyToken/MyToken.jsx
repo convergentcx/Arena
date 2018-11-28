@@ -11,7 +11,8 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 // import CurveChart from '../ListToken/TokenDetails/Chart/Chart';
 
 // import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 import CurveChart from './CurveChart/CurveChart'
 import BlockHistory from './BlockHistory/BlockHistory'
@@ -28,6 +29,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+
 
 const styles = theme => ({
   root: {
@@ -47,7 +51,51 @@ const styles = theme => ({
   pos: {
     marginBottom: 12,
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+  bigAvatar: {
+    margin: 10,
+    width: 60,
+    height: 60,
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
+  }
 });
+
+
+const currencies = [
+  {
+    value: 'attention',
+    label: 'Attention',
+  },
+  {
+    value: 'media',
+    label: 'Media',
+  },
+  {
+    value: 'arts',
+    label: 'Arts',
+  },
+  {
+    value: 'consulting',
+    label: 'Consulting',
+  },
+];
+
 
 const multiplier = 10 ** 18;
 
@@ -66,7 +114,13 @@ class MyTokens extends Component {
     owner: '',
     poolBalance: '',
     symbol: '',
-    popover: false
+    popover: false,
+
+
+    name: 'Cat in the Hat',
+    age: '',
+    multiline: 'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
+    currency: 'EUR',
   };
 
 
@@ -121,6 +175,12 @@ class MyTokens extends Component {
   }
 
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -145,26 +205,87 @@ class MyTokens extends Component {
     return (
       <div id={this.props.address} className={classes.root}>
         <h3>{this.props.name}</h3>
-      
+
         <Grid container spacing={24}>
           <Grid item xs={6}>
-          <Card className={classes.card}>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="Recipe" className={classes.bigAvatar}>
+                    R
+            </Avatar>
+                }
+                action={
+                  <div>
+                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
+                      Edit
+                  </Button>
+                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
+                      Market Page
+                  </Button> */}
+                  </div>
+                }
+                title={
+                  <TextField
+                    id="standard-read-only-input"
+                    defaultValue="Hello World"
+                    className={classes.textField}
+                    margin="normal"
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                }
+                subheader={
+                  <div>
+                    <Chip label="blockchain" className={classes.chip} />
+                    <Chip label="mentorship" className={classes.chip} />
+                  </div>
+                }
+              />
               <CardContent>
-                <Button color="secondary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                  See Market Page
-            </Button>
-            </CardContent>
+                <form className={classes.container} noValidate autoComplete="off">
+
+                  <TextField
+                    id="standard-full-width"
+                    value={this.state.multiline}
+                    onChange={this.handleChange('multiline')}
+                    label="Label"
+                    style={{ margin: 8 }}
+                    placeholder="My token will give you .."
+                    helperText="Tell your investors why you are going to the moon"
+                    fullWidth
+                    multiline
+                    // rows="4"
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+
+                </form>
+
+              </CardContent>
             </Card>
           </Grid>
           <Grid item xs={3}>
             <Card className={classes.card}>
+
               <CardContent>
+
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Market Cap
                 </Typography>
                 <Typography variant="h2" component="h2">
                   {currentPrice * (totalSupply / multiplier)} Ξ
                 </Typography>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Current Value
+                </Typography>
+                <Typography variant="h2" component="h2">
+                  {currentPrice * (totalSupply / multiplier) * 500} $
+                </Typography>
+
               </CardContent>
             </Card>
 
@@ -182,10 +303,7 @@ class MyTokens extends Component {
                   Current Value
                 </Typography>
                 <Typography variant="h2" component="h2">
-                  {(yourBalance / multiplier.toFixed(3)) * currentPrice} Ξ
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
-
+                  {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
                 </Typography>
               </CardContent>
             </Card>
@@ -302,8 +420,73 @@ class MyTokens extends Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={9}>
             <Events date={this.props.date} address={this.props.address} />
+          </Grid>
+
+          <Grid item xs={3}>
+
+            <Grid container sm={12}>
+              <Grid item sm={6}>
+
+              </Grid>
+              <Grid item sm={6}>
+
+              </Grid>
+            </Grid>
+            <TextField
+              id="standard-name"
+              label="Name"
+              className={classes.textField}
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              margin="normal"
+            />
+
+            <TextField
+              required
+              id="standard-required"
+              label="req"
+              defaultValue="Hello World"
+              className={classes.textField}
+              margin="normal"
+            />
+
+
+            <TextField
+              id="standard-number"
+              label="Number"
+              value={this.state.age}
+              onChange={this.handleChange('age')}
+              type="number"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin="normal"
+            />
+
+            <TextField
+              id="standard-select-currency"
+              select
+              label="Select"
+              className={classes.textField}
+              value={this.state.currency}
+              onChange={this.handleChange('currency')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Please select a category"
+              margin="normal"
+            >
+              {currencies.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
 
 
