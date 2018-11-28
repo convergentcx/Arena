@@ -2,207 +2,75 @@ import React, { Component } from 'react';
 import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
 import ipfsApi from 'ipfs-api';
 
-import {
-  CardImg,
-  Col,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Label,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
-  Row,
-  Table
-} from 'reactstrap';
-
-import { Button, Card, CardContent, CardHeader, IconButton, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, IconButton, Grid, Popover, Typography } from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
-import { getMultihashFromBytes32 } from '../../util';
+import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
+import Details from '../../components/Profile/Details.jsx';
+import Services from '../../components/Profile/Services.jsx';
+
+import { CardMedia } from '@material-ui/core';
+import Hannah from '../../assets/hannah.jpg';
+
+import {
+  getPrice,
+  removeDecimals
+} from '../../util';
+
+import { utils } from 'web3';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
-class BuySell extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      priceInEther: 0,
-      rewardInEther: 0
-    };
-  }
-
-  buyHandler = () => {
-    const buyStackId = this.props.contract.methods.mint.cacheSend(String(10 ** 18), {
-      from: this.props.drizzleState.accounts[0],
-      value: String(this.state.priceInEther)
-    });
-    this.setState({ buyStackId });
-  };
-
-  getStatus = txStackId => {
-    const { transactions, transactionStack } = this.props.drizzleState;
-    const txHash = transactionStack[this.state[txStackId]];
-    if (!txHash) return null;
-    return `Transaction status: ${transactions[txHash].status}`;
-  };
-
-  inputUpdate = async event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-
-    // Update price
-    if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(String(10 ** 18)).call();
-      this.setState({
-        priceInEther
-      });
-    }
-
-    // Update reward
-    if (name === 'sellAmt') {
-      const rewardInEther = await this.props.contract.methods
-        .rewardForBurn(String(10 ** 18))
-        .call();
-      this.setState({
-        rewardInEther
-      });
-    }
-  };
-
-  sellHandler = () => {
-    const sellStackId = this.props.contract.methods.burn.cacheSend(String(10 ** 18), {
-      from: this.props.drizzleState.accounts[0]
-    });
-    this.setState({ sellStackId });
-  };
-
-  render() {
-    return (
-      <Grid container>
-
-        <Grid item md={6}>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <Button color="primary" onClick={this.buyHandler}>
-                Buy
-              </Button>
-            </InputGroupAddon>
-            <Input
-              type="number"
-              name="buyAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <InputGroupAddon addonType="append">
-              With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
-            </InputGroupAddon>
-          </InputGroup>
-          <div>{this.getStatus('buyStackId')}</div>
-        </Grid>
-
-        <Grid item md={6}>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <Button color="primary" onClick={this.sellHandler}>
-                Sell
-              </Button>
-            </InputGroupAddon>
-            <Input
-              type="number"
-              name="sellAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <InputGroupAddon addonType="prepend">
-              For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
-            </InputGroupAddon>
-          </InputGroup>
-          <div>{this.getStatus('sellStackId')}</div>
-        </Grid>
-
-      </Grid>
-    );
-  }
-}
-
-const ContractInfo = props => (
-  <div>
-    <Grid container>
-      <Grid item md={6}>
-        <Card>
-          <CardHeader>Market Cap</CardHeader>
-          <CardContent>{props.marketCap} ETH</CardContent>
-        </Card>
-      </Grid>
-      <Grid item md={6}>
-        <Card>
-          <CardHeader>You own</CardHeader>
-          <CardContent>
-            {props.tokenBalance} {props.symbol}
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-
-    <Grid container style={{ paddingTop: '2%' }}>
-      <Grid item md={12}>
-        <Card>
-          <CardHeader>About {props.name}</CardHeader>
-          <CardContent>
-            Hi I am Hanna - I like to get paid when someone wants something from me..
-          </CardContent>
-          <CardImg
-            top
-            width="100%"
-            height="20%"
-            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=100"
-            alt="Card image cap"
-          />
-        </Card>
-      </Grid>
-    </Grid>
-  </div>
-);
-
 class CurveChart extends Component {
-  getChartData() {
-    let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
-    poolBalance = parseFloat(poolBalance) || 0;
-    totalSupply = parseFloat(totalSupply) || 0;
+  getChartData = () => {
+    let { 
+      currentPrice,
+      exponent,
+      inverseSlope,
+      poolBalance,
+      totalSupply,
+    } = this.props.curveData;
 
-    let currentPoint = { supply: totalSupply, value: currentPrice };
+    poolBalance = utils.toBN(poolBalance);
+    totalSupply = utils.toBN(totalSupply);
 
-    let data = [];
-    let step = (totalSupply || 50) / 100;
+    const currentPoint = {
+      x: parseFloat(removeDecimals(totalSupply.toString())).toFixed(4),
+      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4),
+    };
 
-    for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
-      let price = (1 / inverseSlope) * i ** exponent;
-      if (i < totalSupply) {
-        data.push({
-          supply: i,
-          sell: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+    let data = [
+      {supply: 0, sell: 0, value: 0}
+    ];
+
+    const step = utils.toBN(10**17);
+    for (let i = step; i.lte(utils.toBN(750).mul(step)); i = i.add(step)) {
+      const price = getPrice(inverseSlope, i, exponent);
+      if (i.lte(totalSupply)) {
+        data.push({ 
+          supply: parseFloat(removeDecimals(i)).toFixed(4), 
+          sell: parseFloat(removeDecimals(price)).toFixed(4), 
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
-      } else if (i >= totalSupply) {
+      } else if (i.gt(totalSupply)) {
         data.push({
-          supply: i,
-          buy: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          supply: parseFloat(removeDecimals(i)).toFixed(4), 
+          buy: parseFloat(removeDecimals(price)).toFixed(4), 
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
       }
     }
-    return { data, currentPoint };
+
+    return {
+      data, 
+      currentPoint,
+    };
   }
 
   render() {
@@ -244,109 +112,14 @@ class CurveChart extends Component {
           <ReferenceDot
             isFront={true}
             ifOverflow="extendDomain"
-            x={currentPoint.supply}
-            y={currentPoint.value}
+            x={currentPoint.x}
+            y={currentPoint.y}
             r={16}
             // fill="blue"
             stroke="#0095b3"
-            label={currentPoint.value.toFixed(2)}
+            label={currentPoint.y}
           />
         </ComposedChart>
-      </div>
-    );
-  }
-}
-
-class RequestService extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { jsonData: {}, message: '', stackId: '' };
-  }
-
-  async componentDidMount() {
-    const contentAddress = getMultihashFromBytes32({
-      digest: this.props.mhash,
-      hashFunction: 18,
-      size: 32
-    });
-
-    const result = await ipfs.get('/ipfs/' + contentAddress);
-    const contentString = result[0].content.toString();
-    const jsonData = JSON.parse(contentString);
-    this.setState({
-      jsonData
-    });
-  }
-
-  inputUpdate = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  requestWithEth = serviceIndex => {
-    const { contract, account } = this.props;
-    const stackId = contract.methods.requestWithEth.cacheSend(
-      this.state.message,
-      String(this.state.jsonData.services[serviceIndex].price * multiplier),
-      {
-        from: account
-        // value: this.state.jsonData.services[serviceIndex].price * multiplier,
-      }
-    );
-    this.setState({ stackId });
-  };
-
-  requestWithToken = serviceIndex => {
-    const { contract, account } = this.props;
-    const stackId = contract.methods.requestWithToken.cacheSend(this.state.message, {
-      from: account
-    });
-    this.setState({ stackId });
-  };
-
-  render() {
-    if (!this.state.jsonData.services) {
-      return <div>Still Loading...</div>;
-    }
-
-    let items = this.state.jsonData.services.map((serviceObj, i) => {
-      return (
-        <tr key={i}>
-          <td>{serviceObj.what}</td>
-          <td>{serviceObj.price}</td>
-          <td>
-            <Input name="message" onChange={this.inputUpdate} />
-          </td>
-          <td>
-            <Button color="danger" onClick={() => this.requestWithEth(i)}>
-              Request with ETH
-            </Button>
-          </td>
-          <td>
-            <Button color="success" onClick={() => this.requestWithToken(i)}>
-              Request with {this.props.symbol}
-            </Button>
-          </td>
-        </tr>
-      );
-    });
-
-    return (
-      <div>
-        <Table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th>Price</th>
-              <th>Message</th>
-              <th />
-              <th />
-            </tr>
-          </thead>
-          <tbody>{items}</tbody>
-        </Table>
       </div>
     );
   }
@@ -363,6 +136,7 @@ class ProfileDetails extends Component {
     super(props);
 
     this.state = {
+      anchorEl: null,
       dataKeys: {
         totalSupplyKey: '',
         yourBalanceKey: ''
@@ -374,7 +148,6 @@ class ProfileDetails extends Component {
       owner: '',
       poolBalance: '',
       symbol: '',
-      popover: false
     };
   }
 
@@ -418,9 +191,9 @@ class ProfileDetails extends Component {
     });
   }
 
-  toggle = () => {
+  openPopover = event => {
     this.setState({
-      popover: !this.state.popover
+      anchorEl: event.currentTarget,
     });
   };
 
@@ -438,8 +211,11 @@ class ProfileDetails extends Component {
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
     const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice =
-      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
+    const currentPrice = getPrice(
+      this.state.inverseSlope,
+      utils.toBN(totalSupply).toString(),
+      this.state.exponent
+    );
 
     return (
       <div style={{ padding: '5%' }}>
@@ -456,111 +232,137 @@ class ProfileDetails extends Component {
 
 
         <Grid container style={{ paddingTop: '2%' }}>
-          <BuySell
-            contract={this.props.drizzle.contracts[this.props.addr]}
-            drizzleState={this.props.drizzleState}
-            symbol={this.state.symbol}
-          />
           <Grid container style={{ paddingTop: '2%' }}>
+            <Grid item md={6}>
+              <Card style={{ margin: '6px' }}>
+                <CardMedia
+                    alt="person's photo"
+                    image={Hannah}
+                    style={{ height: '0', paddingTop: '56.25%' }}
+                  />
+                <CardHeader title="About Hannah" />
+                <CardContent>
+                  Hi I am Hanna - I like to get paid when someone wants something from me..
+                </CardContent>
+              </Card>
+            </Grid>
 
             <Grid item md={6}>
-              <ContractInfo
-                marketCap={currentPrice * (totalSupply / multiplier)}
+              <Card style={{ margin: '6px' }}>
+                <Grid container>
+                  <Grid item sm={12} style={{ display: 'flex' }}>
+                    <div style={{ flexGrow: 1 }} />
+                    <div style={{ padding: '15px', }}>
+                      <Button
+                        color="secondary"
+                        size="sm" 
+                        aria-owns={Boolean(this.state.anchorEl) ? 'simple-popper' : undefined}
+                        aria-haspopup="true"
+                        variant="contained"
+                        onClick={this.openPopover}
+                      >
+                        Details
+                      </Button>
+                    </div>
+                  </Grid>
+
+                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <CurveChart
+                      curveData={{
+                        totalSupply: totalSupply,
+                        poolBalance: this.state.poolBalance,
+                        inverseSlope: this.state.inverseSlope,
+                        exponent: this.state.exponent,
+                        currentPrice: currentPrice
+                      }}
+                      margin={{
+                        top: 30,
+                        right: 10,
+                        bottom: 30,
+                        left: 10
+                      }}
+                      width={300}
+                      height={300}
+                    />
+                  </Grid>
+                </Grid>
+              </Card>
+              <div style={{ padding: '2%' }}>
+                <BuyAndSellButtons
+                  contract={this.props.drizzle.contracts[this.props.addr]}
+                  drizzleState={this.props.drizzleState}
+                  symbol={this.state.symbol}
+                />
+              </div>
+            </Grid>
+
+            <Grid item md={6}>
+              <Details
+                marketCap={currentPrice.mul(utils.toBN(totalSupply))}
                 name={this.state.name}
                 symbol={this.state.symbol}
                 tokenBalance={yourBalance / multiplier}
               />
             </Grid>
 
-            <Grid item md={6}>
-              <Card>
-                <div style={{ padding: '15px', }}>
-                  Bonding Curve
-                  <div>
-                    <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
-                      Details
-                    </Button>
-                  </div>
-                  <Popover
-                    placement="bottom"
-                    isOpen={this.state.popover}
-                    target="Popover1"
-                    toggle={this.toggle}
-                  >
-                    <PopoverHeader>Contract Information</PopoverHeader>
-                    <PopoverBody>
-                      <Row>
-                        <Col md={12}>
-                          <FormGroup>
-                            <Label size="sm" style={labelStyle}>
-                              Contract Address
-                            </Label>
-                            <p> {this.props.addr} </p>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={12}>
-                          <Label size="sm" style={labelStyle}>
-                            Owner Address
-                          </Label>
-                          <p>{this.state.owner}</p>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Price
-                          </Label>
-                          <p>{currentPrice} ETH</p>
-                        </Col>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Reserve Pool
-                          </Label>
-                          <p>{this.state.poolBalance} ETH </p>
-                        </Col>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Total Supply
-                          </Label>
-                          <p>
-                            {totalSupply} {this.state.symbol}
-                          </p>
-                        </Col>
-                      </Row>
-                    </PopoverBody>
-                  </Popover>
-                </div>
-
-                <CurveChart
-                  curveData={{
-                    totalSupply: totalSupply,
-                    poolBalance: this.state.poolBalance,
-                    inverseSlope: this.state.inverseSlope,
-                    exponent: this.state.exponent,
-                    currentPrice: currentPrice
-                  }}
-                  margin={{
-                    top: 30,
-                    right: 10,
-                    bottom: 30,
-                    left: 10
-                  }}
-                  width={300}
-                  height={300}
-                />
-              </Card>
-            </Grid>
           </Grid>
 
-          <RequestService
+
+          <Popover
+            id="simple-popper"
+            anchorEl={this.state.anchorEl}
+            onClose={() => this.setState({ anchorEl: null })}
+            open={Boolean(this.state.anchorEl)}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >  
+            <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>                
+              <CardHeader title="Contract Information" style={{ textAlign: 'center' }} />
+              <CardContent style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+                <Grid container>
+                  <Grid item md={12}>
+                    Contract Address
+                    <p>{this.props.addr}</p>
+                  </Grid>
+                  <Grid item md={12}>
+                    Owner Address
+                    <p>{this.state.owner}</p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Price
+                    <p>{removeDecimals(currentPrice)} ETH</p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Reserve Pool
+                    <p>{removeDecimals(this.state.poolBalance)} ETH </p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Total Supply
+                    <p>
+                      {removeDecimals(totalSupply)} {this.state.symbol}
+                    </p>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Popover>
+
+
+          <Services
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
+            drizzleState={this.props.drizzleState}
             mhash={this.state.mhash}
             symbol={this.state.symbol}
           />
         </Grid>
+
       </div>
     );
   }
