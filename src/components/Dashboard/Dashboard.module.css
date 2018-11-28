@@ -1,3 +1,7 @@
+.main {
+  margin-top: 50px;
+}
+
 .Sidebar {
     float: left,
 }
@@ -44,11 +48,15 @@
   }
   
   .menuBox {
-    display: flex;
+    display: inline-block;
     flex-direction: column;
-    padding-right: 3em;
     position: fixed;
     @media (max-width: 900px) {
       display: none;
     }
   }
+
+.tokenBox {
+  display: inline-block;
+  width: 70%
+}
