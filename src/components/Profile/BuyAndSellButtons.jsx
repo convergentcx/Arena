@@ -68,42 +68,43 @@ export default class BuyAndSellButtons extends Component {
   render() {
     return (
       <Grid container>
-
-        <Grid item md={6}>
-          <div>
-            <TextField
-              type="number"
-              name="buyAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <Button color="primary" onClick={this.buyHandler}>
-                Buy
-            </Button>
-            <div addonType="append">
-              With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
-            </div>
+        <Grid item md={4}>
+          <TextField
+            type="number"
+            name="buyAmt"
+            onChange={this.inputUpdate}
+            placeholder={this.props.symbol}
+          />
+          <div addonType="append">
+            With {(this.state.priceInEther / multiplier).toFixed(3)} ETH
           </div>
-          <div>{this.getStatus('buyStackId')}</div>
         </Grid>
 
-        <Grid item md={6}>
-          <div>
-            <TextField
-              type="number"
-              name="sellAmt"
-              onChange={this.inputUpdate}
-              placeholder={this.props.symbol}
-            />
-            <Button color="primary" onClick={this.sellHandler}>
-              Sell
-            </Button>
-            <div addonType="prepend">
-              For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
-            </div>
-          </div>
-          <div>{this.getStatus('sellStackId')}</div>
+        <Grid item md={2}>
+          <Button color="primary" onClick={this.buyHandler}>
+              Buy
+          </Button>
         </Grid>
+        {/* <div>{this.getStatus('buyStackId')}</div> */}
+
+        <Grid item md={4}>
+          <TextField
+            type="number"
+            name="sellAmt"
+            onChange={this.inputUpdate}
+            placeholder={this.props.symbol}
+          />
+          <div addonType="append">
+            For {(this.state.rewardInEther / multiplier).toFixed(3)} ETH
+          </div>
+        </Grid>
+
+        <Grid item md={2}>
+          <Button color="primary" onClick={this.sellHandler}>
+            Sell
+          </Button>
+        </Grid>
+        {/* <div>{this.getStatus('sellStackId')}</div> */}
 
       </Grid>
     );

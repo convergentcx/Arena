@@ -2,17 +2,7 @@ import React, { Component } from 'react';
 import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
 import ipfsApi from 'ipfs-api';
 
-import {
-  Col,
-  FormGroup,
-  Label,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
-  Row,
-} from 'reactstrap';
-
-import { Button, Card, IconButton, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, IconButton, Grid, Popover, Typography } from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
@@ -22,6 +12,11 @@ import withContext from '../../hoc/withContext';
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
 import Services from '../../components/Profile/Services.jsx';
+
+
+import { CardMedia } from '@material-ui/core';
+import Hannah from '../../assets/hannah.jpg';
+
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -120,6 +115,7 @@ class ProfileDetails extends Component {
     super(props);
 
     this.state = {
+      anchorEl: null,
       dataKeys: {
         totalSupplyKey: '',
         yourBalanceKey: ''
@@ -131,7 +127,6 @@ class ProfileDetails extends Component {
       owner: '',
       poolBalance: '',
       symbol: '',
-      popover: false
     };
   }
 
@@ -175,9 +170,9 @@ class ProfileDetails extends Component {
     });
   }
 
-  toggle = () => {
+  openPopover = event => {
     this.setState({
-      popover: !this.state.popover
+      anchorEl: event.currentTarget,
     });
   };
 
@@ -213,12 +208,69 @@ class ProfileDetails extends Component {
 
 
         <Grid container style={{ paddingTop: '2%' }}>
-          <BuyAndSellButtons
-            contract={this.props.drizzle.contracts[this.props.addr]}
-            drizzleState={this.props.drizzleState}
-            symbol={this.state.symbol}
-          />
           <Grid container style={{ paddingTop: '2%' }}>
+            <Grid item md={6}>
+              <Card style={{ margin: '6px' }}>
+                <CardMedia
+                    alt="person's photo"
+                    image={Hannah}
+                    style={{ height: '0', paddingTop: '56.25%' }}
+                  />
+                <CardHeader title="About Hannah" />
+                <CardContent>
+                  Hi I am Hanna - I like to get paid when someone wants something from me..
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item md={6}>
+              <Card style={{ margin: '6px' }}>
+                <Grid container>
+                  <Grid item sm={12} style={{ display: 'flex' }}>
+                    <div style={{ flexGrow: 1 }} />
+                    <div style={{ padding: '15px', }}>
+                      <Button
+                        color="secondary"
+                        size="sm" 
+                        aria-owns={Boolean(this.state.anchorEl) ? 'simple-popper' : undefined}
+                        aria-haspopup="true"
+                        variant="contained"
+                        onClick={this.openPopover}
+                      >
+                        Details
+                      </Button>
+                    </div>
+                  </Grid>
+
+                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <CurveChart
+                      curveData={{
+                        totalSupply: totalSupply,
+                        poolBalance: this.state.poolBalance,
+                        inverseSlope: this.state.inverseSlope,
+                        exponent: this.state.exponent,
+                        currentPrice: currentPrice
+                      }}
+                      margin={{
+                        top: 30,
+                        right: 10,
+                        bottom: 30,
+                        left: 10
+                      }}
+                      width={300}
+                      height={300}
+                    />
+                  </Grid>
+                </Grid>
+              </Card>
+              <div style={{ padding: '2%' }}>
+                <BuyAndSellButtons
+                  contract={this.props.drizzle.contracts[this.props.addr]}
+                  drizzleState={this.props.drizzleState}
+                  symbol={this.state.symbol}
+                />
+              </div>
+            </Grid>
 
             <Grid item md={6}>
               <Details
@@ -229,87 +281,54 @@ class ProfileDetails extends Component {
               />
             </Grid>
 
-            <Grid item md={6}>
-              <Card>
-                <div style={{ padding: '15px', }}>
-                  Bonding Curve
-                  <div>
-                    <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
-                      Details
-                    </Button>
-                  </div>
-                  <Popover
-                    placement="bottom"
-                    isOpen={this.state.popover}
-                    target="Popover1"
-                    toggle={this.toggle}
-                  >
-                    <PopoverHeader>Contract Information</PopoverHeader>
-                    <PopoverBody>
-                      <Row>
-                        <Col md={12}>
-                          <FormGroup>
-                            <Label size="sm" style={labelStyle}>
-                              Contract Address
-                            </Label>
-                            <p> {this.props.addr} </p>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={12}>
-                          <Label size="sm" style={labelStyle}>
-                            Owner Address
-                          </Label>
-                          <p>{this.state.owner}</p>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Price
-                          </Label>
-                          <p>{currentPrice} ETH</p>
-                        </Col>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Reserve Pool
-                          </Label>
-                          <p>{this.state.poolBalance} ETH </p>
-                        </Col>
-                        <Col md={4}>
-                          <Label size="sm" style={labelStyle}>
-                            Total Supply
-                          </Label>
-                          <p>
-                            {totalSupply} {this.state.symbol}
-                          </p>
-                        </Col>
-                      </Row>
-                    </PopoverBody>
-                  </Popover>
-                </div>
-
-                <CurveChart
-                  curveData={{
-                    totalSupply: totalSupply,
-                    poolBalance: this.state.poolBalance,
-                    inverseSlope: this.state.inverseSlope,
-                    exponent: this.state.exponent,
-                    currentPrice: currentPrice
-                  }}
-                  margin={{
-                    top: 30,
-                    right: 10,
-                    bottom: 30,
-                    left: 10
-                  }}
-                  width={300}
-                  height={300}
-                />
-              </Card>
-            </Grid>
           </Grid>
+
+
+          <Popover
+            id="simple-popper"
+            anchorEl={this.state.anchorEl}
+            onClose={() => this.setState({ anchorEl: null })}
+            open={Boolean(this.state.anchorEl)}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >  
+            <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>                
+              <CardHeader title="Contract Information" style={{ textAlign: 'center' }} />
+              <CardContent style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+                <Grid container>
+                  <Grid item md={12}>
+                    Contract Address
+                    <p>{this.props.addr}</p>
+                  </Grid>
+                  <Grid item md={12}>
+                    Owner Address
+                    <p>{this.state.owner}</p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Price
+                    <p>{currentPrice} ETH</p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Reserve Pool
+                    <p>{this.state.poolBalance} ETH </p>
+                  </Grid>
+                  <Grid item md={4}>
+                    Total Supply
+                    <p>
+                      {totalSupply} {this.state.symbol}
+                    </p>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Popover>
+
 
           <Services
             account={this.props.drizzleState.accounts[0]}

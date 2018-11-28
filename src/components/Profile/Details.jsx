@@ -8,17 +8,19 @@ import {
   Grid,
 } from '@material-ui/core';
 
+import Hannah from '../../assets/hannah.jpg';
+
 const Details = props => (
   <div>
     <Grid container>
       <Grid item md={6}>
-        <Card>
+        <Card style={{ margin: '6px' }}>
           <CardHeader>Market Cap</CardHeader>
           <CardContent>{props.marketCap} ETH</CardContent>
         </Card>
       </Grid>
       <Grid item md={6}>
-        <Card>
+        <Card style={{ margin: '6px' }}>
           <CardHeader>You own</CardHeader>
           <CardContent>
             {props.tokenBalance} {props.symbol}
@@ -27,21 +29,21 @@ const Details = props => (
       </Grid>
     </Grid>
 
-    <Grid container style={{ paddingTop: '2%' }}>
+    {/* <Grid container style={{ paddingTop: '2%' }}>
       <Grid item md={12}>
-        <Card>
-          <CardHeader>About {props.name}</CardHeader>
+        <Card style={{ margin: '6px' }}>
+          <CardMedia
+              alt="person's photo"
+              image={Hannah}
+              style={{ height: '0', paddingTop: '56.25%' }}
+            />
+          <CardHeader title="About Hannah" />
           <CardContent>
             Hi I am Hanna - I like to get paid when someone wants something from me..
           </CardContent>
-          <CardMedia
-            height="200px"
-            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=100"
-            alt="Card image cap"
-          />
         </Card>
       </Grid>
-    </Grid>
+    </Grid> */}
   </div>
 );
 
