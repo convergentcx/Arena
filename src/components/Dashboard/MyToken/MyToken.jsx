@@ -43,6 +43,14 @@ const styles = theme => ({
   card: {
     minWidth: 200,
   },
+  smallCard: {
+    width: '95%',
+    boxSizing: 'border-box',
+    margin: 0,
+  },
+  mediumCard: {
+    height: '95%'
+  },
   title: {
     fontSize: 14,
   },
@@ -205,8 +213,8 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <Grid item xs={4}>
-            <Card className={classes.card}>
+          <Grid item md={4} xs={12}>
+            <Card className={classes.card} style={{height: '100%'}}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.bigAvatar}>
@@ -271,68 +279,64 @@ class MyTokens extends Component {
 
 
 
-          <Grid item xs={5}>
-            <Grid container sm={12}>
+          <Grid item md={5} sm={12} xs={12}>
+            <Grid container style={{height: '100%'}}>
+              <Grid item sm={12} style={{height: '50%', display: 'flex', 'paddingBottom': '6px'}}>
+                <Card className={classes.smallCard} style={{ marginRight: '6px' }} >
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Current Price
+                    </Typography>
+                    <Typography variant="h6" component="h2">
+                      {currentPrice} Ξ
+                    </Typography>
+                  </CardContent>
+                </Card>
 
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Current Price
-                </Typography>
-                  <Typography variant="h6" component="h2">
-                    {currentPrice} Ξ
-                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
+                {/* 2 */}
+                <Card className={classes.smallCard} style={{'marginLeft': '6px'}}>
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Current Token Supply
+                    </Typography>
+                    <Typography variant="h6" component="h2">
+                      {totalSupply / multiplier} {this.state.symbol}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item sm={12} style={{height: '50%', display: 'flex', 'paddingTop': '6px' }}>
+                <Card className={classes.smallCard} style={{'marginRight': '6px'}}>
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Reserve Pool
+                    </Typography>
+                    <Typography variant="h6" component="h2">
+                      {this.state.poolBalance / multiplier} Ξ
+                    </Typography>
+                  </CardContent>
+                </Card>
 
-                  </Typography>
-                </CardContent>
-              </Card>
+                <Card className={classes.smallCard} style={{'marginLeft': '6px'}}>
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Price formula
+                    </Typography>
+                    <Typography variant="h6" component="h2">
+                      {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Current Token Supply
-                </Typography>
-                  <Typography variant="h6" component="h2">
-                    {totalSupply / multiplier} {this.state.symbol}
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
-                  </Typography>
-                </CardContent>
-              </Card>
-
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Reserve Pool
-                </Typography>
-                  <Typography variant="h6" component="h2">
-                    {this.state.poolBalance / multiplier} Ξ
-                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
-                  </Typography>
-                </CardContent>
-              </Card>
-
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Price formula
-                </Typography>
-                  <Typography variant="h6" component="h2">
-                    {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
-                  </Typography>
-                </CardContent>
-              </Card>
             </Grid>
 
           </Grid>
-          <Grid item xs={3}>
-            <Card className={classes.card}>
+          <Grid item md={3} xs={12} style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+            
+            
+            <Grid item md={12} style={{paddingBottom: '6px'}}>
+            <Card>
               <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Your Balance
@@ -347,10 +351,11 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
 
+            </Grid>
 
+            <Grid item md={12} style={{paddingTop: '6px'}}>
 
-
-            <Card className={classes.card}>
+            <Card>
 
               <CardContent>
 
@@ -366,6 +371,8 @@ class MyTokens extends Component {
 
               </CardContent>
             </Card>
+            </Grid>
+
           </Grid>
         </Grid>
 
