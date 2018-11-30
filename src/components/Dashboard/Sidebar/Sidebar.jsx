@@ -19,7 +19,7 @@ export default class Example extends React.Component {
 
     return (
       <div>
-        <p>My Economies</p>
+        <p className={classes.sidebarTitle}>My Economies</p>
         <Nav vertical>{links}</Nav>
       </div>
     );

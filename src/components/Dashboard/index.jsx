@@ -102,8 +102,8 @@ class Dashboard extends Component {
           <Route path='/dashboard' component={} />
           <Route path="/dashboard/:tokenAddress" exact component={Events} />
         </Switch> */}
+        <div className={classes.tokenBox}>{tokens}</div>
         
-        {tokens}
         <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
 
         </div>
