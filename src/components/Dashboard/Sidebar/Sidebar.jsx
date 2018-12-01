@@ -11,16 +11,15 @@ export default class Example extends React.Component {
       this.props.tokens.map(token => {
         return (
           // <NavLink to={`/dashboard/#${token.address}`}>{token.name}</NavLink>
-          <NavHashLink smooth to={`/dashboard/#${token.address}`} className={classes.NavHashLink}>
+          <NavLink to={`/dashboard/${token.address}`} className={classes.NavHashLink}>
             {token.name}
-          </NavHashLink>
+          </NavLink>
         );
       });
 
     return (
       <div>
-        <p className={classes.sidebarTitle}>My Economies</p>
-        <Nav vertical>{links}</Nav>
+        <Nav>{links}</Nav>
       </div>
     );
   }

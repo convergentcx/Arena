@@ -81,30 +81,33 @@ class Dashboard extends Component {
   };
 
   render() {
-    const tokens =
-      this.state.tokens &&
-      this.state.tokens.map(token => {
-        return (
-          <MyToken
-            address={token.address}
-            date={token.date}
-            name={token.name}
-            key={token.address}
-          />
-        );
-      });
+  //  const tokens =
+    //  this.state.tokens &&
+    //  this.state.tokens.map(token => {
+      //  return (
+      //    <MyToken
+      //      address={token.address}
+      //      date={token.date}
+      //      name={token.name}
+      //      key={token.address}
+      //    />
+      //  );
+      // });
 
     return (
       <div className={classes.main}>
-        {/*<ScrollableTabsButtonAuto  />*/}
 
         {/* <Switch>
           <Route path='/dashboard' component={} />
           <Route path="/dashboard/:tokenAddress" exact component={Events} />
         </Switch> */}
-        <div className={classes.tokenBox}>{tokens}</div>
-        
+        {/*<div className={classes.tokenBox}>{tokens}</div>*/}
+        {/*<Sidebar tokens={this.state.tokens} className={classes.menuBox} />*/}
+        {/*<ScrollableTabsButtonAuto tokens={this.state.tokens} />*/}
+
         <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
+        <Route path="/dashboard/:tokenAddress" exact render={(props) => <MyToken key={props.match.params.tokenAddress}/>}/>
+        
 
         </div>
     );

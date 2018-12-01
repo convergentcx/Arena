@@ -127,11 +127,16 @@ class MyTokens extends Component {
     age: '',
     multiline: 'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
     currency: 'EUR',
+    editingProfile: false,
+    displayName: 'My Token',
+    editingServices: false,
   };
 
 
   async componentDidMount() {
-    const { address, drizzle } = this.props;
+    const { drizzle } = this.props;
+    const address = this.props.match.params.tokenAddress;
+    console.log("biatch")
     const contractConfig = {
       contractName: address,
       web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address)
@@ -187,10 +192,19 @@ class MyTokens extends Component {
     });
   };
 
+  toggleEditable = () => {
+    this.setState({editingProfile: !this.state.editingProfile})
+  }
+
+  toggleServiceEditable = () => {
+    this.setState({editingServices: !this.state.editingServices})
+  }
+
   render() {
     const { classes } = this.props;
+    const address = this.props.match.params.tokenAddress;
 
-    const contract = this.props.drizzleState.contracts[this.props.address];
+    const contract = this.props.drizzleState.contracts[address];
 
     if (
       !contract ||
@@ -209,7 +223,7 @@ class MyTokens extends Component {
 
 
     return (
-      <div id={this.props.address} className={classes.root}>
+      <div id={address} className={classes.root}>
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
@@ -223,8 +237,8 @@ class MyTokens extends Component {
                 }
                 action={
                   <div>
-                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
-                      Edit
+                    <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleEditable} style={{ float: 'right' }}>
+                      {this.state.editingProfile ? 'Save' : 'Edit'}
                   </Button>
                     {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
                       Market Page
@@ -234,14 +248,19 @@ class MyTokens extends Component {
                 title={
                   <TextField
                     id="standard-read-only-input"
-                    defaultValue="Token display name"
+                    value={this.state.displayName}
+                    onChange={this.handleChange('displayName')}
                     className={classes.textField}
                     margin="normal"
                     InputProps={{
-                      readOnly: true,
+                      readOnly: !this.state.editingProfile,
                     }}
                   />
                 }
+                
+                // What follows is an idea for how people could give themselves tags. Not sure how/if we 
+                // should add these for the alpha
+
                 subheader={
                   <div>
                     <Chip label="blockchain" className={classes.chip} />
@@ -265,7 +284,10 @@ class MyTokens extends Component {
                     // rows="4"
                     margin="normal"
                     InputLabelProps={{
-                      shrink: true,
+                      shrink: true
+                    }}
+                    InputProps={{
+                      readOnly: !this.state.editingProfile,
                     }}
                   />
 
@@ -385,6 +407,9 @@ class MyTokens extends Component {
           <Grid item xs={12} sm={12} md={6}>
             <Card className={classes.card}>
               <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      7 day price chart
+                    </Typography>
                 <CurveChart
                   curveData={{
                     totalSupply: 0,
@@ -413,6 +438,9 @@ class MyTokens extends Component {
           <Grid item xs={12} sm={12} md={6}>
             <Card className={classes.card}>
               <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Bonding curve
+                    </Typography>
                 <CurveChart
                   curveData={{
                     totalSupply: totalSupply / multiplier,
@@ -443,8 +471,8 @@ class MyTokens extends Component {
 
                 action={
                   <div>
-                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
-                      Edit
+                    <Button color={this.state.editingServices ? 'primary' : 'secondary'} size="sm" onClick={this.toggleServiceEditable} style={{ float: 'right' }}>
+                    {this.state.editingServices ? 'Save' : 'Edit'}
                   </Button>
                     {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
                       Market Page
@@ -464,8 +492,13 @@ class MyTokens extends Component {
                         id="standard-required"
                         label="req"
                         defaultValue="Service 1"
+                        value={this.state.service1}
+                        onChange={this.handleChange('service1')}
                         className={classes.textField}
                         margin="normal"
+                        InputProps={{
+                      readOnly: !this.state.editingServices,
+                    }}
                       />
 
                     </Grid>
@@ -485,6 +518,9 @@ class MyTokens extends Component {
                         }}
                         helperText="Please select a category"
                         margin="normal"
+                        InputProps={{
+                      readOnly: !this.state.editingServices,
+                    }}
                       >
                         {currencies.map(option => (
                           <MenuItem key={option.value} value={option.value}>
@@ -505,6 +541,9 @@ class MyTokens extends Component {
                           shrink: true,
                         }}
                         margin="normal"
+                        InputProps={{
+                      readOnly: !this.state.editingServices,
+                    }}
                       />
                     </Grid>
                   </Grid>
@@ -518,14 +557,13 @@ class MyTokens extends Component {
 
           <Grid item xs={12} sm={12} md={8}>
             <Card className={classes.card}>
-              <CardHeader
-                title={"Requests and investments"}
-                subheader={"Honor your token"}
-              />
+              <Typography>
+
+                </Typography>
               <CardContent>
 
 
-                <Events date={this.props.date} address={this.props.address} />
+                <Events date={this.props.date} address={address} />
               </CardContent>
             </Card>
           </Grid>
