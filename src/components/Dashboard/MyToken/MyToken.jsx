@@ -42,6 +42,7 @@ const styles = theme => ({
   },
   card: {
     minWidth: 200,
+    position: 'relative'
   },
   smallCard: {
     width: '95%',
@@ -79,6 +80,11 @@ const styles = theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 2,
+  },
+  editButton: {
+    position: 'absolute',
+    right: 10,
+    top: 15
   }
 });
 
@@ -235,16 +241,6 @@ class MyTokens extends Component {
                     R
             </Avatar>
                 }
-                action={
-                  <div>
-                    <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleEditable} style={{ float: 'right' }}>
-                      {this.state.editingProfile ? 'Save' : 'Edit'}
-                  </Button>
-                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                      Market Page
-                  </Button> */}
-                  </div>
-                }
                 title={
                   <TextField
                     id="standard-read-only-input"
@@ -257,7 +253,6 @@ class MyTokens extends Component {
                     }}
                   />
                 }
-                
                 // What follows is an idea for how people could give themselves tags. Not sure how/if we 
                 // should add these for the alpha
 
@@ -268,6 +263,9 @@ class MyTokens extends Component {
                   </div>
                 }
               />
+              <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleEditable} className={classes.editButton}>
+                      {this.state.editingProfile ? 'Save' : 'Edit'}
+              </Button>
               <CardContent>
                 <form className={classes.container} noValidate autoComplete="off">
 
@@ -468,25 +466,17 @@ class MyTokens extends Component {
 
             <Card className={classes.card}>
               <CardHeader
-
-                action={
-                  <div>
-                    <Button color={this.state.editingServices ? 'primary' : 'secondary'} size="sm" onClick={this.toggleServiceEditable} style={{ float: 'right' }}>
-                    {this.state.editingServices ? 'Save' : 'Edit'}
-                  </Button>
-                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                      Market Page
-                  </Button> */}
-                  </div>
-                }
                 title={"Your services"}
                 subheader={"What can people get with your token?"}
               />
+              <Button color={this.state.editingServices ? 'primary' : 'secondary'} size="sm" onClick={this.toggleServiceEditable} className={classes.editButton}>
+                    {this.state.editingServices ? 'Save' : 'Edit'}
+                  </Button>
               <CardContent>
                 <form className={classes.container} noValidate autoComplete="off">
 
                   <Grid container sm={12}>
-                    <Grid item sm={4}>
+                    <Grid item sm={6}>
                       <TextField
                         required
                         id="standard-required"
@@ -502,34 +492,7 @@ class MyTokens extends Component {
                       />
 
                     </Grid>
-                    <Grid item sm={4}>
-
-                      <TextField
-                        id="standard-select-currency"
-                        select
-                        label="Select"
-                        className={classes.textField}
-                        value={this.state.currency}
-                        onChange={this.handleChange('currency')}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        helperText="Please select a category"
-                        margin="normal"
-                        InputProps={{
-                      readOnly: !this.state.editingServices,
-                    }}
-                      >
-                        {currencies.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-                    <Grid item sm={4}>
+                    <Grid item sm={6}>
                       <TextField
                         id="standard-number"
                         label="Number"
