@@ -3,6 +3,9 @@ import { Alert } from 'reactstrap';
 
 import { Button, Grid, LinearProgress, TextField, MenuItem } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
+import Chip from '@material-ui/core/Chip';
+
+import shortid from 'shortid';
 
 import ipfsApi from 'ipfs-api';
 
@@ -14,40 +17,40 @@ import ChipsArray from './Chips';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
-const categories = [
-  {
-    value: 'attention',
-    label: 'Attention'
-  },
-  {
-    value: 'media',
-    label: 'Media'
-  },
-  {
-    value: 'technology',
-    label: 'Technology'
-  },
-  {
-    value: 'arts',
-    label: 'Arts'
-  },
-  {
-    value: 'consulting',
-    label: 'Consulting'
-  },
-  {
-    value: 'mentorship',
-    label: 'Mentorship'
-  },
-  {
-    value: 'voting',
-    label: 'Voting Rights'
-  },
-  {
-    value: 'access',
-    label: 'Access Rights'
-  }
-];
+// const categories = [
+//   {
+//     value: 'attention',
+//     label: 'Attention'
+//   },
+//   {
+//     value: 'media',
+//     label: 'Media'
+//   },
+//   {
+//     value: 'technology',
+//     label: 'Technology'
+//   },
+//   {
+//     value: 'arts',
+//     label: 'Arts'
+//   },
+//   {
+//     value: 'consulting',
+//     label: 'Consulting'
+//   },
+//   {
+//     value: 'mentorship',
+//     label: 'Mentorship'
+//   },
+//   {
+//     value: 'voting',
+//     label: 'Voting Rights'
+//   },
+//   {
+//     value: 'access',
+//     label: 'Access Rights'
+//   }
+// ];
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -58,7 +61,9 @@ class LaunchForm extends Component {
       rows: 0,
       stackId: null,
       tooFew: false,
-      tooMany: false
+      tooMany: false,
+      tags: [{ tag: 'blockchain', id: 1 }, { tag: 'arts', id: 2 }],
+      enteredTag: ''
     };
   }
 
@@ -66,6 +71,10 @@ class LaunchForm extends Component {
     this.state.rows === 2
       ? this.setState({ tooMany: true })
       : this.setState({ rows: this.state.rows + 1, tooFew: false });
+  };
+
+  handleDeleteTag = id => {
+    this.setState({ tags: this.state.tags.filter(tag => tag.id !== id) });
   };
 
   deploy = async () => {
@@ -130,6 +139,21 @@ class LaunchForm extends Component {
     return `Transaction status: ${transactions[txHash].status}`;
   };
 
+  onAddTag = e => {
+    if (e.key === 'Enter') {
+      this.setState({
+        tags: [
+          ...this.state.tags,
+          {
+            tag: e.target.value,
+            id: shortid.generate()
+          }
+        ],
+        enteredTag: ''
+      });
+    }
+  };
+
   render() {
     let moreServices = [];
 
@@ -183,25 +207,41 @@ class LaunchForm extends Component {
           />
         </Grid>
         <Grid item md={12}>
-          <Grid item sm={4}>
-            <TextField
-              id="standard-select-currency"
-              select
+          {/* <TextField
+              id="standard-select-category"
+              // select
               label="Select"
               name="category"
-              value={this.state.category}
+              value={this.state.tags}
               onChange={this.inputUpdate}
               helperText="Please select a category"
               margin="normal"
-            >
-              {categories.map(option => (
+            > */}
+          <TextField
+            label="Tag"
+            name="enteredTag"
+            onKeyPress={this.onAddTag}
+            onChange={this.inputUpdate}
+            value={this.state.enteredTag}
+            helperText="Hit enter to add"
+          />
+          <div>
+            {this.state.tags &&
+              this.state.tags.map(tag => (
+                <Chip
+                  key={tag.id}
+                  label={tag.tag}
+                  onDelete={() => this.handleDeleteTag(tag.id)}
+                  color="secondary"
+                />
+              ))}
+          </div>
+          {/* {tags.map(option => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
-              ))}
-            </TextField>
-            <ChipsArray />
-          </Grid>
+              ))} */}
+          {/* </TextField> */}
         </Grid>
         <Grid item md={6}>
           <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} />
