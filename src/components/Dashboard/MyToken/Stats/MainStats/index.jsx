@@ -20,7 +20,7 @@ class Stats extends React.Component {
 
 
             <Grid item md={12} style={{ paddingBottom: '6px' }}>
-              <Card>
+              <Card style={{height: '100%'}}>
                 <CardContent>
                   <Typography color="textSecondary" gutterBottom>
                     Your Balance
@@ -39,7 +39,7 @@ class Stats extends React.Component {
 
             <Grid item md={12} style={{ paddingTop: '6px' }}>
 
-              <Card>
+              <Card style={{height: '100%'}}>
 
                 <CardContent>
 

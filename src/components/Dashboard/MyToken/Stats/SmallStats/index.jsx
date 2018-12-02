@@ -25,7 +25,7 @@ class Stats extends React.Component {
 
         <Grid container style={{ height: '100%' }}>
           <Grid item sm={12} style={{ height: '50%', display: 'flex', 'paddingBottom': '6px' }}>
-            <Card className={classes.smallCard} style={{ marginRight: '6px' }} >
+            <Card className={classes.smallCard} style={{ margin: '0', marginRight: '6px', width: '95%', boxSizing: 'border-box' }} >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
                   Current Price
@@ -37,7 +37,7 @@ class Stats extends React.Component {
             </Card>
 
             {/* 2 */}
-            <Card className={classes.smallCard} style={{ 'marginLeft': '6px' }}>
+            <Card className={classes.smallCard} style={{ margin: '0', 'marginLeft': '6px', width: '95%', boxSizing: 'border-box' }}>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
                   Current Token Supply
@@ -49,7 +49,7 @@ class Stats extends React.Component {
             </Card>
           </Grid>
           <Grid item sm={12} style={{ height: '50%', display: 'flex', 'paddingTop': '6px' }}>
-            <Card className={classes.smallCard} style={{ 'marginRight': '6px' }}>
+            <Card className={classes.smallCard} style={{ margin: '0', 'marginRight': '6px', width: '95%', boxSizing: 'border-box'  }}>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
                   Reserve Pool
@@ -60,7 +60,7 @@ class Stats extends React.Component {
               </CardContent>
             </Card>
 
-            <Card className={classes.smallCard} style={{ 'marginLeft': '6px' }}>
+            <Card className={classes.smallCard} style={{ margin: '0', 'marginLeft': '6px', width: '95%', boxSizing: 'border-box'  }}>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
                   Price formula

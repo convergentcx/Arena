@@ -13,10 +13,9 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 // import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
 
 import Services from './Services';
-// import ProfileCard from './ProfileCard'
-import MainStats from './Stats/MainStats/index.jsx';
-import SmallStats from './Stats/SmallStats/index.jsx';
-
+import ProfileCard from './ProfileCard/index.jsx' // somehow default importing of the jsx file from the parent folder does not work here
+import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
 import CurveChart from './CurveChart/CurveChart'
 import BlockHistory from './BlockHistory/BlockHistory'
@@ -48,9 +47,6 @@ const styles = theme => ({
   card: {
     minWidth: 200,
     position: 'relative'
-  },
-  mediumCard: {
-    height: '95%'
   },
   title: {
     fontSize: 14,
@@ -160,10 +156,6 @@ class MyTokens extends Component {
     });
   };
 
-  toggleEditable = () => {
-    this.setState({ editingProfile: !this.state.editingProfile })
-  }
-
   render() {
     const { classes } = this.props;
     const address = this.props.match.params.tokenAddress;
@@ -191,9 +183,7 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <Grid item md={4} xs={12}>
-            {/* <ProfileCard /> */}
-          </Grid>
+          <ProfileCard />
           <SmallStats 
             currentPrice={currentPrice} 
             totalSupply={totalSupply} 

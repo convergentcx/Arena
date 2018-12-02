@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,6 +6,7 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 // const classes = {
 //     card: {
@@ -44,66 +45,81 @@ class ProfileCard extends React.Component {
         displayName: 'My Token',
     }
 
-    render() {       
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
+
+  toggleProfileEditable = () => {
+    this.setState({ editingProfile: !this.state.editingProfile })
+  }
+
+
+    render() {
         return (
-            <Card style={{ height: '100%' }}>
-                <CardHeader
-                    avatar={
-                        <Avatar aria-label="Recipe">
-                            R
+            <Grid item md={4} xs={12}>
+
+                <Card style={{ height: '100%', position: 'relative' }}>
+                    <CardHeader
+                        avatar={
+                            <Avatar aria-label="Recipe">
+                                R
             </Avatar>
-                    }
-                    title={
-                        <TextField
-                            id="standard-read-only-input"
-                            value={this.state.displayName}
-                            onChange={this.handleChange('displayName')}
-                            margin="normal"
-                            InputProps={{
-                                readOnly: !this.state.editingProfile,
-                            }}
-                        />
-                    }
-                    // What follows is an idea for how people could give themselves tags. Not sure how/if we 
-                    // should add these for the alpha
+                        }
+                        title={
+                            <TextField
+                                id="standard-read-only-input"
+                                value={this.state.displayName}
+                                onChange={this.handleChange('displayName')}
+                                margin="normal"
+                                InputProps={{
+                                    readOnly: !this.state.editingProfile,
+                                }}
+                            />
+                        }
+                        // What follows is an idea for how people could give themselves tags. Not sure how/if we 
+                        // should add these for the alpha
 
-                    subheader={
-                        <div>
-                            <Chip label="blockchain"  />
-                            <Chip label="mentorship" />
-                        </div>
-                    }
-                />
-                <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleEditable}>
-                    {this.state.editingProfile ? 'Save' : 'Edit'}
-                </Button>
-                <CardContent>
-                    <form noValidate autoComplete="off">
+                        subheader={
+                            <div>
+                                <Chip label="blockchain" />
+                                <Chip label="mentorship" />
+                            </div>
+                        }
+                    />
+                    <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleProfileEditable} style={{position: 'absolute', top: '2%', right: '2%'}}>
+                        {this.state.editingProfile ? 'Save' : 'Edit'}
+                    </Button>
+                    <CardContent>
+                        <form noValidate autoComplete="off">
 
-                        <TextField
-                            id="standard-full-width"
-                            value={this.state.multiline}
-                            onChange={this.handleChange('multiline')}
-                            label="Description"
-                            style={{ margin: 8 }}
-                            placeholder="My token will give you .."
-                            helperText="Tell your investors why you are going to the moon"
-                            fullWidth
-                            multiline
-                            // rows="4"
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                            InputProps={{
-                                readOnly: !this.state.editingProfile,
-                            }}
-                        />
+                            <TextField
+                                id="standard-full-width"
+                                value={this.state.multiline}
+                                onChange={this.handleChange('multiline')}
+                                label="Description"
+                                style={{ margin: 8 }}
+                                placeholder="My token will give you .."
+                                helperText="Tell your investors why you are going to the moon"
+                                fullWidth
+                                multiline
+                                // rows="4"
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                                InputProps={{
+                                    readOnly: !this.state.editingProfile,
+                                }}
+                            />
 
-                    </form>
+                        </form>
 
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </Grid>
         );
     }
 }
