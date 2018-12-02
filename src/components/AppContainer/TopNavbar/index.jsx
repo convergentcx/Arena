@@ -18,7 +18,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
+  Typography
 } from '@material-ui/core';
 
 import { ChevronLeft, ChevronRight, Inbox, Mail, Menu, Money, Settings } from '@material-ui/icons';
@@ -29,67 +29,67 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 20,
+    marginRight: 20
   },
   signInButton: {
-    float: 'right',
+    float: 'right'
   },
   hide: {
-    display: 'none',
+    display: 'none'
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: '0 8px',
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -drawerWidth
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
-    marginLeft: 0,
-  },
+    marginLeft: 0
+  }
 });
 
 class PersistentDrawerLeft extends Component {
   state = {
-    open: false,
+    open: false
   };
 
   handleDrawerOpen = () => {
@@ -110,7 +110,7 @@ class PersistentDrawerLeft extends Component {
         <AppBar
           position="fixed"
           className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
+            [classes.appBarShift]: open
           })}
           elevation={3}
           color="default"
@@ -133,7 +133,9 @@ class PersistentDrawerLeft extends Component {
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
-            <Button className={classes.signInButton} color="inherit">Unlock</Button>
+            <Button className={classes.signInButton} color="inherit">
+              Unlock
+            </Button>
           </Toolbar>
         </AppBar>
 
@@ -144,7 +146,7 @@ class PersistentDrawerLeft extends Component {
           anchor="left"
           open={open}
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
         >
           <div className={classes.drawerHeader}>
@@ -156,17 +158,23 @@ class PersistentDrawerLeft extends Component {
           <List>
             <NavLink to={'/'}>
               <ListItem button>
-                <ListItemIcon><Money /></ListItemIcon>
+                <ListItemIcon>
+                  <Money />
+                </ListItemIcon>
                 <ListItemText primary={'Market'} />
               </ListItem>
-              </NavLink>
+            </NavLink>
+            <ListItem button>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <ListItemText primary={'Profile'} />
+            </ListItem>
+            <NavLink to={'/dashboard'}>
               <ListItem button>
-                <ListItemIcon><Inbox /></ListItemIcon>
-                <ListItemText primary={'Profile'} />
-              </ListItem>
-              <NavLink to={'/dashboard'}>
-              <ListItem button>
-                <ListItemIcon><Mail /></ListItemIcon>
+                <ListItemIcon>
+                  <Mail />
+                </ListItemIcon>
                 <ListItemText primary={'Economy Dashboard'} />
               </ListItem>
             </NavLink>
@@ -183,13 +191,11 @@ class PersistentDrawerLeft extends Component {
         </Drawer>
         <main
           className={classNames(classes.content, {
-            [classes.contentShift]: open,
+            [classes.contentShift]: open
           })}
         >
           {/* <div className={classes.drawerHeader} /> */}
-          <div>
-            {this.props.content }
-          </div>
+          <div>{this.props.content}</div>
         </main>
       </div>
     );
@@ -198,13 +204,7 @@ class PersistentDrawerLeft extends Component {
 
 PersistentDrawerLeft.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
-
-
-
-
-
-

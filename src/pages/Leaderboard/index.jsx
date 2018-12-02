@@ -55,11 +55,7 @@ class LeaderboardList extends Component {
           const inverseSlope = await personalEconomy.methods.inverseSlope().call();
           const exponent = await personalEconomy.methods.exponent().call();
           const totalSupply = await personalEconomy.methods.totalSupply().call();
-          const currentPrice= getPrice(
-            inverseSlope,
-            totalSupply,
-            exponent,
-          );
+          const currentPrice = getPrice(inverseSlope, totalSupply, exponent);
           // console.log(currentPrice.mul(w3utils.toBN(totalSupply)))
           const newEconomy = {
             address: event.returnValues.token_address,

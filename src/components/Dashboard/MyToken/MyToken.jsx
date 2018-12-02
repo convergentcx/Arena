@@ -13,13 +13,12 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 // import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
 
 import Services from './Services';
-import ProfileCard from './ProfileCard/index.jsx' // somehow default importing of the jsx file from the parent folder does not work here
+import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
-import CurveChart from './CurveChart/CurveChart'
-import BlockHistory from './BlockHistory/BlockHistory'
-
+import CurveChart from './CurveChart/CurveChart';
+import BlockHistory from './BlockHistory/BlockHistory';
 
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,41 +37,41 @@ import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   card: {
     minWidth: 200,
     position: 'relative'
   },
   title: {
-    fontSize: 14,
+    fontSize: 14
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 200
   },
   dense: {
-    marginTop: 19,
+    marginTop: 19
   },
   bigAvatar: {
     margin: 10,
     width: 60,
-    height: 60,
+    height: 60
   },
   chip: {
-    margin: theme.spacing.unit / 2,
+    margin: theme.spacing.unit / 2
   },
   editButton: {
     position: 'absolute',
@@ -81,12 +80,9 @@ const styles = theme => ({
   }
 });
 
-
 const multiplier = 10 ** 18;
 
-
 class MyTokens extends Component {
-
   state = {
     dataKeys: {
       totalSupplyKey: '',
@@ -99,9 +95,8 @@ class MyTokens extends Component {
     owner: '',
     poolBalance: '',
     symbol: '',
-    popover: false,
+    popover: false
   };
-
 
   async componentDidMount() {
     const { drizzle } = this.props;
@@ -149,10 +144,9 @@ class MyTokens extends Component {
     this.props.history.push('/tokens/' + this.props.address);
   };
 
-
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
   };
 
@@ -176,35 +170,29 @@ class MyTokens extends Component {
     const currentPrice =
       (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
-
-
     return (
       <div id={address} className={classes.root}>
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
           <ProfileCard />
-          <SmallStats 
-            currentPrice={currentPrice} 
-            totalSupply={totalSupply} 
+          <SmallStats
+            currentPrice={currentPrice}
+            totalSupply={totalSupply}
             poolBalance={this.state.poolBalance}
             symbol={this.state.symbol}
             exponent={this.state.exponent}
-            inverseSlope={this.state.inverrseSlope}/>
-          <MainStats 
-            currentPrice={currentPrice} 
-            totalSupply={totalSupply} 
+            inverseSlope={this.state.inverrseSlope}
+          />
+          <MainStats
+            currentPrice={currentPrice}
+            totalSupply={totalSupply}
             yourBalance={yourBalance}
             symbol={this.state.symbol}
-            />
+          />
         </Grid>
 
-
-
         <Grid container spacing={24}>
-
-
-
           <Grid item xs={12} md={6}>
             <Card className={classes.card}>
               <CardContent>
@@ -278,9 +266,7 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
-
         </Grid>
-
 
         <hr />
       </div>

@@ -16,25 +16,25 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
+    backgroundColor: theme.palette.background.paper
+  }
 });
 
 class ScrollableTabsButtonAuto extends React.Component {
   state = {
-    value: 0,
+    value: 0
   };
 
   handleChange = (event, value, address) => {
     this.setState({ value });
-    this.props.history.push(`/dashboard/${address}`)
+    this.props.history.push(`/dashboard/${address}`);
   };
 
   render() {
@@ -46,9 +46,7 @@ class ScrollableTabsButtonAuto extends React.Component {
       this.props.tokens.map(token => {
         return (
           // <NavLink to={`/dashboard/#${token.address}`}>{token.name}</NavLink>
-          <Tab label={token.address}>
-            {token.address}
-          </Tab>
+          <Tab label={token.address}>{token.address}</Tab>
         );
       });
 
@@ -79,7 +77,7 @@ class ScrollableTabsButtonAuto extends React.Component {
 }
 
 ScrollableTabsButtonAuto.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withRouter(withStyles(styles)(ScrollableTabsButtonAuto));

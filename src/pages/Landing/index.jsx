@@ -20,13 +20,13 @@ const Hero = () => (
     <br />
     <br />
     <NavLink to={'/launch'}>
-      <Button size="large" variant="outlined" style={{ color: '#000000', borderColor: '#0044FF'}}>
+      <Button size="large" variant="outlined" style={{ color: '#000000', borderColor: '#0044FF' }}>
         Launch
       </Button>
     </NavLink>
     &nbsp;&nbsp;
     <NavLink to={'/leaderboard'}>
-      <Button color='secondary' size="large" variant="outlined" style={{ color: '#000000' }}>
+      <Button color="secondary" size="large" variant="outlined" style={{ color: '#000000' }}>
         Browse
       </Button>
     </NavLink>

@@ -9,11 +9,11 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing.unit / 2
   },
   chip: {
-    margin: theme.spacing.unit / 2,
-  },
+    margin: theme.spacing.unit / 2
+  }
 });
 
 class ChipsArray extends React.Component {
@@ -23,12 +23,11 @@ class ChipsArray extends React.Component {
       { key: 1, label: 'jQuery' },
       { key: 2, label: 'Polymer' },
       { key: 3, label: 'React' },
-      { key: 4, label: 'Vue.js' },
-    ],
+      { key: 4, label: 'Vue.js' }
+    ]
   };
 
   handleDelete = data => () => {
-
     this.setState(state => {
       const chipData = [...state.chipData];
       const chipToDelete = chipData.indexOf(data);
@@ -43,8 +42,6 @@ class ChipsArray extends React.Component {
     return (
       <Paper className={classes.root}>
         {this.state.chipData.map(data => {
-
-
           return (
             <Chip
               key={data.key}
@@ -61,7 +58,7 @@ class ChipsArray extends React.Component {
 }
 
 ChipsArray.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ChipsArray);

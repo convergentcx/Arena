@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-} from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 import { Button, Grid, LinearProgress, TextField, MenuItem } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
@@ -19,38 +17,37 @@ const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 const categories = [
   {
     value: 'attention',
-    label: 'Attention',
+    label: 'Attention'
   },
   {
     value: 'media',
-    label: 'Media',
+    label: 'Media'
   },
   {
     value: 'technology',
-    label: 'Technology',
+    label: 'Technology'
   },
   {
     value: 'arts',
-    label: 'Arts',
+    label: 'Arts'
   },
   {
     value: 'consulting',
-    label: 'Consulting',
+    label: 'Consulting'
   },
   {
     value: 'mentorship',
-    label: 'Mentorship',
+    label: 'Mentorship'
   },
   {
     value: 'voting',
-    label: 'Voting Rights',
+    label: 'Voting Rights'
   },
   {
     value: 'access',
-    label: 'Access Rights',
+    label: 'Access Rights'
   }
 ];
-
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -142,10 +139,20 @@ class LaunchForm extends Component {
         moreServices.push(
           <Grid container>
             <Grid item md={6}>
-              <TextField label="Service" type="text" name={`service-${i + 1}`} onChange={this.inputUpdate} />
+              <TextField
+                label="Service"
+                type="text"
+                name={`service-${i + 1}`}
+                onChange={this.inputUpdate}
+              />
             </Grid>
             <Grid item md={6}>
-              <TextField label="Price" type="text" name={`price-${i + 1}`} onChange={this.inputUpdate} />
+              <TextField
+                label="Price"
+                type="text"
+                name={`price-${i + 1}`}
+                onChange={this.inputUpdate}
+              />
             </Grid>
           </Grid>
         );
@@ -158,15 +165,25 @@ class LaunchForm extends Component {
     return (
       <Grid container>
         <Grid item md={6} style={{}}>
-          <TextField label="Name" type="text" name="name" placeholder="" onChange={this.inputUpdate} />
+          <TextField
+            label="Name"
+            type="text"
+            name="name"
+            placeholder=""
+            onChange={this.inputUpdate}
+          />
         </Grid>
         <Grid item md={6}>
-          <TextField label="Symbol" type="text" name="symbol" placeholder="" onChange={this.inputUpdate} />
+          <TextField
+            label="Symbol"
+            type="text"
+            name="symbol"
+            placeholder=""
+            onChange={this.inputUpdate}
+          />
         </Grid>
         <Grid item md={12}>
-
           <Grid item sm={4}>
-
             <TextField
               id="standard-select-currency"
               select
@@ -220,12 +237,12 @@ class LaunchForm extends Component {
           </Button>
         </Grid>
         <br />
-        {this.state.ipfsUploading &&
+        {this.state.ipfsUploading && (
           <div>
             <LinearProgress color="secondary" />
             Uploading to IPFS! 📡
           </div>
-        }
+        )}
         <div>{this.waitUntilMined()}</div>
       </Grid>
     );

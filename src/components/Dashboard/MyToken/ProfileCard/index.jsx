@@ -38,90 +38,85 @@ import Grid from '@material-ui/core/Grid';
 // };
 
 class ProfileCard extends React.Component {
+  state = {
+    multiline:
+      'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
+    editingProfile: false,
+    displayName: 'My Token'
+  };
 
-    state = {
-        multiline: 'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
-        editingProfile: false,
-        displayName: 'My Token',
-    }
-
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        });
-    };
-
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
 
   toggleProfileEditable = () => {
-    this.setState({ editingProfile: !this.state.editingProfile })
+    this.setState({ editingProfile: !this.state.editingProfile });
+  };
+
+  render() {
+    return (
+      <Grid item md={4} xs={12}>
+        <Card style={{ height: '100%', position: 'relative' }}>
+          <CardHeader
+            avatar={<Avatar aria-label="Recipe">R</Avatar>}
+            title={
+              <TextField
+                id="standard-read-only-input"
+                value={this.state.displayName}
+                onChange={this.handleChange('displayName')}
+                margin="normal"
+                InputProps={{
+                  readOnly: !this.state.editingProfile
+                }}
+              />
+            }
+            // What follows is an idea for how people could give themselves tags. Not sure how/if we
+            // should add these for the alpha
+
+            subheader={
+              <div>
+                <Chip label="blockchain" />
+                <Chip label="mentorship" />
+              </div>
+            }
+          />
+          <Button
+            color={this.state.editingProfile ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={this.toggleProfileEditable}
+            style={{ position: 'absolute', top: '2%', right: '2%' }}
+          >
+            {this.state.editingProfile ? 'Save' : 'Edit'}
+          </Button>
+          <CardContent>
+            <form noValidate autoComplete="off">
+              <TextField
+                id="standard-full-width"
+                value={this.state.multiline}
+                onChange={this.handleChange('multiline')}
+                label="Description"
+                style={{ margin: 8 }}
+                placeholder="My token will give you .."
+                helperText="Tell your investors why you are going to the moon"
+                fullWidth
+                multiline
+                // rows="4"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  readOnly: !this.state.editingProfile
+                }}
+              />
+            </form>
+          </CardContent>
+        </Card>
+      </Grid>
+    );
   }
-
-
-    render() {
-        return (
-            <Grid item md={4} xs={12}>
-
-                <Card style={{ height: '100%', position: 'relative' }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar aria-label="Recipe">
-                                R
-            </Avatar>
-                        }
-                        title={
-                            <TextField
-                                id="standard-read-only-input"
-                                value={this.state.displayName}
-                                onChange={this.handleChange('displayName')}
-                                margin="normal"
-                                InputProps={{
-                                    readOnly: !this.state.editingProfile,
-                                }}
-                            />
-                        }
-                        // What follows is an idea for how people could give themselves tags. Not sure how/if we 
-                        // should add these for the alpha
-
-                        subheader={
-                            <div>
-                                <Chip label="blockchain" />
-                                <Chip label="mentorship" />
-                            </div>
-                        }
-                    />
-                    <Button color={this.state.editingProfile ? 'primary' : 'secondary'} size="sm" onClick={this.toggleProfileEditable} style={{position: 'absolute', top: '2%', right: '2%'}}>
-                        {this.state.editingProfile ? 'Save' : 'Edit'}
-                    </Button>
-                    <CardContent>
-                        <form noValidate autoComplete="off">
-
-                            <TextField
-                                id="standard-full-width"
-                                value={this.state.multiline}
-                                onChange={this.handleChange('multiline')}
-                                label="Description"
-                                style={{ margin: 8 }}
-                                placeholder="My token will give you .."
-                                helperText="Tell your investors why you are going to the moon"
-                                fullWidth
-                                multiline
-                                // rows="4"
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
-                                InputProps={{
-                                    readOnly: !this.state.editingProfile,
-                                }}
-                            />
-
-                        </form>
-
-                    </CardContent>
-                </Card>
-            </Grid>
-        );
-    }
 }
 
 export default ProfileCard;
