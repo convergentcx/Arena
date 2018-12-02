@@ -3,7 +3,7 @@ import {
   Alert,
 } from 'reactstrap';
 
-import { Button, Grid, LinearProgress, TextField } from '@material-ui/core';
+import { Button, Grid, LinearProgress, TextField, MenuItem } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 
 import ipfsApi from 'ipfs-api';
@@ -12,7 +12,45 @@ import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
+import ChipsArray from './Chips';
+
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+
+const categories = [
+  {
+    value: 'attention',
+    label: 'Attention',
+  },
+  {
+    value: 'media',
+    label: 'Media',
+  },
+  {
+    value: 'technology',
+    label: 'Technology',
+  },
+  {
+    value: 'arts',
+    label: 'Arts',
+  },
+  {
+    value: 'consulting',
+    label: 'Consulting',
+  },
+  {
+    value: 'mentorship',
+    label: 'Mentorship',
+  },
+  {
+    value: 'voting',
+    label: 'Voting Rights',
+  },
+  {
+    value: 'access',
+    label: 'Access Rights',
+  }
+];
+
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -125,6 +163,29 @@ class LaunchForm extends Component {
         <Grid item md={6}>
           <TextField label="Symbol" type="text" name="symbol" placeholder="" onChange={this.inputUpdate} />
         </Grid>
+        <Grid item md={12}>
+
+          <Grid item sm={4}>
+
+            <TextField
+              id="standard-select-currency"
+              select
+              label="Select"
+              name="category"
+              value={this.state.category}
+              onChange={this.inputUpdate}
+              helperText="Please select a category"
+              margin="normal"
+            >
+              {categories.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <ChipsArray />
+          </Grid>
+        </Grid>
         <Grid item md={6}>
           <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} />
         </Grid>
@@ -144,7 +205,7 @@ class LaunchForm extends Component {
         <Grid item md={12}>
           {this.state.tooMany && (
             <Alert color="warning" style={{ marginBottom: '10px' }}>
-              While we build 🛠 only 3 services will be available in your economy 💸 
+              While we build 🛠 only 3 services will be available in your economy 💸
             </Alert>
           )}
           {this.state.tooFew && (
