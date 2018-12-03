@@ -19,7 +19,7 @@ class Stats extends React.Component {
         xs={12}
         style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
       >
-        <Grid item md={12} style={{ paddingBottom: '6px' }}>
+        <Grid item md={12} style={{ paddingBottom: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
@@ -35,7 +35,7 @@ class Stats extends React.Component {
           </Card>
         </Grid>
 
-        <Grid item md={12} style={{ paddingTop: '6px' }}>
+        <Grid item md={12} style={{ paddingTop: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>

@@ -37,7 +37,7 @@ class Services extends React.Component {
         </Button>
         <CardContent>
           <Typography color="textSecondary" gutterBottom>
-            Requests and Transactions
+            Your Services
           </Typography>
           <form noValidate autoComplete="off">
             <Grid container sm={12}>
