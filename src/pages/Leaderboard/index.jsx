@@ -108,7 +108,7 @@ class LeaderboardList extends Component {
 
     renderRows();
 
-    return <tbody>{tableRows}</tbody>;
+    return <TableBody>{tableRows}</TableBody>;
   }
 }
 
