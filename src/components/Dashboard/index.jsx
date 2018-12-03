@@ -9,6 +9,7 @@ import classes from './Dashboard.module.css';
 import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
 // import ScrollableTabsButtonAuto from './Tab/Tab';
+import Sidebar from './Sidebar/Sidebar';
 
 class Dashboard extends Component {
   state = {
