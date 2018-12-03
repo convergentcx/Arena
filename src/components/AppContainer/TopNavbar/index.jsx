@@ -155,20 +155,24 @@ class PersistentDrawerLeft extends Component {
           </div>
           <Divider />
           <List>
-            <NavLink to={'/'}>
+            <NavLink to="/">
               <ListItem button>
-                <ListItemIcon><Money /></ListItemIcon>
-                <ListItemText primary={'Market'} />
+                <ListItemIcon>
+                  <Money />
+                </ListItemIcon>
+                <ListItemText primary="Market" />
               </ListItem>
               </NavLink>
               <ListItem button>
-                <ListItemIcon><Inbox /></ListItemIcon>
-                <ListItemText primary={'Profile'} />
+                <ListItemIcon>
+                  <Inbox />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
               </ListItem>
-              <NavLink to={'/dashboard'}>
+              <NavLink to="/dashboard">
               <ListItem button>
                 <ListItemIcon><Mail /></ListItemIcon>
-                <ListItemText primary={'Economy Dashboard'} />
+                <ListItemText primary="Economy Dashboard" />
               </ListItem>
             </NavLink>
           </List>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { DrizzleContext } from 'drizzle-react';
 
@@ -23,9 +24,9 @@ class MetamaskLogin extends Component {
           const blockie = makeBlockie(drizzleState.accounts[0]);
 
           return (
-            <Button>
+            <NavLink to="/dashboard">
               <img src={blockie} alt="blockie" style={{ borderRadius: '50%', width: '40px', height: '40px' }} />
-            </Button>
+            </NavLink>
           );
         }}
       </DrizzleContext.Consumer>
