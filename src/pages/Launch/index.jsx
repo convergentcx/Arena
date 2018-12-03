@@ -62,10 +62,36 @@ class LaunchForm extends Component {
       stackId: null,
       tooFew: false,
       tooMany: false,
-      tags: [{ tag: 'blockchain', id: 1 }, { tag: 'arts', id: 2 }],
+      tags: [],
       enteredTag: ''
     };
   }
+
+  inputUpdate = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  onAddTag = e => {
+    if (e.key === 'Enter') {
+      this.setState({
+        tags: [
+          ...this.state.tags,
+          {
+            tag: e.target.value,
+            id: shortid.generate()
+          }
+        ],
+        enteredTag: ''
+      });
+    }
+  };
+
+  handleDeleteTag = id => {
+    this.setState({ tags: this.state.tags.filter(tag => tag.id !== id) });
+  };
 
   addService = () => {
     this.state.rows === 2
@@ -73,8 +99,11 @@ class LaunchForm extends Component {
       : this.setState({ rows: this.state.rows + 1, tooFew: false });
   };
 
-  handleDeleteTag = id => {
-    this.setState({ tags: this.state.tags.filter(tag => tag.id !== id) });
+
+  removeService = () => {
+    this.state.rows === 0
+      ? this.setState({ tooFew: true })
+      : this.setState({ rows: this.state.rows - 1, tooMany: false });
   };
 
   deploy = async () => {
@@ -111,22 +140,9 @@ class LaunchForm extends Component {
     this.setState({ stackId });
   };
 
-  removeService = () => {
-    this.state.rows === 0
-      ? this.setState({ tooFew: true })
-      : this.setState({ rows: this.state.rows - 1, tooMany: false });
-  };
-
   submitHash = async data => {
     const result = await ipfs.add(Buffer.from(data));
     return result;
-  };
-
-  inputUpdate = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
   };
 
   waitUntilMined = () => {
@@ -139,21 +155,6 @@ class LaunchForm extends Component {
     return `Transaction status: ${transactions[txHash].status}`;
   };
 
-  onAddTag = e => {
-    if (e.key === 'Enter') {
-      this.setState({
-        tags: [
-          ...this.state.tags,
-          {
-            tag: e.target.value,
-            id: shortid.generate()
-          }
-        ],
-        enteredTag: ''
-      });
-    }
-  };
-
   render() {
     let moreServices = [];
 
@@ -162,7 +163,7 @@ class LaunchForm extends Component {
       while (i < this.state.rows) {
         moreServices.push(
           <Grid container>
-            <Grid item md={6}>
+            <Grid item md={8}>
               <TextField
                 label="Service"
                 type="text"
@@ -170,7 +171,7 @@ class LaunchForm extends Component {
                 onChange={this.inputUpdate}
               />
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={4}>
               <TextField
                 label="Price"
                 type="text"
@@ -188,65 +189,62 @@ class LaunchForm extends Component {
 
     return (
       <Grid container>
-        <Grid item md={6} style={{}}>
-          <TextField
-            label="Name"
-            type="text"
-            name="name"
-            placeholder=""
-            onChange={this.inputUpdate}
-          />
-        </Grid>
-        <Grid item md={6}>
-          <TextField
-            label="Symbol"
-            type="text"
-            name="symbol"
-            placeholder=""
-            onChange={this.inputUpdate}
-          />
-        </Grid>
-        <Grid item md={12}>
-          {/* <TextField
-              id="standard-select-category"
-              // select
-              label="Select"
-              name="category"
-              value={this.state.tags}
+        <Grid item md={8} style={{}}>
+          <Grid item md={12}>
+            <TextField
+              label="Name"
+              type="text"
+              name="name"
+              placeholder=""
               onChange={this.inputUpdate}
-              helperText="Please select a category"
-              margin="normal"
-            > */}
-          <TextField
-            label="Tag"
-            name="enteredTag"
-            onKeyPress={this.onAddTag}
-            onChange={this.inputUpdate}
-            value={this.state.enteredTag}
-            helperText="Hit enter to add"
-          />
-          <div>
-            {this.state.tags &&
-              this.state.tags.map(tag => (
-                <Chip
-                  key={tag.id}
-                  label={tag.tag}
-                  onDelete={() => this.handleDeleteTag(tag.id)}
-                  color="secondary"
-                />
-              ))}
-          </div>
-          {/* {tags.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))} */}
-          {/* </TextField> */}
+              style={{width: '40%'}}
+            />
+            <TextField
+              label="Symbol"
+              type="text"
+              name="symbol"
+              placeholder=""
+              onChange={this.inputUpdate}
+              style={{width: '40%'}}
+            />
+          </Grid>
+          <Grid item md={12}>
+            <TextField
+              label="Tag"
+              name="enteredTag"
+              onKeyPress={this.onAddTag}
+              onChange={this.inputUpdate}
+              value={this.state.enteredTag}
+              helperText="Hit enter to add"
+            />
+          </Grid>
         </Grid>
-        <Grid item md={6}>
+
+        <Grid item md={4} style={{}}>
+          <Grid item md={12}>
+            Photo
+        </Grid>
+          <Grid item md={12}>
+            <div>
+              {this.state.tags &&
+                this.state.tags.map(tag => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.tag}
+                    onDelete={() => this.handleDeleteTag(tag.id)}
+                    color="secondary"
+                  />
+                ))}
+            </div>
+          </Grid>
+
+        </Grid>
+
+
+        <Grid item md={8}>
           <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={4}>
           <TextField label="Price" type="text" name="price-0" onChange={this.inputUpdate} />
         </Grid>
         {moreServices}
