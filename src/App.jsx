@@ -3,18 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import './styles/App.css';
 
-import {
-  AppContainer,
-  Dashboard,
-} from './components';
+import { AppContainer, Dashboard } from './components';
 
-import {
-  Landing,
-  Launch,
-  Leaderboard,
-  Profile,
-} from './pages';
-
+import { Landing, Launch, Leaderboard, Profile } from './pages';
 
 const App = () => (
   <AppContainer>

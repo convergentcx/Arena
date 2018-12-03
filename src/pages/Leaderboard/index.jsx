@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'reactstrap';
 
 import withContext from '../../hoc/withContext';
 
@@ -55,11 +54,7 @@ class LeaderboardList extends Component {
           const inverseSlope = await personalEconomy.methods.inverseSlope().call();
           const exponent = await personalEconomy.methods.exponent().call();
           const totalSupply = await personalEconomy.methods.totalSupply().call();
-          const currentPrice= getPrice(
-            inverseSlope,
-            totalSupply,
-            exponent,
-          );
+          const currentPrice = getPrice(inverseSlope, totalSupply, exponent);
           // console.log(currentPrice.mul(w3utils.toBN(totalSupply)))
           const newEconomy = {
             address: event.returnValues.token_address,
@@ -119,7 +114,7 @@ const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
   <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
-    <Table borderless hover>
+    <table borderless hover>
       <thead>
         <tr>
           <th>Name</th>
@@ -129,7 +124,7 @@ const Leaderboard = () => (
         </tr>
       </thead>
       <LeaderboardListContextualized />
-    </Table>
+    </table>
   </div>
 );
 

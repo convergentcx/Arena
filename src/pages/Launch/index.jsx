@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-} from 'reactstrap';
 
 import { Button, Grid, LinearProgress, TextField } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
@@ -104,10 +101,20 @@ class LaunchForm extends Component {
         moreServices.push(
           <Grid container>
             <Grid item md={6}>
-              <TextField label="Service" type="text" name={`service-${i + 1}`} onChange={this.inputUpdate} />
+              <TextField
+                label="Service"
+                type="text"
+                name={`service-${i + 1}`}
+                onChange={this.inputUpdate}
+              />
             </Grid>
             <Grid item md={6}>
-              <TextField label="Price" type="text" name={`price-${i + 1}`} onChange={this.inputUpdate} />
+              <TextField
+                label="Price"
+                type="text"
+                name={`price-${i + 1}`}
+                onChange={this.inputUpdate}
+              />
             </Grid>
           </Grid>
         );
@@ -120,10 +127,22 @@ class LaunchForm extends Component {
     return (
       <Grid container>
         <Grid item md={6} style={{}}>
-          <TextField label="Name" type="text" name="name" placeholder="" onChange={this.inputUpdate} />
+          <TextField
+            label="Name"
+            type="text"
+            name="name"
+            placeholder=""
+            onChange={this.inputUpdate}
+          />
         </Grid>
         <Grid item md={6}>
-          <TextField label="Symbol" type="text" name="symbol" placeholder="" onChange={this.inputUpdate} />
+          <TextField
+            label="Symbol"
+            type="text"
+            name="symbol"
+            placeholder=""
+            onChange={this.inputUpdate}
+          />
         </Grid>
         <Grid item md={6}>
           <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} />
@@ -143,14 +162,14 @@ class LaunchForm extends Component {
         <br />
         <Grid item md={12}>
           {this.state.tooMany && (
-            <Alert color="warning" style={{ marginBottom: '10px' }}>
-              While we build 🛠 only 3 services will be available in your economy 💸 
-            </Alert>
+            <div color="warning" style={{ marginBottom: '10px' }}>
+              While we build 🛠 only 3 services will be available in your economy 💸
+            </div>
           )}
           {this.state.tooFew && (
-            <Alert color="warning" style={{ marginBottom: '10px' }}>
+            <div color="warning" style={{ marginBottom: '10px' }}>
               For your economy to work 👨‍💼 you need to offer at least one service 🗳
-            </Alert>
+            </div>
           )}
         </Grid>
         <Grid item md={12}>
@@ -159,12 +178,12 @@ class LaunchForm extends Component {
           </Button>
         </Grid>
         <br />
-        {this.state.ipfsUploading &&
+        {this.state.ipfsUploading && (
           <div>
             <LinearProgress color="secondary" />
             Uploading to IPFS! 📡
           </div>
-        }
+        )}
         <div>{this.waitUntilMined()}</div>
       </Grid>
     );

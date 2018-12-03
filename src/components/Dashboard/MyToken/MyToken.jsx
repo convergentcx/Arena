@@ -14,9 +14,8 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
-import CurveChart from './CurveChart/CurveChart'
-import BlockHistory from './BlockHistory/BlockHistory'
-
+import CurveChart from './CurveChart/CurveChart';
+import BlockHistory from './BlockHistory/BlockHistory';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -34,72 +33,68 @@ import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   card: {
-    minWidth: 200,
+    minWidth: 200
   },
   title: {
-    fontSize: 14,
+    fontSize: 14
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 200
   },
   dense: {
-    marginTop: 19,
+    marginTop: 19
   },
   menu: {
-    width: 200,
+    width: 200
   },
   bigAvatar: {
     margin: 10,
     width: 60,
-    height: 60,
+    height: 60
   },
   chip: {
-    margin: theme.spacing.unit / 2,
+    margin: theme.spacing.unit / 2
   }
 });
-
 
 const currencies = [
   {
     value: 'attention',
-    label: 'Attention',
+    label: 'Attention'
   },
   {
     value: 'media',
-    label: 'Media',
+    label: 'Media'
   },
   {
     value: 'arts',
-    label: 'Arts',
+    label: 'Arts'
   },
   {
     value: 'consulting',
-    label: 'Consulting',
-  },
+    label: 'Consulting'
+  }
 ];
-
 
 const multiplier = 10 ** 18;
 
-
 class MyTokens extends Component {
-
   state = {
     dataKeys: {
       totalSupplyKey: '',
@@ -114,13 +109,12 @@ class MyTokens extends Component {
     symbol: '',
     popover: false,
 
-
     name: 'Cat in the Hat',
     age: '',
-    multiline: 'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
-    currency: 'EUR',
+    multiline:
+      'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
+    currency: 'EUR'
   };
-
 
   async componentDidMount() {
     const { address, drizzle } = this.props;
@@ -167,15 +161,11 @@ class MyTokens extends Component {
     this.props.history.push('/tokens/' + this.props.address);
   };
 
-
-  getContractData = () => {
-
-  }
-
+  getContractData = () => {};
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
   };
 
@@ -198,8 +188,6 @@ class MyTokens extends Component {
     const currentPrice =
       (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
-
-
     return (
       <div id={this.props.address} className={classes.root}>
         <h3>{this.props.name}</h3>
@@ -211,13 +199,18 @@ class MyTokens extends Component {
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.bigAvatar}>
                     R
-            </Avatar>
+                  </Avatar>
                 }
                 action={
                   <div>
-                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
+                    <Button
+                      color="secondary"
+                      size="sm"
+                      onClick={this.makeEditable}
+                      style={{ float: 'right' }}
+                    >
                       Edit
-                  </Button>
+                    </Button>
                     {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
                       Market Page
                   </Button> */}
@@ -230,7 +223,7 @@ class MyTokens extends Component {
                     className={classes.textField}
                     margin="normal"
                     InputProps={{
-                      readOnly: true,
+                      readOnly: true
                     }}
                   />
                 }
@@ -243,7 +236,6 @@ class MyTokens extends Component {
               />
               <CardContent>
                 <form className={classes.container} noValidate autoComplete="off">
-
                   <TextField
                     id="standard-full-width"
                     value={this.state.multiline}
@@ -257,34 +249,25 @@ class MyTokens extends Component {
                     // rows="4"
                     margin="normal"
                     InputLabelProps={{
-                      shrink: true,
+                      shrink: true
                     }}
                   />
-
                 </form>
-
               </CardContent>
             </Card>
           </Grid>
 
-
-
-
-
           <Grid item xs={5}>
             <Grid container sm={12}>
-
               <Card className={classes.card}>
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
                     Current Price
-                </Typography>
+                  </Typography>
                   <Typography variant="h6" component="h2">
                     {currentPrice} Ξ
-                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
                   </Typography>
+                  <Typography className={classes.pos} color="textSecondary" />
                 </CardContent>
               </Card>
 
@@ -292,13 +275,11 @@ class MyTokens extends Component {
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
                     Current Token Supply
-                </Typography>
+                  </Typography>
                   <Typography variant="h6" component="h2">
                     {totalSupply / multiplier} {this.state.symbol}
                   </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
-                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary" />
                 </CardContent>
               </Card>
 
@@ -306,13 +287,11 @@ class MyTokens extends Component {
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
                     Reserve Pool
-                </Typography>
+                  </Typography>
                   <Typography variant="h6" component="h2">
                     {this.state.poolBalance / multiplier} Ξ
-                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
                   </Typography>
+                  <Typography className={classes.pos} color="textSecondary" />
                 </CardContent>
               </Card>
 
@@ -320,16 +299,14 @@ class MyTokens extends Component {
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
                     Price formula
-                </Typography>
-                  <Typography variant="h6" component="h2">
-                    {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}                </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-
                   </Typography>
+                  <Typography variant="h6" component="h2">
+                    {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}{' '}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary" />
                 </CardContent>
               </Card>
             </Grid>
-
           </Grid>
           <Grid item xs={3}>
             <Card className={classes.card}>
@@ -343,17 +320,11 @@ class MyTokens extends Component {
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Current Value: {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
                 </Typography>
-
               </CardContent>
             </Card>
 
-
-
-
             <Card className={classes.card}>
-
               <CardContent>
-
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Market Cap
                 </Typography>
@@ -363,18 +334,12 @@ class MyTokens extends Component {
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Current Value: {currentPrice * (totalSupply / multiplier) * 500} $
                 </Typography>
-
               </CardContent>
             </Card>
           </Grid>
         </Grid>
 
-
-
         <Grid container spacing={24}>
-
-
-
           <Grid item xs={6} sm={6}>
             <Card className={classes.card}>
               <CardContent>
@@ -429,27 +394,28 @@ class MyTokens extends Component {
         </Grid>
         <Grid container spacing={24}>
           <Grid item xs={4}>
-
-
             <Card className={classes.card}>
               <CardHeader
-
                 action={
                   <div>
-                    <Button color="secondary" size="sm" onClick={this.makeEditable} style={{ float: 'right' }}>
+                    <Button
+                      color="secondary"
+                      size="sm"
+                      onClick={this.makeEditable}
+                      style={{ float: 'right' }}
+                    >
                       Edit
-                  </Button>
+                    </Button>
                     {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
                       Market Page
                   </Button> */}
                   </div>
                 }
-                title={"Your services"}
-                subheader={"What can people get with your token?"}
+                title={'Your services'}
+                subheader={'What can people get with your token?'}
               />
               <CardContent>
                 <form className={classes.container} noValidate autoComplete="off">
-
                   <Grid container sm={12}>
                     <Grid item sm={4}>
                       <TextField
@@ -460,10 +426,8 @@ class MyTokens extends Component {
                         className={classes.textField}
                         margin="normal"
                       />
-
                     </Grid>
                     <Grid item sm={4}>
-
                       <TextField
                         id="standard-select-currency"
                         select
@@ -473,8 +437,8 @@ class MyTokens extends Component {
                         onChange={this.handleChange('currency')}
                         SelectProps={{
                           MenuProps: {
-                            className: classes.menu,
-                          },
+                            className: classes.menu
+                          }
                         }}
                         helperText="Please select a category"
                         margin="normal"
@@ -495,36 +459,26 @@ class MyTokens extends Component {
                         type="number"
                         className={classes.textField}
                         InputLabelProps={{
-                          shrink: true,
+                          shrink: true
                         }}
                         margin="normal"
                       />
                     </Grid>
                   </Grid>
-
                 </form>
-
-
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item xs={8}>
             <Card className={classes.card}>
-              <CardHeader
-                title={"Requests and investments"}
-                subheader={"Honor your token"}
-              />
+              <CardHeader title={'Requests and investments'} subheader={'Honor your token'} />
               <CardContent>
-
-
                 <Events date={this.props.date} address={this.props.address} />
               </CardContent>
             </Card>
           </Grid>
-
         </Grid>
-
 
         <hr />
       </div>
@@ -533,14 +487,6 @@ class MyTokens extends Component {
 }
 
 export default withStyles(styles)(withContext(withRouter(MyTokens)));
-
-
-
-
-
-
-
-
 
 // class ProfileDetails extends Component {
 //   constructor(props) {
@@ -578,7 +524,6 @@ export default withStyles(styles)(withContext(withRouter(MyTokens)));
 //             Personal Economy of {this.props.addr}
 //           </Typography>
 //         </Grid>
-
 
 //         <Grid container style={{ paddingTop: '2%' }}>
 //           <BuySell

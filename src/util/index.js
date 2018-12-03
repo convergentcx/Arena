@@ -3,17 +3,17 @@ import { utils as w3utils } from 'web3';
 
 const { toBN } = w3utils;
 
-export const addDecimals = (tokens) => {
+export const addDecimals = tokens => {
   return w3utils.toWei(String(tokens), 'ether').toString();
-}
+};
 
 export const getPrice = (inverseSlope, supply, exp) => {
-  return toBN(1 / inverseSlope * (supply ** exp));
-}
+  return toBN((1 / inverseSlope) * supply ** exp);
+};
 
-export const removeDecimals = (tokens) => {
+export const removeDecimals = tokens => {
   return w3utils.fromWei(String(tokens), 'ether').toString();
-}
+};
 
 export const getBytes32FromMultihash = mhash => {
   const decoded = Buffer.from(bs58.decode(mhash));

@@ -3,9 +3,4 @@ import Launch from './Launch';
 import Leaderboard from './Leaderboard';
 import Profile from './Profile';
 
-export {
-  Landing,
-  Launch,
-  Leaderboard,
-  Profile,
-};
+export { Landing, Launch, Leaderboard, Profile };

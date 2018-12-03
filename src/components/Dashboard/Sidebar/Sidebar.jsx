@@ -1,6 +1,5 @@
 import React from 'react';
-import { Nav, NavItem } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
 import classes from './Sidebar.module.css';
 

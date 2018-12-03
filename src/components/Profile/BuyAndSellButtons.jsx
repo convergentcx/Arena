@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 
-import {
-  Button,
-  Grid,
-  TextField,
-} from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 
-import {
-  addDecimals,
-  removeDecimals,
-} from '../../util';
+import { addDecimals, removeDecimals } from '../../util';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './toast.css'
+import './toast.css';
 export default class BuyAndSellButtons extends Component {
   constructor(props) {
     super(props);
@@ -22,14 +15,14 @@ export default class BuyAndSellButtons extends Component {
       interval: null,
       priceInEther: 0,
       rewardInEther: 0,
-      txStatus: null,
+      txStatus: null
     };
   }
 
   buyHandler = () => {
     const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
-      value: this.state.priceInEther,
+      value: this.state.priceInEther
     });
     this.waitForMined(buyStackId);
   };
@@ -67,9 +60,12 @@ export default class BuyAndSellButtons extends Component {
   };
 
   sellHandler = () => {
-    const sellStackId = this.props.contract.methods.burn.cacheSend(addDecimals(this.state.sellAmt), {
-      from: this.props.drizzleState.accounts[0]
-    });
+    const sellStackId = this.props.contract.methods.burn.cacheSend(
+      addDecimals(this.state.sellAmt),
+      {
+        from: this.props.drizzleState.accounts[0]
+      }
+    );
     this.waitForMined(sellStackId);
   };
 
@@ -77,23 +73,23 @@ export default class BuyAndSellButtons extends Component {
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {
-        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' })
+        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' });
         this.setState({
-          txStatus: 'pending',
-        })
+          txStatus: 'pending'
+        });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         toast.success('Transaction mined!', { className: 'green-background' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success',
-        })
+          txStatus: 'success'
+        });
       }
     }, 100);
     this.setState({
-      interval,
+      interval
     });
-  }
+  };
 
   render() {
     return (
@@ -105,14 +101,12 @@ export default class BuyAndSellButtons extends Component {
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
           />
-          <div addonType="append">
-            With {removeDecimals(this.state.priceInEther)} ETH
-          </div>
+          <div addonType="append">With {removeDecimals(this.state.priceInEther)} ETH</div>
         </Grid>
 
         <Grid item md={2}>
           <Button color="primary" onClick={this.buyHandler}>
-              Buy
+            Buy
           </Button>
         </Grid>
         {/* <div>{this.getStatus('buyStackId')}</div> */}
@@ -124,9 +118,7 @@ export default class BuyAndSellButtons extends Component {
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
           />
-          <div addonType="append">
-            For {removeDecimals(this.state.rewardInEther)} ETH
-          </div>
+          <div addonType="append">For {removeDecimals(this.state.rewardInEther)} ETH</div>
         </Grid>
 
         <Grid item md={2}>
@@ -137,7 +129,6 @@ export default class BuyAndSellButtons extends Component {
         {/* <div>{this.getStatus('sellStackId')}</div> */}
 
         <ToastContainer autoClose={false} closeOnClick />
-
       </Grid>
     );
   }
