@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  Avatar,
   Button,
   Card,
   CardContent,
@@ -9,15 +10,15 @@ import {
   TextField
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-
+import dataUriToBuffer from 'data-uri-to-buffer';
 import ipfsApi from 'ipfs-api';
+import Dropzone from 'react-dropzone';
 
 import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
 // import AttributeInput from './AttributeInput';
-import UploadImage from './UploadImage';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -26,7 +27,9 @@ class LaunchForm extends Component {
     super(props);
 
     this.state = {
+      file: '',
       ipfsUploading: false,
+      // preview: '',
       rows: 0,
       stackId: null,
       tooFew: false,
@@ -35,7 +38,7 @@ class LaunchForm extends Component {
       enteredTag: ''
     };
   }
-
+  
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
@@ -65,13 +68,17 @@ class LaunchForm extends Component {
 
     // TODO: Check for all the required fields.
 
+    const imgBuf = dataUriToBuffer(this.state.file) || '';
+
     const dataJson = {
       name: this.state.name,
       description: this.state.description || '',
-      image: this.state.image || '',
+      image: imgBuf,
       symbol: this.state.symbol,
       services: []
     };
+
+    // console.log(dataJson)
 
     for (let i = 0; i <= this.state.rows; i++) {
       dataJson.services.push({ what: this.state[`service-${i}`], price: this.state[`price-${i}`] });
@@ -93,6 +100,17 @@ class LaunchForm extends Component {
     this.setState({ stackId });
   };
 
+  onDrop = files => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.setState({
+        file: e.target.result,
+      })
+    };
+
+    reader.readAsDataURL(files[0]);
+  };
+
   submitHash = async data => {
     const result = await ipfs.add(Buffer.from(data));
     return result;
@@ -109,9 +127,10 @@ class LaunchForm extends Component {
   };
 
   render() {
-    let moreServices = [];
+    const { file } = this.state;
 
-    const renderRows = () => {
+    let moreServices = [];
+    (() => {
       let i = 0;
       while (i < this.state.rows) {
         moreServices.push(
@@ -139,16 +158,31 @@ class LaunchForm extends Component {
         );
         i++;
       }
-    };
-
-    renderRows();
+    })();
 
     return (
       <Card>
         <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
           <Grid container>
             <Grid item sm={12} md={3} style={{ background: '' }}>
-              <UploadImage />
+
+            {/* Upload Image */}
+            <div style={{ height: '200px', width: '200px', margin: 'auto', borderRadius: '50%' }}>
+              <Dropzone
+                accept="image/*"
+                onDrop={this.onDrop}
+                style={{
+                  border: 'none',
+                }}
+              >
+                {file 
+                  ? <Avatar src={file} style={{ height: '200px', width: '200px', margin: 'auto' }} />
+                  : <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                    Click to Upload
+                  </Avatar>
+                }
+              </Dropzone>
+            </div>
 
             </Grid>
             <Grid item sm={12} md={9}>
