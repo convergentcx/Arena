@@ -233,9 +233,6 @@ class LaunchForm extends Component {
             <div>{this.waitUntilMined()}</div>
           </Grid>
         </CardContent>
-
-        <ToastContainer autoClose={false} closeOnClick />
-
       </Card >
     );
   }

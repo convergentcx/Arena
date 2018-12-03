@@ -140,6 +140,9 @@ export default class Services extends Component {
           </TableHead>
           <TableBody>{items}</TableBody>
         </Table>
+
+        <ToastContainer autoClose={false} closeOnClick />
+
       </div>
     );
   }
