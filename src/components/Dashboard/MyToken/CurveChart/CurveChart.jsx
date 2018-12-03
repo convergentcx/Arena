@@ -3,8 +3,8 @@ import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis
 
 class CurveChart extends Component {
   getChartData() {
-    let { totalSupply, poolBalance, inverseSlope, exponent, currentPrice } = this.props.curveData;
-    poolBalance = parseFloat(poolBalance) || 0;
+    let { totalSupply, inverseSlope, exponent, currentPrice } = this.props.curveData;
+    // poolBalance = parseFloat(poolBalance) || 0;
     totalSupply = parseFloat(totalSupply) || 0;
 
     let currentPoint = { supply: totalSupply, value: currentPrice };

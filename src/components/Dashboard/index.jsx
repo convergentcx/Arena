@@ -4,11 +4,11 @@ import Web3 from 'web3';
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
 import Sidebar from './Sidebar/Sidebar';
 import MyToken from './MyToken/MyToken';
-import Events from './MyToken/Events/Events';
+// import Events from './MyToken/Events/Events';
 import classes from './Dashboard.module.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
-import ScrollableTabsButtonAuto from './Tab/Tab';
+// import ScrollableTabsButtonAuto from './Tab/Tab';
 
 class Dashboard extends Component {
   state = {

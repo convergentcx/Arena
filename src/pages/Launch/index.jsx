@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 
-import { Button, Grid, LinearProgress, TextField, Card, CardContent, CardHeader, Avatar, Divider } from '@material-ui/core';
+import { Avatar, Button, Card, CardContent, Grid, LinearProgress, TextField } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 
 import ipfsApi from 'ipfs-api';

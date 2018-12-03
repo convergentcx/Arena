@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
-import ipfsApi from 'ipfs-api';
+// import ipfsApi from 'ipfs-api';
 
 import {
   Button,
@@ -29,15 +29,15 @@ import { getPrice, removeDecimals } from '../../util';
 
 import { utils } from 'web3';
 
-const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+// const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
 class CurveChart extends Component {
   getChartData = () => {
-    let { currentPrice, exponent, inverseSlope, poolBalance, totalSupply } = this.props.curveData;
+    let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
 
-    poolBalance = utils.toBN(poolBalance);
+    // poolBalance = utils.toBN(poolBalance);
     totalSupply = utils.toBN(totalSupply);
 
     const currentPoint = {
