@@ -9,7 +9,6 @@ cache:
   - node_modules
 install: npm install
 script:
-- npm i -g yarn
 - yarn truffle:build && cp -R build src
 - yarn build
 # before_deploy:

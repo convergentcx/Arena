@@ -123,11 +123,11 @@ class CurveChart extends Component {
   }
 }
 
-const labelStyle = {
-  margin: 0,
-  padding: 0,
-  fontSize: '10px'
-};
+// const labelStyle = {
+//   margin: 0,
+//   padding: 0,
+//   fontSize: '10px'
+// };
 
 class ProfileDetails extends Component {
   constructor(props) {
