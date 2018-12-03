@@ -4,8 +4,8 @@ import TopNavbar from './TopNavbar';
 
 const appStyles = {
   backgroundColor: '#232323',
-  height: '100vh',
-}
+  height: '100vh'
+};
 
 const AppContainer = props => (
   <div style={appStyles}>

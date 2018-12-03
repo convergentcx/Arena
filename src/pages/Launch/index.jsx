@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import {
-  Avatar,
   Button,
   Card,
   CardContent,
@@ -17,7 +16,8 @@ import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
-import AttributeInput from './AttributeInput';
+// import AttributeInput from './AttributeInput';
+import UploadImage from './UploadImage';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -63,8 +63,12 @@ class LaunchForm extends Component {
       drizzleState
     } = this.props;
 
+    // TODO: Check for all the required fields.
+
     const dataJson = {
       name: this.state.name,
+      description: this.state.description || '',
+      image: this.state.image || '',
       symbol: this.state.symbol,
       services: []
     };
@@ -131,7 +135,6 @@ class LaunchForm extends Component {
                 style={{ width: '100%' }}
               />
             </Grid>
-
           </Grid>
         );
         i++;
@@ -145,9 +148,8 @@ class LaunchForm extends Component {
         <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
           <Grid container>
             <Grid item sm={12} md={3} style={{ background: '' }}>
-              <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                Click to Upload
-              </Avatar>
+              <UploadImage />
+
             </Grid>
             <Grid item sm={12} md={9}>
               <Grid item xs={12}>
@@ -175,7 +177,6 @@ class LaunchForm extends Component {
                   multiline
                   rows="3"
                   rowsMax="3"
-                  variant="filled"
                   label="Description"
                   type="text"
                   name="description"
@@ -192,7 +193,6 @@ class LaunchForm extends Component {
             </Grid>
 
             <Grid container style={{ marginTop: '40px' }}>
-
               <Grid item xs={9} style={{ paddingLeft: '' }}>
                 <TextField
                   label="Service"
@@ -212,7 +212,6 @@ class LaunchForm extends Component {
                   style={{ width: '100%' }}
                 />
               </Grid>
-
             </Grid>
 
             {moreServices}
@@ -254,7 +253,7 @@ class LaunchForm extends Component {
                 </div>
               )}
             </Grid>
-            
+
             {/* Deploy Button */}
             <Grid item md={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
               <div style={{ flexGrow: 1 }} />

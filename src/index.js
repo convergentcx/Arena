@@ -14,8 +14,8 @@ import { amber, green } from '@material-ui/core/colors';
 const theme = createMuiTheme({
   palette: {
     primary: amber,
-    secondary: green,
-  },
+    secondary: green
+  }
 });
 
 /// Styles
