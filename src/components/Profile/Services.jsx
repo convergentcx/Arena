@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField
+} from '@material-ui/core';
 import ipfsApi from 'ipfs-api';
 
 import { getMultihashFromBytes32 } from '../../util';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './toast.css'
+import './toast.css';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -73,23 +81,23 @@ export default class Services extends Component {
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {
-        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' })
+        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' });
         this.setState({
-          txStatus: 'pending',
-        })
+          txStatus: 'pending'
+        });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         toast.success('Transaction mined!', { className: 'green-background' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success',
-        })
+          txStatus: 'success'
+        });
       }
     }, 100);
     this.setState({
-      interval,
+      interval
     });
-  }
+  };
 
   render() {
     if (!this.state.jsonData.services) {
@@ -132,6 +140,9 @@ export default class Services extends Component {
           </TableHead>
           <TableBody>{items}</TableBody>
         </Table>
+
+        <ToastContainer autoClose={false} closeOnClick />
+
       </div>
     );
   }
