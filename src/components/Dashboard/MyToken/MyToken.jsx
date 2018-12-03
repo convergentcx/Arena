@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classes from './MyToken.module.css';
 import withContext from '../../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
 
@@ -11,25 +10,20 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 // import CurveChart from '../ListToken/TokenDetails/Chart/Chart';
 
 // import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+
+import Services from './Services';
+import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
 import CurveChart from './CurveChart/CurveChart';
-import BlockHistory from './BlockHistory/BlockHistory';
 
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Money from '@material-ui/icons/AttachMoney';
 
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
@@ -40,7 +34,8 @@ const styles = theme => ({
     color: theme.palette.text.secondary
   },
   card: {
-    minWidth: 200
+    minWidth: 200,
+    position: 'relative'
   },
   title: {
     fontSize: 14
@@ -60,9 +55,6 @@ const styles = theme => ({
   dense: {
     marginTop: 19
   },
-  menu: {
-    width: 200
-  },
   bigAvatar: {
     margin: 10,
     width: 60,
@@ -70,27 +62,13 @@ const styles = theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 2
+  },
+  editButton: {
+    position: 'absolute',
+    right: '2%',
+    top: '3%'
   }
 });
-
-const currencies = [
-  {
-    value: 'attention',
-    label: 'Attention'
-  },
-  {
-    value: 'media',
-    label: 'Media'
-  },
-  {
-    value: 'arts',
-    label: 'Arts'
-  },
-  {
-    value: 'consulting',
-    label: 'Consulting'
-  }
-];
 
 const multiplier = 10 ** 18;
 
@@ -107,17 +85,12 @@ class MyTokens extends Component {
     owner: '',
     poolBalance: '',
     symbol: '',
-    popover: false,
-
-    name: 'Cat in the Hat',
-    age: '',
-    multiline:
-      'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
-    currency: 'EUR'
+    popover: false
   };
 
   async componentDidMount() {
-    const { address, drizzle } = this.props;
+    const { drizzle } = this.props;
+    const address = this.props.match.params.tokenAddress;
     const contractConfig = {
       contractName: address,
       web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address)
@@ -161,8 +134,6 @@ class MyTokens extends Component {
     this.props.history.push('/tokens/' + this.props.address);
   };
 
-  getContractData = () => {};
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -171,8 +142,9 @@ class MyTokens extends Component {
 
   render() {
     const { classes } = this.props;
+    const address = this.props.match.params.tokenAddress;
 
-    const contract = this.props.drizzleState.contracts[this.props.address];
+    const contract = this.props.drizzleState.contracts[address];
 
     if (
       !contract ||
@@ -189,160 +161,34 @@ class MyTokens extends Component {
       (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
-      <div id={this.props.address} className={classes.root}>
+      <div id={address} className={classes.root}>
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <Grid item xs={4}>
-            <Card className={classes.card}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="Recipe" className={classes.bigAvatar}>
-                    R
-                  </Avatar>
-                }
-                action={
-                  <div>
-                    <Button
-                      color="secondary"
-                      size="sm"
-                      onClick={this.makeEditable}
-                      style={{ float: 'right' }}
-                    >
-                      Edit
-                    </Button>
-                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                      Market Page
-                  </Button> */}
-                  </div>
-                }
-                title={
-                  <TextField
-                    id="standard-read-only-input"
-                    defaultValue="Token display name"
-                    className={classes.textField}
-                    margin="normal"
-                    InputProps={{
-                      readOnly: true
-                    }}
-                  />
-                }
-                subheader={
-                  <div>
-                    <Chip label="blockchain" className={classes.chip} />
-                    <Chip label="mentorship" className={classes.chip} />
-                  </div>
-                }
-              />
-              <CardContent>
-                <form className={classes.container} noValidate autoComplete="off">
-                  <TextField
-                    id="standard-full-width"
-                    value={this.state.multiline}
-                    onChange={this.handleChange('multiline')}
-                    label="Description"
-                    style={{ margin: 8 }}
-                    placeholder="My token will give you .."
-                    helperText="Tell your investors why you are going to the moon"
-                    fullWidth
-                    multiline
-                    // rows="4"
-                    margin="normal"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
-                </form>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={5}>
-            <Grid container sm={12}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Current Price
-                  </Typography>
-                  <Typography variant="h6" component="h2">
-                    {currentPrice} Ξ
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary" />
-                </CardContent>
-              </Card>
-
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Current Token Supply
-                  </Typography>
-                  <Typography variant="h6" component="h2">
-                    {totalSupply / multiplier} {this.state.symbol}
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary" />
-                </CardContent>
-              </Card>
-
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Reserve Pool
-                  </Typography>
-                  <Typography variant="h6" component="h2">
-                    {this.state.poolBalance / multiplier} Ξ
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary" />
-                </CardContent>
-              </Card>
-
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Price formula
-                  </Typography>
-                  <Typography variant="h6" component="h2">
-                    {`p = 1 / ${this.state.inverseSlope} * supply ^ ${this.state.exponent}`}{' '}
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary" />
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-          <Grid item xs={3}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Your Balance
-                </Typography>
-                <Typography variant="h2" component="h2">
-                  {yourBalance / multiplier.toFixed(3)} {this.state.symbol}
-                </Typography>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Value: {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
-                </Typography>
-              </CardContent>
-            </Card>
-
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Market Cap
-                </Typography>
-                <Typography variant="h2" component="h2">
-                  {currentPrice * (totalSupply / multiplier)} Ξ
-                </Typography>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Current Value: {currentPrice * (totalSupply / multiplier) * 500} $
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <ProfileCard />
+          <SmallStats
+            currentPrice={currentPrice}
+            totalSupply={totalSupply}
+            poolBalance={this.state.poolBalance}
+            symbol={this.state.symbol}
+            exponent={this.state.exponent}
+            inverseSlope={this.state.inverrseSlope}
+          />
+          <MainStats
+            currentPrice={currentPrice}
+            totalSupply={totalSupply}
+            yourBalance={yourBalance}
+            symbol={this.state.symbol}
+          />
         </Grid>
 
         <Grid container spacing={24}>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={12} md={6}>
             <Card className={classes.card}>
               <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  7 day price chart
+                </Typography>
                 <CurveChart
                   curveData={{
                     totalSupply: 0,
@@ -368,9 +214,12 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={12} md={6}>
             <Card className={classes.card}>
               <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Bonding curve
+                </Typography>
                 <CurveChart
                   curveData={{
                     totalSupply: totalSupply / multiplier,
@@ -393,88 +242,17 @@ class MyTokens extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={24}>
-          <Grid item xs={4}>
-            <Card className={classes.card}>
-              <CardHeader
-                action={
-                  <div>
-                    <Button
-                      color="secondary"
-                      size="sm"
-                      onClick={this.makeEditable}
-                      style={{ float: 'right' }}
-                    >
-                      Edit
-                    </Button>
-                    {/* <Button color="primary" size="sm" onClick={this.showDetails} style={{ float: 'right' }}>
-                      Market Page
-                  </Button> */}
-                  </div>
-                }
-                title={'Your services'}
-                subheader={'What can people get with your token?'}
-              />
-              <CardContent>
-                <form className={classes.container} noValidate autoComplete="off">
-                  <Grid container sm={12}>
-                    <Grid item sm={4}>
-                      <TextField
-                        required
-                        id="standard-required"
-                        label="req"
-                        defaultValue="Service 1"
-                        className={classes.textField}
-                        margin="normal"
-                      />
-                    </Grid>
-                    <Grid item sm={4}>
-                      <TextField
-                        id="standard-select-currency"
-                        select
-                        label="Select"
-                        className={classes.textField}
-                        value={this.state.currency}
-                        onChange={this.handleChange('currency')}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu
-                          }
-                        }}
-                        helperText="Please select a category"
-                        margin="normal"
-                      >
-                        {currencies.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-                    <Grid item sm={4}>
-                      <TextField
-                        id="standard-number"
-                        label="Number"
-                        value={this.state.age}
-                        onChange={this.handleChange('age')}
-                        type="number"
-                        className={classes.textField}
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                        margin="normal"
-                      />
-                    </Grid>
-                  </Grid>
-                </form>
-              </CardContent>
-            </Card>
+          <Grid item xs={12} md={4}>
+            <Services />
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Card className={classes.card}>
-              <CardHeader title={'Requests and investments'} subheader={'Honor your token'} />
               <CardContent>
-                <Events date={this.props.date} address={this.props.address} />
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Requests and Transactions
+                </Typography>
+                <Events date={this.props.date} address={address} />
               </CardContent>
             </Card>
           </Grid>
@@ -487,151 +265,3 @@ class MyTokens extends Component {
 }
 
 export default withStyles(styles)(withContext(withRouter(MyTokens)));
-
-// class ProfileDetails extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   async componentDidMount() {
-//     const { addr, drizzle } = this.props;
-//     const contractConfig = {
-//       contractName: addr,
-//       web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr)
-//     };
-//     const events = ['Minted', 'Burned'];
-//     await drizzle.addContract(contractConfig, events);
-
-//   }
-
-//   toggle = () => {
-//     this.setState({
-//       popover: !this.state.popover
-//     });
-//   };
-
-//   render() {
-
-//     return (
-//       <div style={{ padding: '5%' }}>
-
-//         <Grid container style={{ alignItems: 'center' }}>
-//           <IconButton onClick={() => this.props.history.goBack()}>
-//             <KeyboardBackspace />
-//           </IconButton>
-//           <div style={{ flexGrow: 1 }} />
-//           <Typography variant="title">
-//             Personal Economy of {this.props.addr}
-//           </Typography>
-//         </Grid>
-
-//         <Grid container style={{ paddingTop: '2%' }}>
-//           <BuySell
-//             contract={this.props.drizzle.contracts[this.props.addr]}
-//             drizzleState={this.props.drizzleState}
-//             symbol={this.state.symbol}
-//           />
-//           <Grid container style={{ paddingTop: '2%' }}>
-
-//             <Grid item md={6}>
-//               <ContractInfo
-//                 marketCap={currentPrice * (totalSupply / multiplier)}
-//                 name={this.state.name}
-//                 symbol={this.state.symbol}
-//                 tokenBalance={yourBalance / multiplier}
-//               />
-//             </Grid>
-
-//             <Grid item md={6}>
-//               <Card>
-//                 <div style={{ padding: '15px', }}>
-//                   Bonding Curve
-//                   <div>
-//                     <Button color="secondary" size="sm" id="Popover1" onClick={this.toggle}>
-//                       Details
-//                     </Button>
-//                   </div>
-//                   <Popover
-//                     placement="bottom"
-//                     isOpen={this.state.popover}
-//                     target="Popover1"
-//                     toggle={this.toggle}
-//                   >
-//                     <PopoverHeader>Contract Information</PopoverHeader>
-//                     <PopoverBody>
-//                       <Row>
-//                         <Col md={12}>
-//                           <FormGroup>
-//                             <Label size="sm" style={labelStyle}>
-//                               Contract Address
-//                             </Label>
-//                             <p> {this.props.addr} </p>
-//                           </FormGroup>
-//                         </Col>
-//                       </Row>
-//                       <Row>
-//                         <Col md={12}>
-//                           <Label size="sm" style={labelStyle}>
-//                             Owner Address
-//                           </Label>
-//                           <p>{this.state.owner}</p>
-//                         </Col>
-//                       </Row>
-//                       <Row>
-//                         <Col md={4}>
-//                           <Label size="sm" style={labelStyle}>
-//                             Price
-//                           </Label>
-//                           <p>{currentPrice} ETH</p>
-//                         </Col>
-//                         <Col md={4}>
-//                           <Label size="sm" style={labelStyle}>
-//                             Reserve Pool
-//                           </Label>
-//                           <p>{this.state.poolBalance} ETH </p>
-//                         </Col>
-//                         <Col md={4}>
-//                           <Label size="sm" style={labelStyle}>
-//                             Total Supply
-//                           </Label>
-//                           <p>
-//                             {totalSupply} {this.state.symbol}
-//                           </p>
-//                         </Col>
-//                       </Row>
-//                     </PopoverBody>
-//                   </Popover>
-//                 </div>
-
-//                 <CurveChart
-//                   curveData={{
-//                     totalSupply: totalSupply,
-//                     poolBalance: this.state.poolBalance,
-//                     inverseSlope: this.state.inverseSlope,
-//                     exponent: this.state.exponent,
-//                     currentPrice: currentPrice
-//                   }}
-//                   margin={{
-//                     top: 30,
-//                     right: 10,
-//                     bottom: 30,
-//                     left: 10
-//                   }}
-//                   width={300}
-//                   height={300}
-//                 />
-//               </Card>
-//             </Grid>
-//           </Grid>
-
-//           <RequestService
-//             account={this.props.drizzleState.accounts[0]}
-//             contract={this.props.drizzle.contracts[this.props.addr]}
-//             mhash={this.state.mhash}
-//             symbol={this.state.symbol}
-//           />
-//         </Grid>
-//       </div>
-//     );
-//   }
-// }

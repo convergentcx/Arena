@@ -6,9 +6,9 @@ import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory
 import MyToken from './MyToken/MyToken';
 // import Events from './MyToken/Events/Events';
 import classes from './Dashboard.module.css';
-// import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
-import ScrollableTabsButtonAuto from './Tab/Tab';
+// import ScrollableTabsButtonAuto from './Tab/Tab';
 
 class Dashboard extends Component {
   state = {
@@ -78,30 +78,35 @@ class Dashboard extends Component {
   };
 
   render() {
-    const tokens =
-      this.state.tokens &&
-      this.state.tokens.map(token => {
-        return (
-          <MyToken
-            address={token.address}
-            date={token.date}
-            name={token.name}
-            key={token.address}
-          />
-        );
-      });
+    //  const tokens =
+    //  this.state.tokens &&
+    //  this.state.tokens.map(token => {
+    //  return (
+    //    <MyToken
+    //      address={token.address}
+    //      date={token.date}
+    //      name={token.name}
+    //      key={token.address}
+    //    />
+    //  );
+    // });
 
     return (
       <div className={classes.main}>
-        <ScrollableTabsButtonAuto />
-
-        {/* <Sidebar tokens={this.state.tokens} className={classes.menuBox} /> */}
         {/* <Switch>
           <Route path='/dashboard' component={} />
           <Route path="/dashboard/:tokenAddress" exact component={Events} />
         </Switch> */}
+        {/*<div className={classes.tokenBox}>{tokens}</div>*/}
+        {/*<Sidebar tokens={this.state.tokens} className={classes.menuBox} />*/}
+        {/*<ScrollableTabsButtonAuto tokens={this.state.tokens} />*/}
 
-        {tokens}
+        <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
+        <Route
+          path="/dashboard/:tokenAddress"
+          exact
+          render={props => <MyToken key={props.match.params.tokenAddress} />}
+        />
       </div>
     );
   }
