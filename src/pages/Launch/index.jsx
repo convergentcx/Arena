@@ -3,7 +3,6 @@ import { Alert } from 'reactstrap';
 
 import { Button, Grid, LinearProgress, TextField, Card, CardContent, CardHeader, Avatar, Divider } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import Chip from '@material-ui/core/Chip';
 
 import ipfsApi from 'ipfs-api';
 
@@ -139,7 +138,9 @@ class LaunchForm extends Component {
 
           <Grid container>
             <Grid item md={3} style={{ textAlign: 'center' }}>
-              <Avatar style={{ height: '200px', width: '200px', marginTop: '10px' }}>S</Avatar>
+              <div>
+                <Avatar style={{ height: '200px', width: '200px', marginTop: '10px' }}>S</Avatar>
+              </div>
             </Grid>
             <Grid item md={9} style={{ paddingLeft: '10px' }}>
               <TextField

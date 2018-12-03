@@ -42,7 +42,12 @@ const suggestions = [
   {
     value: 'access',
     label: 'Access Rights'
-  }
+  },
+  {
+    value: 'blockchain',
+    label: 'Blockchain'
+  },
+
 ];
 
 function renderInput(inputProps) {
