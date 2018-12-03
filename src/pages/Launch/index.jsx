@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 
-import { Button, Grid, LinearProgress, TextField, MenuItem } from '@material-ui/core';
+import { Button, Grid, LinearProgress, TextField, Card, CardContent, CardHeader, Avatar, Divider } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import Chip from '@material-ui/core/Chip';
-
-import shortid from 'shortid';
 
 import ipfsApi from 'ipfs-api';
 
@@ -13,44 +11,9 @@ import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
-import ChipsArray from './Chips';
+import DownshiftMultiple from './Chips';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
-
-// const categories = [
-//   {
-//     value: 'attention',
-//     label: 'Attention'
-//   },
-//   {
-//     value: 'media',
-//     label: 'Media'
-//   },
-//   {
-//     value: 'technology',
-//     label: 'Technology'
-//   },
-//   {
-//     value: 'arts',
-//     label: 'Arts'
-//   },
-//   {
-//     value: 'consulting',
-//     label: 'Consulting'
-//   },
-//   {
-//     value: 'mentorship',
-//     label: 'Mentorship'
-//   },
-//   {
-//     value: 'voting',
-//     label: 'Voting Rights'
-//   },
-//   {
-//     value: 'access',
-//     label: 'Access Rights'
-//   }
-// ];
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -72,25 +35,6 @@ class LaunchForm extends Component {
     this.setState({
       [name]: value
     });
-  };
-
-  onAddTag = e => {
-    if (e.key === 'Enter') {
-      this.setState({
-        tags: [
-          ...this.state.tags,
-          {
-            tag: e.target.value,
-            id: shortid.generate()
-          }
-        ],
-        enteredTag: ''
-      });
-    }
-  };
-
-  handleDeleteTag = id => {
-    this.setState({ tags: this.state.tags.filter(tag => tag.id !== id) });
   };
 
   addService = () => {
@@ -163,20 +107,22 @@ class LaunchForm extends Component {
       while (i < this.state.rows) {
         moreServices.push(
           <Grid container>
-            <Grid item md={8}>
-              <TextField
-                label="Service"
-                type="text"
-                name={`service-${i + 1}`}
-                onChange={this.inputUpdate}
-              />
-            </Grid>
-            <Grid item md={4}>
+            <Grid item md={3}>
               <TextField
                 label="Price"
                 type="text"
                 name={`price-${i + 1}`}
                 onChange={this.inputUpdate}
+                style={{ width: '80%' }}
+              />
+            </Grid>
+            <Grid item md={9} style={{ paddingLeft: '10px' }}>
+              <TextField
+                label="Service"
+                type="text"
+                name={`service-${i + 1}`}
+                onChange={this.inputUpdate}
+                style={{ width: '100%' }}
               />
             </Grid>
           </Grid>
@@ -188,101 +134,105 @@ class LaunchForm extends Component {
     renderRows();
 
     return (
-      <Grid container>
-        <Grid item md={8} style={{}}>
-          <Grid item md={12}>
-            <TextField
-              label="Name"
-              type="text"
-              name="name"
-              placeholder=""
-              onChange={this.inputUpdate}
-              style={{width: '40%'}}
-            />
-            <TextField
-              label="Symbol"
-              type="text"
-              name="symbol"
-              placeholder=""
-              onChange={this.inputUpdate}
-              style={{width: '40%'}}
-            />
-          </Grid>
-          <Grid item md={12}>
-            <TextField
-              label="Tag"
-              name="enteredTag"
-              onKeyPress={this.onAddTag}
-              onChange={this.inputUpdate}
-              value={this.state.enteredTag}
-              helperText="Hit enter to add"
-            />
-          </Grid>
-        </Grid>
+      <Card>
+        <CardContent style={{ paddingLeft: '5%', paddingRight: '5%' }}>
 
-        <Grid item md={4} style={{}}>
-          <Grid item md={12}>
-            Photo
-        </Grid>
-          <Grid item md={12}>
-            <div>
-              {this.state.tags &&
-                this.state.tags.map(tag => (
-                  <Chip
-                    key={tag.id}
-                    label={tag.tag}
-                    onDelete={() => this.handleDeleteTag(tag.id)}
-                    color="secondary"
-                  />
-                ))}
+          <Grid container>
+            <Grid item md={3} style={{ textAlign: 'center' }}>
+              <Avatar style={{ height: '200px', width: '200px', marginTop: '10px' }}>S</Avatar>
+            </Grid>
+            <Grid item md={9} style={{ paddingLeft: '10px' }}>
+              <TextField
+                required
+                label="Name"
+                type="text"
+                name="name"
+                placeholder=""
+                onChange={this.inputUpdate}
+                style={{ width: '45%' }}
+              />
+              <TextField
+                required
+                label="Symbol"
+                type="text"
+                name="symbol"
+                placeholder=""
+                onChange={this.inputUpdate}
+                style={{ width: '45%', marginLeft: '10%' }}
+              />
+              <Grid item md={12}>
+
+                <TextField
+                  id="standard-full-width"
+                  value={this.state.multiline}
+                  onChange={this.inputChange}
+                  label="Description"
+                  name="description"
+                  style={{ width: '100%' }}
+                  placeholder="Tell the market why your token will become valuable (you can also fill this in later)"
+                  multiline
+                  rows="4"
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+
+              <Grid item md={12}>
+                <DownshiftMultiple />
+              </Grid>
+            </Grid>
+
+            <Grid container style={{ marginTop: '80px' }}>
+
+              <Grid item md={3}>
+                <TextField label="Price" type="text" name="price-0" onChange={this.inputUpdate} style={{ width: '80%' }} />
+              </Grid>
+
+              <Grid item md={9} style={{ paddingLeft: '10px' }}>
+                <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} style={{ width: '100%' }} />
+              </Grid>
+
+            </Grid>
+            {moreServices}
+            <Grid item md={12}>
+              <Button onClick={this.removeService}>
+                <Remove />
+              </Button>
+              <Button onClick={this.addService}>
+                <Add />
+              </Button>
+            </Grid>
+            <br />
+            <Grid item md={12}>
+              {this.state.tooMany && (
+                <Alert color="warning" style={{ marginBottom: '10px' }}>
+                  While we build 🛠 only 3 services will be available in your economy 💸
+            </Alert>
+              )}
+              {this.state.tooFew && (
+                <Alert color="warning" style={{ marginBottom: '10px' }}>
+                  For your economy to work 👨‍💼 you need to offer at least one service 🗳
+            </Alert>
+              )}
+            </Grid>
+            <Grid item md={12}>
+              <Button size="medium" variant="outlined" onClick={this.deploy}>
+                Deploy
+              </Button>
+            </Grid>
+            <br />
+            {this.state.ipfsUploading && (
+              <div>
+                <LinearProgress color="secondary" />
+                Uploading to IPFS! 📡
             </div>
+            )}
+            <div>{this.waitUntilMined()}</div>
           </Grid>
-
-        </Grid>
-
-
-        <Grid item md={8}>
-          <TextField label="Service" type="text" name="service-0" onChange={this.inputUpdate} />
-        </Grid>
-        <Grid item md={4}>
-          <TextField label="Price" type="text" name="price-0" onChange={this.inputUpdate} />
-        </Grid>
-        {moreServices}
-        <Grid item md={12}>
-          <Button onClick={this.removeService}>
-            <Remove />
-          </Button>
-          <Button onClick={this.addService}>
-            <Add />
-          </Button>
-        </Grid>
-        <br />
-        <Grid item md={12}>
-          {this.state.tooMany && (
-            <Alert color="warning" style={{ marginBottom: '10px' }}>
-              While we build 🛠 only 3 services will be available in your economy 💸
-            </Alert>
-          )}
-          {this.state.tooFew && (
-            <Alert color="warning" style={{ marginBottom: '10px' }}>
-              For your economy to work 👨‍💼 you need to offer at least one service 🗳
-            </Alert>
-          )}
-        </Grid>
-        <Grid item md={12}>
-          <Button size="medium" variant="outlined" onClick={this.deploy}>
-            Deploy
-          </Button>
-        </Grid>
-        <br />
-        {this.state.ipfsUploading && (
-          <div>
-            <LinearProgress color="secondary" />
-            Uploading to IPFS! 📡
-          </div>
-        )}
-        <div>{this.waitUntilMined()}</div>
-      </Grid>
+        </CardContent>
+      </Card >
     );
   }
 }
