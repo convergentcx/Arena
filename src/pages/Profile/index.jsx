@@ -145,25 +145,25 @@ class ProfileDetails extends Component {
             </Grid>
 
             <Grid item md={6}>
-              <Card style={{ margin: '6px' }}>
-                <Grid container>
-                  <Grid item sm={12} style={{ display: 'flex' }}>
-                    <div style={{ flexGrow: 1 }} />
-                    <div style={{ padding: '15px' }}>
-                      <Button
-                        color="secondary"
-                        size="sm"
-                        aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
-                        aria-haspopup="true"
-                        variant="contained"
-                        onClick={this.openPopover}
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </Grid>
+              <Grid container>
+                <Grid item sm={12} style={{ display: 'flex' }}>
+                  <div style={{ flexGrow: 1 }} />
+                  <div style={{ padding: '15px' }}>
+                    <Button
+                      color="secondary"
+                      size="sm"
+                      aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
+                      aria-haspopup="true"
+                      variant="contained"
+                      onClick={this.openPopover}
+                    >
+                      Details
+                    </Button>
+                  </div>
+                </Grid>
 
-                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ width: '100%', height: '33vh' }}>
                     <ProfileChart
                       curveData={{
                         totalSupply: totalSupply,
@@ -178,19 +178,18 @@ class ProfileDetails extends Component {
                         bottom: 30,
                         left: 10
                       }}
-                      width={300}
-                      height={300}
+                      width="100%"
+                      height="100%"
                     />
-                  </Grid>
+                  </div>
                 </Grid>
-              </Card>
-              <div style={{ padding: '2%' }}>
-                <BuyAndSellButtons
-                  contract={this.props.drizzle.contracts[this.props.addr]}
-                  drizzleState={this.props.drizzleState}
-                  symbol={this.state.symbol}
-                />
-              </div>
+              </Grid>
+
+              <BuyAndSellButtons
+                contract={this.props.drizzle.contracts[this.props.addr]}
+                drizzleState={this.props.drizzleState}
+                symbol={this.state.symbol}
+              />
             </Grid>
 
             <Grid item md={6}>

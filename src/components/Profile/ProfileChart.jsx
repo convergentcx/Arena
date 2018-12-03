@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 import { getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
@@ -44,19 +44,31 @@ class ProfileChart extends Component {
 
   render() {
     let { data, currentPoint } = this.getChartData();
+    const  { height, width } = this.props;
 
     return (
-      <div>
-        <ComposedChart
+      <ResponsiveContainer height={height} width={width}>
+        <AreaChart
           style={{ margin: 'auto' }}
-          width={this.props.width}
-          height={this.props.height}
           data={data}
           margin={this.props.margin}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="supply" type={'number'} />
-          <YAxis dataKey="value" type={'number'} />
+          <CartesianGrid 
+            strokeDasharray="2 2"
+            stroke="#00C853"
+          />
+          <XAxis 
+            dataKey="supply"
+            type="number"
+            stroke="#00C853"
+            fill="#00C853" 
+          />
+          <YAxis
+            dataKey="value"
+            type="number"
+            stroke="#00C853"
+            fill="#00C853"
+          />
           <Tooltip />
 
           <Area
@@ -66,7 +78,7 @@ class ProfileChart extends Component {
             dataKey="value"
             name={'price'}
             key={'price'}
-            stroke="#0095b3"
+            stroke="#00C853"
             fill="none"
           />
 
@@ -74,22 +86,19 @@ class ProfileChart extends Component {
             isAnimationActive={false}
             stackOffset={'none'}
             dataKey="sell"
-            stroke="#0095b3"
-            fill="#0095b3"
+            stroke="#00C853"
+            fill="#00C853"
           />
 
           <ReferenceDot
-            isFront={true}
-            ifOverflow="extendDomain"
             x={currentPoint.x}
             y={currentPoint.y}
-            r={16}
-            // fill="blue"
-            stroke="#0095b3"
-            label={currentPoint.y}
+            r={4}
+            stroke="#00C853"
+            fill="#00C853"
           />
-        </ComposedChart>
-      </div>
+        </AreaChart>
+      </ResponsiveContainer>
     );
   }
 }
