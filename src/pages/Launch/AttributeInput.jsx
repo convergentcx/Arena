@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import keycode from 'keycode';
 import Downshift from 'downshift';
+import { Chip, MenuItem, Paper, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-// import Popper from '@material-ui/core/Popper';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 
 const suggestions = [
   {
@@ -112,7 +108,7 @@ function getSuggestions(value) {
     });
 }
 
-class DownshiftMultiple extends React.Component {
+class AttributeInput extends Component {
   state = {
     inputValue: '',
     selectedItem: []
@@ -139,6 +135,7 @@ class DownshiftMultiple extends React.Component {
     let { selectedItem } = this.state;
 
     if (selectedItem.indexOf(item) === -1) {
+      console.log(selectedItem, item);
       selectedItem = [...selectedItem, item];
     }
 
@@ -229,7 +226,7 @@ class DownshiftMultiple extends React.Component {
   }
 }
 
-DownshiftMultiple.propTypes = {
+AttributeInput.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -264,4 +261,4 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(DownshiftMultiple);
+export default withStyles(styles)(AttributeInput);

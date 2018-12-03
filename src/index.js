@@ -7,6 +7,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { Drizzle, generateStore } from 'drizzle';
 import { DrizzleContext } from 'drizzle-react';
 
+/// MUI Theme
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { amber, green } from '@material-ui/core/colors';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: amber,
+    secondary: green,
+  },
+});
+
 /// Styles
 import './styles/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,11 +37,13 @@ const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, drizzleStore);
 
 ReactDOM.render(
-  <DrizzleContext.Provider drizzle={drizzle}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </DrizzleContext.Provider>,
+  <MuiThemeProvider theme={theme}>
+    <DrizzleContext.Provider drizzle={drizzle}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </DrizzleContext.Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 );
 

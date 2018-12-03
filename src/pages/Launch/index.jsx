@@ -17,7 +17,7 @@ import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
-import DownshiftMultiple from './Chips';
+import AttributeInput from './AttributeInput';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -111,25 +111,27 @@ class LaunchForm extends Component {
       let i = 0;
       while (i < this.state.rows) {
         moreServices.push(
-          <Grid container>
-            <Grid item md={3}>
-              <TextField
-                label="Price"
-                type="text"
-                name={`price-${i + 1}`}
-                onChange={this.inputUpdate}
-                style={{ width: '80%' }}
-              />
-            </Grid>
-            <Grid item md={9} style={{ paddingLeft: '10px' }}>
+          <Grid container style={{ marginTop: '1vh' }}>
+            <Grid item xs={9}>
               <TextField
                 label="Service"
                 type="text"
                 name={`service-${i + 1}`}
                 onChange={this.inputUpdate}
+                style={{ width: '90%' }}
+              />
+            </Grid>
+
+            <Grid item xs={3}>
+              <TextField
+                label="Price"
+                type="text"
+                name={`price-${i + 1}`}
+                onChange={this.inputUpdate}
                 style={{ width: '100%' }}
               />
             </Grid>
+
           </Grid>
         );
         i++;
@@ -140,78 +142,83 @@ class LaunchForm extends Component {
 
     return (
       <Card>
-        <CardContent style={{ paddingLeft: '5%', paddingRight: '5%' }}>
+        <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
           <Grid container>
-            <Grid item md={3} style={{ textAlign: 'center' }}>
-              <div>
-                <Avatar style={{ height: '200px', width: '200px', marginTop: '10px' }}>S</Avatar>
-              </div>
+            <Grid item sm={12} md={3} style={{ background: '' }}>
+              <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                Click to Upload
+              </Avatar>
             </Grid>
-            <Grid item md={9} style={{ paddingLeft: '10px' }}>
-              <TextField
-                required
-                label="Name"
-                type="text"
-                name="name"
-                placeholder=""
-                onChange={this.inputUpdate}
-                style={{ width: '45%' }}
-              />
-              <TextField
-                required
-                label="Symbol"
-                type="text"
-                name="symbol"
-                placeholder=""
-                onChange={this.inputUpdate}
-                style={{ width: '45%', marginLeft: '10%' }}
-              />
-              <Grid item md={12}>
+            <Grid item sm={12} md={9}>
+              <Grid item xs={12}>
                 <TextField
-                  id="standard-full-width"
-                  value={this.state.multiline}
-                  onChange={this.inputChange}
-                  label="Description"
-                  name="description"
-                  style={{ width: '100%' }}
-                  placeholder="Tell the market why your token will become valuable (you can also fill this in later)"
-                  multiline
-                  rows="4"
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-              </Grid>
-
-              <Grid item md={12}>
-                <DownshiftMultiple />
-              </Grid>
-            </Grid>
-
-            <Grid container style={{ marginTop: '80px' }}>
-              <Grid item md={3}>
-                <TextField
-                  label="Price"
+                  required
+                  label="Name"
                   type="text"
-                  name="price-0"
+                  name="name"
+                  placeholder=""
                   onChange={this.inputUpdate}
-                  style={{ width: '80%' }}
+                  style={{ width: '45%' }}
+                />
+                <TextField
+                  required
+                  label="Symbol"
+                  type="text"
+                  name="symbol"
+                  placeholder=""
+                  onChange={this.inputUpdate}
+                  style={{ width: '45%', marginLeft: '10%' }}
+                />
+              </Grid>
+              <Grid item xs={12} style={{ marginTop: '2vh' }}>
+                <TextField
+                  multiline
+                  rows="3"
+                  rowsMax="3"
+                  variant="filled"
+                  label="Description"
+                  type="text"
+                  name="description"
+                  placeholder=""
+                  // placeholder="Tell the market why your token will become valuable (you can also fill this in later)"
+                  onChange={this.inputUpdate}
+                  style={{ width: '100%' }}
                 />
               </Grid>
 
-              <Grid item md={9} style={{ paddingLeft: '10px' }}>
+              {/* <Grid item xs={12} style={{ marginTop: '2vh' }}>
+                <AttributeInput />
+              </Grid> */}
+            </Grid>
+
+            <Grid container style={{ marginTop: '40px' }}>
+
+              <Grid item xs={9} style={{ paddingLeft: '' }}>
                 <TextField
                   label="Service"
                   type="text"
                   name="service-0"
                   onChange={this.inputUpdate}
+                  style={{ width: '90%' }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  label="Price"
+                  type="text"
+                  name="price-0"
+                  onChange={this.inputUpdate}
                   style={{ width: '100%' }}
                 />
               </Grid>
+
             </Grid>
+
             {moreServices}
-            <Grid item md={12}>
+
+            <Grid item xs={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
+              <div style={{ flexGrow: 1 }} />
               <Button onClick={this.removeService}>
                 <Remove />
               </Button>
@@ -219,10 +226,11 @@ class LaunchForm extends Component {
                 <Add />
               </Button>
             </Grid>
-            <br />
-            <Grid item md={12}>
+
+            {/* Alerts */}
+            <Grid item md={12} style={{ display: 'flex', justifyContent: 'center' }}>
               {this.state.tooMany && (
-                <div color="warning" style={{ marginBottom: '10px' }}>
+                <div color="warning" style={{ marginBottom: '' }}>
                   While we build{' '}
                   <span role="img" aria-label="emoji">
                     🛠
@@ -234,7 +242,7 @@ class LaunchForm extends Component {
                 </div>
               )}
               {this.state.tooFew && (
-                <div color="warning" style={{ marginBottom: '10px' }}>
+                <div color="warning" style={{ marginBottom: '' }}>
                   For your economy to work{' '}
                   <span role="img" aria-label="emoji">
                     👨‍💼
@@ -246,22 +254,27 @@ class LaunchForm extends Component {
                 </div>
               )}
             </Grid>
-            <Grid item md={12}>
-              <Button size="medium" variant="outlined" onClick={this.deploy}>
-                Deploy
+            
+            {/* Deploy Button */}
+            <Grid item md={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
+              <div style={{ flexGrow: 1 }} />
+              <Button size="large" variant="outlined" onClick={this.deploy}>
+                DEPLOY
               </Button>
             </Grid>
-            <br />
-            {this.state.ipfsUploading && (
-              <div>
-                <LinearProgress color="secondary" />
-                Uploading to IPFS!{' '}
-                <span role="img" aria-label="emoji">
-                  📡
-                </span>
-              </div>
-            )}
-            <div>{this.waitUntilMined()}</div>
+
+            <Grid item md={12} style={{ marginTop: '1vh' }}>
+              {this.state.ipfsUploading && (
+                <div style={{ width: '100%' }}>
+                  <LinearProgress color="secondary" />
+                  Uploading to IPFS!{' '}
+                  <span role="img" aria-label="emoji">
+                    📡
+                  </span>
+                </div>
+              )}
+              <div>{this.waitUntilMined()}</div>
+            </Grid>
           </Grid>
         </CardContent>
       </Card>
