@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 
-import { Button, Grid, LinearProgress, TextField, Card, CardContent, CardHeader, Avatar, Divider } from '@material-ui/core';
+import { Avatar, Button, Card, CardContent, Grid, LinearProgress, TextField } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 
 import ipfsApi from 'ipfs-api';
@@ -209,12 +209,12 @@ class LaunchForm extends Component {
             <Grid item md={12}>
               {this.state.tooMany && (
                 <Alert color="warning" style={{ marginBottom: '10px' }}>
-                  While we build 🛠 only 3 services will be available in your economy 💸
+                  While we build <span role="img" aria-label="emoji">🛠</span> only 3 services will be available in your economy <span role="img" aria-label="emoji">💸</span>
             </Alert>
               )}
               {this.state.tooFew && (
                 <Alert color="warning" style={{ marginBottom: '10px' }}>
-                  For your economy to work 👨‍💼 you need to offer at least one service 🗳
+                  For your economy to work <span role="img" aria-label="emoji">👨‍💼</span> you need to offer at least one service <span role="img" aria-label="emoji">🗳</span>
             </Alert>
               )}
             </Grid>
@@ -227,7 +227,7 @@ class LaunchForm extends Component {
             {this.state.ipfsUploading && (
               <div>
                 <LinearProgress color="secondary" />
-                Uploading to IPFS! 📡
+                Uploading to IPFS! <span role="img" aria-label="emoji">📡</span>
             </div>
             )}
             <div>{this.waitUntilMined()}</div>

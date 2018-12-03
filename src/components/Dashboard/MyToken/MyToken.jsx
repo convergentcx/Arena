@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classes from './MyToken.module.css';
 import withContext from '../../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
 
@@ -18,22 +17,13 @@ import MainStats from './Stats/MainStats/index.jsx'; // somehow default importin
 import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
 import CurveChart from './CurveChart/CurveChart';
-import BlockHistory from './BlockHistory/BlockHistory';
 
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import Money from '@material-ui/icons/AttachMoney';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-
-import Chip from '@material-ui/core/Chip';
-import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {

@@ -13,7 +13,7 @@ const pad = n => (n < 10 ? '0' + n : n);
 
 const Recharts = require('recharts');
 
-const { Area, XAxis, YAxis, CartesianGrid, Tooltip, Line, ReferenceDot, ComposedChart } = Recharts;
+const { Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ComposedChart } = Recharts;
 
 class PriceChart extends React.Component {
   static contextTypes = {
@@ -101,7 +101,7 @@ class PriceChart extends React.Component {
 
   render() {
     if (!this.documentReady) return null;
-    let { events, currentPrice, symbol } = this.props;
+    let { events, symbol } = this.props;
     if (!events || !events.length) return null;
     let values = this.getChartData(events);
     let price = values[values.length - 1];
