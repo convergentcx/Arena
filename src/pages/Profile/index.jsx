@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
-import ipfsApi from 'ipfs-api';
+// import ipfsApi from 'ipfs-api';
 
-import { Button, Card, CardContent, CardHeader, IconButton, Grid, Popover, Typography } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Grid,
+  Popover,
+  Typography
+} from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
@@ -16,62 +25,51 @@ import Services from '../../components/Profile/Services.jsx';
 import { CardMedia } from '@material-ui/core';
 import Hannah from '../../assets/hannah.jpg';
 
-import {
-  getPrice,
-  removeDecimals
-} from '../../util';
+import { getPrice, removeDecimals } from '../../util';
 
 import { utils } from 'web3';
 
-const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+// const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
 class CurveChart extends Component {
   getChartData = () => {
-    let { 
-      currentPrice,
-      exponent,
-      inverseSlope,
-      poolBalance,
-      totalSupply,
-    } = this.props.curveData;
+    let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
 
-    poolBalance = utils.toBN(poolBalance);
+    // poolBalance = utils.toBN(poolBalance);
     totalSupply = utils.toBN(totalSupply);
 
     const currentPoint = {
       x: parseFloat(removeDecimals(totalSupply.toString())).toFixed(4),
-      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4),
+      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4)
     };
 
-    let data = [
-      {supply: 0, sell: 0, value: 0}
-    ];
+    let data = [{ supply: 0, sell: 0, value: 0 }];
 
-    const step = utils.toBN(10**17);
+    const step = utils.toBN(10 ** 17);
     for (let i = step; i.lte(utils.toBN(750).mul(step)); i = i.add(step)) {
       const price = getPrice(inverseSlope, i, exponent);
       if (i.lte(totalSupply)) {
-        data.push({ 
-          supply: parseFloat(removeDecimals(i)).toFixed(4), 
-          sell: parseFloat(removeDecimals(price)).toFixed(4), 
-          value: parseFloat(removeDecimals(price)).toFixed(4),
+        data.push({
+          supply: parseFloat(removeDecimals(i)).toFixed(4),
+          sell: parseFloat(removeDecimals(price)).toFixed(4),
+          value: parseFloat(removeDecimals(price)).toFixed(4)
         });
       } else if (i.gt(totalSupply)) {
         data.push({
-          supply: parseFloat(removeDecimals(i)).toFixed(4), 
-          buy: parseFloat(removeDecimals(price)).toFixed(4), 
-          value: parseFloat(removeDecimals(price)).toFixed(4),
+          supply: parseFloat(removeDecimals(i)).toFixed(4),
+          buy: parseFloat(removeDecimals(price)).toFixed(4),
+          value: parseFloat(removeDecimals(price)).toFixed(4)
         });
       }
     }
 
     return {
-      data, 
-      currentPoint,
+      data,
+      currentPoint
     };
-  }
+  };
 
   render() {
     let { data, currentPoint } = this.getChartData();
@@ -125,11 +123,11 @@ class CurveChart extends Component {
   }
 }
 
-const labelStyle = {
-  margin: 0,
-  padding: 0,
-  fontSize: '10px'
-};
+// const labelStyle = {
+//   margin: 0,
+//   padding: 0,
+//   fontSize: '10px'
+// };
 
 class ProfileDetails extends Component {
   constructor(props) {
@@ -147,7 +145,7 @@ class ProfileDetails extends Component {
       name: '',
       owner: '',
       poolBalance: '',
-      symbol: '',
+      symbol: ''
     };
   }
 
@@ -193,7 +191,7 @@ class ProfileDetails extends Component {
 
   openPopover = event => {
     this.setState({
-      anchorEl: event.currentTarget,
+      anchorEl: event.currentTarget
     });
   };
 
@@ -219,27 +217,23 @@ class ProfileDetails extends Component {
 
     return (
       <div style={{ padding: '5%' }}>
-
         <Grid container style={{ alignItems: 'center' }}>
           <IconButton onClick={() => this.props.history.goBack()}>
             <KeyboardBackspace />
           </IconButton>
           <div style={{ flexGrow: 1 }} />
-          <Typography variant="title">
-            Personal Economy of {this.props.addr}
-          </Typography>
+          <Typography variant="title">Personal Economy of {this.props.addr}</Typography>
         </Grid>
-
 
         <Grid container style={{ paddingTop: '2%' }}>
           <Grid container style={{ paddingTop: '2%' }}>
             <Grid item md={6}>
               <Card style={{ margin: '6px' }}>
                 <CardMedia
-                    alt="person's photo"
-                    image={Hannah}
-                    style={{ height: '0', paddingTop: '56.25%' }}
-                  />
+                  alt="person's photo"
+                  image={Hannah}
+                  style={{ height: '0', paddingTop: '56.25%' }}
+                />
                 <CardHeader title="About Hannah" />
                 <CardContent>
                   Hi I am Hanna - I like to get paid when someone wants something from me..
@@ -252,11 +246,11 @@ class ProfileDetails extends Component {
                 <Grid container>
                   <Grid item sm={12} style={{ display: 'flex' }}>
                     <div style={{ flexGrow: 1 }} />
-                    <div style={{ padding: '15px', }}>
+                    <div style={{ padding: '15px' }}>
                       <Button
                         color="secondary"
-                        size="sm" 
-                        aria-owns={Boolean(this.state.anchorEl) ? 'simple-popper' : undefined}
+                        size="sm"
+                        aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
                         aria-haspopup="true"
                         variant="contained"
                         onClick={this.openPopover}
@@ -304,9 +298,7 @@ class ProfileDetails extends Component {
                 tokenBalance={yourBalance / multiplier}
               />
             </Grid>
-
           </Grid>
-
 
           <Popover
             id="simple-popper"
@@ -315,16 +307,18 @@ class ProfileDetails extends Component {
             open={Boolean(this.state.anchorEl)}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'right',
+              horizontal: 'right'
             }}
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'right',
+              horizontal: 'right'
             }}
-          >  
-            <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>                
+          >
+            <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>
               <CardHeader title="Contract Information" style={{ textAlign: 'center' }} />
-              <CardContent style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+              <CardContent
+                style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}
+              >
                 <Grid container>
                   <Grid item md={12}>
                     Contract Address
@@ -353,7 +347,6 @@ class ProfileDetails extends Component {
             </Card>
           </Popover>
 
-
           <Services
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
@@ -362,7 +355,6 @@ class ProfileDetails extends Component {
             symbol={this.state.symbol}
           />
         </Grid>
-
       </div>
     );
   }

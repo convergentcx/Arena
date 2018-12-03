@@ -37,7 +37,7 @@ module.exports = {
       100,
     ],
     "no-unused-vars": [
-      "warn",
+      "off", //need to change back to warn b4 production
     ],
   }
 };

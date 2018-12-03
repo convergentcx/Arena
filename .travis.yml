@@ -3,23 +3,22 @@ sudo: required
 group: beta
 language: node_js
 node_js:
-- '8'
+- '10.5.0'
 cache:
   directories:
   - node_modules
 install: npm install
 script:
-- npm i -g yarn
 - yarn truffle:build && cp -R build src
 - yarn build
-before_deploy:
-- yarn truffle:build && cp -R build src
-- yarn build
-deploy:
-  skip_cleanup: true
-  provider: firebase
-  token:
-    secure: 
-env:
-  global:
-    secure: Zs/oGX6gHQ3jtsp11dm66hMgcrA9bj2am2evWNlWMHliz3ey0rhO6njwL/Xsduw2azq5yD+LmH8Qj7IGBu30Oj0480W5YOXWhqKT7eANVkV21yBjehOhhWl7FeiJKLqBXIlSE7BwDAJqKMcttFyBj8PKM7gq2RKnT3T51cC9IJ52qOwA4Y6M4VT/UMIdnon7Pjvgruvno+jdEHewY0zUkOeQbUIO1rJLegMu6GQ0SBUs6opmo/hX6e+GPvPhMDEb1Aj6Gqo6pbjHTOyojrphc3NfWz+Ks/1+WgoFHLjqy+q6Ta8dVklyLEnaFWiXnDiUhsZ/6XmEadk8fK/FTJHWizbs11yU6UefSbFq35N5ZyTeMj6jjE4lj0g3Y6zdCDVhzlAJoVLE5vMgXb8ebUwHEhBz50/3H3LWSxoyQGB579iTz3thS01Lb8jl9NHkx09EZ4mUYv47ZLtG+EirX376JVTcF7yls7Frh0uYbxwNephqWq3m8Jhho5LwUUSGodOgOebWSOHzSh2FgYO8JxN/NrhnnPR2L/iiNRCxELW+vorzOCjstj6M+veeIqkNMKMH7qPJfwnahlAraI+bw74HMY9cF5KdVU4OTBzQlxDEImwFRw20bO6P2lr0e/YUfZeYtgJZzqNrCpv+zhy+GcRs6Dw1o/xvrtb4Y2Tw8nJlHqM=
+# before_deploy:
+# - yarn truffle:build && cp -R build src
+# - yarn build
+# deploy:
+#   skip_cleanup: true
+#   provider: firebase
+#   token:
+#     secure: 
+# env:
+#   global:
+#     secure: Zs/oGX6gHQ3jtsp11dm66hMgcrA9bj2am2evWNlWMHliz3ey0rhO6njwL/Xsduw2azq5yD+LmH8Qj7IGBu30Oj0480W5YOXWhqKT7eANVkV21yBjehOhhWl7FeiJKLqBXIlSE7BwDAJqKMcttFyBj8PKM7gq2RKnT3T51cC9IJ52qOwA4Y6M4VT/UMIdnon7Pjvgruvno+jdEHewY0zUkOeQbUIO1rJLegMu6GQ0SBUs6opmo/hX6e+GPvPhMDEb1Aj6Gqo6pbjHTOyojrphc3NfWz+Ks/1+WgoFHLjqy+q6Ta8dVklyLEnaFWiXnDiUhsZ/6XmEadk8fK/FTJHWizbs11yU6UefSbFq35N5ZyTeMj6jjE4lj0g3Y6zdCDVhzlAJoVLE5vMgXb8ebUwHEhBz50/3H3LWSxoyQGB579iTz3thS01Lb8jl9NHkx09EZ4mUYv47ZLtG+EirX376JVTcF7yls7Frh0uYbxwNephqWq3m8Jhho5LwUUSGodOgOebWSOHzSh2FgYO8JxN/NrhnnPR2L/iiNRCxELW+vorzOCjstj6M+veeIqkNMKMH7qPJfwnahlAraI+bw74HMY9cF5KdVU4OTBzQlxDEImwFRw20bO6P2lr0e/YUfZeYtgJZzqNrCpv+zhy+GcRs6Dw1o/xvrtb4Y2Tw8nJlHqM=

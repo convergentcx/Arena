@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-} from '@material-ui/core';
+import { Card, CardContent, CardHeader, Grid } from '@material-ui/core';
 
 import { removeDecimals } from '../../util';
 

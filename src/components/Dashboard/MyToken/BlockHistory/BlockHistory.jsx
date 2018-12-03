@@ -4,15 +4,15 @@ import PriceChart from '../PriceChart/PriceChart';
 class BlockHistory extends Component {
   state = {
     timestamps: {},
-    sort: [],
-  }
+    sort: []
+  };
 
   handleBlockLoad(block, event) {
     if (block) {
       this.setState({
         timestamps: {
           ...this.state.timestamps,
-          [event.blockHash]: parseInt(block.timestamp, 10),
+          [event.blockHash]: parseInt(block.timestamp, 10)
         }
       });
     }
@@ -25,8 +25,10 @@ class BlockHistory extends Component {
       .map(event => [event, timestamps[event.blockHash] || Infinity])
       .sort((a, b) => a[1] - b[1]);
     return (
-      <div className='blockHistory'>
-        {showChart && <PriceChart events={sortedEvents} symbol={symbol} currentPrice={currentPrice} />}
+      <div className="blockHistory">
+        {showChart && (
+          <PriceChart events={sortedEvents} symbol={symbol} currentPrice={currentPrice} />
+        )}
       </div>
     );
   }

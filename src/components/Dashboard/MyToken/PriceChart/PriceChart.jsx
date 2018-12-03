@@ -1,40 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 function toNumber(num, dec) {
-    if (num === undefined || dec === undefined) return null;
-    // let n = new BN(num);
-    // dec = (10 ** dec).toString();
-    // let d = new BN(dec);
-    // return Number(n.div(d));
-    return num / (10 ** dec);
-  }
-const pad = (n) => n < 10 ? '0' + n : n;
+  if (num === undefined || dec === undefined) return null;
+  // let n = new BN(num);
+  // dec = (10 ** dec).toString();
+  // let d = new BN(dec);
+  // return Number(n.div(d));
+  return num / 10 ** dec;
+}
+const pad = n => (n < 10 ? '0' + n : n);
 
-  
 const Recharts = require('recharts');
 
-const {
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Line,
-  ReferenceDot,
-  ComposedChart
-} = Recharts;
+const { Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ComposedChart } = Recharts;
 
 class PriceChart extends React.Component {
   static contextTypes = {
     contractActions: PropTypes.object,
-    contractParams: PropTypes.object,
-  }
+    contractParams: PropTypes.object
+  };
 
   state = {
-    priceInEth: true,
-  }
+    priceInEth: true
+  };
 
   constructor(props) {
     super(props);
@@ -64,24 +53,27 @@ class PriceChart extends React.Component {
     let minTimestamp = events[0][1];
     let values = events.map(([event, timestamp]) => {
       switch (event.event) {
-        case 'Minted':
-          value += toNumber(priceInEth ? event.returnValues.totalCost : event.returnValues.amount, 18);
-          break;
-        case 'Burned':
-          value -= toNumber(priceInEth ? event.returnValues.reward : event.returnValues.amount, 18);
-          break;
-        default:
-          break;
+      case 'Minted':
+        value += toNumber(
+          priceInEth ? event.returnValues.totalCost : event.returnValues.amount,
+          18
+        );
+        break;
+      case 'Burned':
+        value -= toNumber(priceInEth ? event.returnValues.reward : event.returnValues.amount, 18);
+        break;
+      default:
+        break;
       }
       return {
         time: timestamp - minTimestamp,
         when: new Date(timestamp * 1000).toString(),
-        value,
+        value
       };
     });
     values.push({
       time: Date.now() / 1000 - minTimestamp,
-      value,
+      value
     });
     return values;
   }
@@ -92,7 +84,15 @@ class PriceChart extends React.Component {
     time *= 1000;
     const date = new Date(time);
     if (!date) return '';
-    return date.getMonth() + '/' + pad(date.getDate(), 2) + ' ' + date.getHours() + ':' + pad(date.getMinutes(), 2);
+    return (
+      date.getMonth() +
+      '/' +
+      pad(date.getDate(), 2) +
+      ' ' +
+      date.getHours() +
+      ':' +
+      pad(date.getMinutes(), 2)
+    );
   }
 
   toggle() {
@@ -101,14 +101,14 @@ class PriceChart extends React.Component {
 
   render() {
     if (!this.documentReady) return null;
-    let { events, currentPrice, symbol } = this.props;
+    let { events, symbol } = this.props;
     if (!events || !events.length) return null;
     let values = this.getChartData(events);
     let price = values[values.length - 1];
     let width = Math.min(600, (window.innerWidth < 480 ? window.innerWidth : 480) - 30);
-    let height = width * 2 / 3;
+    let height = (width * 2) / 3;
     return (
-      <div >
+      <div>
         <ComposedChart
           style={{ margin: 'auto' }}
           width={width}
@@ -116,7 +116,7 @@ class PriceChart extends React.Component {
           data={values}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <CartesianGrid strokeDasharray="3 3"/>
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="time"
             type="number"
@@ -124,11 +124,21 @@ class PriceChart extends React.Component {
             domain={['dataMin', 'dataMax']}
           />
           <YAxis
-            label={{ value: this.state.priceInEth ? 'ETH' : symbol, angle: -90, position: 'insideLeft' }} 
+            label={{
+              value: this.state.priceInEth ? 'ETH' : symbol,
+              angle: -90,
+              position: 'insideLeft'
+            }}
             dataKey="value"
-            type='number'
+            type="number"
           />
-          <Area isAnimationActive={false} type="stepAfter" dataKey="value" stroke="blue" fill="blue" />
+          <Area
+            isAnimationActive={false}
+            type="stepAfter"
+            dataKey="value"
+            stroke="blue"
+            fill="blue"
+          />
           <ReferenceDot
             isFront={true}
             ifOverflow="extendDomain"
@@ -140,7 +150,7 @@ class PriceChart extends React.Component {
           />
           <Tooltip />
         </ComposedChart>
-        <div className='row'>
+        <div className="row">
           <button onClick={this.toggle}>
             {this.state.priceInEth ? 'View ' + symbol + ' supply' : 'View prices in ETH'}
           </button>
