@@ -38,7 +38,7 @@ class LaunchForm extends Component {
       enteredTag: ''
     };
   }
-  
+
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
@@ -104,8 +104,8 @@ class LaunchForm extends Component {
     const reader = new FileReader();
     reader.onload = e => {
       this.setState({
-        file: e.target.result,
-      })
+        file: e.target.result
+      });
     };
 
     reader.readAsDataURL(files[0]);
@@ -165,25 +165,27 @@ class LaunchForm extends Component {
         <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
           <Grid container>
             <Grid item sm={12} md={3} style={{ background: '' }}>
-
-            {/* Upload Image */}
-            <div style={{ height: '200px', width: '200px', margin: 'auto', borderRadius: '50%' }}>
-              <Dropzone
-                accept="image/*"
-                onDrop={this.onDrop}
-                style={{
-                  border: 'none',
-                }}
-              >
-                {file 
-                  ? <Avatar src={file} style={{ height: '200px', width: '200px', margin: 'auto' }} />
-                  : <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                    Click to Upload
-                  </Avatar>
-                }
-              </Dropzone>
-            </div>
-
+              {/* Upload Image */}
+              <div style={{ height: '200px', width: '200px', margin: 'auto', borderRadius: '50%' }}>
+                <Dropzone
+                  accept="image/*"
+                  onDrop={this.onDrop}
+                  style={{
+                    border: 'none'
+                  }}
+                >
+                  {file ? (
+                    <Avatar
+                      src={file}
+                      style={{ height: '200px', width: '200px', margin: 'auto' }}
+                    />
+                  ) : (
+                    <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                      Click to Upload
+                    </Avatar>
+                  )}
+                </Dropzone>
+              </div>
             </Grid>
             <Grid item sm={12} md={9}>
               <Grid item xs={12}>
