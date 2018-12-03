@@ -8,7 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import {
   AppBar,
-  Button,
   CssBaseline,
   Divider,
   Drawer,
@@ -22,6 +21,8 @@ import {
 } from '@material-ui/core';
 
 import { ChevronLeft, ChevronRight, Inbox, Mail, Menu, Money, Settings } from '@material-ui/icons';
+
+import MetamaskLogin from './MetamaskLogin';
 
 import Logo from '../../../assets/logo.png';
 
@@ -133,7 +134,7 @@ class PersistentDrawerLeft extends Component {
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
-            <Button className={classes.signInButton} color="inherit">Unlock</Button>
+            <MetamaskLogin />
           </Toolbar>
         </AppBar>
 
