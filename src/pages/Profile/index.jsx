@@ -125,7 +125,9 @@ class ProfileDetails extends Component {
             <KeyboardBackspace style={{ color: 'white' }} />
           </IconButton>
           <div style={{ flexGrow: 1 }} />
-          <Typography variant="title" style={{ color: 'white' }}>Personal Economy of {this.state.name}</Typography>
+          <Typography variant="title" style={{ color: 'white' }}>
+            Personal Economy of {this.state.name}
+          </Typography>
         </Grid>
 
         <Grid container>

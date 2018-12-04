@@ -93,8 +93,12 @@ export default class BuyAndSellButtons extends Component {
 
   render() {
     return (
-      <Grid container style= {{ color: 'white', background: 'rgba(255,255,255,0.1)' }}>
-        <Grid item md={6} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+      <Grid container style={{ color: 'white', background: 'rgba(255,255,255,0.6)' }}>
+        <Grid
+          item
+          md={6}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+        >
           <TextField
             type="number"
             name="buyAmt"
@@ -103,12 +107,21 @@ export default class BuyAndSellButtons extends Component {
             helperText={`With ${removeDecimals(this.state.priceInEther)} ETH`}
           />
           {/* &nbsp;&nbsp; */}
-          <Button color="primary" variant="outlined" onClick={this.buyHandler} style={{ height: '100%' }}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={this.buyHandler}
+            style={{ height: '100%' }}
+          >
             Buy
           </Button>
         </Grid>
 
-        <Grid item md={6} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+        <Grid
+          item
+          md={6}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+        >
           <TextField
             type="number"
             name="sellAmt"
@@ -117,7 +130,12 @@ export default class BuyAndSellButtons extends Component {
             helperText={`For ${removeDecimals(this.state.rewardInEther)} ETH`}
           />
           {/* &nbsp;&nbsp; */}
-          <Button color="primary" variant="outlined" onClick={this.sellHandler} style={{ height: '100%' }}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={this.sellHandler}
+            style={{ height: '100%' }}
+          >
             Sell
           </Button>
         </Grid>

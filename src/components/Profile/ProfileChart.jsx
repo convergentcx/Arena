@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Area, AreaChart, CartesianGrid, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceDot,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
 
 import { getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
@@ -44,31 +53,14 @@ class ProfileChart extends Component {
 
   render() {
     let { data, currentPoint } = this.getChartData();
-    const  { height, width } = this.props;
+    const { height, width } = this.props;
 
     return (
       <ResponsiveContainer height={height} width={width}>
-        <AreaChart
-          style={{ margin: 'auto' }}
-          data={data}
-          margin={this.props.margin}
-        >
-          <CartesianGrid 
-            strokeDasharray="2 2"
-            stroke="#00C853"
-          />
-          <XAxis 
-            dataKey="supply"
-            type="number"
-            stroke="#00C853"
-            fill="#00C853" 
-          />
-          <YAxis
-            dataKey="value"
-            type="number"
-            stroke="#00C853"
-            fill="#00C853"
-          />
+        <AreaChart style={{ margin: 'auto' }} data={data} margin={this.props.margin}>
+          <CartesianGrid strokeDasharray="2 2" stroke="#00C853" />
+          <XAxis dataKey="supply" type="number" stroke="#00C853" fill="#00C853" />
+          <YAxis dataKey="value" type="number" stroke="#00C853" fill="#00C853" />
           <Tooltip />
 
           <Area
