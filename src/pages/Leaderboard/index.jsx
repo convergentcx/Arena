@@ -11,6 +11,8 @@ import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 
 import { utils as w3utils } from 'web3';
 
+import Item from './Item';
+
 import ipfsApi from 'ipfs-api';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
@@ -113,7 +115,7 @@ const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
   <div style={{ marginLeft: '200px', marginRight: '200px',padding: '10%' }}>
-    <Table>
+    {/* <Table>
       <TableHead>
         <TableRow>
           <TableCell>Name</TableCell>
@@ -123,7 +125,11 @@ const Leaderboard = () => (
         </TableRow>
       </TableHead>
       <LeaderboardListContextualized />
-    </Table>
+    </Table> */}
+    <Item address={'0x5a050a01c702DF50653F5177Ce9A4691c70667bB'} name="Logan" marketCap="0.23 ETH" twentyFour="+12%" sevenDay="+1,003%" />
+    <Item address={'0x5a050a01c702DF50653F5177Ce9A4691c70667bB'} name="Logan" marketCap="0.23 ETH" twentyFour="+12%" sevenDay="+1,003%" />
+    <Item address={'0x5a050a01c702DF50653F5177Ce9A4691c70667bB'} name="Logan" marketCap="0.23 ETH" twentyFour="+12%" sevenDay="+1,003%" />
+
   </div>
 );
 
