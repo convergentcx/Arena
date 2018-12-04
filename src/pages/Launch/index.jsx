@@ -121,7 +121,7 @@ class LaunchForm extends Component {
     const txHash = transactionStack[this.state.stackId];
     if (!txHash) return null;
     if (transactions[txHash].status === 'success') {
-      setTimeout(() => this.props.history.push('/'), 1000);
+      setTimeout(() => this.props.history.push('/leaderboard'), 1000);
     }
     return `Transaction status: ${transactions[txHash].status}`;
   };
