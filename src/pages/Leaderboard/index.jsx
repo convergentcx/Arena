@@ -86,8 +86,7 @@ class LeaderboardList extends Component {
 
   render() {
     let tableRows = [];
-
-    const renderRows = async () => {
+    (() => {
       let i = 0;
       while (i < this.state.personalEconomies.length) {
         const personalEconomy = this.state.personalEconomies[i];
@@ -104,9 +103,7 @@ class LeaderboardList extends Component {
         );
         i++;
       }
-    };
-
-    renderRows();
+    })();
 
     return <TableBody>{tableRows}</TableBody>;
   }
@@ -115,7 +112,7 @@ class LeaderboardList extends Component {
 const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
-  <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
+  <div style={{ marginLeft: '200px', marginRight: '200px',padding: '10%' }}>
     <Table>
       <TableHead>
         <TableRow>
