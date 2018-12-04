@@ -8,7 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import {
   AppBar,
-  Button,
   CssBaseline,
   Divider,
   Drawer,
@@ -22,6 +21,8 @@ import {
 } from '@material-ui/core';
 
 import { ChevronLeft, ChevronRight, Inbox, Mail, Menu, Money, Settings } from '@material-ui/icons';
+
+import MetamaskLogin from './MetamaskLogin';
 
 import Logo from '../../../assets/logo.png';
 
@@ -71,7 +72,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    // padding:  theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -133,9 +134,7 @@ class PersistentDrawerLeft extends Component {
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
-            <Button className={classes.signInButton} color="inherit">
-              Unlock
-            </Button>
+            <MetamaskLogin />
           </Toolbar>
         </AppBar>
 
@@ -156,26 +155,26 @@ class PersistentDrawerLeft extends Component {
           </div>
           <Divider />
           <List>
-            <NavLink to={'/'}>
+            <NavLink to="/">
               <ListItem button>
                 <ListItemIcon>
                   <Money />
                 </ListItemIcon>
-                <ListItemText primary={'Market'} />
+                <ListItemText primary="Market" />
               </ListItem>
             </NavLink>
             <ListItem button>
               <ListItemIcon>
                 <Inbox />
               </ListItemIcon>
-              <ListItemText primary={'Profile'} />
+              <ListItemText primary="Profile" />
             </ListItem>
-            <NavLink to={'/dashboard'}>
+            <NavLink to="/dashboard">
               <ListItem button>
                 <ListItemIcon>
                   <Mail />
                 </ListItemIcon>
-                <ListItemText primary={'Economy Dashboard'} />
+                <ListItemText primary="Economy Dashboard" />
               </ListItem>
             </NavLink>
           </List>

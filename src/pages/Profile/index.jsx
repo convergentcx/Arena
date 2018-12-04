@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
 // import ipfsApi from 'ipfs-api';
 
 import {
@@ -20,114 +19,18 @@ import withContext from '../../hoc/withContext';
 
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
+import ProfileChart from '../../components/Profile/ProfileChart.jsx';
 import Services from '../../components/Profile/Services.jsx';
 
 import { CardMedia } from '@material-ui/core';
 import Hannah from '../../assets/hannah.jpg';
 
 import { getPrice, removeDecimals } from '../../util';
-
 import { utils } from 'web3';
 
 // const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
-
-class CurveChart extends Component {
-  getChartData = () => {
-    let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
-
-    // poolBalance = utils.toBN(poolBalance);
-    totalSupply = utils.toBN(totalSupply);
-
-    const currentPoint = {
-      x: parseFloat(removeDecimals(totalSupply.toString())).toFixed(4),
-      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4)
-    };
-
-    let data = [{ supply: 0, sell: 0, value: 0 }];
-
-    const step = utils.toBN(10 ** 17);
-    for (let i = step; i.lte(utils.toBN(750).mul(step)); i = i.add(step)) {
-      const price = getPrice(inverseSlope, i, exponent);
-      if (i.lte(totalSupply)) {
-        data.push({
-          supply: parseFloat(removeDecimals(i)).toFixed(4),
-          sell: parseFloat(removeDecimals(price)).toFixed(4),
-          value: parseFloat(removeDecimals(price)).toFixed(4)
-        });
-      } else if (i.gt(totalSupply)) {
-        data.push({
-          supply: parseFloat(removeDecimals(i)).toFixed(4),
-          buy: parseFloat(removeDecimals(price)).toFixed(4),
-          value: parseFloat(removeDecimals(price)).toFixed(4)
-        });
-      }
-    }
-
-    return {
-      data,
-      currentPoint
-    };
-  };
-
-  render() {
-    let { data, currentPoint } = this.getChartData();
-
-    return (
-      <div>
-        <ComposedChart
-          style={{ margin: 'auto' }}
-          width={this.props.width}
-          height={this.props.height}
-          data={data}
-          margin={this.props.margin}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="supply" type={'number'} />
-          <YAxis dataKey="value" type={'number'} />
-          <Tooltip />
-
-          <Area
-            isAnimationActive={false}
-            dots={false}
-            stackOffset={'none'}
-            dataKey="value"
-            name={'price'}
-            key={'price'}
-            stroke="#0095b3"
-            fill="none"
-          />
-
-          <Area
-            isAnimationActive={false}
-            stackOffset={'none'}
-            dataKey="sell"
-            stroke="#0095b3"
-            fill="#0095b3"
-          />
-
-          <ReferenceDot
-            isFront={true}
-            ifOverflow="extendDomain"
-            x={currentPoint.x}
-            y={currentPoint.y}
-            r={16}
-            // fill="blue"
-            stroke="#0095b3"
-            label={currentPoint.y}
-          />
-        </ComposedChart>
-      </div>
-    );
-  }
-}
-
-// const labelStyle = {
-//   margin: 0,
-//   padding: 0,
-//   fontSize: '10px'
-// };
 
 class ProfileDetails extends Component {
   constructor(props) {
@@ -219,14 +122,16 @@ class ProfileDetails extends Component {
       <div style={{ padding: '5%' }}>
         <Grid container style={{ alignItems: 'center' }}>
           <IconButton onClick={() => this.props.history.goBack()}>
-            <KeyboardBackspace />
+            <KeyboardBackspace style={{ color: 'white' }} />
           </IconButton>
           <div style={{ flexGrow: 1 }} />
-          <Typography variant="title">Personal Economy of {this.props.addr}</Typography>
+          <Typography variant="title" style={{ color: 'white' }}>
+            Personal Economy of {this.state.name}
+          </Typography>
         </Grid>
 
-        <Grid container style={{ paddingTop: '2%' }}>
-          <Grid container style={{ paddingTop: '2%' }}>
+        <Grid container>
+          <Grid container>
             <Grid item md={6}>
               <Card style={{ margin: '6px' }}>
                 <CardMedia
@@ -242,26 +147,26 @@ class ProfileDetails extends Component {
             </Grid>
 
             <Grid item md={6}>
-              <Card style={{ margin: '6px' }}>
-                <Grid container>
-                  <Grid item sm={12} style={{ display: 'flex' }}>
-                    <div style={{ flexGrow: 1 }} />
-                    <div style={{ padding: '15px' }}>
-                      <Button
-                        color="secondary"
-                        size="sm"
-                        aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
-                        aria-haspopup="true"
-                        variant="contained"
-                        onClick={this.openPopover}
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </Grid>
+              <Grid container>
+                <Grid item sm={12} style={{ display: 'flex' }}>
+                  <div style={{ flexGrow: 1 }} />
+                  <div style={{ padding: '15px' }}>
+                    <Button
+                      color="secondary"
+                      size="sm"
+                      aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
+                      aria-haspopup="true"
+                      variant="contained"
+                      onClick={this.openPopover}
+                    >
+                      Details
+                    </Button>
+                  </div>
+                </Grid>
 
-                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                    <CurveChart
+                <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ width: '100%', height: '33vh' }}>
+                    <ProfileChart
                       curveData={{
                         totalSupply: totalSupply,
                         poolBalance: this.state.poolBalance,
@@ -275,19 +180,18 @@ class ProfileDetails extends Component {
                         bottom: 30,
                         left: 10
                       }}
-                      width={300}
-                      height={300}
+                      width="100%"
+                      height="100%"
                     />
-                  </Grid>
+                  </div>
                 </Grid>
-              </Card>
-              <div style={{ padding: '2%' }}>
-                <BuyAndSellButtons
-                  contract={this.props.drizzle.contracts[this.props.addr]}
-                  drizzleState={this.props.drizzleState}
-                  symbol={this.state.symbol}
-                />
-              </div>
+              </Grid>
+
+              <BuyAndSellButtons
+                contract={this.props.drizzle.contracts[this.props.addr]}
+                drizzleState={this.props.drizzleState}
+                symbol={this.state.symbol}
+              />
             </Grid>
 
             <Grid item md={6}>

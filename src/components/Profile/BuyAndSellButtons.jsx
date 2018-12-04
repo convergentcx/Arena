@@ -93,40 +93,52 @@ export default class BuyAndSellButtons extends Component {
 
   render() {
     return (
-      <Grid container>
-        <Grid item md={4}>
+      <Grid container style={{ color: 'white', background: 'rgba(255,255,255,0.6)' }}>
+        <Grid
+          item
+          md={6}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+        >
           <TextField
             type="number"
             name="buyAmt"
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
+            helperText={`With ${removeDecimals(this.state.priceInEther)} ETH`}
           />
-          <div addonType="append">With {removeDecimals(this.state.priceInEther)} ETH</div>
-        </Grid>
-
-        <Grid item md={2}>
-          <Button color="primary" onClick={this.buyHandler}>
+          {/* &nbsp;&nbsp; */}
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={this.buyHandler}
+            style={{ height: '100%' }}
+          >
             Buy
           </Button>
         </Grid>
-        {/* <div>{this.getStatus('buyStackId')}</div> */}
 
-        <Grid item md={4}>
+        <Grid
+          item
+          md={6}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+        >
           <TextField
             type="number"
             name="sellAmt"
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
+            helperText={`For ${removeDecimals(this.state.rewardInEther)} ETH`}
           />
-          <div addonType="append">For {removeDecimals(this.state.rewardInEther)} ETH</div>
-        </Grid>
-
-        <Grid item md={2}>
-          <Button color="primary" onClick={this.sellHandler}>
+          {/* &nbsp;&nbsp; */}
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={this.sellHandler}
+            style={{ height: '100%' }}
+          >
             Sell
           </Button>
         </Grid>
-        {/* <div>{this.getStatus('sellStackId')}</div> */}
 
         <ToastContainer autoClose={false} closeOnClick />
       </Grid>

@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import Web3 from 'web3';
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
-import Sidebar from './Sidebar/Sidebar';
+// import Sidebar from './Sidebar/Sidebar';
 import MyToken from './MyToken/MyToken';
 // import Events from './MyToken/Events/Events';
 import classes from './Dashboard.module.css';
 import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
 // import ScrollableTabsButtonAuto from './Tab/Tab';
+import Sidebar from './Sidebar/Sidebar';
 
 class Dashboard extends Component {
   state = {
