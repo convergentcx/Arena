@@ -25,6 +25,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
+import { getMultihashFromBytes32 } from '../../../util';
+import ipfsApi from 'ipfs-api';
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -74,6 +78,7 @@ const multiplier = 10 ** 18;
 
 class MyTokens extends Component {
   state = {
+    jsonData: {},
     dataKeys: {
       totalSupplyKey: '',
       yourBalanceKey: ''
@@ -111,11 +116,22 @@ class MyTokens extends Component {
     const owner = await contract.methods.owner().call();
     const poolBalance = await contract.methods.poolBalance().call();
 
-    // TODO IPFS
     const name = await contract.methods.name().call();
     const symbol = await contract.methods.symbol().call();
+    
+    const contentAddress = getMultihashFromBytes32({
+      digest: mhash,
+      hashFunction: 18,
+      size: 32
+    });
+    const result = await ipfs.get('/ipfs/' + contentAddress);
+    const contentString = result[0].content.toString();
+    const jsonData = JSON.parse(contentString);
+    console.log(jsonData);
+
 
     this.setState({
+      jsonData,
       dataKeys: {
         totalSupplyKey,
         yourBalanceKey
@@ -165,7 +181,7 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <ProfileCard />
+          <ProfileCard jsonData={this.state.jsonData} />
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
@@ -243,7 +259,14 @@ class MyTokens extends Component {
         </Grid>
         <Grid container spacing={24}>
           <Grid item xs={12} md={4}>
-            <Services />
+            <Services
+              jsonData={this.state.jsonData}
+              account={this.props.drizzleState.accounts[0]}
+              contract={this.props.drizzle.contracts[address]}
+              drizzleState={contract}
+              mhash={this.state.mhash}
+              symbol={this.state.symbol}
+            />
           </Grid>
 
           <Grid item xs={12} md={8}>
