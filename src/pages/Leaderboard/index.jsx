@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'reactstrap';
+
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
 import withContext from '../../hoc/withContext';
 
@@ -92,14 +93,14 @@ class LeaderboardList extends Component {
         const personalEconomy = this.state.personalEconomies[i];
 
         tableRows.push(
-          <tr key={i}>
-            <td>
+          <TableRow key={i}>
+            <TableCell>
               <Link to={`tokens/${personalEconomy.address}`}>{personalEconomy.name}</Link>
-            </td>
-            <td>{removeDecimals(removeDecimals(personalEconomy.marketCap))} ETH</td>
-            <td>TODO</td>
-            <td>TODO</td>
-          </tr>
+            </TableCell>
+            <TableCell>{removeDecimals(removeDecimals(personalEconomy.marketCap))} ETH</TableCell>
+            <TableCell>TODO</TableCell>
+            <TableCell>TODO</TableCell>
+          </TableRow>
         );
         i++;
       }
@@ -107,7 +108,7 @@ class LeaderboardList extends Component {
 
     renderRows();
 
-    return <tbody>{tableRows}</tbody>;
+    return <TableBody>{tableRows}</TableBody>;
   }
 }
 
@@ -115,15 +116,15 @@ const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
   <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
-    <Table borderless hover>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Market Cap</th>
-          <th>24hr Change</th>
-          <th>7 Day Change</th>
-        </tr>
-      </thead>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell>Market Cap</TableCell>
+          <TableCell>24hr Change</TableCell>
+          <TableCell>7 Day Change</TableCell>
+        </TableRow>
+      </TableHead>
       <LeaderboardListContextualized />
     </Table>
   </div>

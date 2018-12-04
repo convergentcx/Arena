@@ -1,5 +1,4 @@
 import React from 'react';
-import { Nav } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classes from './Sidebar.module.css';
 
@@ -17,7 +16,7 @@ export default class Example extends React.Component {
 
     return (
       <div>
-        <Nav>{links}</Nav>
+        <ul>{links}</ul>
       </div>
     );
   }

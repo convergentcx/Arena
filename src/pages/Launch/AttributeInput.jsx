@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import keycode from 'keycode';
 import Downshift from 'downshift';
+import { Chip, MenuItem, Paper, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-// import Popper from '@material-ui/core/Popper';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 
 const suggestions = [
   {
@@ -46,8 +42,7 @@ const suggestions = [
   {
     value: 'blockchain',
     label: 'Blockchain'
-  },
-
+  }
 ];
 
 function renderInput(inputProps) {
@@ -59,9 +54,9 @@ function renderInput(inputProps) {
         inputRef: ref,
         classes: {
           root: classes.inputRoot,
-          input: classes.inputInput,
+          input: classes.inputInput
         },
-        ...InputProps,
+        ...InputProps
       }}
       {...other}
     />
@@ -79,7 +74,7 @@ function renderSuggestion({ suggestion, index, itemProps, highlightedIndex, sele
       selected={isHighlighted}
       component="div"
       style={{
-        fontWeight: isSelected ? 500 : 400,
+        fontWeight: isSelected ? 500 : 400
       }}
     >
       {suggestion.label}
@@ -91,7 +86,7 @@ renderSuggestion.propTypes = {
   index: PropTypes.number,
   itemProps: PropTypes.object,
   selectedItem: PropTypes.string,
-  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired,
+  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
 };
 
 function getSuggestions(value) {
@@ -102,34 +97,33 @@ function getSuggestions(value) {
   return inputLength === 0
     ? []
     : suggestions.filter(suggestion => {
-        const keep =
+      const keep =
           count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
 
-        if (keep) {
-          count += 1;
-        }
+      if (keep) {
+        count += 1;
+      }
 
-        return keep;
-      });
+      return keep;
+    });
 }
 
-class DownshiftMultiple extends React.Component {
+class AttributeInput extends Component {
   state = {
     inputValue: '',
-    selectedItem: [],
+    selectedItem: []
   };
 
   handleKeyDown = event => {
     const { inputValue, selectedItem } = this.state;
     if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
       this.setState({
-        selectedItem: selectedItem.slice(0, selectedItem.length - 1),
+        selectedItem: selectedItem.slice(0, selectedItem.length - 1)
       });
     }
 
     if (event.key === 'Enter') {
-      
-      this.handleChange(this.state.inputValue)
+      this.handleChange(this.state.inputValue);
     }
   };
 
@@ -137,16 +131,17 @@ class DownshiftMultiple extends React.Component {
     this.setState({ inputValue: event.target.value });
   };
 
-  handleChange = (item) => {
+  handleChange = item => {
     let { selectedItem } = this.state;
 
     if (selectedItem.indexOf(item) === -1) {
+      console.log(selectedItem, item);
       selectedItem = [...selectedItem, item];
     }
 
     this.setState({
       inputValue: '',
-      selectedItem,
+      selectedItem
     });
   };
 
@@ -157,7 +152,6 @@ class DownshiftMultiple extends React.Component {
       return { selectedItem };
     });
   };
-
 
   // onAddTag = e => {
   //   if (e.key === 'Enter') {
@@ -173,7 +167,6 @@ class DownshiftMultiple extends React.Component {
   //     });
   //   }
   // };
-
 
   render() {
     const { classes } = this.props;
@@ -192,7 +185,7 @@ class DownshiftMultiple extends React.Component {
           isOpen,
           inputValue: inputValue2,
           selectedItem: selectedItem2,
-          highlightedIndex,
+          highlightedIndex
         }) => (
           <div className={classes.container}>
             {renderInput({
@@ -209,9 +202,9 @@ class DownshiftMultiple extends React.Component {
                   />
                 )),
                 onChange: this.handleInputChange,
-                onKeyDown: this.handleKeyDown,
+                onKeyDown: this.handleKeyDown
               }),
-              label: 'Tags',
+              label: 'Tags'
             })}
             {isOpen ? (
               <Paper className={classes.paper} square>
@@ -221,8 +214,8 @@ class DownshiftMultiple extends React.Component {
                     index,
                     itemProps: getItemProps({ item: suggestion.label }),
                     highlightedIndex,
-                    selectedItem: selectedItem2,
-                  }),
+                    selectedItem: selectedItem2
+                  })
                 )}
               </Paper>
             ) : null}
@@ -233,39 +226,39 @@ class DownshiftMultiple extends React.Component {
   }
 }
 
-DownshiftMultiple.propTypes = {
-  classes: PropTypes.object.isRequired,
+AttributeInput.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
+    height: 250
   },
   container: {
     flexGrow: 1,
-    position: 'relative',
+    position: 'relative'
   },
   paper: {
     position: 'absolute',
     zIndex: 1,
     marginTop: theme.spacing.unit,
     left: 0,
-    right: 0,
+    right: 0
   },
   chip: {
-    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`
   },
   inputRoot: {
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   inputInput: {
     width: 'auto',
-    flexGrow: 1,
+    flexGrow: 1
   },
   divider: {
-    height: theme.spacing.unit * 2,
-  },
+    height: theme.spacing.unit * 2
+  }
 });
 
-export default withStyles(styles)(DownshiftMultiple);
+export default withStyles(styles)(AttributeInput);
