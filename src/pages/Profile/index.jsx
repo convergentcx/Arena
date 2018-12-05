@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import ipfsApi from 'ipfs-api';
+import ipfsApi from 'ipfs-api';
 
 import {
   Button,
@@ -25,10 +25,10 @@ import Services from '../../components/Profile/Services.jsx';
 import { CardMedia } from '@material-ui/core';
 import Hannah from '../../assets/hannah.jpg';
 
-import { getPrice, removeDecimals } from '../../util';
+import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
 
-// const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
@@ -73,20 +73,31 @@ class ProfileDetails extends Component {
     const owner = await contract.methods.owner().call();
     const poolBalance = await contract.methods.poolBalance().call();
 
-    // TODO IPFS
-    const name = await contract.methods.name().call();
-    const symbol = await contract.methods.symbol().call();
+    const multihash = getMultihashFromBytes32({
+      digest: mhash,
+      hashFunction: 18,
+      size: 32,
+    });
+
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
+    // console.log(dataJson)
+
+    const { description, image, name, symbol } = dataJson;
+    // const str = String.fromCharCode(image);
+    const pic = Buffer.from(image.data).toString('base64');
 
     this.setState({
       dataKeys: {
         totalSupplyKey,
         yourBalanceKey
       },
+      description,
       exponent,
       inverseSlope,
       mhash,
       name,
       owner,
+      pic,
       poolBalance,
       symbol
     });
@@ -135,13 +146,13 @@ class ProfileDetails extends Component {
             <Grid item md={6}>
               <Card style={{ margin: '6px' }}>
                 <CardMedia
-                  alt="person's photo"
-                  image={Hannah}
+                  alt="photo"
+                  image={'data:image/jpeg;base64,' + this.state.pic}
                   style={{ height: '0', paddingTop: '56.25%' }}
                 />
-                <CardHeader title="About Hannah" />
+                <CardHeader title={`About ${this.state.name}`} />
                 <CardContent>
-                  Hi I am Hanna - I like to get paid when someone wants something from me..
+                  {this.state.description}
                 </CardContent>
               </Card>
             </Grid>
@@ -153,7 +164,7 @@ class ProfileDetails extends Component {
                   <div style={{ padding: '15px' }}>
                     <Button
                       color="secondary"
-                      size="sm"
+                      size="small"
                       aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
                       aria-haspopup="true"
                       variant="contained"

@@ -113,12 +113,12 @@ export default class Services extends Component {
             <TextField name="message" onChange={this.inputUpdate} />
           </TableCell>
           <TableCell>
-            <Button color="danger" onClick={() => this.requestWithEth(i)}>
+            <Button color="secondary" onClick={() => this.requestWithEth(i)}>
               Request with ETH
             </Button>
           </TableCell>
           <TableCell>
-            <Button color="success" onClick={() => this.requestWithToken(i)}>
+            <Button color="primary" onClick={() => this.requestWithToken(i)}>
               Request with {this.props.symbol}
             </Button>
           </TableCell>
