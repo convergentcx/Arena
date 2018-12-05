@@ -4,12 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
-// import ContractInfo from '../../ListToken/TokenDetails/ContractInfo/ContractInfo';
-// import BuySell from '../ListToken/TokenDetails/BuySell/BuySell';
-// import RequestService from '../ListToken/TokenDetails/RequestService/RequestService';
-// import CurveChart from '../ListToken/TokenDetails/Chart/Chart';
-
-// import classes from '../ListToken/TokenDetails/TokenDetails.module.css';
 
 import Services from './Services';
 import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
@@ -24,6 +18,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+
+import { getMultihashFromBytes32 } from '../../../util';
+import ipfsApi from 'ipfs-api';
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const styles = theme => ({
   root: {
@@ -74,6 +72,7 @@ const multiplier = 10 ** 18;
 
 class MyTokens extends Component {
   state = {
+    jsonData: {},
     dataKeys: {
       totalSupplyKey: '',
       yourBalanceKey: ''
@@ -111,11 +110,21 @@ class MyTokens extends Component {
     const owner = await contract.methods.owner().call();
     const poolBalance = await contract.methods.poolBalance().call();
 
-    // TODO IPFS
     const name = await contract.methods.name().call();
     const symbol = await contract.methods.symbol().call();
+    
+    const multihash = getMultihashFromBytes32({
+      digest: mhash,
+      hashFunction: 18,
+      size: 32
+    });
+    
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
+    console.log(dataJson);
+
 
     this.setState({
+      dataJson,
       dataKeys: {
         totalSupplyKey,
         yourBalanceKey
@@ -149,7 +158,8 @@ class MyTokens extends Component {
     if (
       !contract ||
       !(this.state.dataKeys.yourBalanceKey in contract.balanceOf) ||
-      !(this.state.dataKeys.totalSupplyKey in contract.totalSupply)
+      !(this.state.dataKeys.totalSupplyKey in contract.totalSupply) ||
+      !(this.state.dataJson.services)
     ) {
       return <div>Still Loading...</div>;
     }
@@ -165,14 +175,14 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <ProfileCard />
+          <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
             poolBalance={this.state.poolBalance}
             symbol={this.state.symbol}
             exponent={this.state.exponent}
-            inverseSlope={this.state.inverrseSlope}
+            inverseSlope={this.state.inverseSlope}
           />
           <MainStats
             currentPrice={currentPrice}
@@ -243,7 +253,14 @@ class MyTokens extends Component {
         </Grid>
         <Grid container spacing={24}>
           <Grid item xs={12} md={4}>
-            <Services />
+            <Services
+              jsonData={this.state.dataJson}
+              account={this.props.drizzleState.accounts[0]}
+              contract={this.props.drizzle.contracts[address]}
+              drizzleState={contract}
+              mhash={this.state.mhash}
+              symbol={this.state.symbol}
+            />
           </Grid>
 
           <Grid item xs={12} md={8}>

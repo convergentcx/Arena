@@ -160,27 +160,29 @@ class PersistentDrawerLeft extends Component {
                 <ListItemIcon>
                   <Money />
                 </ListItemIcon>
-                <ListItemText primary="Market" />
+                <ListItemText primary="Home" />
               </ListItem>
             </NavLink>
+            <NavLink to="/leaderboard">
             <ListItem button>
               <ListItemIcon>
                 <Inbox />
               </ListItemIcon>
-              <ListItemText primary="Profile" />
+              <ListItemText primary="Leaderboard" />
             </ListItem>
+            </NavLink>
             <NavLink to="/dashboard">
               <ListItem button>
                 <ListItemIcon>
                   <Mail />
                 </ListItemIcon>
-                <ListItemText primary="Economy Dashboard" />
+                <ListItemText primary="Dashboard" />
               </ListItem>
             </NavLink>
           </List>
           <Divider />
           <List>
-            {['Settings', 'Impressum'].map((text, index) => (
+            {['About', 'Impressum'].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemIcon>{index % 2 === 0 ? <Settings /> : <Mail />}</ListItemIcon>
                 <ListItemText primary={text} />

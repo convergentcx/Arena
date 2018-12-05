@@ -135,14 +135,14 @@ class AttributeInput extends Component {
     let { selectedItem } = this.state;
 
     if (selectedItem.indexOf(item) === -1) {
-      console.log(selectedItem, item);
       selectedItem = [...selectedItem, item];
     }
-
+    this.props.passItems(selectedItem)
     this.setState({
       inputValue: '',
       selectedItem
     });
+
   };
 
   handleDelete = item => () => {

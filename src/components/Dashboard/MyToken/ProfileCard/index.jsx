@@ -3,39 +3,10 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Chip from '@material-ui/core/Chip';
-import Avatar from '@material-ui/core/Avatar';
+import Photo from '../../../Profile/Photo.jsx';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
-// const classes = {
-//     card: {
-//         minWidth: 200,
-//         position: 'relative'
-//     },
-//     container: {
-//         display: 'flex',
-//         flexWrap: 'wrap',
-//     },
-//     textField: {
-//         marginLeft: 0,
-//         marginRight: 0,
-//         width: 200,
-//     },
-//     bigAvatar: {
-//         margin: 10,
-//         width: 60,
-//         height: 60,
-//     },
-//     chip: {
-//         margin: 1,
-//     },
-//     editButton: {
-//         position: 'absolute',
-//         right: '2%',
-//         top: '3%'
-//     }
-// };
 
 class ProfileCard extends React.Component {
   state = {
@@ -45,27 +16,40 @@ class ProfileCard extends React.Component {
     displayName: 'My Token'
   };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
+  async componentDidMount() {
+    const { image } = this.props.jsonData;
+    const pic = Buffer.from(image.data).toString('base64');
+    this.setState({pic})
+  }
 
   toggleProfileEditable = () => {
     this.setState({ editingProfile: !this.state.editingProfile });
   };
 
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
+    const chips = this.props.jsonData.tags.map((tag) => {
+      return (
+      <Chip label={tag} />
+      )
+    })
     return (
       <Grid item md={4} xs={12}>
         <Card style={{ height: '100%', position: 'relative' }}>
           <CardHeader
-            avatar={<Avatar aria-label="Recipe">R</Avatar>}
+            avatar={<Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />}
             title={
               <TextField
                 id="standard-read-only-input"
                 value={this.state.displayName}
-                onChange={this.handleChange('displayName')}
+                onChange={this.handleChange}
                 margin="normal"
                 InputProps={{
                   readOnly: !this.state.editingProfile
@@ -77,8 +61,7 @@ class ProfileCard extends React.Component {
 
             subheader={
               <div>
-                <Chip label="blockchain" />
-                <Chip label="mentorship" />
+                {chips}
               </div>
             }
           />
@@ -93,9 +76,9 @@ class ProfileCard extends React.Component {
           <CardContent>
             <form noValidate autoComplete="off">
               <TextField
-                id="standard-full-width"
-                value={this.state.multiline}
-                onChange={this.handleChange('multiline')}
+                name="description"
+                value={this.state.editingProfile ? this.state.description :this.props.jsonData.description}
+                onChange={this.handleChange}
                 label="Description"
                 style={{ margin: 8 }}
                 placeholder="My token will give you .."

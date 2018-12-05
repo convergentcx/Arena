@@ -18,7 +18,7 @@ import withContext from '../../hoc/withContext';
 
 import { getBytes32FromMultihash } from '../../util';
 
-// import AttributeInput from './AttributeInput';
+import AttributeInput from './AttributeInput';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -66,7 +66,6 @@ class LaunchForm extends Component {
     } = this.props;
 
     // TODO: Check for all the required fields.
-
     let imgBuf = '';
     try {
       imgBuf = dataUriToBuffer(this.state.file);
@@ -74,11 +73,13 @@ class LaunchForm extends Component {
       console.error(e);
     }
 
+
     const dataJson = {
       name: this.state.name,
       description: this.state.description || '',
       image: imgBuf,
       symbol: this.state.symbol,
+      tags: this.state.selectedItems,
       services: []
     };
 
@@ -125,10 +126,14 @@ class LaunchForm extends Component {
     const txHash = transactionStack[this.state.stackId];
     if (!txHash) return null;
     if (transactions[txHash].status === 'success') {
-      setTimeout(() => this.props.history.push('/'), 1000);
+      setTimeout(() => this.props.history.push('/leaderboard'), 1000);
     }
     return `Transaction status: ${transactions[txHash].status}`;
   };
+
+  getSelectedTags = (selectedItems) => {
+    this.setState({ selectedItems })
+  }
 
   render() {
     const { file } = this.state;
@@ -184,10 +189,10 @@ class LaunchForm extends Component {
                       style={{ height: '200px', width: '200px', margin: 'auto' }}
                     />
                   ) : (
-                    <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                      Click to Upload
+                      <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                        Click to Upload
                     </Avatar>
-                  )}
+                    )}
                 </Dropzone>
               </div>
             </Grid>
@@ -227,9 +232,9 @@ class LaunchForm extends Component {
                 />
               </Grid>
 
-              {/* <Grid item xs={12} style={{ marginTop: '2vh' }}>
-                <AttributeInput />
-              </Grid> */}
+              <Grid item xs={12} style={{ marginTop: '2vh' }}>
+                <AttributeInput passItems={this.getSelectedTags} />
+              </Grid>
             </Grid>
 
             <Grid container style={{ marginTop: '40px' }}>

@@ -11,20 +11,62 @@ import Grid from '@material-ui/core/Grid';
 class Services extends React.Component {
   state = {
     editingServices: false,
-    price1: ''
+    jsonData: {}
   };
 
   toggleServiceEditable = () => {
     this.setState({ editingServices: !this.state.editingServices });
   };
 
-  handleChange = name => event => {
+  handleChange = event => {
+    const { name, value } = event.target;
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   };
 
+
+
   render() {
+
+    let items = this.props.jsonData.services.map((serviceObj, i) => {
+      return (
+        <Grid container sm={12}>
+          <Grid item sm={6}>
+            <TextField
+              name={`service-${i}`}
+              value={this.state.editingServices ? this.state[`service-${i}`] : serviceObj.what}
+              label={`Service ${i}`}
+              onChange={this.handleChange}
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+              InputProps={{
+                readOnly: !this.state.editingServices
+              }}
+            />
+          </Grid>
+          <Grid item sm={6}>
+            <TextField
+              label={`Price ${i}`}
+              name={`price-${i}`}
+              value={this.state.editingServices ? this.state[`price-${i}`] : serviceObj.price}
+              onChange={this.handleChange}
+              type="number"
+              InputLabelProps={{
+                shrink: true
+              }}
+              margin="normal"
+              InputProps={{
+                readOnly: !this.state.editingServices
+              }}
+            />
+          </Grid>
+        </Grid>
+      )
+    });
+
     return (
       <Card style={{ position: 'relative' }}>
         <Button
@@ -40,38 +82,7 @@ class Services extends React.Component {
             Your Services
           </Typography>
           <form noValidate autoComplete="off">
-            <Grid container sm={12}>
-              <Grid item sm={6}>
-                <TextField
-                  required
-                  id="standard-required"
-                  label="req"
-                  defaultValue="Service 1"
-                  value={this.state.service1}
-                  onChange={this.handleChange('service1')}
-                  margin="normal"
-                  InputProps={{
-                    readOnly: !this.state.editingServices
-                  }}
-                />
-              </Grid>
-              <Grid item sm={6}>
-                <TextField
-                  id="standard-number"
-                  label="Number"
-                  value={this.state.price}
-                  onChange={this.handleChange('price1')}
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  margin="normal"
-                  InputProps={{
-                    readOnly: !this.state.editingServices
-                  }}
-                />
-              </Grid>
-            </Grid>
+            {items}
           </form>
         </CardContent>
       </Card>
