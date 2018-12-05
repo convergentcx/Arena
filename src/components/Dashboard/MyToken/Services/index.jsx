@@ -18,44 +18,37 @@ import {
 class Services extends React.Component {
   state = {
     editingServices: false,
-    price1: '',
-    price2: '',
-    price3: '',
-    service1: '',
-    service2: '',
-    service3: '',
+    jsonData: {}
   };
-
 
   toggleServiceEditable = () => {
     this.setState({ editingServices: !this.state.editingServices });
   };
 
-  handleChange = name => event => {
+  handleChange = event => {
+    const { name, value } = event.target;
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   };
 
 
 
   render() {
-    if (!this.props.jsonData.services) {
-      return <div>Still Loading...</div>;
-    }
 
     let items = this.props.jsonData.services.map((serviceObj, i) => {
       return (
         <Grid container sm={12}>
           <Grid item sm={6}>
             <TextField
-              required
-              id="standard-required"
+              name={`service-${i}`}
+              value={this.state.editingServices ? this.state[`service-${i}`] : serviceObj.what}
               label={`Service ${i}`}
-              name={`service${i}`}
-              value={this.state.editingServices ? this.state[`price${i}`]: serviceObj.what}
               onChange={this.handleChange}
               margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
               InputProps={{
                 readOnly: !this.state.editingServices
               }}
@@ -63,10 +56,9 @@ class Services extends React.Component {
           </Grid>
           <Grid item sm={6}>
             <TextField
-              id="standard-number"
               label={`Price ${i}`}
-              name={`price${i}`}
-              value={this.state.editingServices ? this.state[`service${i}`] : serviceObj.price}
+              name={`price-${i}`}
+              value={this.state.editingServices ? this.state[`price-${i}`] : serviceObj.price}
               onChange={this.handleChange}
               type="number"
               InputLabelProps={{

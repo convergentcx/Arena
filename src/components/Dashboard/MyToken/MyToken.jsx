@@ -165,7 +165,8 @@ class MyTokens extends Component {
     if (
       !contract ||
       !(this.state.dataKeys.yourBalanceKey in contract.balanceOf) ||
-      !(this.state.dataKeys.totalSupplyKey in contract.totalSupply)
+      !(this.state.dataKeys.totalSupplyKey in contract.totalSupply) ||
+      !(this.state.jsonData.services)
     ) {
       return <div>Still Loading...</div>;
     }
@@ -188,7 +189,7 @@ class MyTokens extends Component {
             poolBalance={this.state.poolBalance}
             symbol={this.state.symbol}
             exponent={this.state.exponent}
-            inverseSlope={this.state.inverrseSlope}
+            inverseSlope={this.state.inverseSlope}
           />
           <MainStats
             currentPrice={currentPrice}

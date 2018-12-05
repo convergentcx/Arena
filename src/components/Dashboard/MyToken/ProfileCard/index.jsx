@@ -45,17 +45,68 @@ class ProfileCard extends React.Component {
     displayName: 'My Token'
   };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
   toggleProfileEditable = () => {
     this.setState({ editingProfile: !this.state.editingProfile });
   };
 
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+
+
+  // render() {
+
+  //   let items = this.props.jsonData.services.map((serviceObj, i) => {
+  //     return (
+  //       <Grid container sm={12}>
+  //         <Grid item sm={6}>
+  //           <TextField
+  //             name={`service-${i}`}
+  //             value={this.state.editingServices ? this.state[`service-${i}`] : serviceObj.what}
+  //             label={`Service ${i}`}
+  //             onChange={this.handleChange}
+  //             margin="normal"
+  //             InputLabelProps={{
+  //               shrink: true
+  //             }}
+  //             InputProps={{
+  //               readOnly: !this.state.editingServices
+  //             }}
+  //           />
+  //         </Grid>
+  //         <Grid item sm={6}>
+  //           <TextField
+  //             label={`Price ${i}`}
+  //             name={`price-${i}`}
+  //             value={this.state.editingServices ? this.state[`price-${i}`] : serviceObj.price}
+  //             onChange={this.handleChange}
+  //             type="number"
+  //             InputLabelProps={{
+  //               shrink: true
+  //             }}
+  //             margin="normal"
+  //             InputProps={{
+  //               readOnly: !this.state.editingServices
+  //             }}
+  //           />
+  //         </Grid>
+  //       </Grid>
+  //     )
+  //   });
+
+
   render() {
+    console.log(this.props.jsonData);
+    const chips = this.props.jsonData.tags.map((tag) => {
+      return (
+      <Chip label={tag} />
+      )
+    })
     return (
       <Grid item md={4} xs={12}>
         <Card style={{ height: '100%', position: 'relative' }}>
@@ -65,7 +116,7 @@ class ProfileCard extends React.Component {
               <TextField
                 id="standard-read-only-input"
                 value={this.state.displayName}
-                onChange={this.handleChange('displayName')}
+                onChange={this.handleChange}
                 margin="normal"
                 InputProps={{
                   readOnly: !this.state.editingProfile
@@ -77,8 +128,7 @@ class ProfileCard extends React.Component {
 
             subheader={
               <div>
-                <Chip label="blockchain" />
-                <Chip label="mentorship" />
+                {chips}
               </div>
             }
           />
@@ -93,9 +143,9 @@ class ProfileCard extends React.Component {
           <CardContent>
             <form noValidate autoComplete="off">
               <TextField
-                id="standard-full-width"
-                value={this.state.multiline}
-                onChange={this.handleChange('multiline')}
+                name="description"
+                value={this.state.editingProfile ? this.state.description :this.props.jsonData.description}
+                onChange={this.handleChange}
                 label="Description"
                 style={{ margin: 8 }}
                 placeholder="My token will give you .."
