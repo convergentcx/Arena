@@ -37,6 +37,7 @@ class ProfileDetails extends Component {
 
     this.state = {
       anchorEl: null,
+      dataJson: {},
       dataKeys: {
         totalSupplyKey: '',
         yourBalanceKey: ''
@@ -88,6 +89,7 @@ class ProfileDetails extends Component {
         totalSupplyKey,
         yourBalanceKey
       },
+      dataJson,
       description,
       exponent,
       inverseSlope,
@@ -263,7 +265,7 @@ class ProfileDetails extends Component {
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
             drizzleState={this.props.drizzleState}
-            mhash={this.state.mhash}
+            dataJson={this.state.dataJson}
             symbol={this.state.symbol}
           />
         </Grid>
