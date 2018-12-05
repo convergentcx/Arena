@@ -1,4 +1,4 @@
-/* Info card shows:
+/* QuickFacts shows:
 
   XXX
   Contributors

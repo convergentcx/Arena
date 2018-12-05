@@ -84,7 +84,7 @@ export default class Services extends Component {
       return <div>Still Loading...</div>;
     }
 
-    let items = this.props.dataJson.services.map((serviceObj, i) => {
+    const items = this.props.dataJson.services.map((serviceObj, i) => {
       return (
         <TableRow key={i}>
           <TableCell>{serviceObj.what}</TableCell>
