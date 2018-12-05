@@ -29,7 +29,6 @@ class LaunchForm extends Component {
     this.state = {
       file: '',
       ipfsUploading: false,
-      // preview: '',
       rows: 0,
       stackId: null,
       tooFew: false,
@@ -68,7 +67,10 @@ class LaunchForm extends Component {
 
     // TODO: Check for all the required fields.
 
-    const imgBuf = dataUriToBuffer(this.state.file) || '';
+    let imgBuf = '';
+    try {
+      imgBuf = dataUriToBuffer(this.state.file);
+    } catch (e) { console.error(e); }
 
     const dataJson = {
       name: this.state.name,

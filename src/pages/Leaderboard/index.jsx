@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
 import withContext from '../../hoc/withContext';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
-import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
+import { getMultihashFromBytes32, getPrice } from '../../util';
 
 import { utils as w3utils } from 'web3';
+
+import Item from './Item';
 
 import ipfsApi from 'ipfs-api';
 
@@ -86,47 +85,27 @@ class LeaderboardList extends Component {
 
   render() {
     let tableRows = [];
-
-    const renderRows = async () => {
+    (() => {
       let i = 0;
       while (i < this.state.personalEconomies.length) {
         const personalEconomy = this.state.personalEconomies[i];
 
         tableRows.push(
-          <TableRow key={i}>
-            <TableCell>
-              <Link to={`tokens/${personalEconomy.address}`}>{personalEconomy.name}</Link>
-            </TableCell>
-            <TableCell>{removeDecimals(removeDecimals(personalEconomy.marketCap))} ETH</TableCell>
-            <TableCell>TODO</TableCell>
-            <TableCell>TODO</TableCell>
-          </TableRow>
+          <Item address={personalEconomy.address} name={personalEconomy.name} marketCap={personalEconomy.marketCap} twentyFour="+12%" sevenDay="+1,003%" />
         );
         i++;
       }
-    };
+    })();
 
-    renderRows();
-
-    return <TableBody>{tableRows}</TableBody>;
+    return <div>{tableRows}</div>;
   }
 }
 
 const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
-  <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell>Market Cap</TableCell>
-          <TableCell>24hr Change</TableCell>
-          <TableCell>7 Day Change</TableCell>
-        </TableRow>
-      </TableHead>
-      <LeaderboardListContextualized />
-    </Table>
+  <div style={{ marginLeft: '200px', marginRight: '200px',padding: '10%' }}>
+    <LeaderboardListContextualized />
   </div>
 );
 
