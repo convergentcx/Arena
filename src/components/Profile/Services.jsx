@@ -9,37 +9,17 @@ import {
   TableRow,
   TextField
 } from '@material-ui/core';
-import ipfsApi from 'ipfs-api';
-
-import { getMultihashFromBytes32 } from '../../util';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './toast.css';
-
-const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
 export default class Services extends Component {
   constructor(props) {
     super(props);
-    this.state = { interval: null, jsonData: {}, message: '', txStatus: null };
-  }
-
-  async componentDidMount() {
-    const contentAddress = getMultihashFromBytes32({
-      digest: this.props.mhash,
-      hashFunction: 18,
-      size: 32
-    });
-
-    const result = await ipfs.get('/ipfs/' + contentAddress);
-    const contentString = result[0].content.toString();
-    const jsonData = JSON.parse(contentString);
-    this.setState({
-      jsonData
-    });
+    this.state = { interval: null, message: '', txStatus: null };
   }
 
   inputUpdate = event => {
@@ -100,11 +80,11 @@ export default class Services extends Component {
   };
 
   render() {
-    if (!this.state.jsonData.services) {
+    if (!this.props.dataJson) {
       return <div>Still Loading...</div>;
     }
 
-    let items = this.state.jsonData.services.map((serviceObj, i) => {
+    const items = this.props.dataJson.services.map((serviceObj, i) => {
       return (
         <TableRow key={i}>
           <TableCell>{serviceObj.what}</TableCell>
@@ -113,12 +93,12 @@ export default class Services extends Component {
             <TextField name="message" onChange={this.inputUpdate} />
           </TableCell>
           <TableCell>
-            <Button color="danger" onClick={() => this.requestWithEth(i)}>
+            <Button color="secondary" onClick={() => this.requestWithEth(i)}>
               Request with ETH
             </Button>
           </TableCell>
           <TableCell>
-            <Button color="success" onClick={() => this.requestWithToken(i)}>
+            <Button color="primary" onClick={() => this.requestWithToken(i)}>
               Request with {this.props.symbol}
             </Button>
           </TableCell>
