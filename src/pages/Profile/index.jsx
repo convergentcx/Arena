@@ -19,10 +19,9 @@ import withContext from '../../hoc/withContext';
 
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
+import Photo from '../../components/Profile/Photo.jsx';
 import ProfileChart from '../../components/Profile/ProfileChart.jsx';
 import Services from '../../components/Profile/Services.jsx';
-
-import { CardMedia } from '@material-ui/core';
 
 import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
@@ -143,17 +142,10 @@ class ProfileDetails extends Component {
         <Grid container>
           <Grid container>
             <Grid item md={6}>
-              <Card style={{ margin: '6px' }}>
-                <CardMedia
-                  alt="photo"
-                  image={'data:image/jpeg;base64,' + this.state.pic}
-                  style={{ height: '0', paddingTop: '56.25%' }}
-                />
-                <CardHeader title={`About ${this.state.name}`} />
-                <CardContent>
-                  {this.state.description}
-                </CardContent>
-              </Card>
+              <Photo 
+                pic={'data:image/jpeg;base64,' + this.state.pic}
+                width="200px"
+              />
             </Grid>
 
             <Grid item md={6}>
@@ -229,7 +221,7 @@ class ProfileDetails extends Component {
             }}
           >
             <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>
-              <CardHeader title="Contract Information" style={{ textAlign: 'center' }} />
+              <CardHeader title="Contract Details" style={{ textAlign: 'center' }} />
               <CardContent
                 style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}
               >
