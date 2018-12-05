@@ -29,7 +29,6 @@ class LaunchForm extends Component {
     this.state = {
       file: '',
       ipfsUploading: false,
-      // preview: '',
       rows: 0,
       stackId: null,
       tooFew: false,
