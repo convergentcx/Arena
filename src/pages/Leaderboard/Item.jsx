@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Chip, Grid, Paper, Typography } from '@material-ui/core';
 
 import makeBlockie from 'ethereum-blockies-base64';
+import { removeDecimals } from '../../util';
 
 const Item = props => (
   <Paper elevation={6} style={{ borderRadius: '50%', height: '', background: '#FFF', marginBottom: '10px' }}>
@@ -23,7 +25,7 @@ const Item = props => (
               {props.name}
             </Typography>
             <Typography style={{ marginTop: '2%' }}>
-              {props.marketCap}
+              {removeDecimals(removeDecimals(props.marketCap))} ETH
             </Typography>
             <Typography style={{ marginTop: '2%' }}>
               {props.twentyFour}
@@ -43,9 +45,11 @@ const Item = props => (
       </Grid>
 
       <Grid item xs={3} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+      <Link to={`tokens/${props.address}`}>
         <Button color="" variant="contained">
           DISCOVER
         </Button>
+      </Link>
         <div />
       </Grid>
     </Grid>
