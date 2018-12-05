@@ -91,7 +91,13 @@ class LeaderboardList extends Component {
         const personalEconomy = this.state.personalEconomies[i];
 
         tableRows.push(
-          <Item address={personalEconomy.address} name={personalEconomy.name} marketCap={personalEconomy.marketCap} twentyFour="+12%" sevenDay="+1,003%" />
+          <Item
+            address={personalEconomy.address}
+            name={personalEconomy.name}
+            marketCap={personalEconomy.marketCap}
+            twentyFour="+12%"
+            sevenDay="+1,003%"
+          />
         );
         i++;
       }
@@ -104,7 +110,7 @@ class LeaderboardList extends Component {
 const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
-  <div style={{ marginLeft: '200px', marginRight: '200px',padding: '10%' }}>
+  <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
     <LeaderboardListContextualized />
   </div>
 );

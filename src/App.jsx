@@ -7,6 +7,8 @@ import { AppContainer, Dashboard } from './components';
 
 import { Landing, Launch, Leaderboard, Profile } from './pages';
 
+import Dev from './Dev.jsx';
+
 const App = () => (
   <AppContainer>
     <Switch>
@@ -15,6 +17,7 @@ const App = () => (
       <Route path="/launch" component={Launch} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/tokens/:tokenAddress" exact component={Profile} />
+      <Route path="/dev" exact component={Dev} />
     </Switch>
   </AppContainer>
 );

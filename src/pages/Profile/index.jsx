@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import ipfsApi from 'ipfs-api';
+import ipfsApi from 'ipfs-api';
 
 import {
   Button,
@@ -19,16 +19,14 @@ import withContext from '../../hoc/withContext';
 
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Details from '../../components/Profile/Details.jsx';
+import Photo from '../../components/Profile/Photo.jsx';
 import ProfileChart from '../../components/Profile/ProfileChart.jsx';
 import Services from '../../components/Profile/Services.jsx';
 
-import { CardMedia } from '@material-ui/core';
-import Hannah from '../../assets/hannah.jpg';
-
-import { getPrice, removeDecimals } from '../../util';
+import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
 
-// const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const multiplier = 10 ** 18;
 
@@ -38,6 +36,7 @@ class ProfileDetails extends Component {
 
     this.state = {
       anchorEl: null,
+      dataJson: {},
       dataKeys: {
         totalSupplyKey: '',
         yourBalanceKey: ''
@@ -73,20 +72,30 @@ class ProfileDetails extends Component {
     const owner = await contract.methods.owner().call();
     const poolBalance = await contract.methods.poolBalance().call();
 
-    // TODO IPFS
-    const name = await contract.methods.name().call();
-    const symbol = await contract.methods.symbol().call();
+    const multihash = getMultihashFromBytes32({
+      digest: mhash,
+      hashFunction: 18,
+      size: 32
+    });
+
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
+
+    const { description, image, name, symbol } = dataJson;
+    const pic = Buffer.from(image.data).toString('base64');
 
     this.setState({
       dataKeys: {
         totalSupplyKey,
         yourBalanceKey
       },
+      dataJson,
+      description,
       exponent,
       inverseSlope,
       mhash,
       name,
       owner,
+      pic,
       poolBalance,
       symbol
     });
@@ -133,17 +142,7 @@ class ProfileDetails extends Component {
         <Grid container>
           <Grid container>
             <Grid item md={6}>
-              <Card style={{ margin: '6px' }}>
-                <CardMedia
-                  alt="person's photo"
-                  image={Hannah}
-                  style={{ height: '0', paddingTop: '56.25%' }}
-                />
-                <CardHeader title="About Hannah" />
-                <CardContent>
-                  Hi I am Hanna - I like to get paid when someone wants something from me..
-                </CardContent>
-              </Card>
+              <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="200px" />
             </Grid>
 
             <Grid item md={6}>
@@ -153,7 +152,7 @@ class ProfileDetails extends Component {
                   <div style={{ padding: '15px' }}>
                     <Button
                       color="secondary"
-                      size="sm"
+                      size="small"
                       aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
                       aria-haspopup="true"
                       variant="contained"
@@ -219,7 +218,7 @@ class ProfileDetails extends Component {
             }}
           >
             <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>
-              <CardHeader title="Contract Information" style={{ textAlign: 'center' }} />
+              <CardHeader title="Contract Details" style={{ textAlign: 'center' }} />
               <CardContent
                 style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}
               >
@@ -255,7 +254,7 @@ class ProfileDetails extends Component {
             account={this.props.drizzleState.accounts[0]}
             contract={this.props.drizzle.contracts[this.props.addr]}
             drizzleState={this.props.drizzleState}
-            mhash={this.state.mhash}
+            dataJson={this.state.dataJson}
             symbol={this.state.symbol}
           />
         </Grid>
