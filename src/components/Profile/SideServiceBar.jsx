@@ -18,6 +18,7 @@ export default class ServiceBar extends Component {
           <div>
             <Button
               color="secondary"
+<<<<<<< HEAD
               size="small"
               onClick={() => {}}
             >
@@ -30,6 +31,13 @@ export default class ServiceBar extends Component {
             >
               Request ({this.props.symbol})
             </Button>
+=======
+              // onClick=>
+            >
+              Request w ETH
+            </Button>
+            <Button color="secondary">Request w {this.props.symbol}</Button>
+>>>>>>> master
           </div>
         </div>
       );
