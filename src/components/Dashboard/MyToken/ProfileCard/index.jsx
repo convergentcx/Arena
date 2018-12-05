@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Chip from '@material-ui/core/Chip';
-import Avatar from '@material-ui/core/Avatar';
+import Photo from '../../../Profile/Photo.jsx';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -44,6 +44,12 @@ class ProfileCard extends React.Component {
     editingProfile: false,
     displayName: 'My Token'
   };
+
+  async componentDidMount() {
+    const { image } = this.props.jsonData;
+    const pic = Buffer.from(image.data).toString('base64');
+    this.setState({pic})
+  }
 
   toggleProfileEditable = () => {
     this.setState({ editingProfile: !this.state.editingProfile });
@@ -101,7 +107,6 @@ class ProfileCard extends React.Component {
 
 
   render() {
-    console.log(this.props.jsonData);
     const chips = this.props.jsonData.tags.map((tag) => {
       return (
       <Chip label={tag} />
@@ -111,7 +116,7 @@ class ProfileCard extends React.Component {
       <Grid item md={4} xs={12}>
         <Card style={{ height: '100%', position: 'relative' }}>
           <CardHeader
-            avatar={<Avatar aria-label="Recipe">R</Avatar>}
+            avatar={<Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />}
             title={
               <TextField
                 id="standard-read-only-input"

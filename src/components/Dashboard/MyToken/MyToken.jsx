@@ -119,19 +119,18 @@ class MyTokens extends Component {
     const name = await contract.methods.name().call();
     const symbol = await contract.methods.symbol().call();
     
-    const contentAddress = getMultihashFromBytes32({
+    const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
       size: 32
     });
-    const result = await ipfs.get('/ipfs/' + contentAddress);
-    const contentString = result[0].content.toString();
-    const jsonData = JSON.parse(contentString);
-    console.log(jsonData);
+    
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
+    console.log(dataJson);
 
 
     this.setState({
-      jsonData,
+      dataJson,
       dataKeys: {
         totalSupplyKey,
         yourBalanceKey
@@ -166,7 +165,7 @@ class MyTokens extends Component {
       !contract ||
       !(this.state.dataKeys.yourBalanceKey in contract.balanceOf) ||
       !(this.state.dataKeys.totalSupplyKey in contract.totalSupply) ||
-      !(this.state.jsonData.services)
+      !(this.state.dataJson.services)
     ) {
       return <div>Still Loading...</div>;
     }
@@ -182,7 +181,7 @@ class MyTokens extends Component {
         <h3>{this.props.name}</h3>
 
         <Grid container spacing={24}>
-          <ProfileCard jsonData={this.state.jsonData} />
+          <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
@@ -261,7 +260,7 @@ class MyTokens extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12} md={4}>
             <Services
-              jsonData={this.state.jsonData}
+              jsonData={this.state.dataJson}
               account={this.props.drizzleState.accounts[0]}
               contract={this.props.drizzle.contracts[address]}
               drizzleState={contract}
