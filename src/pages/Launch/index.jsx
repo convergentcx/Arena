@@ -70,7 +70,9 @@ class LaunchForm extends Component {
     let imgBuf = '';
     try {
       imgBuf = dataUriToBuffer(this.state.file);
-    } catch (e) { console.error(e); }
+    } catch (e) {
+      console.error(e);
+    }
 
     const dataJson = {
       name: this.state.name,

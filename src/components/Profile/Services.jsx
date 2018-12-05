@@ -20,7 +20,7 @@ export default class Services extends Component {
   constructor(props) {
     super(props);
     this.state = { interval: null, message: '', txStatus: null };
-  } 
+  }
 
   inputUpdate = event => {
     const { name, value } = event.target;

@@ -75,11 +75,11 @@ class ProfileDetails extends Component {
     const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
-      size: 32,
+      size: 32
     });
 
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
-    
+
     const { description, image, name, symbol } = dataJson;
     const pic = Buffer.from(image.data).toString('base64');
 
@@ -142,10 +142,7 @@ class ProfileDetails extends Component {
         <Grid container>
           <Grid container>
             <Grid item md={6}>
-              <Photo 
-                pic={'data:image/jpeg;base64,' + this.state.pic}
-                width="200px"
-              />
+              <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="200px" />
             </Grid>
 
             <Grid item md={6}>

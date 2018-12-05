@@ -6,10 +6,10 @@ export default class ServiceBar extends Component {
   constructor(props) {
     super(props);
     this.state = { interval: null, message: '', txStatus: null };
-  } 
+  }
 
   render() {
-    console.log(this.props.dataJson)
+    console.log(this.props.dataJson);
     const serviceBoxes = this.props.dataJson.services.map((serviceObj, i) => {
       return (
         <div>
@@ -19,12 +19,10 @@ export default class ServiceBar extends Component {
             <Button
               color="secondary"
               // onClick=>
-              >
-              Request w ETH  
+            >
+              Request w ETH
             </Button>
-            <Button color="secondary">
-              Request w {this.props.symbol} 
-            </Button>
+            <Button color="secondary">Request w {this.props.symbol}</Button>
           </div>
         </div>
       );
@@ -37,6 +35,6 @@ export default class ServiceBar extends Component {
         </Paper>
         {serviceBoxes}
       </Paper>
-    )
+    );
   }
-};
+}

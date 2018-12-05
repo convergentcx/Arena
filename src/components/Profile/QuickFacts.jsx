@@ -16,12 +16,8 @@ import { Button, IconButton, Paper, Typography } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
 class SocialBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const items = Object.keys(this.props.socials).map((key) => {
+    const items = Object.keys(this.props.socials).map(key => {
       const destination = this.props.socials[key];
       return (
         <IconButton color="secondary" onClick={() => window.open(destination)}>
@@ -29,22 +25,28 @@ class SocialBar extends Component {
         </IconButton>
       );
     });
-    return <div>{items}</div>
+    return <div>{items}</div>;
   }
 }
 
 const QuickFacts = props => (
   <Paper style={{ padding: '12px', width: props.width || '350px' }}>
-    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49'}}>
+    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49' }}>
       {props.contributors}
     </Typography>
-    <Typography variant="subtitle1" style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}>
+    <Typography
+      variant="subtitle1"
+      style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}
+    >
       contributors
     </Typography>
-    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49'}}>
+    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49' }}>
       {props.marketCap} ETH
     </Typography>
-    <Typography variant="subtitle1" style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}>
+    <Typography
+      variant="subtitle1"
+      style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}
+    >
       market cap
     </Typography>
     <div>

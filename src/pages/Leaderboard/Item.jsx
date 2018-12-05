@@ -6,10 +6,22 @@ import makeBlockie from 'ethereum-blockies-base64';
 import { removeDecimals } from '../../util';
 
 const Item = props => (
-  <Paper elevation={6} style={{ borderRadius: '50%', height: '', background: '#FFF', marginBottom: '10px' }}>
+  <Paper
+    elevation={6}
+    style={{ borderRadius: '50%', height: '', background: '#FFF', marginBottom: '10px' }}
+  >
     <Grid container style={{ background: '', padding: '8px' }}>
-
-      <Grid item xs={3} style={{ background: '', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+      <Grid
+        item
+        xs={3}
+        style={{
+          background: '',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center'
+        }}
+      >
         <div />
         <img
           src={makeBlockie(props.address)}
@@ -20,19 +32,17 @@ const Item = props => (
 
       <Grid item xs={6}>
         <Grid container>
-          <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Typography style={{ marginTop: '2%' }}>
-              {props.name}
-            </Typography>
+          <Grid
+            item
+            xs={12}
+            style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <Typography style={{ marginTop: '2%' }}>{props.name}</Typography>
             <Typography style={{ marginTop: '2%' }}>
               {removeDecimals(removeDecimals(props.marketCap))} ETH
             </Typography>
-            <Typography style={{ marginTop: '2%' }}>
-              {props.twentyFour}
-            </Typography>
-            <Typography style={{ marginTop: '2%' }}>
-              {props.sevenDay}
-            </Typography>
+            <Typography style={{ marginTop: '2%' }}>{props.twentyFour}</Typography>
+            <Typography style={{ marginTop: '2%' }}>{props.sevenDay}</Typography>
           </Grid>
 
           <Grid item xs={12}>
@@ -44,12 +54,21 @@ const Item = props => (
         </Grid>
       </Grid>
 
-      <Grid item xs={3} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-      <Link to={`tokens/${props.address}`}>
-        <Button color="" variant="contained">
-          DISCOVER
-        </Button>
-      </Link>
+      <Grid
+        item
+        xs={3}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center'
+        }}
+      >
+        <Link to={`tokens/${props.address}`}>
+          <Button color="" variant="contained">
+            DISCOVER
+          </Button>
+        </Link>
         <div />
       </Grid>
     </Grid>
