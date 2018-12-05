@@ -18,11 +18,18 @@ export default class ServiceBar extends Component {
           <div>
             <Button
               color="secondary"
-              // onClick=>
+              size="small"
+              onClick={() => {}}
             >
-              Request w ETH
+              Request (ETH)
             </Button>
-            <Button color="secondary">Request w {this.props.symbol}</Button>
+            <Button
+              color="secondary"
+              size="small"
+              onClick={() => {}}
+            >
+              Request ({this.props.symbol})
+            </Button>
           </div>
         </div>
       );
