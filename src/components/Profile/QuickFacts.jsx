@@ -49,7 +49,7 @@ const QuickFacts = props => (
     >
       market cap
     </Typography>
-    <div>
+    <div style={{ marginTop: '12px' }}>
       <Button
         variant="outlined"
         color="secondary"
@@ -57,6 +57,7 @@ const QuickFacts = props => (
       >
         WATCH
       </Button>
+      &nbsp;&nbsp;
       <Button
         variant="outlined"
         color="secondary"
@@ -65,7 +66,7 @@ const QuickFacts = props => (
         SHARE
       </Button>
     </div>
-    <div>
+    <div style={{ marginTop: '12px' }}>
       <SocialBar socials={props.socials || {}} />
     </div>
   </Paper>
