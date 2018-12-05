@@ -80,10 +80,8 @@ class ProfileDetails extends Component {
     });
 
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
-    // console.log(dataJson)
-
+    
     const { description, image, name, symbol } = dataJson;
-    // const str = String.fromCharCode(image);
     const pic = Buffer.from(image.data).toString('base64');
 
     this.setState({
