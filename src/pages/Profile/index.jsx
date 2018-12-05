@@ -23,7 +23,6 @@ import ProfileChart from '../../components/Profile/ProfileChart.jsx';
 import Services from '../../components/Profile/Services.jsx';
 
 import { CardMedia } from '@material-ui/core';
-import Hannah from '../../assets/hannah.jpg';
 
 import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
