@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
 import withContext from '../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
+
+import BubbleChart from '@weknow/react-bubble-chart-d3';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
-import { getMultihashFromBytes32, getPrice } from '../../util';
+import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 
 import { utils as w3utils } from 'web3';
 
@@ -12,7 +15,10 @@ import Item from './Item';
 
 import ipfsApi from 'ipfs-api';
 
+
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+
+
 
 class LeaderboardList extends Component {
   constructor(props) {
@@ -26,6 +32,8 @@ class LeaderboardList extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
+
     const {
       contracts: { PersonalEconomyFactory },
       web3
@@ -83,34 +91,87 @@ class LeaderboardList extends Component {
     this.state.sub.unsubscribe();
   }
 
+  bubbleClick = (label) => {
+    this.props.history.push(`/tokens/${label}`)
+  }
+
+  legendClick = (label) => {
+    console.log("Customer legend click func")
+  }
+
   render() {
-    let tableRows = [];
-    (() => {
-      let i = 0;
-      while (i < this.state.personalEconomies.length) {
-        const personalEconomy = this.state.personalEconomies[i];
+    console.log(this.state.personalEconomies)
+    let data = [];
+    this.state.personalEconomies.forEach((economy)=>{
+      data.push(
+        { label: economy.address,
+          value: removeDecimals(removeDecimals(economy.marketCap.toString()))}
+      )
+    })
 
-        tableRows.push(
-          <Item
-            address={personalEconomy.address}
-            name={personalEconomy.name}
-            marketCap={personalEconomy.marketCap}
-            twentyFour="+12%"
-            sevenDay="+1,003%"
-          />
-        );
-        i++;
-      }
-    })();
+    // let tableRows = [];
+    // (() => {
+    //   let i = 0;
+    //   while (i < this.state.personalEconomies.length) {
+    //     const personalEconomy = this.state.personalEconomies[i];
 
-    return <div>{tableRows}</div>;
+    //     tableRows.push(
+    //       <Item
+    //         address={personalEconomy.address}
+    //         name={personalEconomy.name}
+    //         marketCap={personalEconomy.marketCap}
+    //         twentyFour="+12%"
+    //         sevenDay="+1,003%"
+    //       />
+    //     );
+    //     i++;
+    //   }
+    // })();
+
+    return (
+      <div>
+        <BubbleChart
+          graph={{
+            zoom: 1.1,
+            offsetX: -0.05,
+            offsetY: -0.01
+          }}
+          width={1000}
+          height={800}
+          showLegend={true} // optional value, pass false to disable the legend.
+          legendPercentage={20} // number that represent the % of with that legend going to use.
+          legendFont={{
+            family: 'Arial',
+            size: 12,
+            color: '#000',
+            weight: 'bold',
+          }}
+          valueFont={{
+            family: 'Arial',
+            size: 12,
+            color: '#fff',
+            weight: 'bold',
+          }}
+          labelFont={{
+            family: 'Arial',
+            size: 16,
+            color: '#fff',
+            weight: 'bold',
+          }}
+          //Custom bubble/legend click functions such as searching using the label, redirecting to other page
+          bubbleClickFun={this.bubbleClick}
+          legendClickFun={this.legendClick}
+          data={data}
+        />
+      </div>
+    );
   }
 }
 
-const LeaderboardListContextualized = withContext(LeaderboardList);
+const LeaderboardListContextualized = withRouter(withContext(LeaderboardList));
 
 const Leaderboard = () => (
-  <div style={{ marginLeft: '200px', marginRight: '200px', padding: '10%' }}>
+  <div>
     <LeaderboardListContextualized />
   </div>
 );
