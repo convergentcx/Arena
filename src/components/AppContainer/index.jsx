@@ -4,7 +4,6 @@ import TopNavbar from './TopNavbar';
 
 const appStyles = {
   backgroundColor: '#232323',
-  // height: '100%',
   minHeight: '100vh',
   padding: 0,
   marginBottom: 0

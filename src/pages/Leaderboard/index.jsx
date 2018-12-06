@@ -11,7 +11,7 @@ import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 
 import { utils as w3utils } from 'web3';
 
-import Item from './Item';
+// import Item from './Item';
 
 import ipfsApi from 'ipfs-api';
 

@@ -120,7 +120,6 @@ class MyTokens extends Component {
     });
 
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
-    console.log(dataJson);
 
     this.setState({
       dataJson,
@@ -171,9 +170,7 @@ class MyTokens extends Component {
 
     return (
       <div id={address} className={classes.root}>
-        <h3>{this.props.name}</h3>
-
-        <Grid container spacing={24}>
+        <Grid container spacing={8} style={{ padding: '16px' }}>
           <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}
