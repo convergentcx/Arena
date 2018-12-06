@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-
 import { AppContainer, Dashboard } from './components';
 
 import { Landing, Launch, Leaderboard, Profile } from './pages';

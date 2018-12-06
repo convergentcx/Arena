@@ -7,7 +7,7 @@ const appStyles = {
   // height: '100%',
   minHeight: '100vh',
   padding: 0,
-  marginBottom: 0,
+  marginBottom: 0
 };
 
 const AppContainer = props => (

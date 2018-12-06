@@ -19,13 +19,12 @@ class ProfileCard extends React.Component {
   async componentDidMount() {
     const { image } = this.props.jsonData;
     const pic = Buffer.from(image.data).toString('base64');
-    this.setState({pic})
+    this.setState({ pic });
   }
 
   toggleProfileEditable = () => {
     this.setState({ editingProfile: !this.state.editingProfile });
   };
-
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -35,11 +34,9 @@ class ProfileCard extends React.Component {
   };
 
   render() {
-    const chips = this.props.jsonData.tags.map((tag) => {
-      return (
-      <Chip label={tag} />
-      )
-    })
+    const chips = this.props.jsonData.tags.map(tag => {
+      return <Chip label={tag} />;
+    });
     return (
       <Grid item md={4} xs={12}>
         <Card style={{ height: '100%', position: 'relative' }}>
@@ -59,11 +56,7 @@ class ProfileCard extends React.Component {
             // What follows is an idea for how people could give themselves tags. Not sure how/if we
             // should add these for the alpha
 
-            subheader={
-              <div>
-                {chips}
-              </div>
-            }
+            subheader={<div>{chips}</div>}
           />
           <Button
             color={this.state.editingProfile ? 'primary' : 'secondary'}
@@ -77,7 +70,11 @@ class ProfileCard extends React.Component {
             <form noValidate autoComplete="off">
               <TextField
                 name="description"
-                value={this.state.editingProfile ? this.state.description :this.props.jsonData.description}
+                value={
+                  this.state.editingProfile
+                    ? this.state.description
+                    : this.props.jsonData.description
+                }
                 onChange={this.handleChange}
                 label="Description"
                 style={{ margin: 8 }}

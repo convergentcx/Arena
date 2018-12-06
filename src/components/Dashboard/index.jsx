@@ -45,7 +45,9 @@ class Dashboard extends Component {
   componentDidMount = async () => {
     const { drizzle, drizzleState } = this.props;
     const factoryAddress = drizzle.contracts.PersonalEconomyFactory.address;
+    // TODO - Change this to use the metamask provider OR Infura directly if we need to
     var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    // TODO ^^^
     const factoryContract = new web3.eth.Contract(PersonalEconomyFactory['abi'], factoryAddress);
 
     let filter = { owner_address: drizzleState.accounts[0] };
@@ -53,7 +55,7 @@ class Dashboard extends Component {
     factoryContract.getPastEvents(
       'Created',
       { fromBlock: 0, toBlock: 'latest', filter },
-      (err, events) => {
+      (_, events) => {
         events.forEach(token => {
           let address = token.returnValues.token_address;
           let date = token.returnValues.time;
@@ -66,7 +68,6 @@ class Dashboard extends Component {
   };
 
   render() {
-
     return (
       <div className={classes.main}>
         <Sidebar tokens={this.state.tokens} className={classes.menuBox} />

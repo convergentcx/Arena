@@ -32,7 +32,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     margin: 0,
-    padding: 0,
+    padding: 0
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -166,12 +166,12 @@ class PersistentDrawerLeft extends Component {
               </ListItem>
             </NavLink>
             <NavLink to="/leaderboard">
-            <ListItem button>
-              <ListItemIcon>
-                <Inbox />
-              </ListItemIcon>
-              <ListItemText primary="Leaderboard" />
-            </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <Inbox />
+                </ListItemIcon>
+                <ListItemText primary="Leaderboard" />
+              </ListItem>
             </NavLink>
             <NavLink to="/dashboard">
               <ListItem button>

@@ -15,10 +15,7 @@ import Item from './Item';
 
 import ipfsApi from 'ipfs-api';
 
-
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
-
-
 
 class LeaderboardList extends Component {
   constructor(props) {
@@ -32,7 +29,7 @@ class LeaderboardList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props);
 
     const {
       contracts: { PersonalEconomyFactory },
@@ -91,25 +88,23 @@ class LeaderboardList extends Component {
     this.state.sub.unsubscribe();
   }
 
-  bubbleClick = (label) => {
-    this.props.history.push(`/tokens/${label}`)
-  }
+  bubbleClick = label => {
+    this.props.history.push(`/tokens/${label}`);
+  };
 
-  legendClick = (label) => {
-    console.log("Customer legend click func")
-  }
+  legendClick = label => {
+    console.log('Customer legend click func');
+  };
 
   render() {
-    console.log(this.state.personalEconomies)
+    console.log(this.state.personalEconomies);
     let data = [];
-    this.state.personalEconomies.forEach((economy)=>{
-      data.push(
-        {
-          label: economy.address,
-          value: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3,
-        }
-      )
-    })
+    this.state.personalEconomies.forEach(economy => {
+      data.push({
+        label: economy.address,
+        value: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3
+      });
+    });
 
     // let tableRows = [];
     // (() => {
@@ -146,19 +141,19 @@ class LeaderboardList extends Component {
             family: 'Arial',
             size: 12,
             color: '#000',
-            weight: 'bold',
+            weight: 'bold'
           }}
           valueFont={{
             family: 'Arial',
             size: 12,
             color: '#fff',
-            weight: 'bold',
+            weight: 'bold'
           }}
           labelFont={{
             family: 'Arial',
             size: 16,
             color: '#fff',
-            weight: 'bold',
+            weight: 'bold'
           }}
           //Custom bubble/legend click functions such as searching using the label, redirecting to other page
           bubbleClickFun={this.bubbleClick}

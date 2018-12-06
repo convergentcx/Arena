@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './Sidebar.module.css';
 
-export default class Example extends React.Component {
+export default class DashNav extends React.Component {
   render() {
     const links =
       this.props.tokens &&
@@ -15,7 +15,7 @@ export default class Example extends React.Component {
       });
 
     return (
-      <div>
+      <div style={{ paddingTop: '20px' }}>
         <ul>{links}</ul>
       </div>
     );
