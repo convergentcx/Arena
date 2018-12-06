@@ -73,7 +73,6 @@ class LaunchForm extends Component {
       console.error(e);
     }
 
-
     const dataJson = {
       name: this.state.name,
       description: this.state.description || '',
@@ -131,9 +130,9 @@ class LaunchForm extends Component {
     return `Transaction status: ${transactions[txHash].status}`;
   };
 
-  getSelectedTags = (selectedItems) => {
-    this.setState({ selectedItems })
-  }
+  getSelectedTags = selectedItems => {
+    this.setState({ selectedItems });
+  };
 
   render() {
     const { file } = this.state;
@@ -189,10 +188,10 @@ class LaunchForm extends Component {
                       style={{ height: '200px', width: '200px', margin: 'auto' }}
                     />
                   ) : (
-                      <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                        Click to Upload
+                    <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                      Click to Upload
                     </Avatar>
-                    )}
+                  )}
                 </Dropzone>
               </div>
             </Grid>

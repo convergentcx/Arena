@@ -112,16 +112,14 @@ class MyTokens extends Component {
 
     const name = await contract.methods.name().call();
     const symbol = await contract.methods.symbol().call();
-    
+
     const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
       size: 32
     });
-    
-    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
-    console.log(dataJson);
 
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
 
     this.setState({
       dataJson,
@@ -159,7 +157,7 @@ class MyTokens extends Component {
       !contract ||
       !(this.state.dataKeys.yourBalanceKey in contract.balanceOf) ||
       !(this.state.dataKeys.totalSupplyKey in contract.totalSupply) ||
-      !(this.state.dataJson.services)
+      !this.state.dataJson.services
     ) {
       return <div>Still Loading...</div>;
     }
@@ -172,9 +170,7 @@ class MyTokens extends Component {
 
     return (
       <div id={address} className={classes.root}>
-        <h3>{this.props.name}</h3>
-
-        <Grid container spacing={24}>
+        <Grid container spacing={8} style={{ padding: '16px' }}>
           <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}

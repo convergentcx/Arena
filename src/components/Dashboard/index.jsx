@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
 import MyToken from './MyToken/MyToken';
-import classes from './Dashboard.module.css';
 import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
 // import ScrollableTabsButtonAuto from './Tab/Tab';
-import Sidebar from './Sidebar/Sidebar';
+import TopTabs from './TopTabs';
 
 class Dashboard extends Component {
   state = {
@@ -45,19 +44,21 @@ class Dashboard extends Component {
   componentDidMount = async () => {
     const { drizzle, drizzleState } = this.props;
     const factoryAddress = drizzle.contracts.PersonalEconomyFactory.address;
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    // TODO - Change this to use the metamask provider OR Infura directly if we need to
+    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    // TODO ^^^
     const factoryContract = new web3.eth.Contract(PersonalEconomyFactory['abi'], factoryAddress);
 
-    let filter = { owner_address: drizzleState.accounts[0] };
-    let tokens = [];
+    const filter = { owner_address: drizzleState.accounts[0] };
+    const tokens = [];
     factoryContract.getPastEvents(
       'Created',
       { fromBlock: 0, toBlock: 'latest', filter },
-      (err, events) => {
+      (_, events) => {
         events.forEach(token => {
-          let address = token.returnValues.token_address;
-          let date = token.returnValues.time;
-          let name = token.returnValues.name;
+          const address = token.returnValues.token_address;
+          const date = token.returnValues.time;
+          const name = token.returnValues.name;
           tokens.push({ address, date, name });
           this.setState({ tokens });
         });
@@ -66,10 +67,9 @@ class Dashboard extends Component {
   };
 
   render() {
-
     return (
-      <div className={classes.main}>
-        <Sidebar tokens={this.state.tokens} className={classes.menuBox} />
+      <div>
+        <TopTabs tokens={this.state.tokens} />
         <Route
           path="/dashboard/:tokenAddress"
           exact

@@ -137,12 +137,11 @@ class AttributeInput extends Component {
     if (selectedItem.indexOf(item) === -1) {
       selectedItem = [...selectedItem, item];
     }
-    this.props.passItems(selectedItem)
+    this.props.passItems(selectedItem);
     this.setState({
       inputValue: '',
       selectedItem
     });
-
   };
 
   handleDelete = item => () => {

@@ -25,10 +25,7 @@ class Services extends React.Component {
     });
   };
 
-
-
   render() {
-
     let items = this.props.jsonData.services.map((serviceObj, i) => {
       return (
         <Grid container sm={12}>
@@ -64,7 +61,7 @@ class Services extends React.Component {
             />
           </Grid>
         </Grid>
-      )
+      );
     });
 
     return (
