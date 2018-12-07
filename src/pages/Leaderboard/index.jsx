@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import withContext from '../../hoc/withContext';
-import { withRouter } from 'react-router-dom';
 
 import App from './BubbleChart/App';
 
@@ -29,8 +28,6 @@ class LeaderboardList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
-
     const {
       contracts: { PersonalEconomyFactory },
       web3
@@ -90,7 +87,6 @@ class LeaderboardList extends Component {
   }
 
   render() {
-    console.log(this.state.personalEconomies);
     let data = [];
     this.state.personalEconomies.forEach(economy => {
       data.push({
