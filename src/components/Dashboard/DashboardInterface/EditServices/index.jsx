@@ -1,17 +1,17 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
+import { Paper } from '@material-ui/core';
+
 class Services extends React.Component {
   state = {
     editingServices: false,
-    jsonData: {}
+    jsonData: {},
   };
 
   toggleServiceEditable = () => {
@@ -33,7 +33,7 @@ class Services extends React.Component {
             <TextField
               name={`service-${i}`}
               value={this.state.editingServices ? this.state[`service-${i}`] : serviceObj.what}
-              label={`Service ${i}`}
+              label={`Service`}
               onChange={this.handleChange}
               margin="normal"
               InputLabelProps={{
@@ -46,7 +46,7 @@ class Services extends React.Component {
           </Grid>
           <Grid item sm={6}>
             <TextField
-              label={`Price ${i}`}
+              label={`Price`}
               name={`price-${i}`}
               value={this.state.editingServices ? this.state[`price-${i}`] : serviceObj.price}
               onChange={this.handleChange}
@@ -65,24 +65,22 @@ class Services extends React.Component {
     });
 
     return (
-      <Card style={{ position: 'relative' }}>
+      <Paper style={{ display: 'flex', flexDirection: 'column' }}>
+        <Grid container style={{ padding: '2%' }}>
+          <Typography color="textSecondary" gutterBottom>
+            Your Services
+          </Typography>
+          {items}
+        </Grid>
         <Button
+          variant="contained"
           color={this.state.editingServices ? 'primary' : 'secondary'}
-          size="sm"
-          style={{ position: 'absolute', top: '2%', right: '2%' }}
+          style={{ justifySelf: 'flex-end' }}
           onClick={this.toggleServiceEditable}
         >
           {this.state.editingServices ? 'Save' : 'Edit'}
         </Button>
-        <CardContent>
-          <Typography color="textSecondary" gutterBottom>
-            Your Services
-          </Typography>
-          <form noValidate autoComplete="off">
-            {items}
-          </form>
-        </CardContent>
-      </Card>
+      </Paper>
     );
   }
 }

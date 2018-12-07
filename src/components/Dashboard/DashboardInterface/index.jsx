@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import Services from './Services';
+import EditServices from './EditServices';
 import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
@@ -70,7 +70,7 @@ const styles = theme => ({
 
 const multiplier = 10 ** 18;
 
-class MyTokens extends Component {
+class Interface extends Component {
   state = {
     jsonData: {},
     dataKeys: {
@@ -163,14 +163,37 @@ class MyTokens extends Component {
     }
 
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
-    const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
+    // const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice =
-      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
+    // const currentPrice =
+    //   (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
-      <div id={address} className={classes.root}>
-        <Grid container spacing={8} style={{ padding: '16px' }}>
+      <div id={address} style={{ flexGow: 1, padding: '3%' }}>
+        <Grid container spacing={16}>
+          <Grid item xs={12} md={4}>
+            <EditServices
+              jsonData={this.state.dataJson}
+              account={this.props.drizzleState.accounts[0]}
+              contract={this.props.drizzle.contracts[address]}
+              drizzleState={contract}
+              mhash={this.state.mhash}
+              symbol={this.state.symbol}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  Requests and Transactions
+                </Typography>
+                <Events date={this.props.date} address={address} />
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+        {/* <Grid container spacing={8} style={{ padding: '16px' }}>
           <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}
@@ -212,11 +235,10 @@ class MyTokens extends Component {
                   width={300}
                   height={300}
                 />
-                {/* 
             Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
             the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
             so we can look how it works there exactly.
-            <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
+            <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart />
               </CardContent>
             </Card>
           </Grid>
@@ -246,30 +268,7 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
-        <Grid container spacing={24}>
-          <Grid item xs={12} md={4}>
-            <Services
-              jsonData={this.state.dataJson}
-              account={this.props.drizzleState.accounts[0]}
-              contract={this.props.drizzle.contracts[address]}
-              drizzleState={contract}
-              mhash={this.state.mhash}
-              symbol={this.state.symbol}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={8}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Requests and Transactions
-                </Typography>
-                <Events date={this.props.date} address={address} />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        </Grid> */}
 
         <hr />
       </div>
@@ -277,4 +276,4 @@ class MyTokens extends Component {
   }
 }
 
-export default withStyles(styles)(withContext(withRouter(MyTokens)));
+export default withStyles(styles)(withContext(withRouter(Interface)));
