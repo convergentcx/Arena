@@ -71,11 +71,6 @@ class Dashboard extends Component {
     return (
       <div>
         <TopTabs tokens={this.state.tokens} />
-        <Route
-          path="/dashboard/:tokenAddress"
-          exact
-          render={props => <Interface key={props.match.params.tokenAddress} />}
-        />
       </div>
     );
   }

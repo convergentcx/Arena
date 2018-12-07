@@ -89,7 +89,7 @@ class LeaderboardList extends Component {
   }
 
   bubbleClick = label => {
-    this.props.history.push(`/tokens/${label}`);
+    this.props.history.push(`/economies/${label}`);
   };
 
   legendClick = label => {

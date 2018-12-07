@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Chip from '@material-ui/core/Chip';
+import { Chip, Grid, Paper, TextField } from '@material-ui/core';
 import Photo from '../../../Profile/Photo.jsx';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { Grid, Paper } from '@material-ui/core';
 
 export default class EditDetails extends Component {
   state = {
     multiline:
       'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
     editingProfile: false,
-    displayName: 'My Token'
+    displayName: this.props.jsonData.name,
   };
 
   async componentDidMount() {
@@ -40,7 +35,7 @@ export default class EditDetails extends Component {
     return (
       <Paper style={{ height: '', marginBottom: '16px' }}>
         <Grid container>
-          <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center', background: 'blue' }}>
+          <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
             <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />
           </Grid>
           <Grid item xs={8} style={{ display: 'flex', justifyContent: 'center' }}>

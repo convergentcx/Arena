@@ -186,6 +186,7 @@ class ProfileDetails extends Component {
                   indicatorColor="primary"
                   textColor="primary"
                   onChange={this.handleChange}
+                  fullWidth
                 >
                   <Tab label="Summary" />
                   <Tab label="Contribute" />
@@ -347,7 +348,7 @@ const ProfileDetailsContextualized = withContext(ProfileDetails);
 
 const Profile = props => (
   <div>
-    <ProfileDetailsContextualized addr={props.match.params.tokenAddress} history={props.history} />
+    <ProfileDetailsContextualized addr={props.match.params.economyAddress} history={props.history} />
   </div>
 );
 

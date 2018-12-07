@@ -7,16 +7,14 @@ import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
 import EditServices from './EditServices';
 import EditDetails from './EditDetails'; // somehow default importing of the jsx file from the parent folder does not work here
-import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
-import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+// import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+// import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
-import CurveChart from './CurveChart/CurveChart';
+// import CurveChart from './CurveChart/CurveChart';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Paper } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 
 import { getMultihashFromBytes32 } from '../../../util';
 import ipfsApi from 'ipfs-api';
@@ -67,7 +65,7 @@ const styles = theme => ({
   }
 });
 
-const multiplier = 10 ** 18;
+// const multiplier = 10 ** 18;
 
 class Interface extends Component {
   state = {
@@ -161,38 +159,57 @@ class Interface extends Component {
       return <div>Still Loading...</div>;
     }
 
-    const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
+    // const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
     // const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
     // const currentPrice =
     //   (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
-      <div id={address} style={{ flexGow: 1, padding: '3%' }}>
-        <Grid container spacing={16}>
-          <Grid item xs={12} md={4}>
-            <EditDetails jsonData={this.state.dataJson} />
-            <EditServices
-              jsonData={this.state.dataJson}
-              account={this.props.drizzleState.accounts[0]}
-              contract={this.props.drizzle.contracts[address]}
-              drizzleState={contract}
-              mhash={this.state.mhash}
-              symbol={this.state.symbol}
+      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '8%' }}>
+        <Grid item xs={12} md={4}>
+          <EditDetails jsonData={this.state.dataJson} />
+          <EditServices
+            jsonData={this.state.dataJson}
+            account={this.props.drizzleState.accounts[0]}
+            contract={this.props.drizzle.contracts[address]}
+            drizzleState={contract}
+            mhash={this.state.mhash}
+            symbol={this.state.symbol}
+          />
+          <Paper style={{ marginTop: '16px' }}>
+            <TextField
+              name="description"
+              onChange={() => {}}
+              label="Description"
+              // style={{ margin: 8 }}
+              // placeholder="My token will give you .."
+              // helperText="Tell your investors why you are going to the moon"
+              // fullWidth
+              multiline
+              // rows="4"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+              InputProps={{
+                readOnly: !this.state.editingProfile
+              }}
             />
-          </Grid>
-
-          <Grid item xs={12} md={8}>
-            <Paper style={{ padding: '3%' }}>
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Requests and Transactions
-              </Typography>
-              <Events date={this.props.date} address={address} />
-            </Paper>
-          </Grid>
-
+          </Paper>
         </Grid>
-        {/* <Grid container spacing={8} style={{ padding: '16px' }}>
+
+        <Grid item xs={12} md={8}>
+          <Paper style={{ padding: '3%' }}>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Requests and Transactions
+            </Typography>
+            <Events date={this.props.date} address={address} />
+          </Paper>
+        </Grid>
+
+      </Grid>
+        /* <Grid container spacing={8} style={{ padding: '16px' }}>
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
@@ -266,10 +283,7 @@ class Interface extends Component {
               </CardContent>
             </Card>
           </Grid>
-        </Grid> */}
-
-        <hr />
-      </div>
+        </Grid> */
     );
   }
 }
