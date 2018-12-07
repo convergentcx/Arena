@@ -68,6 +68,7 @@ class LeaderboardList extends Component {
             name: dataJson.name,
             marketCap: currentPrice.mul(w3utils.toBN(totalSupply)),
             services: dataJson.services,
+            tags: dataJson.tags,
             totalSupply
           };
           const list = [...this.state.personalEconomies, newEconomy];
@@ -92,18 +93,16 @@ class LeaderboardList extends Component {
     console.log(this.state.personalEconomies);
     let data = [];
     this.state.personalEconomies.forEach(economy => {
-      console.log(economy)
       data.push({
         label: economy.address,
-        marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3,
+        marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
         name: economy.name,
         address: economy.address,
-        organization: "b",
-        total_amount: "50000",
+        threshold: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 1 ? 
+          "1" : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5 ? "5" : "10",
         group: "low",
-        start_month: "3",
-        start_day: "2",
-        start_year: economy.tags
+        tags: economy.tags && economy.tags.join(", ") || '',
+        start_year: "2009"
       });
     });
 

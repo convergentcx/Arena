@@ -9,12 +9,12 @@ export default function YearsTitles({ yearCenters }) {
             key={year}
             x={yearCenters[year].x}
             y={50}
-            fontSize="35"
+            fontSize="12"
             textAnchor="middle"
             alignmentBaseline="middle"
           >
             {
-              year
+              `< ${year} Ξ`
             }
           </text>)
       }

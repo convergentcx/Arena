@@ -37,9 +37,10 @@ export function createNodes(rawData) {
     radius: radiusScale(+d.marketCap),
     value: +d.marketCap,
     name: d.name,
-    org: d.organization,
+    // org: d.organization,
     group: d.group,
-    attributes: d.tags,
+    tags: d.tags,
+    threshold: d.threshold,
     x: Math.random() * 900,
     y: Math.random() * 800,
   }))

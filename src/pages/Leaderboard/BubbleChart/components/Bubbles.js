@@ -55,8 +55,8 @@ class Bubbles extends React.Component {
   regroupBubbles = (groupByYear) => {
     const { forceStrength, yearCenters, center } = this.props
     if (groupByYear) {
-      this.simulation.force('x', d3.forceX().strength(forceStrength).x(d => yearCenters[d.year].x))
-        .force('y', d3.forceY().strength(forceStrength).y(d => yearCenters[d.year].y))
+      this.simulation.force('x', d3.forceX().strength(forceStrength).x(d => yearCenters[d.threshold].x))
+        .force('y', d3.forceY().strength(forceStrength).y(d => yearCenters[d.threshold].y))
     } else {
       this.simulation.force('x', d3.forceX().strength(forceStrength).x(center.x))
         .force('y', d3.forceY().strength(forceStrength).y(center.y))
@@ -85,7 +85,7 @@ class Bubbles extends React.Component {
       .attr('stroke-width', 2)
       .on('mouseover', showDetail)  // eslint-disable-line
       .on('mouseout', hideDetail) // eslint-disable-line
-      .on('click', d => this.goToProfile(d.address))
+      .on('click', d => {this.goToProfile(d.address); hideDetail(d)})
 
     bubblesE.transition().duration(2000).attr('r', d => d.radius).on('end', () => {
       this.simulation.nodes(data)
@@ -132,15 +132,15 @@ export function showDetail(d) {
   // change outline to indicate hover state.
   d3.select(this).attr('stroke', 'black')
 
-  const content = `<span class="name">Title: </span><span class="value">${
+  const content = `<span class="name">Name: </span><span class="value">${
     d.name
     }</span><br/>` +
     // `<span class="name">Amount: </span><span class="value">$${
-    `<span class="name">MarketCap: </span><span class="value">Ξ${
+    `<span class="name">Market Cap: </span><span class="value">Ξ${
     d.value
     }</span><br/>` +
-    `<span class="name">Year: </span><span class="value">${
-    d.year
+    `<span class="name">Tags: </span><span class="value">${
+    d.tags
     }</span>`
 
   tooltip.showTooltip(content, d3.event)
