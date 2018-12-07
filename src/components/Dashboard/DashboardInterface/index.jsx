@@ -6,7 +6,7 @@ import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
 import EditServices from './EditServices';
-import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import EditDetails from './EditDetails'; // somehow default importing of the jsx file from the parent folder does not work here
 import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
@@ -14,9 +14,8 @@ import CurveChart from './CurveChart/CurveChart';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import { getMultihashFromBytes32 } from '../../../util';
@@ -172,6 +171,7 @@ class Interface extends Component {
       <div id={address} style={{ flexGow: 1, padding: '3%' }}>
         <Grid container spacing={16}>
           <Grid item xs={12} md={4}>
+            <EditDetails jsonData={this.state.dataJson} />
             <EditServices
               jsonData={this.state.dataJson}
               account={this.props.drizzleState.accounts[0]}
@@ -183,18 +183,16 @@ class Interface extends Component {
           </Grid>
 
           <Grid item xs={12} md={8}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Requests and Transactions
-                </Typography>
-                <Events date={this.props.date} address={address} />
-              </CardContent>
-            </Card>
+            <Paper style={{ padding: '3%' }}>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Requests and Transactions
+              </Typography>
+              <Events date={this.props.date} address={address} />
+            </Paper>
           </Grid>
+
         </Grid>
         {/* <Grid container spacing={8} style={{ padding: '16px' }}>
-          <ProfileCard jsonData={this.state.dataJson} />
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
