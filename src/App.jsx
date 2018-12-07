@@ -5,7 +5,7 @@ import { AppContainer, Dashboard } from './components';
 import Interface from './components/Dashboard/DashboardInterface';
 import { Landing, Launch, Leaderboard, Profile } from './pages';
 
-import Dev from './Dev.jsx';
+// import Dev from './Dev.jsx';
 
 const App = () => (
   <AppContainer>
@@ -16,7 +16,7 @@ const App = () => (
       <Route path="/launch" component={Launch} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/economies/:economyAddress" exact component={Profile} />
-      <Route path="/dev" exact component={Dev} />
+      {/* <Route path="/dev" exact component={Dev} /> */}
     </Switch>
   </AppContainer>
 );

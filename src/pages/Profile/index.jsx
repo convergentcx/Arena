@@ -106,7 +106,7 @@ class ProfileDetails extends Component {
     });
   }
 
-  handleChange = (event, value) => {
+  handleChange = (_, value) => {
     this.setState({ value });
   };
 

@@ -81,7 +81,8 @@ class Interface extends Component {
     owner: '',
     poolBalance: '',
     symbol: '',
-    popover: false
+    popover: false,
+    value: 0,
   };
 
   async componentDidMount() {
@@ -135,13 +136,17 @@ class Interface extends Component {
   }
 
   showDetails = () => {
-    this.props.history.push('/tokens/' + this.props.address);
+    this.props.history.push('/economies/' + this.props.address);
   };
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
+  };
+
+  handleTabChange = (_, value) => {
+    this.setState({ value });
   };
 
   render() {
@@ -200,16 +205,30 @@ class Interface extends Component {
         </Grid>
 
         <Grid item xs={12} md={8}>
-          <Tabs>
-            <Tab value="Inbox" />
-            <Tab value="Settings" />
+          <Tabs
+            value={this.state.value}
+            indicatorColor="secondary"
+            onChange={this.handleTabChange}
+            fullWidth
+            style={{ marginBottom: '16px' }}
+          >
+            <Tab label="Inbox" />
+            <Tab label="Stats" />
+            <Tab label="Settings" />
           </Tabs>
-          <Paper style={{ padding: '3%' }}>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Requests and Transactions
-            </Typography>
-            <Events date={this.props.date} address={address} />
-          </Paper>
+          {this.state.value === 0 &&
+            <Paper style={{ padding: '3%' }}>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Requests and Transactions
+              </Typography>
+              <Events date={this.props.date} address={address} />
+            </Paper>
+          }
+          {this.state.value === 1 &&
+            <div>
+              Hello World!
+            </div>
+          }
         </Grid>
 
       </Grid>
