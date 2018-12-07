@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import withContext from '../../hoc/withContext';
-import { withRouter } from 'react-router-dom';
 
-import BubbleChart from '@weknow/react-bubble-chart-d3';
+import App from './BubbleChart/App';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
@@ -29,8 +28,6 @@ class LeaderboardList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
-
     const {
       contracts: { PersonalEconomyFactory },
       web3
@@ -68,6 +65,7 @@ class LeaderboardList extends Component {
             name: dataJson.name,
             marketCap: currentPrice.mul(w3utils.toBN(totalSupply)),
             services: dataJson.services,
+            tags: dataJson.tags,
             totalSupply
           };
           const list = [...this.state.personalEconomies, newEconomy];
@@ -88,21 +86,19 @@ class LeaderboardList extends Component {
     this.state.sub.unsubscribe();
   }
 
-  bubbleClick = label => {
-    this.props.history.push(`/tokens/${label}`);
-  };
-
-  legendClick = label => {
-    console.log('Customer legend click func');
-  };
-
   render() {
-    console.log(this.state.personalEconomies);
     let data = [];
     this.state.personalEconomies.forEach(economy => {
       data.push({
         label: economy.address,
-        value: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3
+        marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
+        name: economy.name,
+        address: economy.address,
+        threshold: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 1 ? 
+          "1" : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5 ? "5" : "10",
+        group: "low",
+        tags: (economy.tags && economy.tags.join(", ")) || '',
+        start_year: "2009"
       });
     });
 
@@ -126,46 +122,14 @@ class LeaderboardList extends Component {
     // })();
 
     return (
-      <div>
-        <BubbleChart
-          graph={{
-            zoom: 1.1,
-            offsetX: -0.05,
-            offsetY: -0.01
-          }}
-          width={1000}
-          height={800}
-          showLegend={true} // optional value, pass false to disable the legend.
-          legendPercentage={20} // number that represent the % of with that legend going to use.
-          legendFont={{
-            family: 'Arial',
-            size: 12,
-            color: '#000',
-            weight: 'bold'
-          }}
-          valueFont={{
-            family: 'Arial',
-            size: 12,
-            color: '#fff',
-            weight: 'bold'
-          }}
-          labelFont={{
-            family: 'Arial',
-            size: 16,
-            color: '#fff',
-            weight: 'bold'
-          }}
-          //Custom bubble/legend click functions such as searching using the label, redirecting to other page
-          bubbleClickFun={this.bubbleClick}
-          legendClickFun={this.legendClick}
-          data={data}
-        />
+      <div style={{ marginTop: '10%'}}>
+        <App data={data}/>
       </div>
     );
   }
 }
 
-const LeaderboardListContextualized = withRouter(withContext(LeaderboardList));
+const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
   <div>

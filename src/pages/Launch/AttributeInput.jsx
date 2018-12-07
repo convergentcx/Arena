@@ -152,21 +152,6 @@ class AttributeInput extends Component {
     });
   };
 
-  // onAddTag = e => {
-  //   if (e.key === 'Enter') {
-  //     this.setState({
-  //       tags: [
-  //         ...this.state.tags,
-  //         {
-  //           tag: e.target.value,
-  //           id: shortid.generate()
-  //         }
-  //       ],
-  //       enteredTag: ''
-  //     });
-  //   }
-  // };
-
   render() {
     const { classes } = this.props;
     const { inputValue, selectedItem } = this.state;
@@ -201,7 +186,11 @@ class AttributeInput extends Component {
                   />
                 )),
                 onChange: this.handleInputChange,
-                onKeyDown: this.handleKeyDown
+                onKeyDown: (event) => {
+                  if (highlightedIndex === null) {
+                    this.handleKeyDown(event);
+                  }
+                }
               }),
               label: 'Tags'
             })}
