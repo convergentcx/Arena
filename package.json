@@ -33,6 +33,7 @@
     "bs58": "4.0.1",
     "data-uri-to-buffer": "^2.0.0",
     "eslint": "5.6.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "7.11.1",
     "ipfs-api": "26.1.2",
     "openzeppelin-solidity": "2.0.0",
@@ -40,7 +41,6 @@
     "react-dropzone": "^7.0.1",
     "react-progress-button": "^5.1.0",
     "truffle": "5.0.0-next.15"
-
   },
   "scripts": {
     "start": "react-scripts start",
