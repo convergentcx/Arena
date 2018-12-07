@@ -15,7 +15,6 @@ const theme = createMuiTheme({"palette":{"common":{"black":"#000","white":"#fff"
 
 /// Styles
 import './styles/index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 /// Our components
 import App from './App';
