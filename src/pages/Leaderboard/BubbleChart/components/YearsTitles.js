@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function YearsTitles({ yearCenters }) {
   return (
@@ -22,9 +23,9 @@ export default function YearsTitles({ yearCenters }) {
   )
 }
 
-// YearsTitles.propTypes = {
-//   yearCenters: PropTypes.objectOf(PropTypes.shape({
-//     x: PropTypes.number.isRequired,
-//     y: PropTypes.number.isRequired,
-//   }).isRequired).isRequired,
-// }
+YearsTitles.propTypes = {
+  yearCenters: PropTypes.objectOf(PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }).isRequired).isRequired,
+}

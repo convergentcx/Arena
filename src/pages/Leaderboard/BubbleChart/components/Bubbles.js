@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3'
 import { fillColor } from '../utils'
 import tooltip from './Tooltip'
@@ -104,25 +105,25 @@ class Bubbles extends React.Component {
 export default withRouter(Bubbles);
 
 
-// Bubbles.propTypes = {
-//   center: PropTypes.shape({
-//     x: PropTypes.number.isRequired,
-//     y: PropTypes.number.isRequired,
-//   }),
-//   forceStrength: PropTypes.number.isRequired,
-//   groupByYear: PropTypes.bool.isRequired,
-//   yearCenters: PropTypes.objectOf(PropTypes.shape({
-//     x: PropTypes.number.isRequired,
-//     y: PropTypes.number.isRequired,
-//   }).isRequired).isRequired,
-//   data: PropTypes.arrayOf(PropTypes.shape({
-//     x: PropTypes.number.isRequired,
-//     id: PropTypes.string.isRequired,
-//     radius: PropTypes.number.isRequired,
-//     value: PropTypes.number.isRequired,
-//     name: PropTypes.string.isRequired,
-//   })),
-// }
+Bubbles.propTypes = {
+  center: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+  forceStrength: PropTypes.number.isRequired,
+  groupByYear: PropTypes.bool.isRequired,
+  yearCenters: PropTypes.objectOf(PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }).isRequired).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    radius: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })),
+}
 
 /*
 * Function called on mouseover to display the

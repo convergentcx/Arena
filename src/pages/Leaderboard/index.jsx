@@ -97,7 +97,7 @@ class LeaderboardList extends Component {
         threshold: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 1 ? 
           "1" : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5 ? "5" : "10",
         group: "low",
-        tags: economy.tags && economy.tags.join(", ") || '',
+        tags: (economy.tags && economy.tags.join(", ")) || '',
         start_year: "2009"
       });
     });

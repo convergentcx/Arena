@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import classes from './GroupingPicker.module.css'
 
 export default class GroupingPicker extends React.Component {
@@ -16,7 +17,7 @@ export default class GroupingPicker extends React.Component {
   }
 }
 
-// GroupingPicker.propTypes = {
-//   onChanged: PropTypes.func.isRequired,
-//   active: PropTypes.oneOf(['all', 'year']).isRequired,
-// }
+GroupingPicker.propTypes = {
+  onChanged: PropTypes.func.isRequired,
+  active: PropTypes.oneOf(['all', 'year']).isRequired,
+}

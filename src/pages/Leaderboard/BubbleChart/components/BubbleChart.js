@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function BubbleChart({ width, height, children }) {
   return (
@@ -10,8 +11,8 @@ export default function BubbleChart({ width, height, children }) {
   )
 }
 
-// BubbleChart.propTypes = {
-//   width: PropTypes.number.isRequired,
-//   height: PropTypes.number.isRequired,
-//   children: PropTypes.node,
-// }
+BubbleChart.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  children: PropTypes.node,
+}
