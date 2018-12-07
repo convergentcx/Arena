@@ -126,16 +126,16 @@ class LeaderboardList extends Component {
     // })();
 
     return (
-      <div>
+      <div style={{ padding: '20%'}}>
         <BubbleChart
           graph={{
-            zoom: 1.1,
-            offsetX: -0.05,
-            offsetY: -0.01
+            zoom: 0.2,
+            offsetX: 0,
+            offsetY: 0
           }}
           width={1000}
           height={800}
-          showLegend={true} // optional value, pass false to disable the legend.
+          showLegend={false} // optional value, pass false to disable the legend.
           legendPercentage={20} // number that represent the % of with that legend going to use.
           legendFont={{
             family: 'Arial',
