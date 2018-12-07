@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { withTheme } from '@material-ui/core/styles';
 
 import { getPrice, removeDecimals } from '../../util';
 import { utils } from 'web3';
@@ -58,9 +59,9 @@ class ProfileChart extends Component {
     return (
       <ResponsiveContainer height={height} width={width}>
         <AreaChart style={{ margin: 'auto' }} data={data} margin={this.props.margin}>
-          <CartesianGrid strokeDasharray="2 2" stroke="#00C853" />
-          <XAxis dataKey="supply" type="number" stroke="#00C853" fill="#00C853" />
-          <YAxis dataKey="value" type="number" stroke="#00C853" fill="#00C853" />
+          <CartesianGrid strokeDasharray="2 2" stroke={this.props.theme.palette.primary.main} />
+          <XAxis dataKey="supply" type="number" stroke={this.props.theme.palette.primary.main} fill={this.props.theme.palette.primary.main} />
+          <YAxis dataKey="value" type="number" stroke={this.props.theme.palette.primary.main} fill={this.props.theme.palette.primary.main} />
           <Tooltip />
 
           <Area
@@ -70,7 +71,7 @@ class ProfileChart extends Component {
             dataKey="value"
             name={'price'}
             key={'price'}
-            stroke="#00C853"
+            stroke={this.props.theme.palette.primary.main}
             fill="none"
           />
 
@@ -78,16 +79,16 @@ class ProfileChart extends Component {
             isAnimationActive={false}
             stackOffset={'none'}
             dataKey="sell"
-            stroke="#00C853"
-            fill="#00C853"
+            stroke={this.props.theme.palette.primary.main}
+            fill={this.props.theme.palette.primary.main}
           />
 
           <ReferenceDot
             x={currentPoint.x}
             y={currentPoint.y}
             r={4}
-            stroke="#00C853"
-            fill="#00C853"
+            stroke={this.props.theme.palette.primary.main}
+            fill={this.props.theme.palette.primary.main}
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -95,4 +96,4 @@ class ProfileChart extends Component {
   }
 }
 
-export default ProfileChart;
+export default withTheme()(ProfileChart);

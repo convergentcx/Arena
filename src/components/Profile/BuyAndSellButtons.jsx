@@ -93,20 +93,21 @@ export default class BuyAndSellButtons extends Component {
 
   render() {
     return (
-      <Grid container style={{ color: 'white', background: 'rgba(255,255,255,0.6)' }}>
+      <Grid container>
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
         >
           <TextField
             type="number"
+            variant="outlined"
             name="buyAmt"
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
             helperText={`With ${removeDecimals(this.state.priceInEther)} ETH`}
           />
-          {/* &nbsp;&nbsp; */}
+          &nbsp;&nbsp;
           <Button
             color="primary"
             variant="outlined"
@@ -120,16 +121,17 @@ export default class BuyAndSellButtons extends Component {
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}
+          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
         >
           <TextField
             type="number"
+            variant="outlined"
             name="sellAmt"
             onChange={this.inputUpdate}
             placeholder={this.props.symbol}
             helperText={`For ${removeDecimals(this.state.rewardInEther)} ETH`}
           />
-          {/* &nbsp;&nbsp; */}
+          &nbsp;&nbsp;
           <Button
             color="primary"
             variant="outlined"

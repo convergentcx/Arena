@@ -7,7 +7,9 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  // Modal,
   Paper,
+  // Popper,
   Popover,
   Tab,
   Tabs
@@ -135,7 +137,7 @@ class ProfileDetails extends Component {
     );
 
     return (
-      <div>
+      <div style={{ width: '100vw' }}>
         {/* Header */}
         <Paper
           square
@@ -184,7 +186,6 @@ class ProfileDetails extends Component {
                 <Tabs
                   value={this.state.value}
                   indicatorColor="primary"
-                  textColor="primary"
                   onChange={this.handleChange}
                   fullWidth
                 >

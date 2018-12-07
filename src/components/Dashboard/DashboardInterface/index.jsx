@@ -14,7 +14,7 @@ import EditDetails from './EditDetails'; // somehow default importing of the jsx
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { Grid, Paper, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 
 import { getMultihashFromBytes32 } from '../../../util';
 import ipfsApi from 'ipfs-api';
@@ -200,6 +200,10 @@ class Interface extends Component {
         </Grid>
 
         <Grid item xs={12} md={8}>
+          <Tabs>
+            <Tab value="Inbox" />
+            <Tab value="Settings" />
+          </Tabs>
           <Paper style={{ padding: '3%' }}>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
               Requests and Transactions

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+// import { Route } from 'react-router-dom';
 import Web3 from 'web3';
 
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
 import withContext from '../../hoc/withContext';
 
-import Interface from './DashboardInterface';
+// import Interface from './DashboardInterface';
 
 import TopTabs from './TopTabs';
 
