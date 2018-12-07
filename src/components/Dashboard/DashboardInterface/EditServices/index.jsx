@@ -1,20 +1,22 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+import React, { Component } from 'react';
+import { Button, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import ipfsApi from 'ipfs-api';
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
-import { Paper } from '@material-ui/core';
-
-class Services extends React.Component {
+class Services extends Component {
   state = {
     editingServices: false,
     jsonData: {},
+    loading: false,
   };
 
-  toggleServiceEditable = () => {
+  editServicesOrSave = () => {
+    if (this.state.editingServices) {
+      // First save to IPFS
+      const oldDataJson = this.state.jsonData;
+      const newDataJson = oldDataJson;
+    }
+
     this.setState({ editingServices: !this.state.editingServices });
   };
 
@@ -31,10 +33,11 @@ class Services extends React.Component {
         <Grid container sm={12}>
           <Grid item sm={6}>
             <TextField
-              name={`service-${i}`}
-              value={this.state.editingServices ? this.state[`service-${i}`] : serviceObj.what}
               label={`Service`}
+              name={`service-${i}`}
+              defaultValue={serviceObj.what}
               onChange={this.handleChange}
+              type="text"
               margin="normal"
               InputLabelProps={{
                 shrink: true
@@ -48,13 +51,13 @@ class Services extends React.Component {
             <TextField
               label={`Price`}
               name={`price-${i}`}
-              value={this.state.editingServices ? this.state[`price-${i}`] : serviceObj.price}
+              defaultValue={serviceObj.price}
               onChange={this.handleChange}
               type="number"
+              margin="normal"
               InputLabelProps={{
                 shrink: true
               }}
-              margin="normal"
               InputProps={{
                 readOnly: !this.state.editingServices
               }}
@@ -70,13 +73,13 @@ class Services extends React.Component {
           <Typography color="textSecondary" gutterBottom>
             Your Services
           </Typography>
-          {items}
+          {this.state.loading ? 'loading' : items}
         </Grid>
         <Button
           variant="contained"
           color={this.state.editingServices ? 'primary' : 'secondary'}
           style={{ justifySelf: 'flex-end' }}
-          onClick={this.toggleServiceEditable}
+          onClick={this.editServicesOrSave}
         >
           {this.state.editingServices ? 'Save' : 'Edit'}
         </Button>
