@@ -94,7 +94,7 @@ class ProfileDetails extends Component {
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
     await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
-      eventsArray.push(event[0].address);
+      event[0] && eventsArray.push(event[0].address);
       // this.setState({ eventsArray });
     });
     let unique = [...new Set(eventsArray)];

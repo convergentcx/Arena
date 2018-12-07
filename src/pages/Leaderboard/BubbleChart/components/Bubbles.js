@@ -66,7 +66,7 @@ class Bubbles extends React.Component {
   }
 
   goToProfile = (address) => {
-    this.props.history.push(`/tokens/${address}`);
+    this.props.history.push(`/economies/${address}`);
   }
 
   renderBubbles(data) {
