@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import withContext from '../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
 
-import BubbleChart from '@weknow/react-bubble-chart-d3';
+import App from './BubbleChart/App';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
@@ -88,21 +88,22 @@ class LeaderboardList extends Component {
     this.state.sub.unsubscribe();
   }
 
-  bubbleClick = label => {
-    this.props.history.push(`/tokens/${label}`);
-  };
-
-  legendClick = label => {
-    console.log('Customer legend click func');
-  };
-
   render() {
     console.log(this.state.personalEconomies);
     let data = [];
     this.state.personalEconomies.forEach(economy => {
+      console.log(economy)
       data.push({
         label: economy.address,
-        value: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3
+        marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) || 3,
+        name: economy.name,
+        address: economy.address,
+        organization: "b",
+        total_amount: "50000",
+        group: "low",
+        start_month: "3",
+        start_day: "2",
+        start_year: economy.tags
       });
     });
 
@@ -126,46 +127,14 @@ class LeaderboardList extends Component {
     // })();
 
     return (
-      <div style={{ padding: '20%'}}>
-        <BubbleChart
-          graph={{
-            zoom: 0.2,
-            offsetX: 0,
-            offsetY: 0
-          }}
-          width={1000}
-          height={800}
-          showLegend={false} // optional value, pass false to disable the legend.
-          legendPercentage={20} // number that represent the % of with that legend going to use.
-          legendFont={{
-            family: 'Arial',
-            size: 12,
-            color: '#000',
-            weight: 'bold'
-          }}
-          valueFont={{
-            family: 'Arial',
-            size: 12,
-            color: '#fff',
-            weight: 'bold'
-          }}
-          labelFont={{
-            family: 'Arial',
-            size: 16,
-            color: '#fff',
-            weight: 'bold'
-          }}
-          //Custom bubble/legend click functions such as searching using the label, redirecting to other page
-          bubbleClickFun={this.bubbleClick}
-          legendClickFun={this.legendClick}
-          data={data}
-        />
+      <div style={{ marginTop: '10%'}}>
+        <App data={data}/>
       </div>
     );
   }
 }
 
-const LeaderboardListContextualized = withRouter(withContext(LeaderboardList));
+const LeaderboardListContextualized = withContext(LeaderboardList);
 
 const Leaderboard = () => (
   <div>
