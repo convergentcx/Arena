@@ -9,7 +9,6 @@ export default class ServicePanel extends Component {
   }
 
   render() {
-    console.log(this.props.dataJson);
     const serviceBoxes = this.props.dataJson.services.map((serviceObj, i) => {
       return (
         <div style={{ textAlign: 'center', padding: '6px' }}>

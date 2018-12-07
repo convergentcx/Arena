@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ipfsApi from 'ipfs-api';
+import Web3 from 'web3';
 
 import {
   Button,
@@ -86,6 +87,17 @@ class ProfileDetails extends Component {
       pic = Buffer.from(image.data).toString('base64');
     }
 
+    // workaround with additional instance of contract, because drizzle does not support getPastEvents
+    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
+    let eventsArray = [];
+    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
+      eventsArray.push(event[0].address);
+      // this.setState({ eventsArray });
+    });
+    let unique = [...new Set(eventsArray)];
+    let contributors = unique.length;
+    
     this.setState({
       dataKeys: {
         totalSupplyKey,
@@ -100,7 +112,8 @@ class ProfileDetails extends Component {
       owner,
       pic,
       poolBalance,
-      symbol
+      symbol,
+      contributors
     });
   }
 
@@ -222,7 +235,7 @@ class ProfileDetails extends Component {
         >
           <Grid item xs={3}>
             <InfoCard
-              contributors={6}
+              contributors={this.state.contributors}
               marketCap={removeDecimals(removeDecimals(utils.toBN(totalSupply).mul(currentPrice)))}
               socials={{
                 twitter: 'https://convergent.cx',
