@@ -3,8 +3,8 @@ import React from 'react';
 import TopNavbar from './TopNavbar';
 
 const appStyles = {
-  backgroundColor: '#232323',
   minHeight: '100vh',
+  height: '100%',
   padding: 0,
   marginBottom: 0
 };

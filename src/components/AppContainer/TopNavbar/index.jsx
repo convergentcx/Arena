@@ -32,7 +32,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     margin: 0,
-    padding: 0
+    padding: 0,
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -115,8 +115,8 @@ class PersistentDrawerLeft extends Component {
             [classes.appBarShift]: open
           })}
           elevation={3}
-          color="default"
-          style={{ paddingLeft: '2%', paddingRight: '2%' }}
+          color="primary"
+          style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar disableGutters={!open}>
             <IconButton

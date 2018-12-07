@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 const heroStyle = {
   backgroundSize: 'cover',
   // background: '#FFFFFF',
-  color: '#FFFFFF',
+  // color: '#FFFFFF',
   WebkitBackgroundSize: 'cover',
   MozBackgroundSize: 'cover',
   OBackgroundSize: 'cover',

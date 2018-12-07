@@ -1,44 +1,45 @@
 import React, { Component } from 'react';
-
+// import { Route } from 'react-router-dom';
 import Web3 from 'web3';
+
 import PersonalEconomyFactory from '../../build/contracts/PersonalEconomyFactory.json';
-import MyToken from './MyToken/MyToken';
-import { Route } from 'react-router-dom';
 import withContext from '../../hoc/withContext';
-// import ScrollableTabsButtonAuto from './Tab/Tab';
+
+// import Interface from './DashboardInterface';
+
 import TopTabs from './TopTabs';
 
 class Dashboard extends Component {
   state = {
     tokens: null,
-    web3Contract: null,
-    tokenContract: null,
-    eventsArray: [],
-    tokenPurchaseAmount: null,
-    price: null,
-    reward: null,
-    owner: '',
-    symbol: '',
-    name: '',
-    exponent: null,
-    inverseSlope: null,
-    dataKeyTotalSupply: null,
-    dataKeyPoolBalance: null,
-    dataKeyTokenBalance: null,
-    dataKeyRequestPrice1: null,
-    currentPrice: null,
-    marketCap: null,
-    actions: {
-      action1: '',
-      action2: '',
-      action3: ''
-    },
-    prices: {
-      price1: '',
-      price2: '',
-      price3: ''
-    },
-    popoverOpen: false
+    // web3Contract: null,
+    // tokenContract: null,
+    // eventsArray: [],
+    // tokenPurchaseAmount: null,
+    // price: null,
+    // reward: null,
+    // owner: '',
+    // symbol: '',
+    // name: '',
+    // exponent: null,
+    // inverseSlope: null,
+    // dataKeyTotalSupply: null,
+    // dataKeyPoolBalance: null,
+    // dataKeyTokenBalance: null,
+    // dataKeyRequestPrice1: null,
+    // currentPrice: null,
+    // marketCap: null,
+    // actions: {
+    //   action1: '',
+    //   action2: '',
+    //   action3: ''
+    // },
+    // prices: {
+    //   price1: '',
+    //   price2: '',
+    //   price3: ''
+    // },
+    // popoverOpen: false
   };
 
   componentDidMount = async () => {
@@ -70,11 +71,6 @@ class Dashboard extends Component {
     return (
       <div>
         <TopTabs tokens={this.state.tokens} />
-        <Route
-          path="/dashboard/:tokenAddress"
-          exact
-          render={props => <MyToken key={props.match.params.tokenAddress} />}
-        />
       </div>
     );
   }

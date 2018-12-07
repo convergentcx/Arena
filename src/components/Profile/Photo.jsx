@@ -11,7 +11,7 @@ const Photo = props => (
       height: props.width,
       borderStyle: 'solid',
       borderColor: '#FFF',
-      borderWidth: '3px'
+      borderWidth: '3px',
     }}
   />
 );

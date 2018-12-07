@@ -5,19 +5,16 @@ import { withRouter } from 'react-router-dom';
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import Services from './Services';
-import ProfileCard from './ProfileCard/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
-import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
-import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import EditServices from './EditServices';
+import EditDetails from './EditDetails'; // somehow default importing of the jsx file from the parent folder does not work here
+// import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+// import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
 
-import CurveChart from './CurveChart/CurveChart';
+// import CurveChart from './CurveChart/CurveChart';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Paper, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 
 import { getMultihashFromBytes32 } from '../../../util';
 import ipfsApi from 'ipfs-api';
@@ -68,9 +65,9 @@ const styles = theme => ({
   }
 });
 
-const multiplier = 10 ** 18;
+// const multiplier = 10 ** 18;
 
-class MyTokens extends Component {
+class Interface extends Component {
   state = {
     jsonData: {},
     dataKeys: {
@@ -84,7 +81,8 @@ class MyTokens extends Component {
     owner: '',
     poolBalance: '',
     symbol: '',
-    popover: false
+    popover: false,
+    value: 0,
   };
 
   async componentDidMount() {
@@ -138,13 +136,17 @@ class MyTokens extends Component {
   }
 
   showDetails = () => {
-    this.props.history.push('/tokens/' + this.props.address);
+    this.props.history.push('/economies/' + this.props.address);
   };
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
+  };
+
+  handleTabChange = (_, value) => {
+    this.setState({ value });
   };
 
   render() {
@@ -162,16 +164,75 @@ class MyTokens extends Component {
       return <div>Still Loading...</div>;
     }
 
-    const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
-    const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
+    // const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
+    // const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice =
-      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
+    // const currentPrice =
+    //   (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
 
     return (
-      <div id={address} className={classes.root}>
-        <Grid container spacing={8} style={{ padding: '16px' }}>
-          <ProfileCard jsonData={this.state.dataJson} />
+      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '8%' }}>
+        <Grid item xs={12} md={4}>
+          <EditDetails jsonData={this.state.dataJson} />
+          <EditServices
+            jsonData={this.state.dataJson}
+            account={this.props.drizzleState.accounts[0]}
+            contract={this.props.drizzle.contracts[address]}
+            drizzleState={contract}
+            mhash={this.state.mhash}
+            symbol={this.state.symbol}
+          />
+          <Paper style={{ marginTop: '16px' }}>
+            <TextField
+              name="description"
+              onChange={() => {}}
+              label="Description"
+              // style={{ margin: 8 }}
+              // placeholder="My token will give you .."
+              // helperText="Tell your investors why you are going to the moon"
+              // fullWidth
+              multiline
+              // rows="4"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+              InputProps={{
+                readOnly: !this.state.editingProfile
+              }}
+            />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={8}>
+          <Tabs
+            value={this.state.value}
+            indicatorColor="secondary"
+            onChange={this.handleTabChange}
+            fullWidth
+            style={{ marginBottom: '16px' }}
+          >
+            <Tab label="Inbox" />
+            <Tab label="Stats" />
+            <Tab label="Settings" />
+          </Tabs>
+          {this.state.value === 0 &&
+            <Paper style={{ padding: '3%' }}>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Requests and Transactions
+              </Typography>
+              <Events date={this.props.date} address={address} />
+            </Paper>
+          }
+          {this.state.value === 1 &&
+            <div>
+              Hello World!
+            </div>
+          }
+        </Grid>
+
+      </Grid>
+        /* <Grid container spacing={8} style={{ padding: '16px' }}>
           <SmallStats
             currentPrice={currentPrice}
             totalSupply={totalSupply}
@@ -212,11 +273,10 @@ class MyTokens extends Component {
                   width={300}
                   height={300}
                 />
-                {/* 
             Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
             the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
             so we can look how it works there exactly.
-            <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
+            <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart />
               </CardContent>
             </Card>
           </Grid>
@@ -246,35 +306,9 @@ class MyTokens extends Component {
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
-        <Grid container spacing={24}>
-          <Grid item xs={12} md={4}>
-            <Services
-              jsonData={this.state.dataJson}
-              account={this.props.drizzleState.accounts[0]}
-              contract={this.props.drizzle.contracts[address]}
-              drizzleState={contract}
-              mhash={this.state.mhash}
-              symbol={this.state.symbol}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={8}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Requests and Transactions
-                </Typography>
-                <Events date={this.props.date} address={address} />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <hr />
-      </div>
+        </Grid> */
     );
   }
 }
 
-export default withStyles(styles)(withContext(withRouter(MyTokens)));
+export default withStyles(styles)(withContext(withRouter(Interface)));
