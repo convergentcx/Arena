@@ -26,6 +26,7 @@ class LeaderboardList extends Component {
     };
   }
 
+
   componentDidMount() {
     const {
       contracts: { PersonalEconomyFactory },

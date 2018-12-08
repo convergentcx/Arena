@@ -12,7 +12,10 @@ export default class EditDetails extends Component {
 
   async componentDidMount() {
     const { image } = this.props.jsonData;
-    const pic = Buffer.from(image.data).toString('base64');
+    let pic = '';
+    if (image.data) {
+      pic = Buffer.from(image.data).toString('base64');
+    }
     this.setState({ pic });
   }
 
@@ -28,7 +31,7 @@ export default class EditDetails extends Component {
   };
 
   render() {
-    const chips = this.props.jsonData.tags.map((tag, index)=> {
+    const chips = this.props.jsonData.tags && this.props.jsonData.tags.map((tag, index)=> {
       return <Chip key={index} label={tag} />;
     });
 
