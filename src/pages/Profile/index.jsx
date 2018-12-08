@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ipfsApi from 'ipfs-api';
 import Web3 from 'web3';
+import classes from './Profile.module.css'
 
 import {
   Button,
@@ -99,7 +100,7 @@ class ProfileDetails extends Component {
     });
     let unique = [...new Set(eventsArray)];
     let contributors = unique.length;
-    
+
     this.setState({
       dataKeys: {
         totalSupplyKey,
@@ -130,6 +131,7 @@ class ProfileDetails extends Component {
   };
 
   render() {
+    console.log(classes);
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
     if (
@@ -152,81 +154,75 @@ class ProfileDetails extends Component {
     return (
       <div style={{ width: '100vw' }}>
         {/* Header */}
-        <Paper
-          square
-          style={{
-            height: '54vh',
-            background: this.state.favoriteColor || 'rgb(216, 75, 42)',
-            paddingLeft: '20%',
-            display: 'flex',
-            alignItems: 'flex-end'
-          }}
-        >
-          <h1 style={{ color: 'white' }}>Economy of {this.state.name}</h1>
-        </Paper>
-        <Paper square style={{ background: 'white', height: '14vh' }}>
-          <div style={{ position: 'absolute', top: 0, height: '68vh', width: '100%' }}>
-            <Grid container style={{ height: '100%' }}>
-              <Grid
-                item
-                xs={12}
-                md={3}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  paddingBottom: '5vh',
-                  height: '100%',
-                  width: '100%'
-                }}
-              >
-                <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="50%" />
-              </Grid>
-              <Grid
-                item
-                xs={0}
-                md={6}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  height: '100%',
-                  width: '100%'
-                }}
-              >
-                <Tabs
-                  value={this.state.value}
-                  indicatorColor="primary"
-                  onChange={this.handleChange}
-                  fullWidth
-                >
-                  <Tab label="Summary" />
-                  <Tab label="Contribute" />
-                  <Tab label="Services" />
-                </Tabs>
-              </Grid>
-              <Grid
-                item
-                xs={0}
-                md={3}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  paddingBottom: '3vh',
-                  height: '100%',
-                  width: '100%'
-                }}
-              >
-                <Button color="secondary" size="large" variant="contained">
-                  CONTRIBUTE
-                </Button>
-              </Grid>
+        <Grid container style={{
+          height: '33vh',
+          background: this.state.favoriteColor || 'rgb(216, 75, 42)',
+        }}>
+          <Grid item xs={0} md={3} className={classes.NameBoxSpacer}/>
+          <Grid item xs={12} md={9}
+            className={ classes.NameBox }>
+            <h1 className = { classes.Name }>{this.state.name}</h1>
+          </Grid>
+        </Grid>
+
+        <div style={{ position: 'absolute', top: 0, height: '47vh', width: '100%' }}>
+          <Grid container style={{ height: '100%' }}>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              className={classes.PhotoBox}
+            >
+              <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="55%" className={classes.Photo} />
             </Grid>
-          </div>
+            <Grid
+              item
+              xs={12}
+              md={9}
+            >
+            </Grid>
+          </Grid>
+        </div>
+
+        <Paper square style={{ background: 'white', height: '12vh' }}>
+          <Grid container style={{ height: '100%' }}>
+            <Grid item xs={0} md={3} />
+
+            <Grid
+              item
+              xs={12}
+              md={6}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                height: '100%',
+                width: '100%'
+              }}
+            >
+              <Tabs
+                value={this.state.value}
+                indicatorColor="primary"
+                onChange={this.handleChange}
+                fullWidth
+              >
+                <Tab label="Summary" />
+                <Tab label="Contribute" />
+                <Tab label="Services" />
+              </Tabs>
+            </Grid>
+            <Grid 
+              item md={3}               
+              className={classes.ContributeBox}>
+              <Button color="secondary" size="large" variant="contained">
+                CONTRIBUTE
+              </Button>
+
+            </Grid>
+          </Grid>
+
+
         </Paper>
 
         {/* Content */}
@@ -235,7 +231,7 @@ class ProfileDetails extends Component {
           spacing={16}
           style={{ padding: '4%', paddingTop: '16px', minHeight: '80vh' }}
         >
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <InfoCard
               contributors={this.state.contributors}
               marketCap={removeDecimals(removeDecimals(utils.toBN(totalSupply).mul(currentPrice)))}
@@ -247,7 +243,7 @@ class ProfileDetails extends Component {
               width="100%"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {this.state.value === 1 && (
               <div>
                 <Grid container>
@@ -303,7 +299,7 @@ class ProfileDetails extends Component {
               </Paper>
             )}
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <ServicePanel symbol={this.state.symbol} dataJson={this.state.dataJson} />
           </Grid>
         </Grid>
