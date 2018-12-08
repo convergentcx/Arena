@@ -13,6 +13,7 @@ import { Add, Remove } from '@material-ui/icons';
 import dataUriToBuffer from 'data-uri-to-buffer';
 import ipfsApi from 'ipfs-api';
 import Dropzone from 'react-dropzone';
+import { withSnackbar } from 'notistack';
 
 import withContext from '../../hoc/withContext';
 
@@ -106,7 +107,7 @@ class LaunchForm extends Component {
         from: drizzleState.accounts[0]
       }
     );
-    this.setState({ stackId });
+    this.waitForMined(stackId);
   };
 
   onDrop = files => {
@@ -125,14 +126,34 @@ class LaunchForm extends Component {
     return result;
   };
 
-  waitUntilMined = () => {
+  getStatus = txStackId => {
     const { transactions, transactionStack } = this.props.drizzleState;
-    const txHash = transactionStack[this.state.stackId];
+    const txHash = transactionStack[txStackId];
     if (!txHash) return null;
-    if (transactions[txHash].status === 'success') {
-      setTimeout(() => this.props.history.push('/leaderboard'), 1000);
-    }
-    return `Transaction status: ${transactions[txHash].status}`;
+    return transactions[txHash].status;
+  };
+
+  waitForMined = stackId => {
+    const { enqueueSnackbar } = this.props; 
+    const interval = setInterval(() => {
+      const status = this.getStatus(stackId);
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        enqueueSnackbar('Waiting for transaction to be mined...');
+        this.setState({
+          txStatus: 'pending'
+        });
+      }
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+        clearInterval(this.state.interval);
+        this.setState({
+          txStatus: 'success'
+        });
+      }
+    }, 100);
+    this.setState({
+      interval
+    });
   };
 
   getSelectedTags = selectedItems => {
@@ -321,7 +342,6 @@ class LaunchForm extends Component {
                   </span>
                 </div>
               )}
-              <div>{this.waitUntilMined()}</div>
             </Grid>
           </Grid>
         </CardContent>
@@ -330,7 +350,7 @@ class LaunchForm extends Component {
   }
 }
 
-const LaunchFormContextualized = withContext(LaunchForm);
+const LaunchFormContextualized = withSnackbar(withContext(LaunchForm));
 
 const Launch = props => (
   <div style={{ padding: '10%', paddingTop: '5%' }}>
