@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Paper, TextField, Typography } from '@material-ui/core';
 
 export default class ServicePanel extends Component {
   constructor(props) {
@@ -21,6 +21,10 @@ export default class ServicePanel extends Component {
           >
             {serviceObj.price || 44} {this.props.symbol}
           </Typography>
+          <div style={{ height: '6px'}} />
+          <TextField
+            placeholder="Type your message here..."
+          />
           <div style={{ marginTop: '6px' }}>
             <Button color="secondary" size="small" onClick={() => {}}>
               Request (ETH)

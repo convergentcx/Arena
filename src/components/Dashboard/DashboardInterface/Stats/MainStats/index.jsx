@@ -26,7 +26,7 @@ class MainStats extends Component {
                 {removeDecimals(yourBalance)} {this.props.symbol}
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {removeDecimals(yourBalance) * removeDecimals(currentPrice) * 100} $
+                Current Value: {(removeDecimals(yourBalance) * removeDecimals(currentPrice) * 100).toFixed(2)} $
               </Typography>
             </CardContent>
           </Card>
@@ -39,10 +39,10 @@ class MainStats extends Component {
                 Market Cap
               </Typography>
               <Typography variant="h2" component="h2">
-                {removeDecimals(currentPrice) * removeDecimals(totalSupply)} Ξ
+                {(removeDecimals(currentPrice) * removeDecimals(totalSupply)).toFixed(6)} Ξ
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {removeDecimals(currentPrice) * removeDecimals(totalSupply) * 100} $
+                Current Value: {(removeDecimals(currentPrice) * removeDecimals(totalSupply) * 100).toFixed(2)} $
               </Typography>
             </CardContent>
           </Card>
