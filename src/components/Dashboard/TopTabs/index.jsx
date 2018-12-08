@@ -27,6 +27,8 @@ class TopTabs extends Component {
         onChange={this.handleChange}
         style={{ paddingTop: '60px', paddingLeft: '16px' }}
         fullWidth
+        indicatorColor="secondary"
+        textColor="secondary"
       >
         {tabs}
       </Tabs>

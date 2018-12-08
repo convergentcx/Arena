@@ -188,6 +188,7 @@ class Interface extends Component {
           <Tabs
             value={this.state.value}
             indicatorColor="secondary"
+            textColor="primary"
             onChange={this.handleTabChange}
             style={{ marginBottom: '16px' }}
           >

@@ -15,7 +15,7 @@ const slateTheme = createMuiTheme({
       light: 'rgba(144, 19, 254, 1)',
       main: '#3E3E3E',
       dark: 'rgba(62, 0, 117, 1)',
-      contrastTex: '#FFFFFF',
+      contrastText: '#FFFFFF',
     },
     secondary: {
       light: 'rgba(74, 144, 226, 1)',
@@ -52,9 +52,9 @@ const hackerTheme = createMuiTheme({
     },
     primary: {
       light: 'rgba(144, 19, 254, 1)',
-      main: '#3E3E3E',
+      main: '#888888',
       dark: '#2cb42c',
-      contrastTex: '#FFFFFF',
+      contrastText: '#FFFFFF',
     },
     secondary: {
       light: 'rgba(74, 144, 226, 1)',
