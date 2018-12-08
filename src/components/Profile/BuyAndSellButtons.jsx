@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-
 import { Button, Grid, TextField } from '@material-ui/core';
+import { withSnackbar } from 'notistack';
 
 import { addDecimals, removeDecimals } from '../../util';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './toast.css';
-export default class BuyAndSellButtons extends Component {
+class BuyAndSellButtons extends Component {
   constructor(props) {
     super(props);
 
@@ -74,16 +71,17 @@ export default class BuyAndSellButtons extends Component {
   };
 
   waitForMined = stackId => {
+    const { enqueueSnackbar } = this.props; 
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {
-        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' });
+        enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
           txStatus: 'pending'
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
-        toast.success('Transaction mined!', { className: 'green-background' });
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
           txStatus: 'success'
@@ -145,9 +143,9 @@ export default class BuyAndSellButtons extends Component {
             Sell
           </Button>
         </Grid>
-
-        <ToastContainer autoClose={false} closeOnClick />
       </Grid>
     );
   }
 }
+
+export default withSnackbar(BuyAndSellButtons);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
+import { withSnackbar } from 'notistack';
 
 import { addDecimals, toBN } from '../../util';
 
-export default class ServicePanel extends Component {
+class ServicePanel extends Component {
   constructor(props) {
     super(props);
     this.state = { interval: null, message: '', txStatus: null };
@@ -23,13 +23,13 @@ export default class ServicePanel extends Component {
     }
 
     const amountNeeded = await this.props.contract.methods.priceToMint(addDecimals(serviceObj.price)).call();
-    // if (balanceOf(this.props.drizzleState.accounts[0]) < amountNeeded) {
-    //   return alert("You don't have enough Ether to do this action!");
-    // }
-    console.log(this.props.drizzleState)
-    return;
+    const yourBalance = this.props.drizzleState.accountBalances[this.props.drizzleState.accounts[0]];
 
-    const stackId = this.props.contract.methods.requestWithETH.cacheSend(`Service - ${serviceObj.what} | Message - ${message}`, addDecimals(serviceObj.price), {
+    if (toBN(yourBalance).lt(toBN(amountNeeded))) {
+      return alert("You don't have enough ether to do this action!");
+    }
+
+    const stackId = this.props.contract.methods.requestWithEth.cacheSend(`Service - ${serviceObj.what} | Message - ${message}`, addDecimals(serviceObj.price), {
       from: this.props.drizzleState.accounts[0],
       value: amountNeeded,
     });
@@ -46,13 +46,41 @@ export default class ServicePanel extends Component {
       return alert(`You don't have enough ${this.props.dataJson.symbol} to do this action!`);
     }
 
-    const stackId = this.props.contract.methods.request.cacheSend(`Service - ${serviceObj.what} | Message - ${message}`, addDecimals(serviceObj.price), {
+    const stackId = this.props.contract.methods.requestWithToken.cacheSend(`Service - ${serviceObj.what} | Message - ${message}`, addDecimals(serviceObj.price), {
       from: this.props.drizzleState.accounts[0],
     });
     this.waitForMined(stackId);
   }
 
-  waitForMined = stackId => { return alert(stackId); }
+  getStatus = txStackId => {
+    const { transactions, transactionStack } = this.props.drizzleState;
+    const txHash = transactionStack[txStackId];
+    if (!txHash) return null;
+    return transactions[txHash].status;
+  };
+
+  waitForMined = stackId => {
+    const { enqueueSnackbar } = this.props; 
+    const interval = setInterval(() => {
+      const status = this.getStatus(stackId);
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        enqueueSnackbar('Waiting for transaction to be mined...');
+        this.setState({
+          txStatus: 'pending'
+        });
+      }
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+        clearInterval(this.state.interval);
+        this.setState({
+          txStatus: 'success'
+        });
+      }
+    }, 100);
+    this.setState({
+      interval
+    });
+  };
 
   render() {
     const serviceBoxes = this.props.dataJson.services.map((serviceObj, index) => {
@@ -83,6 +111,7 @@ export default class ServicePanel extends Component {
               Request ({this.props.dataJson.symbol})
             </Button>
           </div>
+          <hr />
         </div>
       );
     });
@@ -96,10 +125,8 @@ export default class ServicePanel extends Component {
         </Paper>
         {serviceBoxes}
       </Paper>
-      
-
-
-
     );
   }
 }
+
+export default withSnackbar(ServicePanel);
