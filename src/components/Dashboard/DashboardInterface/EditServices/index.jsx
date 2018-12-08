@@ -5,9 +5,7 @@ const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 class Services extends Component {
   state = {
-    editingServices: false,
     jsonData: this.props.jsonData,
-    loading: false,
   };
 
   editServicesOrSave = async () => {
@@ -52,8 +50,8 @@ class Services extends Component {
   render() {
     let items = this.state.jsonData.services.map((serviceObj, i) => {
       return (
-        <Grid container sm={12}>
-          <Grid item sm={6}>
+        <Grid container>
+          <Grid item xs={9}>
             <TextField
               label={`Service`}
               name={`service-${i}`}
@@ -65,11 +63,11 @@ class Services extends Component {
                 shrink: true
               }}
               InputProps={{
-                readOnly: !this.state.editingServices
+                readOnly: !this.props.editing
               }}
             />
           </Grid>
-          <Grid item sm={6}>
+          <Grid item xs={3}>
             <TextField
               label={`Price`}
               name={`price-${i}`}
@@ -81,7 +79,7 @@ class Services extends Component {
                 shrink: true
               }}
               InputProps={{
-                readOnly: !this.state.editingServices
+                readOnly: !this.props.editing
               }}
             />
           </Grid>
@@ -91,11 +89,11 @@ class Services extends Component {
 
     return (
       <Paper style={{ display: 'flex', flexDirection: 'column' }}>
-        <Grid container style={{ padding: '2%' }}>
+        <Grid container style={{ padding: '5%' }}>
           <Typography color="textSecondary" gutterBottom>
             Your Services
           </Typography>
-          {this.state.loading 
+          {this.props.loading 
             ? <Grid container style={{ height: '30vh', padding: '5%', textAlign: 'center' }}>
                 <Grid item xs={12}>
                 Saving to IPFS
@@ -107,14 +105,6 @@ class Services extends Component {
             : items
           }
         </Grid>
-        <Button
-          variant="contained"
-          color={this.state.editingServices ? 'primary' : 'secondary'}
-          style={{ justifySelf: 'flex-end' }}
-          onClick={this.editServicesOrSave}
-        >
-          {this.state.editingServices ? 'Save' : 'Edit'}
-        </Button>
       </Paper>
     );
   }

@@ -29,21 +29,23 @@ export function createNodes(rawData) {
     // Use map() to convert raw data into node data.
     // Checkout http://learnjsdata.com/ for more on
     // working with data.
-  const myNodes = rawData.map(d => ({
+  const myNodes = rawData.map(d => {
+    console.log(radiusScale(Math.ceil(+d.marketCap)))
+    return ({
     // id: d.id,
     // radius: radiusScale(+d.total_amount),
     // value: +d.total_amount,
     address: d.address,
-    radius: radiusScale(+d.marketCap),
+    radius: 10,
     value: +d.marketCap,
     name: d.name,
     // org: d.organization,
-    group: d.group,
+    group: d.group, 
     tags: d.tags,
     threshold: d.threshold,
     x: Math.random() * 900,
     y: Math.random() * 800,
-  }))
+  })})
 
     // sort them descending to prevent occlusion of smaller nodes.
   myNodes.sort((a, b) => b.value - a.value)

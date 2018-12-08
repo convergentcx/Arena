@@ -17,7 +17,7 @@ class Stats extends React.Component {
         item
         md={3}
         xs={12}
-        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '16px' }}
       >
         <Grid item md={12} style={{ paddingBottom: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>

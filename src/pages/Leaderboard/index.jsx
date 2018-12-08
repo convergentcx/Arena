@@ -88,7 +88,8 @@ class LeaderboardList extends Component {
 
   render() {
     let data = [];
-    this.state.personalEconomies.forEach(economy => {
+    this.state.personalEconomies.forEach((economy, index) => {
+      console.log(Number(removeDecimals(removeDecimals(economy.marketCap.toString()))))
       data.push({
         label: economy.address,
         marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
