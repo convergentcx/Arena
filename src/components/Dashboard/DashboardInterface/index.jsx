@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import EditColumn from './InfoColumn';
+import EditColumn from './EditColumn';
 
 import MainStats from './Stats/MainStats/index.jsx';
 import SmallStats from './Stats/SmallStats/index.jsx';
