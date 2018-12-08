@@ -32,10 +32,16 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     )   public
         payable
     {
+        uint256 cost = priceToMint(_price);
+        require(msg.value >= cost, "Must send requisite amount to purchase.");
+
+        _mint(msg.sender, _price);
+        _transfer(msg.sender, owner, _price);
         emit Requested(_msg, now, msg.sender);
     }
 
-    function requestWithToken(string _msg) public {
+    function requestWithToken(string _msg, uint256 _price) public {
+        _transfer(msg.sender, owner, _price)
         emit Requested(_msg, now, msg.sender);
     }
 

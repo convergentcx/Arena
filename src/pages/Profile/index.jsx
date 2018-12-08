@@ -129,7 +129,7 @@ class ProfileDetails extends Component {
   };
 
   render() {
-    console.log(classes);
+    // console.log(classes);
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
     if (
@@ -156,7 +156,7 @@ class ProfileDetails extends Component {
           height: '33vh',
           background: this.state.favoriteColor || 'rgb(216, 75, 42)',
         }}>
-          <Grid item xs={0} md={3} className={classes.NameBoxSpacer}/>
+          <Grid item xs={false} md={3} className={classes.NameBoxSpacer}/>
           <Grid item xs={12} md={9}
             className={ classes.NameBox }>
             <h1 className = { classes.Name }>{this.state.name}</h1>
@@ -184,7 +184,7 @@ class ProfileDetails extends Component {
 
         <Paper square style={{ background: 'white', height: '12vh' }}>
           <Grid container style={{ height: '100%' }}>
-            <Grid item xs={0} md={3} />
+            <Grid item xs={false} md={3} />
 
             <Grid
               item
@@ -298,7 +298,11 @@ class ProfileDetails extends Component {
             )}
           </Grid>
           <Grid item xs={12} md={3}>
-            <ServicePanel symbol={this.state.symbol} dataJson={this.state.dataJson} />
+            <ServicePanel 
+              dataJson={this.state.dataJson}
+              contract={this.props.drizzle.contracts[this.props.addr]}
+              drizzleState={this.props.drizzleState}
+            />
           </Grid>
         </Grid>
 

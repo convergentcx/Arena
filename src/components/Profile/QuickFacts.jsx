@@ -17,10 +17,10 @@ import { Delete } from '@material-ui/icons';
 
 class SocialBar extends Component {
   render() {
-    const items = Object.keys(this.props.socials).map(key => {
+    const items = Object.keys(this.props.socials).map((key, index) => {
       const destination = this.props.socials[key];
       return (
-        <IconButton color="secondary" onClick={() => window.open(destination)}>
+        <IconButton key={index} color="secondary" onClick={() => window.open(destination)}>
           <Delete />
         </IconButton>
       );
