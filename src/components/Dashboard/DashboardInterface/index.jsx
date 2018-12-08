@@ -10,12 +10,11 @@ import EditColumn from './InfoColumn';
 import MainStats from './Stats/MainStats/index.jsx';
 import SmallStats from './Stats/SmallStats/index.jsx';
 
-// import CurveChart from './CurveChart/CurveChart';
 import ProfileChart from '../../Profile/ProfileChart.jsx';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Grid, Paper, Switch, Tab, Tabs, Typography } from '@material-ui/core';
 
 import { getMultihashFromBytes32, getPrice, toBN } from '../../../util';
 
@@ -190,7 +189,6 @@ class Interface extends Component {
             value={this.state.value}
             indicatorColor="secondary"
             onChange={this.handleTabChange}
-            fullWidth
             style={{ marginBottom: '16px' }}
           >
             <Tab label="Inbox" />
@@ -243,7 +241,25 @@ class Interface extends Component {
                 yourBalance={yourBalance}
                 symbol={this.state.symbol}
               />
-                            {/*
+            </Grid>
+          }
+          {this.state.value === 2 &&
+            <Grid container spacing={16}>
+              <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+                Lights
+              </Typography>
+              <Switch
+                checked={this.props.lights}
+                onChange={this.props.toggleLights}
+                value="checkedB"
+                color="primary"
+              />
+              </Grid>
+            </Grid>  
+          }
+        </Grid>
+                                    {/*
               <Paper>
                 <Grid container>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -272,86 +288,7 @@ class Interface extends Component {
               <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
               {/* </Grid>
             </Paper> */}
-            </Grid>
-          }
-        </Grid>
-
       </Grid>
-        /* <Grid container spacing={8} style={{ padding: '16px' }}>
-          <SmallStats
-            currentPrice={currentPrice}
-            totalSupply={totalSupply}
-            poolBalance={this.state.poolBalance}
-            symbol={this.state.symbol}
-            exponent={this.state.exponent}
-            inverseSlope={this.state.inverseSlope}
-          />
-          <MainStats
-            currentPrice={currentPrice}
-            totalSupply={totalSupply}
-            yourBalance={yourBalance}
-            symbol={this.state.symbol}
-          />
-        </Grid>
-
-        <Grid container spacing={24}>
-          <Grid item xs={12} md={6}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  7 day price chart
-                </Typography>
-                <CurveChart
-                  curveData={{
-                    totalSupply: 0,
-                    poolBalance: 0,
-                    inverseSlope: 0,
-                    exponent: 0,
-                    currentPrice: 0
-                  }}
-                  margin={{
-                    top: 30,
-                    right: 10,
-                    bottom: 30,
-                    left: 10
-                  }}
-                  width={300}
-                  height={300}
-                />
-            Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
-            the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
-            so we can look how it works there exactly.
-            <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Card className={classes.card}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Bonding curve
-                </Typography>
-                <CurveChart
-                  curveData={{
-                    totalSupply: totalSupply / multiplier,
-                    poolBalance: this.state.poolBalance / multiplier,
-                    inverseSlope: this.state.inverseSlope,
-                    exponent: this.state.exponent,
-                    currentPrice: currentPrice
-                  }}
-                  margin={{
-                    top: 30,
-                    right: 10,
-                    bottom: 30,
-                    left: 10
-                  }}
-                  width={300}
-                  height={300}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid> */
     );
   }
 }

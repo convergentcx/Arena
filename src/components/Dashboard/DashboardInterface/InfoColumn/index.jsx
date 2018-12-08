@@ -9,6 +9,8 @@ import { Button, CircularProgress, Grid, Paper, TextField, Typography } from '@m
 import EditServices from '../EditServices';
 import EditDetails from '../EditDetails';
 
+import { makeCancelable } from '../../../../util';
+
 import ipfsApi from 'ipfs-api';
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -17,6 +19,13 @@ class EditColumn extends Component {
     description: this.props.dataJson.description,
     editing: false,
     loading: false,
+  }
+
+  componentWillUnmount() {
+    if (this._asyncRequest) {
+      // console.log(this._asyncRequest);
+      this._asyncRequest.cancel();
+    }
   }
 
   edit = () => {
@@ -47,11 +56,11 @@ class EditColumn extends Component {
     }
 
     this.setState({ loading: true, });
-    await this.submitHash(JSON.stringify(newDataJson));
-    this.setState({ editing: false, loading: false });
-    this.props.updateData(newDataJson);
-
-    // TODO, submit the hash to the chain
+    this._asyncRequest = makeCancelable(this.submitHash(JSON.stringify(newDataJson)).then(res => {
+      this.setState({ editing: false, loading: false });
+      this.props.updateData(newDataJson);
+      // TODO, submit the hash to the chain
+    }));
   };
 
   handleChange = event => {
@@ -61,9 +70,8 @@ class EditColumn extends Component {
     });
   };
 
-  submitHash = async data => {
-    const result = await ipfs.add(Buffer.from(data));
-    return result;
+  submitHash = data => {
+    return ipfs.add(Buffer.from(data));
   };
 
   render() {

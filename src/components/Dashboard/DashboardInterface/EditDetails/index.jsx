@@ -93,7 +93,6 @@ export default class EditDetails extends Component {
               style={{ margin: 8 }}
               placeholder="My token will give you .."
               helperText="Tell your investors why you are going to the moon"
-              fullWidth
               multiline
               // rows="4"
               margin="normal"

@@ -3,7 +3,7 @@ import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 
 import { removeDecimals } from '../../../../../util';
 
-class Stats extends Component {
+class MainStats extends Component {
   render() {
     const yourBalance = this.props.yourBalance;
     const currentPrice = this.props.currentPrice;
@@ -52,4 +52,4 @@ class Stats extends Component {
   }
 }
 
-export default Stats;
+export default MainStats;

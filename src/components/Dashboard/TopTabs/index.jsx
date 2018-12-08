@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { Tab, Tabs } from '@material-ui/core';
 
-export default class TopTabs extends Component {
+class TopTabs extends Component {
   state = {
     value: 0
   };
@@ -15,11 +15,9 @@ export default class TopTabs extends Component {
   render() {
     const tabs =
       this.props.tokens &&
-      this.props.tokens.map(token => {
+      this.props.tokens.map((token, index) => {
         return (
-          <Link to={`/dashboard/${token.address}`}>
-            <Tab label={token.name} />
-          </Link>
+          <Tab label={token.name} key={index} onClick={() => this.props.history.push(`/dashboard/${token.address}`)} />
         );
       });
 
@@ -28,9 +26,12 @@ export default class TopTabs extends Component {
         value={this.state.value}
         onChange={this.handleChange}
         style={{ paddingTop: '60px', paddingLeft: '16px' }}
+        fullWidth
       >
         {tabs}
       </Tabs>
     );
   }
 }
+
+export default withRouter(TopTabs);

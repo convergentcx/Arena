@@ -65,12 +65,19 @@ class LaunchForm extends Component {
       drizzleState
     } = this.props;
 
-    // TODO: Check for all the required fields.
+    // Check for all the required fields.
+    if (!this.state.name
+      || ! this.state.symbol
+      || ! this.state.services.length
+    ) { 
+      return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
+    }
+
     let imgBuf = '';
     try {
       imgBuf = dataUriToBuffer(this.state.file);
     } catch (e) {
-      console.error(e);
+      // console.error(e);
     }
 
     const dataJson = {
@@ -81,8 +88,6 @@ class LaunchForm extends Component {
       tags: this.state.selectedItems,
       services: []
     };
-
-    // console.log(dataJson)
 
     for (let i = 0; i <= this.state.rows; i++) {
       dataJson.services.push({ what: this.state[`service-${i}`], price: this.state[`price-${i}`] });
