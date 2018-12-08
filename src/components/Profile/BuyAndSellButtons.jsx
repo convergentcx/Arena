@@ -41,7 +41,10 @@ class BuyAndSellButtons extends Component {
 
     // Update price
     if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+      let priceInEther = 0;
+      if (Number(value) !== 0) {
+        priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+      }
       this.setState({
         priceInEther
       });
@@ -49,9 +52,12 @@ class BuyAndSellButtons extends Component {
 
     // Update reward
     if (name === 'sellAmt') {
-      const rewardInEther = await this.props.contract.methods
+      let rewardInEther = 0;
+      if (Number(value) !== 0) {
+        rewardInEther = await this.props.contract.methods
         .rewardForBurn(addDecimals(value))
         .call();
+      }
       this.setState({
         rewardInEther
       });
