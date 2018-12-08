@@ -87,12 +87,11 @@ class ProfileDetails extends Component {
       pic = Buffer.from(image.data).toString('base64');
     }
 
-    // workaround with additional instance of contract, because drizzle does not support getPastEvents
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // TODO this needs to change
+    const web3 = new Web3(drizzle.web3.currentProvider);
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
     
-    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
+    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (_, event) => {
       event[0] && eventsArray.push(event[0].address);
     });
     

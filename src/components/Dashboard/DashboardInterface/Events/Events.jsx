@@ -25,20 +25,6 @@ const styles = theme => ({
   }
 });
 
-// let id = 0;
-// function createData(name, calories, fat, carbs, protein) {
-//   id += 1;
-//   return { id, name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9)
-// ];
-
 class Events extends React.Component {
   state = {
     eventsArray: [],
@@ -46,16 +32,13 @@ class Events extends React.Component {
   };
 
   componentDidMount() {
-    // @DEV NOT SURE IF WE CAN GET EVENTS FROM DRIZZLE; WOULD BE BETTER NOT TO HAVE TO INSTANTIATE THE SAME CONTRACT
-    // WITH WEB3
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    const web3 = new Web3(this.props.drizzle.web3.currentProvider);
 
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], this.props.address);
     let eventsArray = [];
-    web3Contract.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' }, (err, events) => {
+    web3Contract.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' }, (_, events) => {
       eventsArray.push(events);
       this.setState({ eventsArray });
-      // console.log(eventsArray);
     });
   }
 
@@ -82,22 +65,8 @@ class Events extends React.Component {
             </TableCell>
           </TableRow>
         );
-      });
-
-    // .map(event => {
-    //   return (
-    //     <tr key={event.transactionHash}>
-    //       <td>
-    //         {event.returnValues.time && new Date(event.returnValues.time * 1000).toDateString()}
-    //       </td>
-    //       <td>{event.event}</td>
-    //       <td>{event.returnValues.who && event.returnValues.who}</td>
-    //       <td>{event.returnValues.message ? event.returnValues.message : ''}</td>
-    //       <td>{event.returnValues.amount ? event.returnValues.amount / multiplier : ''}</td>
-    //       <td>{event.returnValues.totalCost ? event.returnValues.totalCost / multiplier : ''}</td>
-    //     </tr>
-    //   );
-    // });
+      }
+    );
 
     return (
       <Paper className={classes.root}>

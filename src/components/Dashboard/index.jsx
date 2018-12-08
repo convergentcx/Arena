@@ -16,9 +16,7 @@ class Dashboard extends Component {
   componentDidMount = () => {
     const { drizzle, drizzleState } = this.props;
     const factoryAddress = drizzle.contracts.PersonalEconomyFactory.address;
-    // TODO - Change this to use the metamask provider OR Infura directly if we need to
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-    // TODO ^^^
+    const web3 = new Web3(drizzle.web3.currentProvider);
     const factoryContract = new web3.eth.Contract(PersonalEconomyFactory['abi'], factoryAddress);
 
     const filter = { owner_address: drizzleState.accounts[0] };

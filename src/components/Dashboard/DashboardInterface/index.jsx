@@ -203,7 +203,7 @@ class Interface extends Component {
               <Typography className={classes.title} color="textSecondary" gutterBottom>
                 Requests and Transactions
               </Typography>
-              <Events date={this.props.date} address={address} />
+              <Events date={this.props.date} address={address} drizzle={this.props.drizzle} />
             </Paper>
           }
           {this.state.value === 1 &&
@@ -262,35 +262,6 @@ class Interface extends Component {
             </Grid>  
           }
         </Grid>
-                                    {/*
-              <Paper>
-                <Grid container>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    7 day price chart
-                  </Typography>
-                  <CurveChart
-                    curveData={{
-                      totalSupply: 0,
-                      poolBalance: 0,
-                      inverseSlope: 0,
-                      exponent: 0,
-                      currentPrice: 0
-                    }}
-                    margin={{
-                      top: 30,
-                      right: 10,
-                      bottom: 30,
-                      left: 10
-                    }}
-                    width={300}
-                    height={300}
-                  /> */}
-              {/* Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
-              the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
-              so we can look how it works there exactly.
-              <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
-              {/* </Grid>
-            </Paper> */}
       </Grid>
     );
   }
