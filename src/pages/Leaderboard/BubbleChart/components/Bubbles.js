@@ -66,7 +66,7 @@ class Bubbles extends React.Component {
   }
 
   goToProfile = (address) => {
-    this.props.history.push(`/tokens/${address}`);
+    this.props.history.push(`/economies/${address}`);
   }
 
   renderBubbles(data) {
@@ -118,7 +118,7 @@ Bubbles.propTypes = {
   }).isRequired).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
     x: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     radius: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,

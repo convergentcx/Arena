@@ -28,8 +28,8 @@ export default class EditDetails extends Component {
   };
 
   render() {
-    const chips = this.props.jsonData.tags.map(tag => {
-      return <Chip label={tag} />;
+    const chips = this.props.jsonData.tags.map((tag, index)=> {
+      return <Chip key={index} label={tag} />;
     });
 
     return (
@@ -69,7 +69,7 @@ export default class EditDetails extends Component {
           // What follows is an idea for how people could give themselves tags. Not sure how/if we
           // should add these for the alpha
 
-          subheader={<div>{chips}</div>}
+          subheader={<diisIndexedAccessTypeNode
         />
         <Button
           color={this.state.editingProfile ? 'primary' : 'secondary'}
@@ -93,7 +93,6 @@ export default class EditDetails extends Component {
               style={{ margin: 8 }}
               placeholder="My token will give you .."
               helperText="Tell your investors why you are going to the moon"
-              fullWidth
               multiline
               // rows="4"
               margin="normal"

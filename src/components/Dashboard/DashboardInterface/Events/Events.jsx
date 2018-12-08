@@ -63,9 +63,9 @@ class Events extends React.Component {
     const { classes } = this.props;
     const rows =
       this.state.eventsArray[0] &&
-      this.state.eventsArray[0].map(row => {
+      this.state.eventsArray[0].map((row, index) => {
         return (
-          <TableRow key={row.transactionHash}>
+          <TableRow key={index}>
             <TableCell component="th" scope="row">
               {row.event}
             </TableCell>

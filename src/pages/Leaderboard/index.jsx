@@ -23,7 +23,6 @@ class LeaderboardList extends Component {
     this.state = {
       events: [],
       personalEconomies: [],
-      sub: null
     };
   }
 
@@ -33,7 +32,7 @@ class LeaderboardList extends Component {
       web3
     } = this.props.drizzle;
 
-    const sub = PersonalEconomyFactory.events
+    this._sub = PersonalEconomyFactory.events
       .Created({
         fromBlock: 0
       })
@@ -76,19 +75,16 @@ class LeaderboardList extends Component {
           // console.log('aleady has ' + id);
         }
       });
-
-    this.setState({
-      sub
-    });
   }
 
   componentWillUnmount() {
-    this.state.sub.unsubscribe();
+    this._sub.unsubscribe();
   }
 
   render() {
     let data = [];
-    this.state.personalEconomies.forEach(economy => {
+    this.state.personalEconomies.forEach((economy, index) => {
+      // console.log(Number(removeDecimals(removeDecimals(economy.marketCap.toString()))))
       data.push({
         label: economy.address,
         marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
