@@ -28,8 +28,7 @@ import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Photo from '../../components/Profile/Photo.jsx';
 import ProfileChart from '../../components/Profile/ProfileChart.jsx';
 
-import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
-import { utils } from 'web3';
+import { getMultihashFromBytes32, getPrice, removeDecimals, toBN } from '../../util';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -91,13 +90,14 @@ class ProfileDetails extends Component {
     }
 
     // workaround with additional instance of contract, because drizzle does not support getPastEvents
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // TODO this needs to change
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
+    
     await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
       event[0] && eventsArray.push(event[0].address);
-      // this.setState({ eventsArray });
     });
+    
     let unique = [...new Set(eventsArray)];
     let contributors = unique.length;
 
@@ -147,7 +147,7 @@ class ProfileDetails extends Component {
 
     const currentPrice = getPrice(
       this.state.inverseSlope,
-      utils.toBN(totalSupply).toString(),
+      toBN(totalSupply).toString(),
       this.state.exponent
     );
 
@@ -234,7 +234,7 @@ class ProfileDetails extends Component {
           <Grid item xs={12} md={3}>
             <InfoCard
               contributors={this.state.contributors}
-              marketCap={removeDecimals(removeDecimals(utils.toBN(totalSupply).mul(currentPrice)))}
+              marketCap={removeDecimals(removeDecimals(toBN(totalSupply).mul(currentPrice)))}
               socials={{
                 twitter: 'https://convergent.cx',
                 facebook: 'https://convergent.cx',
