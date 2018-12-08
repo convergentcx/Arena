@@ -59,9 +59,9 @@ class ProfileChart extends Component {
     return (
       <ResponsiveContainer height={height} width={width}>
         <AreaChart style={{ margin: 'auto' }} data={data} margin={this.props.margin}>
-          <CartesianGrid strokeDasharray="2 2" stroke={this.props.theme.palette.primary.main} />
-          <XAxis dataKey="supply" type="number" stroke={this.props.theme.palette.primary.main} fill={this.props.theme.palette.primary.main} />
-          <YAxis dataKey="value" type="number" stroke={this.props.theme.palette.primary.main} fill={this.props.theme.palette.primary.main} />
+          <CartesianGrid strokeDasharray="2 2" stroke={this.props.theme.palette.secondary.main} />
+          <XAxis dataKey="supply" type="number" stroke={this.props.theme.palette.secondary.main} fill={this.props.theme.palette.secondary.main} />
+          <YAxis dataKey="value" type="number" stroke={this.props.theme.palette.secondary.main} fill={this.props.theme.palette.secondary.main} />
           <Tooltip />
 
           <Area
@@ -71,7 +71,7 @@ class ProfileChart extends Component {
             dataKey="value"
             name={'price'}
             key={'price'}
-            stroke={this.props.theme.palette.primary.main}
+            stroke={this.props.theme.palette.secondary.main}
             fill="none"
           />
 
@@ -79,16 +79,16 @@ class ProfileChart extends Component {
             isAnimationActive={false}
             stackOffset={'none'}
             dataKey="sell"
-            stroke={this.props.theme.palette.primary.main}
-            fill={this.props.theme.palette.primary.main}
+            stroke={this.props.theme.palette.secondary.main}
+            fill={this.props.theme.palette.secondary.main}
           />
 
           <ReferenceDot
             x={currentPoint.x}
             y={currentPoint.y}
             r={4}
-            stroke={this.props.theme.palette.primary.main}
-            fill={this.props.theme.palette.primary.main}
+            stroke={this.props.theme.palette.secondary.main}
+            fill={this.props.theme.palette.secondary.main}
           />
         </AreaChart>
       </ResponsiveContainer>

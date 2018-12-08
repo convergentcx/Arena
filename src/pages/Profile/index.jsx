@@ -14,7 +14,8 @@ import {
   // Popper,
   Popover,
   Tab,
-  Tabs
+  Tabs,
+  Typography
 } from '@material-ui/core';
 // import { KeyboardBackspace } from '@material-ui/icons';
 
@@ -93,11 +94,11 @@ class ProfileDetails extends Component {
     const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // TODO this needs to change
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
-    
+
     await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
       event[0] && eventsArray.push(event[0].address);
     });
-    
+
     let unique = [...new Set(eventsArray)];
     let contributors = unique.length;
 
@@ -158,10 +159,10 @@ class ProfileDetails extends Component {
           height: '33vh',
           background: this.state.favoriteColor || 'rgb(216, 75, 42)',
         }}>
-          <Grid item xs={0} md={3} className={classes.NameBoxSpacer}/>
+          <Grid item xs={0} md={3} className={classes.NameBoxSpacer} />
           <Grid item xs={12} md={9}
-            className={ classes.NameBox }>
-            <h1 className = { classes.Name }>{this.state.name}</h1>
+            className={classes.NameBox}>
+            <h1 className={classes.Name}>{this.state.name}</h1>
           </Grid>
         </Grid>
 
@@ -184,7 +185,7 @@ class ProfileDetails extends Component {
           </Grid>
         </div>
 
-        <Paper square style={{ background: 'white', height: '12vh' }}>
+        <Paper square style={{ background: 'primary', height: '12vh' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={0} md={3} />
 
@@ -203,7 +204,8 @@ class ProfileDetails extends Component {
             >
               <Tabs
                 value={this.state.value}
-                indicatorColor="primary"
+                indicatorColor="secondary"
+                textColor="secondary"
                 onChange={this.handleChange}
                 fullWidth
               >
@@ -212,8 +214,8 @@ class ProfileDetails extends Component {
                 <Tab label="Services" />
               </Tabs>
             </Grid>
-            <Grid 
-              item md={3}               
+            <Grid
+              item md={3}
               className={classes.ContributeBox}>
               <Button color="secondary" size="large" variant="contained">
                 CONTRIBUTE
@@ -245,7 +247,7 @@ class ProfileDetails extends Component {
           </Grid>
           <Grid item xs={12} md={6}>
             {this.state.value === 1 && (
-              <div>
+              <Paper>
                 <Grid container>
                   <Grid item sm={12} style={{ display: 'flex' }}>
                     <div style={{ flexGrow: 1 }} />
@@ -291,11 +293,25 @@ class ProfileDetails extends Component {
                   drizzleState={this.props.drizzleState}
                   symbol={this.state.symbol}
                 />
-              </div>
+              </Paper>
             )}
             {this.state.value === 0 && (
+              <Paper style={{ minHeight: '50vh', padding: '15px', display: 'flex', flexDirection: 'column' }}>
+
+                <Typography variant="h6" style={{ fontWeight: 'bold', color: 'primary', height: '400px' }}>
+                {this.state.description}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                >
+                  my story
+                </Typography>
+              </Paper>
+            )}
+            {this.state.value === 2 && (
               <Paper style={{ textAlign: 'center', minHeight: '50vh', padding: '2%' }}>
-                <p>{this.state.description}</p>
+                <Typography style={{ color: 'primary' }}>coming soon</Typography>
               </Paper>
             )}
           </Grid>

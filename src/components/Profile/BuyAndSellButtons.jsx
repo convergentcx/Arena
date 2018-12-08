@@ -109,7 +109,7 @@ export default class BuyAndSellButtons extends Component {
           />
           &nbsp;&nbsp;
           <Button
-            color="primary"
+            color="secondary"
             variant="outlined"
             onClick={this.buyHandler}
             style={{ height: '100%' }}
@@ -133,7 +133,7 @@ export default class BuyAndSellButtons extends Component {
           />
           &nbsp;&nbsp;
           <Button
-            color="primary"
+            color="secondary"
             variant="outlined"
             onClick={this.sellHandler}
             style={{ height: '100%' }}

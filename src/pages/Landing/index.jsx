@@ -19,7 +19,7 @@ const Hero = () => (
   <div style={heroStyle}>
     <h1 className="display-4">Unlock your personal economy</h1>
     <br />
-    <h5>Launch your own cryptocurrency, tokenize your future, and regain your freedom.</h5>
+    <h5>Launch your own cryptocurrency and tokenize your work.</h5>
     <br />
     <br />
     <NavLink to={'/launch'}>

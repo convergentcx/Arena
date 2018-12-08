@@ -7,11 +7,11 @@ import { Landing, Launch, Leaderboard, Profile } from './pages';
 
 /// MUI Theme
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { hackerTheme, slateTheme } from './themes';
+import { slateTheme, achillTheme } from './themes';
 
 export default class App extends Component {
   state= {
-    lights: true,
+    lights: false,
   }
 
   toggleLights = () => {
@@ -20,7 +20,7 @@ export default class App extends Component {
 
   render() {
     return (
-    <MuiThemeProvider theme={this.state.lights ? slateTheme : hackerTheme}>
+    <MuiThemeProvider theme={this.state.lights ? slateTheme : achillTheme}>
       <AppContainer>
         <Switch>
           <Route path="/" exact component={Landing} />

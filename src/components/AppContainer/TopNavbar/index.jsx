@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 
 import {
   AppBar,
@@ -16,6 +16,7 @@ import {
 import MetamaskLogin from './MetamaskLogin';
 
 import Logo from '../../../assets/logo.png';
+import WhiteLogo from '../../../assets/logo_white.png';
 
 const drawerWidth = 240;
 
@@ -103,15 +104,15 @@ class PersistentDrawerLeft extends Component {
             [classes.appBarShift]: open
           })}
           elevation={3}
-          color="primary"
+          color="bar"
           style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar disableGutters={!open}>
             <NavLink to={'/'}>
-              <img src={Logo} alt="Convergent" width="40px" height="40px" />
+              <img src={this.props.theme.palette.type === 'dark' ? WhiteLogo : Logo} alt="Convergent" width="40px" height="40px" />
             </NavLink>
             &nbsp;&nbsp;
-            <Typography variant="h5" color="inherit" noWrap>
+            <Typography variant="h5" color="common" noWrap>
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
@@ -131,4 +132,4 @@ PersistentDrawerLeft.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default withTheme()(withStyles(styles)(PersistentDrawerLeft));

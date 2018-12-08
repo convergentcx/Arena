@@ -11,13 +11,13 @@ export default class ServicePanel extends Component {
   render() {
     const serviceBoxes = this.props.dataJson.services.map((serviceObj, i) => {
       return (
-        <div style={{ textAlign: 'center', padding: '6px' }}>
-          <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49' }}>
+        <div style={{minHeight: '30vh'}}>
+          <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
             {serviceObj.what || 'Title'}
           </Typography>
           <Typography
             variant="subtitle1"
-            style={{ color: '#4F687A', fontSize: '14px', fontWeight: 'bold', marginTop: '6px' }}
+            style={{ color: '#primary', fontSize: '14px', fontWeight: 'bold', marginTop: '6px' }}
           >
             {serviceObj.price || 44} {this.props.symbol}
           </Typography>
@@ -34,13 +34,14 @@ export default class ServicePanel extends Component {
     });
 
     return (
-      <Paper>
-        <Paper style={{ height: '5%', background: 'black', textAlign: 'center' }}>
-          <Typography variant="h6" style={{ color: '#FFF' }}>
-            Quick Services
-          </Typography>
-        </Paper>
+        <Paper style={{ padding: '15px', display: 'flex', flexDirection: 'column' }}>
         {serviceBoxes}
+        <Typography
+                  variant="subtitle1"
+                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                >
+            my services
+          </Typography>
       </Paper>
       
 
