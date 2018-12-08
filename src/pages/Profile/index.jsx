@@ -9,9 +9,7 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  // Modal,
   Paper,
-  // Popper,
   Popover,
   Tab,
   Tabs
@@ -165,7 +163,7 @@ class ProfileDetails extends Component {
           </Grid>
         </Grid>
 
-        <div style={{ position: 'absolute', top: 0, height: '47vh', width: '100%' }}>
+        <div style={{ position: 'absolute', top: '7vh', height: '40vh', width: '100%' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid
               item

@@ -68,7 +68,7 @@ class LaunchForm extends Component {
     // Check for all the required fields.
     if (!this.state.name
       || ! this.state.symbol
-      || ! this.state.services.length
+      || ! this.state['service-0']
     ) { 
       return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
     }
@@ -333,7 +333,7 @@ class LaunchForm extends Component {
 const LaunchFormContextualized = withContext(LaunchForm);
 
 const Launch = props => (
-  <div style={{ padding: '10%' }}>
+  <div style={{ padding: '10%', paddingTop: '5%' }}>
     <LaunchFormContextualized history={props.history} />
   </div>
 );

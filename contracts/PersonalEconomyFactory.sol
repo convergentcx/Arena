@@ -18,7 +18,7 @@ contract PersonalEconomyFactory is Factory {
         public
         returns (address tokenAddress)
     {
-        tokenAddress = new PersonalEconomy(_mhash, _name, _symbol);
+        tokenAddress = new PersonalEconomy(_mhash, _name, _symbol, msg.sender);
         
         register(tokenAddress);
         emit Created(tokenAddress, msg.sender, now, _name);

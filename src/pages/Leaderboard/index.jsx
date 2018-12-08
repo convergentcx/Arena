@@ -10,7 +10,6 @@ import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 
 import { utils as w3utils } from 'web3';
 
-// import Item from './Item';
 
 import ipfsApi from 'ipfs-api';
 
@@ -84,7 +83,6 @@ class LeaderboardList extends Component {
   render() {
     let data = [];
     this.state.personalEconomies.forEach((economy, index) => {
-      // console.log(Number(removeDecimals(removeDecimals(economy.marketCap.toString()))))
       data.push({
         label: economy.address,
         marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
@@ -97,27 +95,8 @@ class LeaderboardList extends Component {
       });
     });
 
-    // let tableRows = [];
-    // (() => {
-    //   let i = 0;
-    //   while (i < this.state.personalEconomies.length) {
-    //     const personalEconomy = this.state.personalEconomies[i];
-
-    //     tableRows.push(
-    //       <Item
-    //         address={personalEconomy.address}
-    //         name={personalEconomy.name}
-    //         marketCap={personalEconomy.marketCap}
-    //         twentyFour="+12%"
-    //         sevenDay="+1,003%"
-    //       />
-    //     );
-    //     i++;
-    //   }
-    // })();
-
     return (
-      <div style={{ marginTop: '10%'}}>
+      <div style={{ marginTop: ''}}>
         <App data={data}/>
       </div>
     );

@@ -120,6 +120,7 @@ class Interface extends Component {
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
 
     this.setState({
+      contract,
       dataJson,
       dataKeys: {
         totalSupplyKey,
@@ -170,11 +171,12 @@ class Interface extends Component {
       this.state.exponent
     );
     return (
-      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '7%' }}>
+      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '2%' }}>
         <Grid item xs={12} md={4}>
           <EditColumn
             address={address}
             contract={contract}
+            myContract={this.state.contract}
             dataJson={this.state.dataJson}
             drizzle={this.props.drizzle}
             drizzleState={this.props.drizzleState}

@@ -20,6 +20,8 @@ export default class BuyAndSellButtons extends Component {
   }
 
   buyHandler = () => {
+    if (!this.state.buyAmt) { return; }
+    
     const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
       value: this.state.priceInEther
@@ -60,6 +62,8 @@ export default class BuyAndSellButtons extends Component {
   };
 
   sellHandler = () => {
+    if (!this.state.sellAmt) { return; }
+
     const sellStackId = this.props.contract.methods.burn.cacheSend(
       addDecimals(this.state.sellAmt),
       {
