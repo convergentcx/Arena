@@ -46,9 +46,6 @@ const styles = theme => ({
     marginLeft: 12,
     marginRight: 20
   },
-  signInButton: {
-    float: 'right'
-  },
   hide: {
     display: 'none'
   },
@@ -122,24 +119,7 @@ class PersistentDrawerLeft extends Component {
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
-
-        <Button
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <MetamaskLogin />
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-        </Menu>
+            <MetamaskLogin />
           </Toolbar>
         </AppBar>
         <main>
