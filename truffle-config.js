@@ -8,6 +8,16 @@ module.exports = {
       network_id: '*',       // Any network (default: none)
     },
 
+    rinkeby: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '4',
+      skipDryRun: true,
+      confirmations: 0,
+      gasPrice: 3000000000,   // 3 gwei
+      gas: 3000000,
+    },
+
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port

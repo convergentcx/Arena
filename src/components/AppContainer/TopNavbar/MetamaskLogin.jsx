@@ -138,9 +138,11 @@ class MetamaskLogin extends Component {
                       </Typography>
                     </Grid>
                     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-                      <Button color="secondary" variant="outlined">
-                        DASHBOARD
-                      </Button>
+                      <NavLink to="/dashboard">
+                        <Button color="secondary" variant="outlined">
+                          DASHBOARD
+                        </Button>
+                      </NavLink>
                     </Grid>
                   </Grid>
                   <span className={classes.arrowArrow} ref={this.handleArrowRef} />

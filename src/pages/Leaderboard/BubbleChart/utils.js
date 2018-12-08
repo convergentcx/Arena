@@ -30,7 +30,7 @@ export function createNodes(rawData) {
     // Checkout http://learnjsdata.com/ for more on
     // working with data.
   const myNodes = rawData.map(d => {
-    console.log(radiusScale(Math.ceil(+d.marketCap)))
+    // console.log(radiusScale(Math.ceil(+d.marketCap)))
     return ({
     // id: d.id,
     // radius: radiusScale(+d.total_amount),

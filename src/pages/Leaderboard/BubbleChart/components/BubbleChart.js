@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function BubbleChart({ width, height, children }) {
   return (
-    <svg className="bubbleChart" width={width} height={height}>
+    <svg className="bubbleChart" style={{ width, height }}>
       {
         children
       }

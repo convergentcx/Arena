@@ -13,18 +13,6 @@ export default class App extends React.Component {
     grouping: 'all',
   }
 
-  // componentDidMount() {
-  //   d3.csv('data/gates_money.csv', (err, data) => {
-  //     if (err) {
-  //       console.log(err)
-  //       return
-  //     }
-  //     this.setState({
-  //       data: createNodes(data),
-  //     })
-  //   })
-  // }
-
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
@@ -32,8 +20,6 @@ export default class App extends React.Component {
       })
     }
   }
-
-
 
   onGroupingChanged = (newGrouping) => {
     this.setState({
@@ -56,5 +42,4 @@ export default class App extends React.Component {
       </div>
     )
   }
-
 }

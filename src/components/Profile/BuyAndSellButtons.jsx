@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-
 import { Button, Grid, TextField } from '@material-ui/core';
+import { withSnackbar } from 'notistack';
 
 import { addDecimals, removeDecimals } from '../../util';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './toast.css';
-export default class BuyAndSellButtons extends Component {
+class BuyAndSellButtons extends Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +17,8 @@ export default class BuyAndSellButtons extends Component {
   }
 
   buyHandler = () => {
+    if (!this.state.buyAmt) { return; }
+    
     const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
       value: this.state.priceInEther
@@ -42,7 +41,10 @@ export default class BuyAndSellButtons extends Component {
 
     // Update price
     if (name === 'buyAmt') {
-      const priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+      let priceInEther = 0;
+      if (Number(value) !== 0) {
+        priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+      }
       this.setState({
         priceInEther
       });
@@ -50,9 +52,12 @@ export default class BuyAndSellButtons extends Component {
 
     // Update reward
     if (name === 'sellAmt') {
-      const rewardInEther = await this.props.contract.methods
+      let rewardInEther = 0;
+      if (Number(value) !== 0) {
+        rewardInEther = await this.props.contract.methods
         .rewardForBurn(addDecimals(value))
         .call();
+      }
       this.setState({
         rewardInEther
       });
@@ -60,6 +65,8 @@ export default class BuyAndSellButtons extends Component {
   };
 
   sellHandler = () => {
+    if (!this.state.sellAmt) { return; }
+
     const sellStackId = this.props.contract.methods.burn.cacheSend(
       addDecimals(this.state.sellAmt),
       {
@@ -70,16 +77,17 @@ export default class BuyAndSellButtons extends Component {
   };
 
   waitForMined = stackId => {
+    const { enqueueSnackbar } = this.props; 
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {
-        toast.info('Waiting for transaction to be mined...', { className: 'blue-background' });
+        enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
           txStatus: 'pending'
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
-        toast.success('Transaction mined!', { className: 'green-background' });
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
           txStatus: 'success'
@@ -141,9 +149,9 @@ export default class BuyAndSellButtons extends Component {
             Sell
           </Button>
         </Grid>
-
-        <ToastContainer autoClose={false} closeOnClick />
       </Grid>
     );
   }
 }
+
+export default withSnackbar(BuyAndSellButtons);

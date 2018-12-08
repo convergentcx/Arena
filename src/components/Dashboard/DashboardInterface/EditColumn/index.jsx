@@ -5,11 +5,12 @@
 
 import React, { Component } from 'react';
 import { Button, CircularProgress, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { withSnackbar } from 'notistack';
 
 import EditServices from '../EditServices';
 import EditDetails from '../EditDetails';
 
-import { makeCancelable } from '../../../../util';
+import { getBytes32FromMultihash, makeCancelable } from '../../../../util';
 
 import ipfsApi from 'ipfs-api';
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
@@ -19,14 +20,44 @@ class EditColumn extends Component {
     description: this.props.dataJson.description,
     editing: false,
     loading: false,
+    txStatus: null,
   }
 
   componentWillUnmount() {
     if (this._asyncRequest) {
-      // console.log(this._asyncRequest);
       this._asyncRequest.cancel();
     }
   }
+
+  getStatus = txStackId => {
+    const { transactions, transactionStack } = this.props.drizzleState;
+    const txHash = transactionStack[txStackId];
+    if (!txHash) return null;
+    return transactions[txHash].status;
+  };
+
+  waitForMined = stackId => {
+    const { enqueueSnackbar } = this.props; 
+    const interval = setInterval(() => {
+      const status = this.getStatus(stackId);
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        enqueueSnackbar('Waiting for transaction to be mined...');
+        this.setState({
+          txStatus: 'pending'
+        });
+      }
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+        clearInterval(this.state.interval);
+        this.setState({
+          txStatus: 'success'
+        });
+      }
+    }, 100);
+    this.setState({
+      interval
+    });
+  };
 
   edit = () => {
     this.setState({ editing: !this.state.editing });
@@ -56,10 +87,20 @@ class EditColumn extends Component {
     }
 
     this.setState({ loading: true, });
-    this._asyncRequest = makeCancelable(this.submitHash(JSON.stringify(newDataJson)).then(res => {
+    this._asyncRequest = makeCancelable(this.submitHash(JSON.stringify(newDataJson)).then(ipfsHash => {
+      // let stackId;
+      const mhash = getBytes32FromMultihash(ipfsHash[0].path);
+
+      const stackId = this.props.myContract.methods.updateData.cacheSend(
+        mhash.digest,
+        {
+          from: this.props.drizzleState.accounts[0]
+        }
+      );
+
       this.setState({ editing: false, loading: false });
+      this.waitForMined(stackId);
       this.props.updateData(newDataJson);
-      // TODO, submit the hash to the chain
     }));
   };
 
@@ -131,4 +172,4 @@ class EditColumn extends Component {
   }
 }
 
-export default EditColumn;
+export default withSnackbar(EditColumn);
