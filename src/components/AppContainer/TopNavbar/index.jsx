@@ -7,11 +7,8 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import {
-  Button,
   AppBar,
   CssBaseline,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography
 } from '@material-ui/core';
@@ -96,7 +93,6 @@ class PersistentDrawerLeft extends Component {
   render() {
     const { classes } = this.props;
     const { open } = this.state;
-    const { anchorEl } = this.state;
 
     return (
       <div className={classes.root}>
