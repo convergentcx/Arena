@@ -1,18 +1,11 @@
 import Web3 from 'web3';
 import PersonalEconomy from '../../../../build/contracts/PersonalEconomy.json';
-// import classes from './Events.module.css';
 
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
-const multiplier = 10 ** 18;
+import { removeDecimals } from '../../../../util';
 
 const styles = theme => ({
   root: {
@@ -58,10 +51,10 @@ class Events extends React.Component {
             <TableCell>{row.returnValues.who && row.returnValues.who}</TableCell>
             <TableCell>{row.returnValues.message ? row.returnValues.message : ''}</TableCell>
             <TableCell numeric>
-              {row.returnValues.amount ? row.returnValues.amount / multiplier : ''}
+              {row.returnValues.amount ? removeDecimals(row.returnValues.amount) : ''}
             </TableCell>
             <TableCell numeric>
-              {row.returnValues.totalCost ? row.returnValues.totalCost / multiplier : ''}
+              {row.returnValues.totalCost ? removeDecimals(row.returnValues.totalCost) : ''}
             </TableCell>
           </TableRow>
         );
