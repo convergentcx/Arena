@@ -41,7 +41,7 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     }
 
     function requestWithToken(string _msg, uint256 _price) public {
-        _transfer(msg.sender, owner, _price)
+        _transfer(msg.sender, owner, _price);
         emit Requested(_msg, now, msg.sender);
     }
 
