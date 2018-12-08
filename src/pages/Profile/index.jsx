@@ -156,7 +156,7 @@ class ProfileDetails extends Component {
           square
           style={{
             height: '54vh',
-            background: this.state.favoriteColor || 'teal',
+            background: this.state.favoriteColor || 'rgb(216, 75, 42)',
             paddingLeft: '20%',
             display: 'flex',
             alignItems: 'flex-end'

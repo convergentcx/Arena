@@ -7,20 +7,14 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import {
+  Button,
   AppBar,
   CssBaseline,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography
 } from '@material-ui/core';
-
-import { ChevronLeft, ChevronRight, Inbox, Mail, Menu, Money, Settings } from '@material-ui/icons';
 
 import MetamaskLogin from './MetamaskLogin';
 
@@ -91,20 +85,21 @@ const styles = theme => ({
 
 class PersistentDrawerLeft extends Component {
   state = {
-    open: false
+    anchorEl: null,
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handleClose = () => {
+    this.setState({ anchorEl: null });
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const { open } = this.state;
+    const { anchorEl } = this.state;
 
     return (
       <div className={classes.root}>
@@ -119,14 +114,6 @@ class PersistentDrawerLeft extends Component {
           style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar disableGutters={!open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <Menu />
-            </IconButton>
             <NavLink to={'/'}>
               <img src={Logo} alt="Convergent" width="40px" height="40px" />
             </NavLink>
@@ -135,67 +122,27 @@ class PersistentDrawerLeft extends Component {
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
-            <MetamaskLogin />
+
+        <Button
+          aria-owns={anchorEl ? 'simple-menu' : undefined}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >
+          <MetamaskLogin />
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+          <MenuItem onClick={this.handleClose}>My account</MenuItem>
+          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+        </Menu>
           </Toolbar>
         </AppBar>
-
-        {/* Drawer */}
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <NavLink to="/">
-              <ListItem button>
-                <ListItemIcon>
-                  <Money />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-            </NavLink>
-            <NavLink to="/leaderboard">
-              <ListItem button>
-                <ListItemIcon>
-                  <Inbox />
-                </ListItemIcon>
-                <ListItemText primary="Leaderboard" />
-              </ListItem>
-            </NavLink>
-            <NavLink to="/dashboard">
-              <ListItem button>
-                <ListItemIcon>
-                  <Mail />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-            </NavLink>
-          </List>
-          <Divider />
-          <List>
-            {['About', 'Impressum'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <Settings /> : <Mail />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open
-          })}
-        >
+        <main>
           <div>{this.props.content}</div>
         </main>
       </div>

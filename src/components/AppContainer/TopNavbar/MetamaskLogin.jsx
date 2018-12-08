@@ -18,7 +18,6 @@ class MetamaskLogin extends Component {
           }
 
           const blockie = makeBlockie(drizzleState.accounts[0]);
-
           return (
             <NavLink to="/dashboard">
               <img

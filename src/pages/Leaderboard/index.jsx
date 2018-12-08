@@ -98,7 +98,6 @@ class LeaderboardList extends Component {
           "1" : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5 ? "5" : "10",
         group: "low",
         tags: (economy.tags && economy.tags.join(", ")) || '',
-        start_year: "2009"
       });
     });
 
