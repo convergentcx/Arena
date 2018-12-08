@@ -1,12 +1,9 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import React, { Component } from 'react';
+import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 
-const multiplier = 10 ** 18;
+import { removeDecimals } from '../../../../../util';
 
-class Stats extends React.Component {
+class Stats extends Component {
   render() {
     const yourBalance = this.props.yourBalance;
     const currentPrice = this.props.currentPrice;
@@ -15,37 +12,37 @@ class Stats extends React.Component {
     return (
       <Grid
         item
-        md={3}
         xs={12}
-        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '16px' }}
+        md={6}
+        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}
       >
-        <Grid item md={12} style={{ paddingBottom: '6px', height: '50%' }}>
+        <Grid item xs={12} style={{ paddingBottom: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 Your Balance
               </Typography>
               <Typography variant="h2" component="h2">
-                {yourBalance / multiplier.toFixed(3)} {this.props.symbol}
+                {removeDecimals(yourBalance)} {this.props.symbol}
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {(yourBalance / multiplier.toFixed(3)) * currentPrice * 500} $
+                Current Value: {removeDecimals(yourBalance) * removeDecimals(currentPrice) * 100} $
               </Typography>
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid item md={12} style={{ paddingTop: '6px', height: '50%' }}>
+        <Grid item xs={12} style={{ paddingTop: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 Market Cap
               </Typography>
               <Typography variant="h2" component="h2">
-                {currentPrice * (totalSupply / multiplier)} Ξ
+                {removeDecimals(currentPrice) * removeDecimals(totalSupply)} Ξ
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {currentPrice * (totalSupply / multiplier) * 500} $
+                Current Value: {removeDecimals(currentPrice) * removeDecimals(totalSupply) * 100} $
               </Typography>
             </CardContent>
           </Card>

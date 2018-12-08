@@ -5,18 +5,20 @@ import { withRouter } from 'react-router-dom';
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import EditServices from './EditServices';
-import EditDetails from './EditDetails'; // somehow default importing of the jsx file from the parent folder does not work here
-import MainStats from './Stats/MainStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
-import SmallStats from './Stats/SmallStats/index.jsx'; // somehow default importing of the jsx file from the parent folder does not work here
+import EditColumn from './InfoColumn';
 
-import CurveChart from './CurveChart/CurveChart';
+import MainStats from './Stats/MainStats/index.jsx';
+import SmallStats from './Stats/SmallStats/index.jsx';
+
+// import CurveChart from './CurveChart/CurveChart';
+import ProfileChart from '../../Profile/ProfileChart.jsx';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Button, Grid, Paper, Tab, Tabs, TextField, Typography } from '@material-ui/core';
+import { Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 
-import { getMultihashFromBytes32 } from '../../../util';
+import { getMultihashFromBytes32, getPrice, toBN } from '../../../util';
+
 import ipfsApi from 'ipfs-api';
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
@@ -65,11 +67,8 @@ const styles = theme => ({
   }
 });
 
-const multiplier = 10 ** 18;
-
 class Interface extends Component {
   state = {
-    jsonData: {},
     dataKeys: {
       totalSupplyKey: '',
       yourBalanceKey: ''
@@ -137,28 +136,21 @@ class Interface extends Component {
     });
   }
 
-  edit = () => {
-    this.setState({ editing: !this.state.editing });
-  }
-
   showDetails = () => {
     this.props.history.push('/economies/' + this.props.address);
-  };
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
   };
 
   handleTabChange = (_, value) => {
     this.setState({ value });
   };
 
+  updateData = newData => {
+    this.setState({ dataJson: newData });
+  }
+
   render() {
     const { classes } = this.props;
     const address = this.props.match.params.tokenAddress;
-
     const contract = this.props.drizzleState.contracts[address];
 
     if (
@@ -173,54 +165,24 @@ class Interface extends Component {
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
     const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
-    const currentPrice =
-      (1 / this.state.inverseSlope) * (totalSupply / multiplier) ** this.state.exponent;
-
+    const currentPrice = getPrice(
+      this.state.inverseSlope,
+      toBN(totalSupply).toString(),
+      this.state.exponent
+    );
     return (
       <Grid container spacing={16} style={{ padding: '16px', paddingTop: '7%' }}>
         <Grid item xs={12} md={4}>
-          <EditDetails jsonData={this.state.dataJson} />
-          <EditServices
-            editing={this.state.editing}
-            loading={this.state.loading}
-            jsonData={this.state.dataJson}
-            account={this.props.drizzleState.accounts[0]}
-            contract={this.props.drizzle.contracts[address]}
-            drizzleState={contract}
+          <EditColumn
+            address={address}
+            contract={contract}
+            dataJson={this.state.dataJson}
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
             mhash={this.state.mhash}
             symbol={this.state.symbol}
+            updateData={this.updateData}
           />
-          <Paper style={{ marginTop: '16px', padding: '5%' }}>
-            <Typography color="textSecondary" gutterBottom>
-              Your Story
-            </Typography>
-            <TextField
-              name="description"
-              onChange={() => {}}
-              label="Description"
-              // style={{ margin: 8 }}
-              placeholder={this.state.dataJson.description.slice(0, 27) || "My token will give you .."}
-              helperText="Tell your contributors why you are going to the moon"
-              fullWidth
-              multiline
-              rows="4"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true
-              }}
-              InputProps={{
-                readOnly: !this.state.editing
-              }}
-            />
-          </Paper>
-          <Button
-            variant="contained"
-            color={this.state.editing ? 'primary' : 'secondary'} 
-            style={{ width: '100%', marginTop: '16px' }}
-            onClick={this.edit}
-          >
-            {this.state.editing? 'SUBMIT TO CHAIN' : 'EDIT'}
-          </Button>
         </Grid>
 
         <Grid item xs={12} md={8}>
@@ -244,7 +206,29 @@ class Interface extends Component {
             </Paper>
           }
           {this.state.value === 1 &&
-            <Grid container>
+            <Grid container spacing={16}>
+              <Typography className={classes.title} color="textSecondary" style={{ marginLeft: '16px' }} gutterBottom>
+                Bonding curve
+              </Typography>
+              <div style={{ width: '100%', height: '400px' }}>
+                <ProfileChart
+                  curveData={{
+                    totalSupply: totalSupply,
+                    poolBalance: this.state.poolBalance,
+                    inverseSlope: this.state.inverseSlope,
+                    exponent: this.state.exponent,
+                    currentPrice: currentPrice
+                  }}
+                  margin={{
+                    top: 30,
+                    right: 10,
+                    bottom: 30,
+                    left: 10
+                  }}
+                  width="100%"
+                  height="100%"
+                />
+              </div>
               <SmallStats
                 currentPrice={currentPrice}
                 totalSupply={totalSupply}
@@ -259,6 +243,7 @@ class Interface extends Component {
                 yourBalance={yourBalance}
                 symbol={this.state.symbol}
               />
+                            {/*
               <Paper>
                 <Grid container>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -280,13 +265,13 @@ class Interface extends Component {
                     }}
                     width={300}
                     height={300}
-                  />
+                  /> */}
               {/* Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
               the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
               so we can look how it works there exactly.
               <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
-              </Grid>
-            </Paper>
+              {/* </Grid>
+            </Paper> */}
             </Grid>
           }
         </Grid>

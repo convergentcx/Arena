@@ -37,3 +37,5 @@ export const getMultihashFromBytes32 = mhashObj => {
   multihashBytes.set(hashBytes, 2);
   return bs58.encode(multihashBytes);
 };
+
+export { toBN };

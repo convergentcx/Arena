@@ -36,7 +36,7 @@ export function createNodes(rawData) {
     // radius: radiusScale(+d.total_amount),
     // value: +d.total_amount,
     address: d.address,
-    radius: 10,
+    radius: radiusScale(+d.marketCap),
     value: +d.marketCap,
     name: d.name,
     // org: d.organization,
