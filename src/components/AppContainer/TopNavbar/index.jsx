@@ -9,18 +9,9 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   CssBaseline,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography
 } from '@material-ui/core';
-
-import { ChevronLeft, ChevronRight, Inbox, Mail, Menu, Money, Settings } from '@material-ui/icons';
 
 import MetamaskLogin from './MetamaskLogin';
 
@@ -51,9 +42,6 @@ const styles = theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 20
-  },
-  signInButton: {
-    float: 'right'
   },
   hide: {
     display: 'none'
@@ -91,19 +79,19 @@ const styles = theme => ({
 
 class PersistentDrawerLeft extends Component {
   state = {
-    open: false
+    anchorEl: null,
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handleClose = () => {
+    this.setState({ anchorEl: null });
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const { open } = this.state;
 
     return (
@@ -119,14 +107,6 @@ class PersistentDrawerLeft extends Component {
           style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar disableGutters={!open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <Menu />
-            </IconButton>
             <NavLink to={'/'}>
               <img src={Logo} alt="Convergent" width="40px" height="40px" />
             </NavLink>
@@ -138,64 +118,7 @@ class PersistentDrawerLeft extends Component {
             <MetamaskLogin />
           </Toolbar>
         </AppBar>
-
-        {/* Drawer */}
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <NavLink to="/">
-              <ListItem button>
-                <ListItemIcon>
-                  <Money />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-            </NavLink>
-            <NavLink to="/leaderboard">
-              <ListItem button>
-                <ListItemIcon>
-                  <Inbox />
-                </ListItemIcon>
-                <ListItemText primary="Leaderboard" />
-              </ListItem>
-            </NavLink>
-            <NavLink to="/dashboard">
-              <ListItem button>
-                <ListItemIcon>
-                  <Mail />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-            </NavLink>
-          </List>
-          <Divider />
-          <List>
-            {['About', 'Impressum'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <Settings /> : <Mail />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open
-          })}
-        >
+        <main>
           <div>{this.props.content}</div>
         </main>
       </div>

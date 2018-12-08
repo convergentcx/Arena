@@ -34,14 +34,18 @@ export default class ServicePanel extends Component {
     });
 
     return (
-      <Paper square>
-        <Paper square style={{ height: '5%', background: 'black', textAlign: 'center' }}>
+      <Paper>
+        <Paper style={{ height: '5%', background: 'black', textAlign: 'center' }}>
           <Typography variant="h6" style={{ color: '#FFF' }}>
             Quick Services
           </Typography>
         </Paper>
         {serviceBoxes}
       </Paper>
+      
+
+
+
     );
   }
 }

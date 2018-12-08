@@ -1,0 +1,57 @@
+.ContributeBox {
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%
+}
+
+.Name {
+    margin: 0;
+    color: white;
+}
+
+.PhotoBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 9vh;
+    height: 100%;
+}
+
+.NameBox {
+    padding-top: 12vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    padding-bottom: 2vh;
+    height: 100%;
+    width: 100%;
+}
+
+
+@media (min-width: 960px) { 
+    .ContributeBox {
+        display: flex
+    }
+    .PhotoBox {
+        padding-bottom: 7vh;
+    }
+    
+    .NameBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: flex-end;
+        padding-bottom: 2vh;
+        height: 100%;
+        width: 100%;
+    }
+
+    .Name {
+        padding-left: 25px;
+    }
+ }

@@ -131,6 +131,8 @@ Bubbles.propTypes = {
 */
 export function showDetail(d) {
   // change outline to indicate hover state.
+  d3.select(this).style("cursor", "pointer"); 
+
   d3.select(this).attr('stroke', 'black')
 
   const content = `<span class="name">Name: </span><span class="value">${
@@ -151,6 +153,9 @@ export function showDetail(d) {
 * Hides tooltip
 */
 export function hideDetail(d) {
+  
+  d3.select(this).style("cursor", "default"); 
+
   // reset outline
   d3.select(this)
     .attr('stroke', d3.rgb(fillColor(d.group)).darker())
