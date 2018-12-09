@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import classNames from 'classnames';
 import { withTheme } from '@material-ui/core/styles';
 
-import {
-  AppBar,
-  CssBaseline,
-  Toolbar,
-  Typography
-} from '@material-ui/core';
+import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
 
 import MetamaskLogin from './MetamaskLogin';
 
@@ -29,7 +23,12 @@ class TopNav extends Component {
         >
           <Toolbar>
             <NavLink to={'/'}>
-              <img src={this.props.theme.palette.type === 'dark' ? WhiteLogo : Logo} alt="Convergent" width="40px" height="40px" />
+              <img
+                src={this.props.theme.palette.type === 'dark' ? WhiteLogo : Logo}
+                alt="Convergent"
+                width="40px"
+                height="40px"
+              />
             </NavLink>
             &nbsp;&nbsp;
             <Typography variant="h5" color="common" noWrap>
@@ -47,5 +46,4 @@ class TopNav extends Component {
   }
 }
 
-export default withTheme()(TopNav));
-
+export default withTheme()(TopNav);

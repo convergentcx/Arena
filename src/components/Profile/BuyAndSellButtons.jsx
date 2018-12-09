@@ -17,8 +17,10 @@ class BuyAndSellButtons extends Component {
   }
 
   buyHandler = () => {
-    if (!this.state.buyAmt) { return; }
-    
+    if (!this.state.buyAmt) {
+      return;
+    }
+
     const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
       value: this.state.priceInEther
@@ -54,9 +56,7 @@ class BuyAndSellButtons extends Component {
     if (name === 'sellAmt') {
       let rewardInEther = 0;
       if (Number(value) !== 0) {
-        rewardInEther = await this.props.contract.methods
-        .rewardForBurn(addDecimals(value))
-        .call();
+        rewardInEther = await this.props.contract.methods.rewardForBurn(addDecimals(value)).call();
       }
       this.setState({
         rewardInEther
@@ -65,7 +65,9 @@ class BuyAndSellButtons extends Component {
   };
 
   sellHandler = () => {
-    if (!this.state.sellAmt) { return; }
+    if (!this.state.sellAmt) {
+      return;
+    }
 
     const sellStackId = this.props.contract.methods.burn.cacheSend(
       addDecimals(this.state.sellAmt),
@@ -77,7 +79,7 @@ class BuyAndSellButtons extends Component {
   };
 
   waitForMined = stackId => {
-    const { enqueueSnackbar } = this.props; 
+    const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {

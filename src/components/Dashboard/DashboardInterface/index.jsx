@@ -82,7 +82,7 @@ class Interface extends Component {
     poolBalance: '',
     symbol: '',
     popover: false,
-    value: 0,
+    value: 0
   };
 
   async componentDidMount() {
@@ -146,7 +146,7 @@ class Interface extends Component {
 
   updateData = newData => {
     this.setState({ dataJson: newData });
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -198,17 +198,22 @@ class Interface extends Component {
             <Tab label="Stats" />
             <Tab label="Settings" />
           </Tabs>
-          {this.state.value === 0 &&
+          {this.state.value === 0 && (
             <Paper style={{ padding: '3%' }}>
               <Typography className={classes.title} color="textSecondary" gutterBottom>
                 Requests and Transactions
               </Typography>
               <Events date={this.props.date} address={address} drizzle={this.props.drizzle} />
             </Paper>
-          }
-          {this.state.value === 1 &&
+          )}
+          {this.state.value === 1 && (
             <Grid container spacing={16}>
-              <Typography className={classes.title} color="textSecondary" style={{ marginLeft: '16px' }} gutterBottom>
+              <Typography
+                className={classes.title}
+                color="textSecondary"
+                style={{ marginLeft: '16px' }}
+                gutterBottom
+              >
                 Bonding curve
               </Typography>
               <div style={{ width: '100%', height: '400px' }}>
@@ -245,22 +250,31 @@ class Interface extends Component {
                 symbol={this.state.symbol}
               />
             </Grid>
-          }
-          {this.state.value === 2 &&
+          )}
+          {this.state.value === 2 && (
             <Grid container spacing={16}>
-              <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-                Lights
-              </Typography>
-              <Switch
-                checked={this.props.lights}
-                onChange={this.props.toggleLights}
-                value="checkedB"
-                color="primary"
-              />
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+                  Lights
+                </Typography>
+                <Switch
+                  checked={this.props.lights}
+                  onChange={this.props.toggleLights}
+                  value="checkedB"
+                  color="primary"
+                />
               </Grid>
-            </Grid>  
-          }
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

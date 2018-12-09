@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ipfsApi from 'ipfs-api';
 import Web3 from 'web3';
-import classes from './Profile.module.css'
+import classes from './Profile.module.css';
 
 import {
   Button,
@@ -129,7 +129,6 @@ class ProfileDetails extends Component {
   };
 
   render() {
-    // console.log(classes);
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
     if (
@@ -152,33 +151,29 @@ class ProfileDetails extends Component {
     return (
       <div style={{ width: '100vw' }}>
         {/* Header */}
-        <Grid container style={{
-          height: '33vh',
-          background: this.state.favoriteColor || 'rgb(216, 75, 42)',
-        }}>
-          <Grid item xs={false} md={3} className={classes.NameBoxSpacer}/>
-          <Grid item xs={12} md={9}
-            className={classes.NameBox}>
+        <Grid
+          container
+          style={{
+            height: '33vh',
+            background: this.state.favoriteColor || 'rgb(216, 75, 42)'
+          }}
+        >
+          <Grid item xs={false} md={3} className={classes.NameBoxSpacer} />
+          <Grid item xs={12} md={9} className={classes.NameBox}>
             <h1 className={classes.Name}>{this.state.name}</h1>
           </Grid>
         </Grid>
 
         <div style={{ position: 'absolute', top: '7vh', height: '40vh', width: '100%' }}>
           <Grid container style={{ height: '100%' }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              className={classes.PhotoBox}
-            >
-              <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="55%" className={classes.Photo} />
+            <Grid item xs={12} md={3} className={classes.PhotoBox}>
+              <Photo
+                pic={'data:image/jpeg;base64,' + this.state.pic}
+                width="55%"
+                className={classes.Photo}
+              />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              md={9}
-            >
-            </Grid>
+            <Grid item xs={12} md={9} />
           </Grid>
         </div>
 
@@ -211,17 +206,12 @@ class ProfileDetails extends Component {
                 <Tab label="Services" />
               </Tabs>
             </Grid>
-            <Grid
-              item md={3}
-              className={classes.ContributeBox}>
+            <Grid item md={3} className={classes.ContributeBox}>
               <Button color="secondary" size="large" variant="contained">
                 CONTRIBUTE
               </Button>
-
             </Grid>
           </Grid>
-
-
         </Paper>
 
         {/* Content */}
@@ -293,16 +283,25 @@ class ProfileDetails extends Component {
               </Paper>
             )}
             {this.state.value === 0 && (
-              <Paper style={{ minHeight: '50vh', padding: '15px', display: 'flex', flexDirection: 'column' }}>
-
-                <Typography variant="h6" style={{ fontWeight: 'bold', color: 'primary', height: '400px' }}>
-                {this.state.description}
-                </Typography>
+              <Paper
+                style={{
+                  minHeight: '50vh',
+                  padding: '15px',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
                 <Typography
                   variant="subtitle1"
                   style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
                 >
                   my story
+                </Typography>
+                <Typography
+                  variant="h6"
+                  style={{ fontWeight: 'bold', color: 'primary', height: '400px' }}
+                >
+                  {this.state.description}
                 </Typography>
               </Paper>
             )}
@@ -313,7 +312,7 @@ class ProfileDetails extends Component {
             )}
           </Grid>
           <Grid item xs={12} md={3}>
-            <ServicePanel 
+            <ServicePanel
               dataJson={this.state.dataJson}
               contract={this.props.drizzle.contracts[this.props.addr]}
               drizzleState={this.props.drizzleState}
@@ -375,7 +374,10 @@ const ProfileDetailsContextualized = withContext(ProfileDetails);
 
 const Profile = props => (
   <div>
-    <ProfileDetailsContextualized addr={props.match.params.economyAddress} history={props.history} />
+    <ProfileDetailsContextualized
+      addr={props.match.params.economyAddress}
+      history={props.history}
+    />
   </div>
 );
 

@@ -186,7 +186,7 @@ class AttributeInput extends Component {
                   />
                 )),
                 onChange: this.handleInputChange,
-                onKeyDown: (event) => {
+                onKeyDown: event => {
                   if (highlightedIndex === null) {
                     this.handleKeyDown(event);
                   }

@@ -60,8 +60,18 @@ class ProfileChart extends Component {
       <ResponsiveContainer height={height} width={width}>
         <AreaChart style={{ margin: 'auto' }} data={data} margin={this.props.margin}>
           <CartesianGrid strokeDasharray="2 2" stroke={this.props.theme.palette.secondary.main} />
-          <XAxis dataKey="supply" type="number" stroke={this.props.theme.palette.secondary.main} fill={this.props.theme.palette.secondary.main} />
-          <YAxis dataKey="value" type="number" stroke={this.props.theme.palette.secondary.main} fill={this.props.theme.palette.secondary.main} />
+          <XAxis
+            dataKey="supply"
+            type="number"
+            stroke={this.props.theme.palette.secondary.main}
+            fill={this.props.theme.palette.secondary.main}
+          />
+          <YAxis
+            dataKey="value"
+            type="number"
+            stroke={this.props.theme.palette.secondary.main}
+            fill={this.props.theme.palette.secondary.main}
+          />
           <Tooltip />
 
           <Area

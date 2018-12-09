@@ -10,7 +10,6 @@ import { getMultihashFromBytes32, getPrice, removeDecimals } from '../../util';
 
 import { utils as w3utils } from 'web3';
 
-
 import ipfsApi from 'ipfs-api';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
@@ -21,10 +20,9 @@ class LeaderboardList extends Component {
 
     this.state = {
       events: [],
-      personalEconomies: [],
+      personalEconomies: []
     };
   }
-
 
   componentDidMount() {
     const {
@@ -89,16 +87,20 @@ class LeaderboardList extends Component {
         marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
         name: economy.name,
         address: economy.address,
-        threshold: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 1 ? 
-          "1" : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5 ? "5" : "10",
-        group: "low",
-        tags: (economy.tags && economy.tags.join(", ")) || '',
+        threshold:
+          Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 1
+            ? '1'
+            : Number(removeDecimals(removeDecimals(economy.marketCap.toString()))) < 5
+              ? '5'
+              : '10',
+        group: 'low',
+        tags: (economy.tags && economy.tags.join(', ')) || ''
       });
     });
 
     return (
-      <div style={{ marginTop: ''}}>
-        <App data={data}/>
+      <div style={{ marginTop: '' }}>
+        <App data={data} />
       </div>
     );
   }

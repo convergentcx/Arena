@@ -67,10 +67,7 @@ class LaunchForm extends Component {
     } = this.props;
 
     // Check for all the required fields.
-    if (!this.state.name
-      || ! this.state.symbol
-      || ! this.state['service-0']
-    ) { 
+    if (!this.state.name || !this.state.symbol || !this.state['service-0']) {
       return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
     }
 
@@ -134,7 +131,7 @@ class LaunchForm extends Component {
   };
 
   waitForMined = stackId => {
-    const { enqueueSnackbar } = this.props; 
+    const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {

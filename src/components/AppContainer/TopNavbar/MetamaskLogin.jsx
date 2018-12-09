@@ -13,7 +13,7 @@ const styles = theme => {
   let bg = '#464646';
 
   if (theme.palette.type === 'dark') {
-    bg = '#FFFFFF'
+    bg = '#FFFFFF';
   }
 
   return {
@@ -31,8 +31,8 @@ const styles = theme => {
         height: '1em',
         '&::before': {
           borderWidth: '0 1em 1em 1em',
-          borderColor: `transparent transparent ${bg} transparent`,
-        },
+          borderColor: `transparent transparent ${bg} transparent`
+        }
       },
       '&[x-placement*="top"] $arrowArrow': {
         bottom: 0,
@@ -42,8 +42,8 @@ const styles = theme => {
         height: '1em',
         '&::before': {
           borderWidth: '1em 1em 0 1em',
-          borderColor: `${bg} transparent transparent transparent`,
-        },
+          borderColor: `${bg} transparent transparent transparent`
+        }
       },
       '&[x-placement*="right"] $arrowArrow': {
         left: 0,
@@ -52,8 +52,8 @@ const styles = theme => {
         width: '1em',
         '&::before': {
           borderWidth: '1em 1em 1em 0',
-          borderColor: `transparent ${bg} transparent transparent`,
-        },
+          borderColor: `transparent ${bg} transparent transparent`
+        }
       },
       '&[x-placement*="left"] $arrowArrow': {
         right: 0,
@@ -62,9 +62,9 @@ const styles = theme => {
         width: '1em',
         '&::before': {
           borderWidth: '1em 0 1em 1em',
-          borderColor: `transparent transparent transparent ${bg}`,
-        },
-      },
+          borderColor: `transparent transparent transparent ${bg}`
+        }
+      }
     },
     arrowArrow: {
       position: 'absolute',
@@ -77,20 +77,20 @@ const styles = theme => {
         display: 'block',
         width: 0,
         height: 0,
-        borderStyle: 'solid',
-      },
-    },
-  }
+        borderStyle: 'solid'
+      }
+    }
+  };
 };
 
 class MetamaskLogin extends Component {
   state = {
-    arrowRef: null,
+    arrowRef: null
   };
 
   handleArrowRef = node => {
     this.setState({
-      arrowRef: node,
+      arrowRef: node
     });
   };
 
@@ -108,12 +108,10 @@ class MetamaskLogin extends Component {
 
           const blockie = makeBlockie(drizzleState.accounts[0]);
 
-          const shortenAddress = address => (
-            address.slice(0,8) + '...' + address.slice(-6)
-          );
+          const shortenAddress = address => address.slice(0, 8) + '...' + address.slice(-6);
 
           let contrastText = '#FFFFFF';
-          if (theme.palette.type === 'dark' ) {
+          if (theme.palette.type === 'dark') {
             contrastText = '#232323';
           }
 
@@ -128,16 +126,26 @@ class MetamaskLogin extends Component {
                 <React.Fragment>
                   <Grid container style={{ textAlign: 'center' }}>
                     <Grid item xs={12}>
-                      <Typography variant="subtitle1" style={{ color: contrastText, fontSize: '12px' }}>
+                      <Typography
+                        variant="subtitle1"
+                        style={{ color: contrastText, fontSize: '12px' }}
+                      >
                         {shortenAddress(drizzleState.accounts[0])}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant="subtitle1" style={{ color: contrastText, fontSize: '14px' }}>
+                      <Typography
+                        variant="subtitle1"
+                        style={{ color: contrastText, fontSize: '14px' }}
+                      >
                         Balance: {removeDecimals(balance)} ETH
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}
+                    >
                       <NavLink to="/dashboard">
                         <Button color="secondary" variant="outlined">
                           DASHBOARD
@@ -154,10 +162,10 @@ class MetamaskLogin extends Component {
                   modifiers: {
                     arrow: {
                       enabled: Boolean(this.state.arrowRef),
-                      element: this.state.arrowRef,
-                    },
-                  },
-                },
+                      element: this.state.arrowRef
+                    }
+                  }
+                }
               }}
             >
               <NavLink to="/dashboard">

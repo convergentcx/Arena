@@ -58,8 +58,7 @@ class Events extends React.Component {
             </TableCell>
           </TableRow>
         );
-      }
-    );
+      });
 
     return (
       <Paper className={classes.root}>

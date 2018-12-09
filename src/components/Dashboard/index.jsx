@@ -10,7 +10,7 @@ import TopTabs from './TopTabs';
 
 class Dashboard extends Component {
   state = {
-    tokens: null,
+    tokens: null
   };
 
   componentDidMount = () => {
@@ -21,26 +21,28 @@ class Dashboard extends Component {
 
     const filter = { owner_address: drizzleState.accounts[0] };
     const tokens = [];
-    this._asyncRequest = makeCancelable(factoryContract.getPastEvents(
-      'Created',
-      { fromBlock: 0, toBlock: 'latest', filter },
-      (_, events) => {
-        events.forEach(token => {
-          const address = token.returnValues.token_address;
-          const date = token.returnValues.time;
-          const name = token.returnValues.name;
-          tokens.push({ address, date, name });
-          this.setState({ tokens });
-        });
-      }
-    ));
+    this._asyncRequest = makeCancelable(
+      factoryContract.getPastEvents(
+        'Created',
+        { fromBlock: 0, toBlock: 'latest', filter },
+        (_, events) => {
+          events.forEach(token => {
+            const address = token.returnValues.token_address;
+            const date = token.returnValues.time;
+            const name = token.returnValues.name;
+            tokens.push({ address, date, name });
+            this.setState({ tokens });
+          });
+        }
+      )
+    );
   };
 
   componentWillUnmount = () => {
     if (this._asyncRequest) {
       this._asyncRequest.cancel();
     }
-  }
+  };
 
   render() {
     return (

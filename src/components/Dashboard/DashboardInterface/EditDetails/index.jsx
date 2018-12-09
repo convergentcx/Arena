@@ -7,7 +7,7 @@ export default class EditDetails extends Component {
     multiline:
       'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
     editingProfile: false,
-    displayName: this.props.jsonData.name,
+    displayName: this.props.jsonData.name
   };
 
   async componentDidMount() {
@@ -31,9 +31,11 @@ export default class EditDetails extends Component {
   };
 
   render() {
-    const chips = this.props.jsonData.tags && this.props.jsonData.tags.map((tag, index)=> {
-      return <Chip key={index} label={tag} />;
-    });
+    const chips =
+      this.props.jsonData.tags &&
+      this.props.jsonData.tags.map((tag, index) => {
+        return <Chip key={index} label={tag} />;
+      });
 
     return (
       <Paper style={{ height: '', marginBottom: '16px' }}>
@@ -52,7 +54,16 @@ export default class EditDetails extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} style={{ marginTop: '8px', marginBottom: '8px', display: 'flex', justifyContent: 'space-around' }}>
+          <Grid
+            item
+            xs={12}
+            style={{
+              marginTop: '8px',
+              marginBottom: '8px',
+              display: 'flex',
+              justifyContent: 'space-around'
+            }}
+          >
             {chips}
           </Grid>
         </Grid>
