@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
 const heroStyle = {
   backgroundSize: 'cover',
@@ -12,14 +12,15 @@ const heroStyle = {
   OBackgroundSize: 'cover',
   height: '100vh',
   margin: '0',
-  padding: '10%'
+  paddingLeft: '4%',
+  paddingTop: '30%'
 };
 
 const Hero = () => (
   <div style={heroStyle}>
-    <h1 className="display-4">Unlock your personal economy</h1>
+    <Typography variant="h3" color="common">Unlock your personal economy</Typography>
     <br />
-    <h5>Launch your own cryptocurrency and tokenize your work.</h5>
+    <Typography variant="h6" color="common">Launch your own cryptocurrency and tokenize your work.</Typography>
     <br />
     <br />
     <NavLink to={'/launch'}>
