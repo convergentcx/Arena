@@ -11,7 +11,8 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     constructor(
         bytes32 _mhash,
         string _name,
-        string _symbol
+        string _symbol,
+        address _owner
     )   EthPolynomialCurvedToken(
         _name,
         _symbol,
@@ -22,7 +23,7 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
         public
     {
         mhash = _mhash;
-        owner = msg.sender;
+        owner = _owner;
     }
 
     function requestWithEth(
@@ -31,11 +32,23 @@ contract PersonalEconomy is EthPolynomialCurvedToken {
     )   public
         payable
     {
+        uint256 cost = priceToMint(_price);
+        require(msg.value >= cost, "Must send requisite amount to purchase.");
+
+        _mint(msg.sender, _price);
+        _transfer(msg.sender, owner, _price);
         emit Requested(_msg, now, msg.sender);
     }
 
-    function requestWithToken(string _msg) public {
+    function requestWithToken(string _msg, uint256 _price) public {
+        _transfer(msg.sender, owner, _price);
         emit Requested(_msg, now, msg.sender);
     }
 
+    function updateData(bytes32 _mhash)
+        public returns (bool)
+    {
+        require(msg.sender == owner);
+        mhash = _mhash;
+    }
 }

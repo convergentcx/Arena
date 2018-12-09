@@ -9,9 +9,7 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  // Modal,
   Paper,
-  // Popper,
   Popover,
   Tab,
   Tabs,
@@ -90,12 +88,11 @@ class ProfileDetails extends Component {
       pic = Buffer.from(image.data).toString('base64');
     }
 
-    // workaround with additional instance of contract, because drizzle does not support getPastEvents
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); // TODO this needs to change
+    const web3 = new Web3(drizzle.web3.currentProvider);
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
 
-    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (err, event) => {
+    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (_, event) => {
       event[0] && eventsArray.push(event[0].address);
     });
 
@@ -132,7 +129,7 @@ class ProfileDetails extends Component {
   };
 
   render() {
-    console.log(classes);
+    // console.log(classes);
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
     if (
@@ -159,14 +156,14 @@ class ProfileDetails extends Component {
           height: '33vh',
           background: this.state.favoriteColor || 'rgb(216, 75, 42)',
         }}>
-          <Grid item xs={0} md={3} className={classes.NameBoxSpacer} />
+          <Grid item xs={false} md={3} className={classes.NameBoxSpacer}/>
           <Grid item xs={12} md={9}
             className={classes.NameBox}>
             <h1 className={classes.Name}>{this.state.name}</h1>
           </Grid>
         </Grid>
 
-        <div style={{ position: 'absolute', top: 0, height: '47vh', width: '100%' }}>
+        <div style={{ position: 'absolute', top: '7vh', height: '40vh', width: '100%' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid
               item
@@ -187,7 +184,7 @@ class ProfileDetails extends Component {
 
         <Paper square style={{ background: 'primary', height: '12vh' }}>
           <Grid container style={{ height: '100%' }}>
-            <Grid item xs={0} md={3} />
+            <Grid item xs={false} md={3} />
 
             <Grid
               item
@@ -316,7 +313,11 @@ class ProfileDetails extends Component {
             )}
           </Grid>
           <Grid item xs={12} md={3}>
-            <ServicePanel symbol={this.state.symbol} dataJson={this.state.dataJson} />
+            <ServicePanel 
+              dataJson={this.state.dataJson}
+              contract={this.props.drizzle.contracts[this.props.addr]}
+              drizzleState={this.props.drizzleState}
+            />
           </Grid>
         </Grid>
 

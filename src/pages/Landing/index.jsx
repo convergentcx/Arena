@@ -12,17 +12,17 @@ const heroStyle = {
   OBackgroundSize: 'cover',
   height: '100vh',
   margin: '0',
-  paddingLeft: '4%',
-  paddingTop: '30%'
+  padding: '10%',
+  paddingTop: '2%',
+
 };
 
 const Hero = () => (
   <div style={heroStyle}>
-    <Typography variant="h3" color="common">Unlock your personal economy</Typography>
-    <br />
-    <Typography variant="h6" color="common">Launch your own cryptocurrency and tokenize your work.</Typography>
-    <br />
-    <br />
+    <Typography variant="h3">Unlock your personal economy</Typography>
+    <div style={{ height: '6%'}} />
+    <Typography variant="h6">Launch your own cryptocurrency, tokenize your work.</Typography>
+    <div style={{ height: '12%'}} />
     <NavLink to={'/launch'}>
       <Button size="large" variant="outlined" color="primary">
         Launch

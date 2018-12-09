@@ -56,58 +56,6 @@ export default class EditDetails extends Component {
             {chips}
           </Grid>
         </Grid>
-        {/* <CardHeader
-          avatar={<Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />}
-          title={
-            <TextField
-              id="standard-read-only-input"
-              value={this.state.displayName}
-              onChange={this.handleChange}
-              margin="normal"
-              InputProps={{
-                readOnly: !this.state.editingProfile
-              }}
-            />
-          }
-          // What follows is an idea for how people could give themselves tags. Not sure how/if we
-          // should add these for the alpha
-
-          subheader={<diisIndexedAccessTypeNode
-        />
-        <Button
-          color={this.state.editingProfile ? 'primary' : 'secondary'}
-          size="sm"
-          onClick={this.toggleProfileEditable}
-          style={{ position: 'absolute', top: '2%', right: '2%' }}
-        >
-          {this.state.editingProfile ? 'Save' : 'Edit'}
-        </Button>
-        <CardContent>
-          <form noValidate autoComplete="off">
-            <TextField
-              name="description"
-              value={
-                this.state.editingProfile
-                  ? this.state.description
-                  : this.props.jsonData.description
-              }
-              onChange={this.handleChange}
-              label="Description"
-              style={{ margin: 8 }}
-              placeholder="My token will give you .."
-              helperText="Tell your investors why you are going to the moon"
-              multiline
-              // rows="4"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true
-              }}
-              InputProps={{
-                readOnly: !this.state.editingProfile
-              }}
-            />
-          </form>
-        </CardContent> */}
       </Paper>
     );
   }

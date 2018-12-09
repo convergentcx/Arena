@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Events from './Events/Events';
 import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import EditColumn from './InfoColumn';
+import EditColumn from './EditColumn';
 
 import MainStats from './Stats/MainStats/index.jsx';
 import SmallStats from './Stats/SmallStats/index.jsx';
@@ -120,6 +120,7 @@ class Interface extends Component {
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
 
     this.setState({
+      contract,
       dataJson,
       dataKeys: {
         totalSupplyKey,
@@ -170,11 +171,12 @@ class Interface extends Component {
       this.state.exponent
     );
     return (
-      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '7%' }}>
+      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '2%' }}>
         <Grid item xs={12} md={4}>
           <EditColumn
             address={address}
             contract={contract}
+            myContract={this.state.contract}
             dataJson={this.state.dataJson}
             drizzle={this.props.drizzle}
             drizzleState={this.props.drizzleState}
@@ -201,7 +203,7 @@ class Interface extends Component {
               <Typography className={classes.title} color="textSecondary" gutterBottom>
                 Requests and Transactions
               </Typography>
-              <Events date={this.props.date} address={address} />
+              <Events date={this.props.date} address={address} drizzle={this.props.drizzle} />
             </Paper>
           }
           {this.state.value === 1 &&
@@ -260,35 +262,6 @@ class Interface extends Component {
             </Grid>  
           }
         </Grid>
-                                    {/*
-              <Paper>
-                <Grid container>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    7 day price chart
-                  </Typography>
-                  <CurveChart
-                    curveData={{
-                      totalSupply: 0,
-                      poolBalance: 0,
-                      inverseSlope: 0,
-                      exponent: 0,
-                      currentPrice: 0
-                    }}
-                    margin={{
-                      top: 30,
-                      right: 10,
-                      bottom: 30,
-                      left: 10
-                    }}
-                    width={300}
-                    height={300}
-                  /> */}
-              {/* Here I want to include a price chart, but I am not sure which props it needs and how to set up the contract so that 
-              the BlockHistory component can read the events out of it. The BlockHistory and PriceChart components are taken from Memelordz,
-              so we can look how it works there exactly.
-              <BlockHistory symbol={this.state.symbol} contract={this.props.drizzle.contracts[this.props.address]} showChart /> */}
-              {/* </Grid>
-            </Paper> */}
       </Grid>
     );
   }

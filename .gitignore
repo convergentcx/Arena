@@ -22,7 +22,6 @@ yarn-error.log*
 
 node_modules
 .vscode
-src/build
 package-lock.json
 .firebase
 .env
