@@ -2,11 +2,9 @@ import React from 'react';
 
 import { Avatar } from '@material-ui/core';
 
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 const Photo = props => {
-
   const Div = styled.div`
     position: relative;
     width: ${props.width};
@@ -15,16 +13,16 @@ const Photo = props => {
       max-width: 180px;
     }
     &:after {
-      content: "";
+      content: '';
       display: block;
       padding-bottom: 100%;
     }
-  `
+  `;
   const ImgDiv = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100% 
-`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  `;
 
   return (
     <Div>
@@ -32,12 +30,18 @@ const Photo = props => {
         <Avatar
           alt="photo"
           src={props.pic}
-          style = {{borderStyle: 'solid', borderColor: '#FFF', borderWidth: '3px', position: 'static', height: '100%', width: '100%'}}
+          style={{
+            borderStyle: 'solid',
+            borderColor: '#FFF',
+            borderWidth: '3px',
+            position: 'static',
+            height: '100%',
+            width: '100%'
+          }}
         />
       </ImgDiv>
     </Div>
   );
-
 };
 
 export default Photo;

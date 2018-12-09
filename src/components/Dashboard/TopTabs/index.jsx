@@ -17,7 +17,11 @@ class TopTabs extends Component {
       this.props.tokens &&
       this.props.tokens.map((token, index) => {
         return (
-          <Tab label={token.name} key={index} onClick={() => this.props.history.push(`/dashboard/${token.address}`)} />
+          <Tab
+            label={token.name}
+            key={index}
+            onClick={() => this.props.history.push(`/dashboard/${token.address}`)}
+          />
         );
       });
 

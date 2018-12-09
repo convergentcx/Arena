@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import {
-  AppBar,
-  CssBaseline,
-  Toolbar,
-  Typography
-} from '@material-ui/core';
+import { withTheme } from '@material-ui/core/styles';
+
+import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
 
 import MetamaskLogin from './MetamaskLogin';
 
 import Logo from '../../../assets/logo.png';
+import WhiteLogo from '../../../assets/logo_white.png';
 
-export default class TopNav extends Component {
+class TopNav extends Component {
   render() {
     return (
       <div>
@@ -20,15 +18,20 @@ export default class TopNav extends Component {
         <AppBar
           position="static"
           elevation={3}
-          color="primary"
-          style={{ paddingLeft: '4%', paddingRight: '4%', height: '7vh' }}
+          color="bar"
+          style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar>
             <NavLink to={'/'}>
-              <img src={Logo} alt="Convergent" width="40px" height="40px" />
+              <img
+                src={this.props.theme.palette.type === 'dark' ? WhiteLogo : Logo}
+                alt="Convergent"
+                width="40px"
+                height="40px"
+              />
             </NavLink>
             &nbsp;&nbsp;
-            <Typography variant="h5" color="inherit" noWrap>
+            <Typography variant="h5" color="common" noWrap>
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />
@@ -42,3 +45,5 @@ export default class TopNav extends Component {
     );
   }
 }
+
+export default withTheme()(TopNav);

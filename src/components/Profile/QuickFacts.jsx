@@ -31,21 +31,21 @@ class SocialBar extends Component {
 
 const QuickFacts = props => (
   <Paper style={{ padding: '12px', width: props.width || '350px' }}>
-    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49' }}>
+    <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
       {props.contributors}
     </Typography>
     <Typography
       variant="subtitle1"
-      style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}
+      style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
     >
       contributors
     </Typography>
-    <Typography variant="h5" style={{ fontWeight: 'bold', color: '#052D49' }}>
+    <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
       {props.marketCap} ETH
     </Typography>
     <Typography
       variant="subtitle1"
-      style={{ color: '#4F687A', fontSize: '12px', fontWeight: 'bold' }}
+      style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
     >
       market cap
     </Typography>

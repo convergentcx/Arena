@@ -14,7 +14,12 @@ class MainStats extends Component {
         item
         xs={12}
         md={6}
-        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          textAlign: 'center'
+        }}
       >
         <Grid item xs={12} style={{ paddingBottom: '6px', height: '50%' }}>
           <Card style={{ height: '100%' }}>
@@ -26,7 +31,8 @@ class MainStats extends Component {
                 {removeDecimals(yourBalance)} {this.props.symbol}
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {(removeDecimals(yourBalance) * removeDecimals(currentPrice) * 100).toFixed(2)} $
+                Current Value:{' '}
+                {(removeDecimals(yourBalance) * removeDecimals(currentPrice) * 100).toFixed(2)} $
               </Typography>
             </CardContent>
           </Card>
@@ -42,7 +48,8 @@ class MainStats extends Component {
                 {(removeDecimals(currentPrice) * removeDecimals(totalSupply)).toFixed(6)} Ξ
               </Typography>
               <Typography color="textSecondary" gutterBottom>
-                Current Value: {(removeDecimals(currentPrice) * removeDecimals(totalSupply) * 100).toFixed(2)} $
+                Current Value:{' '}
+                {(removeDecimals(currentPrice) * removeDecimals(totalSupply) * 100).toFixed(2)} $
               </Typography>
             </CardContent>
           </Card>

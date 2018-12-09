@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ipfsApi from 'ipfs-api';
 import Web3 from 'web3';
-import classes from './Profile.module.css'
+import classes from './Profile.module.css';
 
 import {
   Button,
@@ -12,7 +12,8 @@ import {
   Paper,
   Popover,
   Tab,
-  Tabs
+  Tabs,
+  Typography
 } from '@material-ui/core';
 // import { KeyboardBackspace } from '@material-ui/icons';
 
@@ -90,11 +91,11 @@ class ProfileDetails extends Component {
     const web3 = new Web3(drizzle.web3.currentProvider);
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
-    
+
     await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (_, event) => {
       event[0] && eventsArray.push(event[0].address);
     });
-    
+
     let unique = [...new Set(eventsArray)];
     let contributors = unique.length;
 
@@ -128,7 +129,6 @@ class ProfileDetails extends Component {
   };
 
   render() {
-    // console.log(classes);
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
     if (
@@ -151,37 +151,33 @@ class ProfileDetails extends Component {
     return (
       <div style={{ width: '100vw' }}>
         {/* Header */}
-        <Grid container style={{
-          height: '33vh',
-          background: this.state.favoriteColor || 'rgb(216, 75, 42)',
-        }}>
-          <Grid item xs={false} md={3} className={classes.NameBoxSpacer}/>
-          <Grid item xs={12} md={9}
-            className={ classes.NameBox }>
-            <h1 className = { classes.Name }>{this.state.name}</h1>
+        <Grid
+          container
+          style={{
+            height: '33vh',
+            background: this.state.favoriteColor || 'rgb(216, 75, 42)'
+          }}
+        >
+          <Grid item xs={false} md={3} className={classes.NameBoxSpacer} />
+          <Grid item xs={12} md={9} className={classes.NameBox}>
+            <h1 className={classes.Name}>{this.state.name}</h1>
           </Grid>
         </Grid>
 
         <div style={{ position: 'absolute', top: '7vh', height: '40vh', width: '100%' }}>
           <Grid container style={{ height: '100%' }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              className={classes.PhotoBox}
-            >
-              <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="55%" className={classes.Photo} />
+            <Grid item xs={12} md={3} className={classes.PhotoBox}>
+              <Photo
+                pic={'data:image/jpeg;base64,' + this.state.pic}
+                width="55%"
+                className={classes.Photo}
+              />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              md={9}
-            >
-            </Grid>
+            <Grid item xs={12} md={9} />
           </Grid>
         </div>
 
-        <Paper square style={{ background: 'white', height: '12vh' }}>
+        <Paper square style={{ background: 'primary', height: '12vh' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={false} md={3} />
 
@@ -200,7 +196,8 @@ class ProfileDetails extends Component {
             >
               <Tabs
                 value={this.state.value}
-                indicatorColor="primary"
+                indicatorColor="secondary"
+                textColor="secondary"
                 onChange={this.handleChange}
                 fullWidth
               >
@@ -209,17 +206,12 @@ class ProfileDetails extends Component {
                 <Tab label="Services" />
               </Tabs>
             </Grid>
-            <Grid 
-              item md={3}               
-              className={classes.ContributeBox}>
+            <Grid item md={3} className={classes.ContributeBox}>
               <Button color="secondary" size="large" variant="contained">
                 CONTRIBUTE
               </Button>
-
             </Grid>
           </Grid>
-
-
         </Paper>
 
         {/* Content */}
@@ -242,7 +234,7 @@ class ProfileDetails extends Component {
           </Grid>
           <Grid item xs={12} md={6}>
             {this.state.value === 1 && (
-              <div>
+              <Paper>
                 <Grid container>
                   <Grid item sm={12} style={{ display: 'flex' }}>
                     <div style={{ flexGrow: 1 }} />
@@ -288,16 +280,39 @@ class ProfileDetails extends Component {
                   drizzleState={this.props.drizzleState}
                   symbol={this.state.symbol}
                 />
-              </div>
+              </Paper>
             )}
             {this.state.value === 0 && (
+              <Paper
+                style={{
+                  minHeight: '50vh',
+                  padding: '15px',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                >
+                  my story
+                </Typography>
+                <Typography
+                  variant="h6"
+                  style={{ fontWeight: 'bold', color: 'primary', height: '400px' }}
+                >
+                  {this.state.description}
+                </Typography>
+              </Paper>
+            )}
+            {this.state.value === 2 && (
               <Paper style={{ textAlign: 'center', minHeight: '50vh', padding: '2%' }}>
-                <p>{this.state.description}</p>
+                <Typography style={{ color: 'primary' }}>coming soon</Typography>
               </Paper>
             )}
           </Grid>
           <Grid item xs={12} md={3}>
-            <ServicePanel 
+            <ServicePanel
               dataJson={this.state.dataJson}
               contract={this.props.drizzle.contracts[this.props.addr]}
               drizzleState={this.props.drizzleState}
@@ -359,7 +374,10 @@ const ProfileDetailsContextualized = withContext(ProfileDetails);
 
 const Profile = props => (
   <div>
-    <ProfileDetailsContextualized addr={props.match.params.economyAddress} history={props.history} />
+    <ProfileDetailsContextualized
+      addr={props.match.params.economyAddress}
+      history={props.history}
+    />
   </div>
 );
 

@@ -1,5 +1,5 @@
 /**
- * EditColumn handles the edit state of the lower components and 
+ * EditColumn handles the edit state of the lower components and
  * the IPFS logic for submitting the new information to the network.
  */
 
@@ -20,8 +20,8 @@ class EditColumn extends Component {
     description: this.props.dataJson.description,
     editing: false,
     loading: false,
-    txStatus: null,
-  }
+    txStatus: null
+  };
 
   componentWillUnmount() {
     if (this._asyncRequest) {
@@ -37,7 +37,7 @@ class EditColumn extends Component {
   };
 
   waitForMined = stackId => {
-    const { enqueueSnackbar } = this.props; 
+    const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
       if (status === 'pending' && this.state.txStatus !== 'pending') {
@@ -61,7 +61,7 @@ class EditColumn extends Component {
 
   edit = () => {
     this.setState({ editing: !this.state.editing });
-  }
+  };
 
   save = async () => {
     // First save to IPFS
@@ -86,22 +86,21 @@ class EditColumn extends Component {
       newDataJson.description = this.state.description;
     }
 
-    this.setState({ loading: true, });
-    this._asyncRequest = makeCancelable(this.submitHash(JSON.stringify(newDataJson)).then(ipfsHash => {
-      // let stackId;
-      const mhash = getBytes32FromMultihash(ipfsHash[0].path);
+    this.setState({ loading: true });
+    this._asyncRequest = makeCancelable(
+      this.submitHash(JSON.stringify(newDataJson)).then(ipfsHash => {
+        // let stackId;
+        const mhash = getBytes32FromMultihash(ipfsHash[0].path);
 
-      const stackId = this.props.myContract.methods.updateData.cacheSend(
-        mhash.digest,
-        {
+        const stackId = this.props.myContract.methods.updateData.cacheSend(mhash.digest, {
           from: this.props.drizzleState.accounts[0]
-        }
-      );
+        });
 
-      this.setState({ editing: false, loading: false });
-      this.waitForMined(stackId);
-      this.props.updateData(newDataJson);
-    }));
+        this.setState({ editing: false, loading: false });
+        this.waitForMined(stackId);
+        this.props.updateData(newDataJson);
+      })
+    );
   };
 
   handleChange = event => {
@@ -131,44 +130,47 @@ class EditColumn extends Component {
           symbol={this.props.symbol}
         />
         <Paper style={{ marginTop: '16px', padding: '5%' }}>
-            <Typography color="textSecondary" gutterBottom>
-              Your Story
-            </Typography>
-            {this.state.loading
-              ? <Grid container style={{ height: '', padding: '5%', textAlign: 'center' }}>
-                  <Grid item xs={12}>
-                    <CircularProgress />
-                  </Grid>
-                </Grid>
-              : <TextField
-                  name="description"
-                  label="Description"
-                  placeholder={this.state.description.slice(0, 27) + '...' || "My token will give you .."}
-                  helperText="Tell your contributors why you are going to the moon"
-                  fullWidth
-                  multiline
-                  rows="4"
-                  margin="normal"
-                  onChange={this.handleChange}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  InputProps={{
-                    readOnly: !this.state.editing
-                  }}
-                />
-            }
-          </Paper>
-          <Button
-            variant="contained"
-            color={this.state.editing ? 'primary' : 'secondary'} 
-            style={{ width: '100%', marginTop: '16px' }}
-            onClick={this.state.editing ? this.save : this.edit}
-          >
-            {this.state.editing ? 'SUBMIT TO CHAIN' : 'EDIT'}
-          </Button>
+          <Typography color="textSecondary" gutterBottom>
+            Your Story
+          </Typography>
+          {this.state.loading ? (
+            <Grid container style={{ height: '', padding: '5%', textAlign: 'center' }}>
+              <Grid item xs={12}>
+                <CircularProgress />
+              </Grid>
+            </Grid>
+          ) : (
+            <TextField
+              name="description"
+              label="Description"
+              placeholder={
+                this.state.description.slice(0, 27) + '...' || 'My token will give you ..'
+              }
+              helperText="Tell your contributors why you are going to the moon"
+              fullWidth
+              multiline
+              rows="4"
+              margin="normal"
+              onChange={this.handleChange}
+              InputLabelProps={{
+                shrink: true
+              }}
+              InputProps={{
+                readOnly: !this.state.editing
+              }}
+            />
+          )}
+        </Paper>
+        <Button
+          variant="contained"
+          color={this.state.editing ? 'primary' : 'secondary'}
+          style={{ width: '100%', marginTop: '16px' }}
+          onClick={this.state.editing ? this.save : this.edit}
+        >
+          {this.state.editing ? 'SUBMIT TO CHAIN' : 'EDIT'}
+        </Button>
       </div>
-    )
+    );
   }
 }
 

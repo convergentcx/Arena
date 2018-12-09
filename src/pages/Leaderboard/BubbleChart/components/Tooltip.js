@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as d3 from 'd3'
-import './Tooltip.css'
+import * as d3 from 'd3';
+import './Tooltip.css';
 
 /*
  * Creates tooltip with provided id that
@@ -11,19 +11,20 @@ import './Tooltip.css'
 function floatingTooltip(tooltipId, width) {
   // Local variable to hold tooltip div for
   // manipulation in other functions.
-  const tt = d3.select('body')
+  const tt = d3
+    .select('body')
     .append('div')
     .attr('class', 'tooltip')
     .attr('id', tooltipId)
-    .style('pointer-events', 'none')
+    .style('pointer-events', 'none');
 
   // Set a width if it is provided.
   if (width) {
-    tt.style('width', width)
+    tt.style('width', width);
   }
 
   // Initially it is hidden.
-  hideTooltip()
+  hideTooltip();
 
   /*
    * Display tooltip with provided content.
@@ -33,17 +34,16 @@ function floatingTooltip(tooltipId, width) {
    * event is d3.event for positioning.
    */
   function showTooltip(content, event) {
-    tt.style('opacity', 1.0)
-      .html(content)
+    tt.style('opacity', 1.0).html(content);
 
-    updatePosition(event)
+    updatePosition(event);
   }
 
   /*
    * Hide the tooltip div.
    */
   function hideTooltip() {
-    tt.style('opacity', 0.0)
+    tt.style('opacity', 0.0);
   }
 
   /*
@@ -51,42 +51,44 @@ function floatingTooltip(tooltipId, width) {
    * based on d3 mouse event.
    */
   function updatePosition(event) {
-    const xOffset = 20
-    const yOffset = 10
+    const xOffset = 20;
+    const yOffset = 10;
 
-    const ttw = tt.style('width')
-    const tth = tt.style('height')
+    const ttw = tt.style('width');
+    const tth = tt.style('height');
 
-    const wscrY = window.scrollY
-    const wscrX = window.scrollX
+    const wscrY = window.scrollY;
+    const wscrX = window.scrollX;
 
-    const curX = (document.all) ? event.clientX + wscrX : event.pageX
-    const curY = (document.all) ? event.clientY + wscrY : event.pageY
-    let ttleft = ((curX - wscrX + xOffset * 2 + ttw) > window.innerWidth) ?
-                 curX - ttw - xOffset * 2 : curX + xOffset
+    const curX = document.all ? event.clientX + wscrX : event.pageX;
+    const curY = document.all ? event.clientY + wscrY : event.pageY;
+    let ttleft =
+      curX - wscrX + xOffset * 2 + ttw > window.innerWidth
+        ? curX - ttw - xOffset * 2
+        : curX + xOffset;
 
     if (ttleft < wscrX + xOffset) {
-      ttleft = wscrX + xOffset
+      ttleft = wscrX + xOffset;
     }
 
-    let tttop = ((curY - wscrY + yOffset * 2 + tth) > window.innerHeight) ?
-                curY - tth - yOffset * 2 : curY + yOffset
+    let tttop =
+      curY - wscrY + yOffset * 2 + tth > window.innerHeight
+        ? curY - tth - yOffset * 2
+        : curY + yOffset;
 
     if (tttop < wscrY + yOffset) {
-      tttop = curY + yOffset
+      tttop = curY + yOffset;
     }
 
-    tt
-      .style('top', `${tttop}px`)
-      .style('left', `${ttleft}px`)
+    tt.style('top', `${tttop}px`).style('left', `${ttleft}px`);
   }
 
   return {
     showTooltip,
     hideTooltip,
-    updatePosition,
-  }
+    updatePosition
+  };
 }
 
-const tooltip = floatingTooltip('gates_tooltip', 240)
-export default tooltip
+const tooltip = floatingTooltip('gates_tooltip', 240);
+export default tooltip;
