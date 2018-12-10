@@ -3824,7 +3824,7 @@ d3-scale@1.0.6:
     d3-time "1"
     d3-time-format "2"
 
-d3-scale@^2.1.2, d3-scale@~2.1.0:
+d3-scale@2.1.2, d3-scale@~2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-2.1.2.tgz#4e932b7b60182aee9073ede8764c98423e5f9a94"
   integrity sha512-bESpd64ylaKzCDzvULcmHKZTlzA/6DGSVwx7QSDj/EnX9cpSevsdiwdHFYI9ouo9tNBbV3v5xztHS2uFeOzh8Q==
@@ -8969,7 +8969,7 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-notistack@^0.4.0:
+notistack@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/notistack/-/notistack-0.4.0.tgz#58671a31ba4e1fcf1313b77b063113091c7936ae"
   integrity sha512-AE0MD2HVmmMC+hVtrHJLZr2UtzJXCDDBfmeRNCiV1xzA8GTkgLlwaz3DayHuG4VmW6ZU4kVMeTlBiOKIs7VrEw==
@@ -12283,7 +12283,7 @@ style-loader@0.23.0:
     loader-utils "^1.1.0"
     schema-utils "^0.4.5"
 
-styled-components@^4.1.2:
+styled-components@4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.1.2.tgz#f8a685e3b2bcd03c5beac7f2c02bb6ad237da9b3"
   integrity sha512-NdvWatJ2WLqZxAvto+oH0k7GAC/TlAUJTrHoXJddjbCrU6U23EmVbb9LXJBF+d6q6hH+g9nQYOWYPUeX/Vlc2w==
