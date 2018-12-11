@@ -220,7 +220,7 @@ class ProfileDetails extends Component {
           spacing={16}
           style={{ padding: '4%', paddingTop: '16px', minHeight: '80vh' }}
         >
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={3} className={classes.Box1}>
             <InfoCard
               contributors={this.state.contributors}
               marketCap={removeDecimals(removeDecimals(toBN(totalSupply).mul(currentPrice)))}
@@ -232,7 +232,7 @@ class ProfileDetails extends Component {
               width="100%"
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6}  className={classes.Box2}>
             {this.state.value === 1 && (
               <Paper>
                 <Grid container>
@@ -311,7 +311,7 @@ class ProfileDetails extends Component {
               </Paper>
             )}
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={3}  className={classes.Box3}>
             <ServicePanel
               dataJson={this.state.dataJson}
               contract={this.props.drizzle.contracts[this.props.addr]}

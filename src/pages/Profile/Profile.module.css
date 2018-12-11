@@ -32,6 +32,19 @@
     width: 100%;
 }
 
+.Box1 {
+    order: 2
+}
+
+.Box2 {
+    order: 1
+}
+
+.Box3 {
+    order: 3
+}
+
+
 
 @media (min-width: 960px) { 
     .ContributeBox {
@@ -53,5 +66,17 @@
 
     .Name {
         padding-left: 25px;
+    }
+
+    .Box1 {
+        order: 1
+    }
+    
+    .Box2 {
+        order: 2
+    }
+    
+    .Box3 {
+        order: 3
     }
  }
