@@ -5,13 +5,9 @@ import classes from './Profile.module.css';
 
 import {
   Button,
-  Card,
-  CardContent,
-  CardHeader,
   Collapse,
   Grid,
   Paper,
-  Popover,
   Tab,
   Tabs,
   Typography
