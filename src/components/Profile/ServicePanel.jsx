@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Paper, TextField, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
 
-import { addDecimals, toBN } from '../../util';
 
 class ServicePanel extends Component {
 

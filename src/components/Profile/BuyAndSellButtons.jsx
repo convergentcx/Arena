@@ -120,7 +120,7 @@ class BuyAndSellButtons extends Component {
           &nbsp;&nbsp;
           <Button
             color="secondary"
-            variant="outlined"
+            variant="contained"
             onClick={this.buyHandler}
             style={{ height: '100%' }}
           >
@@ -144,7 +144,7 @@ class BuyAndSellButtons extends Component {
           &nbsp;&nbsp;
           <Button
             color="secondary"
-            variant="outlined"
+            variant="contained"
             onClick={this.sellHandler}
             style={{ height: '100%' }}
           >

@@ -31,9 +31,6 @@ class SocialBar extends Component {
 
 const QuickFacts = props => (
   <Paper style={{ padding: '12px', width: props.width || '350px' }}>
-    <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
-      {props.contributors}
-    </Typography>
     <Typography
       variant="subtitle1"
       style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
@@ -41,13 +38,16 @@ const QuickFacts = props => (
       contributors
     </Typography>
     <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
-      {props.marketCap} ETH
+      {props.contributors}
     </Typography>
     <Typography
       variant="subtitle1"
       style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
     >
       market cap
+    </Typography>
+    <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
+      {props.marketCap} ETH
     </Typography>
     <div style={{ marginTop: '12px' }}>
       <Button

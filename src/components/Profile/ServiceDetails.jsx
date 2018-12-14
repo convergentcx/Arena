@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
 
 import { addDecimals, toBN } from '../../util';
@@ -118,7 +118,7 @@ class ServicePanel extends Component {
             name={`message-${index}`}
             onChange={this.inputUpdate}
           />
-          <div style={{ marginTop: '6px' }}>
+          <div style={{ marginTop: '6px', textAlign: 'right' }}>
             <Button
               color="secondary"
               size="small"
