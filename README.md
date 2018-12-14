@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/convergentcx/Arena.svg?branch=master)](https://travis-ci.org/convergentcx/Arena)
+[![Build Status](https://travis-ci.org/convergentcx/Arena.svg?branch=master)](https://travis-ci.org/convergentcx/Arena) [![Greenkeeper badge](https://badges.greenkeeper.io/convergentcx/Arena.svg)](https://greenkeeper.io/)
 
 # Arena (WIP)
 
