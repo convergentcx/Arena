@@ -59,6 +59,7 @@
   },
   "greenkeeper": {
     "ignore": [
+      "babel-eslint",
       "d3"
     ]
   },
