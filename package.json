@@ -57,6 +57,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "greenkeeper": {
+    "ignore": [
+      "d3"
+    ]
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
