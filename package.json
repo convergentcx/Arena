@@ -60,7 +60,8 @@
   "greenkeeper": {
     "ignore": [
       "babel-eslint",
-      "d3"
+      "d3",
+      "eslint"
     ]
   },
   "browserslist": [
