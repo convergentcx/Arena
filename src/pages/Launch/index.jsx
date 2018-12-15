@@ -205,16 +205,22 @@ class LaunchForm extends Component {
                     border: 'none'
                   }}
                 >
-                  {() =>
+                  {({getRootProps, getInputProps}) =>
                     file ? (
-                      <Avatar
-                        src={file}
-                        style={{ height: '200px', width: '200px', margin: 'auto' }}
-                      />
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Avatar
+                          src={file}
+                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                        />
+                      </div>
                     ) : (
-                      <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                        Click to Upload
-                      </Avatar>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }} {...getRootProps()}>
+                          Click to Upload
+                        </Avatar>
+                      </div>
                     )
                   }
                 </Dropzone>
