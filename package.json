@@ -67,7 +67,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format"
+      "pre-commit": "yarn format",
+      "pre-push": "yarn lint"
     }
   },
   "browserslist": [

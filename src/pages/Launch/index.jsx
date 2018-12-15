@@ -250,7 +250,6 @@ class LaunchForm extends Component {
                   type="text"
                   name="description"
                   placeholder=""
-                  // placeholder="Tell the market why your token will become valuable (you can also fill this in later)"
                   onChange={this.inputUpdate}
                   style={{ width: '100%' }}
                 />
