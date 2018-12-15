@@ -18,7 +18,7 @@ class TopNav extends Component {
         <AppBar
           position="static"
           elevation={3}
-          color="bar"
+          color="inherit"
           style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar>
@@ -31,7 +31,7 @@ class TopNav extends Component {
               />
             </NavLink>
             &nbsp;&nbsp;
-            <Typography variant="h5" color="common" noWrap>
+            <Typography variant="h5" color="default" noWrap>
               Arena
             </Typography>
             <div style={{ flexGrow: 1 }} />

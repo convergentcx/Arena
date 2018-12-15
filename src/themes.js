@@ -35,7 +35,10 @@ const slateTheme = createMuiTheme({
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)'
     }
-  }
+  },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 /// Hacker theme
@@ -74,7 +77,10 @@ const hackerTheme = createMuiTheme({
       disabled: 'rgba(255, 255, 255, 0.38)',
       hint: 'rgba(255, 255, 255, 0.38)'
     }
-  }
+  },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 const achillTheme = createMuiTheme({
@@ -118,7 +124,10 @@ const achillTheme = createMuiTheme({
       disabled: 'rgba(255, 255, 255, 0.38)',
       hint: 'rgba(255, 255, 255, 0.38)'
     }
-  }
+  },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 export { slateTheme, hackerTheme, achillTheme };
