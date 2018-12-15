@@ -205,7 +205,7 @@ class LaunchForm extends Component {
                     border: 'none'
                   }}
                 >
-                  {({getRootProps, getInputProps}) =>
+                  {({ getRootProps, getInputProps }) =>
                     file ? (
                       <div {...getRootProps()}>
                         <input {...getInputProps()} />
@@ -217,7 +217,10 @@ class LaunchForm extends Component {
                     ) : (
                       <div {...getRootProps()}>
                         <input {...getInputProps()} />
-                        <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }} {...getRootProps()}>
+                        <Avatar
+                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                          {...getRootProps()}
+                        >
                           Click to Upload
                         </Avatar>
                       </div>
