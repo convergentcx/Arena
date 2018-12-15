@@ -205,16 +205,18 @@ class LaunchForm extends Component {
                     border: 'none'
                   }}
                 >
-                  {() => file ? (
-                    <Avatar
-                      src={file}
-                      style={{ height: '200px', width: '200px', margin: 'auto' }}
-                    />
-                  ) : (
-                    <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                      Click to Upload
-                    </Avatar>
-                  )}
+                  {() =>
+                    file ? (
+                      <Avatar
+                        src={file}
+                        style={{ height: '200px', width: '200px', margin: 'auto' }}
+                      />
+                    ) : (
+                      <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
+                        Click to Upload
+                      </Avatar>
+                    )
+                  }
                 </Dropzone>
               </div>
             </Grid>

@@ -37,8 +37,8 @@ const slateTheme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true,
-  },
+    useNextVariants: true
+  }
 });
 
 /// Hacker theme
@@ -79,8 +79,8 @@ const hackerTheme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true,
-  },
+    useNextVariants: true
+  }
 });
 
 const achillTheme = createMuiTheme({
@@ -126,8 +126,8 @@ const achillTheme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true,
-  },
+    useNextVariants: true
+  }
 });
 
 export { slateTheme, hackerTheme, achillTheme };
