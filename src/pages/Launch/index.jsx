@@ -16,6 +16,7 @@ import Dropzone from 'react-dropzone';
 import { withSnackbar } from 'notistack';
 
 import withContext from '../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
 
 import { getBytes32FromMultihash } from '../../util';
 
@@ -146,6 +147,7 @@ class LaunchForm extends Component {
         this.setState({
           txStatus: 'success'
         });
+        setTimeout(()=>{this.props.history.push('/leaderboard')}, 2000)
       }
     }, 100);
     this.setState({
@@ -347,7 +349,7 @@ class LaunchForm extends Component {
   }
 }
 
-const LaunchFormContextualized = withSnackbar(withContext(LaunchForm));
+const LaunchFormContextualized = withSnackbar(withContext(withRouter(LaunchForm)));
 
 const Launch = props => (
   <div style={{ padding: '10%', paddingTop: '5%' }}>
