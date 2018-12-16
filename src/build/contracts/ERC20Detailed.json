@@ -1542,7 +1542,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.0-beta.1",
-  "updatedAt": "2018-12-08T22:22:23.366Z",
+  "updatedAt": "2018-12-16T19:14:46.488Z",
   "devdoc": {
     "methods": {
       "decimals()": {
