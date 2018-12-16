@@ -4,8 +4,6 @@ import Photo from '../../../Profile/Photo.jsx';
 
 export default class EditDetails extends Component {
   state = {
-    multiline:
-      'Whoever pays me in token will get my full attention I am very good at listening to peoples problems and helping',
     editingProfile: false,
     displayName: this.props.jsonData.name
   };

@@ -215,7 +215,12 @@ class ProfileDetails extends Component {
               </Tabs>
             </Grid>
             <Grid item md={3} className={classes.ContributeBox}>
-              <Button color="secondary" size="large" variant="contained" onClick={() => this.setState({ value: 1 })}>
+              <Button
+                color="secondary"
+                size="large"
+                variant="contained"
+                onClick={() => this.setState({ value: 1 })}
+              >
                 CONTRIBUTE
               </Button>
             </Grid>
