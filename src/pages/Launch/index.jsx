@@ -205,16 +205,27 @@ class LaunchForm extends Component {
                     border: 'none'
                   }}
                 >
-                  {file ? (
-                    <Avatar
-                      src={file}
-                      style={{ height: '200px', width: '200px', margin: 'auto' }}
-                    />
-                  ) : (
-                    <Avatar style={{ height: '200px', width: '200px', margin: 'auto' }}>
-                      Click to Upload
-                    </Avatar>
-                  )}
+                  {({ getRootProps, getInputProps }) =>
+                    file ? (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Avatar
+                          src={file}
+                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                        />
+                      </div>
+                    ) : (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Avatar
+                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                          {...getRootProps()}
+                        >
+                          Click to Upload
+                        </Avatar>
+                      </div>
+                    )
+                  }
                 </Dropzone>
               </div>
             </Grid>
@@ -248,7 +259,6 @@ class LaunchForm extends Component {
                   type="text"
                   name="description"
                   placeholder=""
-                  // placeholder="Tell the market why your token will become valuable (you can also fill this in later)"
                   onChange={this.inputUpdate}
                   style={{ width: '100%' }}
                 />
