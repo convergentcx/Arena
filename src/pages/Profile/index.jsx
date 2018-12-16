@@ -3,15 +3,7 @@ import ipfsApi from 'ipfs-api';
 import Web3 from 'web3';
 import classes from './Profile.module.css';
 
-import {
-  Button,
-  Collapse,
-  Grid,
-  Paper,
-  Tab,
-  Tabs,
-  Typography
-} from '@material-ui/core';
+import { Button, Collapse, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 // import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
@@ -201,8 +193,9 @@ class ProfileDetails extends Component {
             >
               <Tabs
                 style={{
-                display: 'flex',
-                justifyContent: 'right'}}
+                  display: 'flex',
+                  justifyContent: 'right'
+                }}
                 value={this.state.value}
                 indicatorColor="secondary"
                 textColor="secondary"
@@ -248,75 +241,94 @@ class ProfileDetails extends Component {
           <Grid item xs={12} md={6} className={classes.Box2}>
             {this.state.value === 1 && (
               <Paper>
-
                 <BuyAndSellButtons
                   contract={this.props.drizzle.contracts[this.props.addr]}
                   drizzleState={this.props.drizzleState}
                   symbol={this.state.symbol}
                 />
                 <Button
-                        color="secondary"
-                        size="small"
-                        aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
-                        aria-haspopup="true"
-                        variant="outlined"
-                        style={{ marginLeft: '5%', marginBottom: '5%'}}
-                        onClick={this.handleExpandClick}
-                        // onClick={this.openPopover}
-                      >
-                        Details
-                      </Button>
+                  color="secondary"
+                  size="small"
+                  aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
+                  aria-haspopup="true"
+                  variant="outlined"
+                  style={{ marginLeft: '5%', marginBottom: '5%' }}
+                  onClick={this.handleExpandClick}
+                  // onClick={this.openPopover}
+                >
+                  Details
+                </Button>
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-
-            <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center', color: 'primary', padding: '11px', fontSize: '11px' }}>
-              <Grid container>
-                <Grid item md={12}>
-                  <Typography>Contract Address:
-                  {' ' + this.props.addr}</Typography>
-                </Grid>
-                <Grid item md={12}>
-                  <Typography>Owner Address:
-                 {' ' + this.state.owner}</Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <Typography> Current Price:
-                  {' ' + removeDecimals(currentPrice)} ETH</Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <Typography> Reserve Pool:
-                  {' ' + removeDecimals(this.state.poolBalance)} ETH </Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <Typography> Total Supply:
-                    {' ' + removeDecimals(totalSupply)} {this.state.symbol}</Typography>
-                </Grid>
-              </Grid>
-            </div>
-                <Grid container>
-                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ width: '100%', height: '33vh' }}>
-                      <ProfileChart
-                        curveData={{
-                          totalSupply: totalSupply,
-                          poolBalance: this.state.poolBalance,
-                          inverseSlope: this.state.inverseSlope,
-                          exponent: this.state.exponent,
-                          currentPrice: currentPrice
-                        }}
-                        margin={{
-                          top: 30,
-                          right: 10,
-                          bottom: 30,
-                          left: 10
-                        }}
-                        width="100%"
-                        height="100%"
-                      />
-                    </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      color: 'primary',
+                      padding: '11px',
+                      fontSize: '11px'
+                    }}
+                  >
+                    <Grid container>
+                      <Grid item md={12}>
+                        <Typography>
+                          Contract Address:
+                          {' ' + this.props.addr}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={12}>
+                        <Typography>
+                          Owner Address:
+                          {' ' + this.state.owner}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Current Price:
+                          {' ' + removeDecimals(currentPrice)} ETH
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Reserve Pool:
+                          {' ' + removeDecimals(this.state.poolBalance)} ETH{' '}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Total Supply:
+                          {' ' + removeDecimals(totalSupply)} {this.state.symbol}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                  <Grid container>
+                    <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                      <div style={{ width: '100%', height: '33vh' }}>
+                        <ProfileChart
+                          curveData={{
+                            totalSupply: totalSupply,
+                            poolBalance: this.state.poolBalance,
+                            inverseSlope: this.state.inverseSlope,
+                            exponent: this.state.exponent,
+                            currentPrice: currentPrice
+                          }}
+                          margin={{
+                            top: 30,
+                            right: 10,
+                            bottom: 30,
+                            left: 10
+                          }}
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
+                    </Grid>
                   </Grid>
-                </Grid>
                 </Collapse>
-
               </Paper>
             )}
             {this.state.value === 0 && (

@@ -24,7 +24,6 @@ const OwnerCard = props => (
     <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
       {removeDecimals(props.tokenBalance)} {props.symbol}
     </Typography>
-
   </Paper>
 );
 

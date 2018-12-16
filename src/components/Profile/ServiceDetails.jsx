@@ -139,11 +139,7 @@ class ServicePanel extends Component {
       );
     });
 
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {serviceBoxes}
-      </div>
-    );
+    return <div style={{ display: 'flex', flexDirection: 'column' }}>{serviceBoxes}</div>;
   }
 }
 

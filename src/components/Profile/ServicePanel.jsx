@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Paper, Typography } from '@material-ui/core';
 import { withSnackbar } from 'notistack';
 
-
 class ServicePanel extends Component {
-
   render() {
     const serviceBoxes = this.props.dataJson.services.map((serviceObj, index) => {
       const { what, price } = serviceObj;

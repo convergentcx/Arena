@@ -147,7 +147,9 @@ class LaunchForm extends Component {
         this.setState({
           txStatus: 'success'
         });
-        setTimeout(()=>{this.props.history.push('/leaderboard')}, 2000)
+        setTimeout(() => {
+          this.props.history.push('/leaderboard');
+        }, 2000);
       }
     }, 100);
     this.setState({
