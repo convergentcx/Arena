@@ -3,26 +3,18 @@ import ipfsApi from 'ipfs-api';
 import Web3 from 'web3';
 import classes from './Profile.module.css';
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  Paper,
-  Popover,
-  Tab,
-  Tabs,
-  Typography
-} from '@material-ui/core';
+import { Button, Collapse, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 // import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
+import OwnerCard from '../../components/Profile/OwnerCard.jsx';
+
 import InfoCard from '../../components/Profile/QuickFacts.jsx';
 import ServicePanel from '../../components/Profile/ServicePanel.jsx';
+import ServiceDetails from '../../components/Profile/ServiceDetails.jsx';
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
 import Photo from '../../components/Profile/Photo.jsx';
 import ProfileChart from '../../components/Profile/ProfileChart.jsx';
@@ -49,7 +41,8 @@ class ProfileDetails extends Component {
       owner: '',
       poolBalance: '',
       symbol: '',
-      value: 0
+      value: 0,
+      expanded: false
     };
   }
 
@@ -128,6 +121,10 @@ class ProfileDetails extends Component {
     });
   };
 
+  handleExpandClick = () => {
+    this.setState(state => ({ expanded: !state.expanded }));
+  };
+
   render() {
     const contract = this.props.drizzleState.contracts[this.props.addr];
 
@@ -140,7 +137,7 @@ class ProfileDetails extends Component {
     }
 
     const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
-    // const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
+    const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
     const currentPrice = getPrice(
       this.state.inverseSlope,
@@ -195,6 +192,10 @@ class ProfileDetails extends Component {
               }}
             >
               <Tabs
+                style={{
+                  display: 'flex',
+                  justifyContent: 'right'
+                }}
                 value={this.state.value}
                 indicatorColor="secondary"
                 textColor="secondary"
@@ -202,7 +203,7 @@ class ProfileDetails extends Component {
                 fullWidth
               >
                 <Tab label="Summary" />
-                <Tab label="Contribute" />
+                <Tab label="Trade" />
                 <Tab label="Services" />
               </Tabs>
             </Grid>
@@ -225,7 +226,7 @@ class ProfileDetails extends Component {
           spacing={16}
           style={{ padding: '4%', paddingTop: '16px', minHeight: '80vh' }}
         >
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={3} className={classes.Box1}>
             <InfoCard
               contributors={this.state.contributors}
               marketCap={removeDecimals(removeDecimals(toBN(totalSupply).mul(currentPrice)))}
@@ -237,54 +238,97 @@ class ProfileDetails extends Component {
               width="100%"
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} className={classes.Box2}>
             {this.state.value === 1 && (
               <Paper>
-                <Grid container>
-                  <Grid item sm={12} style={{ display: 'flex' }}>
-                    <div style={{ flexGrow: 1 }} />
-                    <div style={{ padding: '15px' }}>
-                      <Button
-                        color="secondary"
-                        size="small"
-                        aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
-                        aria-haspopup="true"
-                        variant="contained"
-                        onClick={this.openPopover}
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </Grid>
-
-                  <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ width: '100%', height: '33vh' }}>
-                      <ProfileChart
-                        curveData={{
-                          totalSupply: totalSupply,
-                          poolBalance: this.state.poolBalance,
-                          inverseSlope: this.state.inverseSlope,
-                          exponent: this.state.exponent,
-                          currentPrice: currentPrice
-                        }}
-                        margin={{
-                          top: 30,
-                          right: 10,
-                          bottom: 30,
-                          left: 10
-                        }}
-                        width="100%"
-                        height="100%"
-                      />
-                    </div>
-                  </Grid>
-                </Grid>
-
                 <BuyAndSellButtons
                   contract={this.props.drizzle.contracts[this.props.addr]}
                   drizzleState={this.props.drizzleState}
                   symbol={this.state.symbol}
                 />
+                <Button
+                  color="secondary"
+                  size="small"
+                  aria-owns={this.state.anchorEl ? 'simple-popper' : undefined}
+                  aria-haspopup="true"
+                  variant="outlined"
+                  style={{ marginLeft: '5%', marginBottom: '5%' }}
+                  onClick={this.handleExpandClick}
+                  // onClick={this.openPopover}
+                >
+                  Details
+                </Button>
+                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      color: 'primary',
+                      padding: '11px',
+                      fontSize: '11px'
+                    }}
+                  >
+                    <Grid container>
+                      <Grid item md={12}>
+                        <Typography>
+                          Contract Address:
+                          {' ' + this.props.addr}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={12}>
+                        <Typography>
+                          Owner Address:
+                          {' ' + this.state.owner}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Current Price:
+                          {' ' + removeDecimals(currentPrice)} ETH
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Reserve Pool:
+                          {' ' + removeDecimals(this.state.poolBalance)} ETH{' '}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography>
+                          {' '}
+                          Total Supply:
+                          {' ' + removeDecimals(totalSupply)} {this.state.symbol}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                  <Grid container>
+                    <Grid item sm={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                      <div style={{ width: '100%', height: '33vh' }}>
+                        <ProfileChart
+                          curveData={{
+                            totalSupply: totalSupply,
+                            poolBalance: this.state.poolBalance,
+                            inverseSlope: this.state.inverseSlope,
+                            exponent: this.state.exponent,
+                            currentPrice: currentPrice
+                          }}
+                          margin={{
+                            top: 30,
+                            right: 10,
+                            bottom: 30,
+                            left: 10
+                          }}
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Collapse>
               </Paper>
             )}
             {this.state.value === 0 && (
@@ -300,7 +344,7 @@ class ProfileDetails extends Component {
                   variant="subtitle1"
                   style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
                 >
-                  my story
+                  {this.state.name}'s story
                 </Typography>
                 <Typography
                   variant="h6"
@@ -311,12 +355,24 @@ class ProfileDetails extends Component {
               </Paper>
             )}
             {this.state.value === 2 && (
-              <Paper style={{ textAlign: 'center', minHeight: '50vh', padding: '2%' }}>
-                <Typography style={{ color: 'primary' }}>coming soon</Typography>
+              <Paper style={{ minHeight: '50vh', padding: '2%' }}>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                >
+                  offered services
+                </Typography>
+                <ServiceDetails
+                  dataJson={this.state.dataJson}
+                  contract={this.props.drizzle.contracts[this.props.addr]}
+                  drizzleState={this.props.drizzleState}
+                />
               </Paper>
             )}
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={3} className={classes.Box3}>
+            <OwnerCard symbol={this.state.symbol} tokenBalance={yourBalance} />
+
             <ServicePanel
               dataJson={this.state.dataJson}
               contract={this.props.drizzle.contracts[this.props.addr]}
@@ -324,52 +380,6 @@ class ProfileDetails extends Component {
             />
           </Grid>
         </Grid>
-
-        {/* Popover */}
-        <Popover
-          id="simple-popper"
-          anchorEl={this.state.anchorEl}
-          onClose={() => this.setState({ anchorEl: null })}
-          open={Boolean(this.state.anchorEl)}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-        >
-          <Card style={{ width: '440px', padding: '11px', fontSize: '11px' }}>
-            <CardHeader title="Contract Details" style={{ textAlign: 'center' }} />
-            <CardContent style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-              <Grid container>
-                <Grid item md={12}>
-                  Contract Address
-                  <p>{this.props.addr}</p>
-                </Grid>
-                <Grid item md={12}>
-                  Owner Address
-                  <p>{this.state.owner}</p>
-                </Grid>
-                <Grid item md={4}>
-                  Price
-                  <p>{removeDecimals(currentPrice)} ETH</p>
-                </Grid>
-                <Grid item md={4}>
-                  Reserve Pool
-                  <p>{removeDecimals(this.state.poolBalance)} ETH </p>
-                </Grid>
-                <Grid item md={4}>
-                  Total Supply
-                  <p>
-                    {removeDecimals(totalSupply)} {this.state.symbol}
-                  </p>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Popover>
       </div>
     );
   }
