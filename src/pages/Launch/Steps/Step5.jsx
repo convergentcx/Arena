@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, CardContent, Grid, LinearProgress, Typography } from '@material-ui/core';
+import {
+  Button,
+  CardContent,
+  Grid,
+  LinearProgress,
+  TextField,
+  Typography
+} from '@material-ui/core';
 import classes from './Steps.module.css';
 import { Close } from '@material-ui/icons';
 import { HelpOutline } from '@material-ui/icons';
@@ -28,20 +35,59 @@ const step3 = props => (
       </div>
       <div className={classes.FormBox}>
         <Grid container>
-          <Grid item xs={8} style={{ marginTop: '2vh' }}>
-            Name: {props.name}
+          <Grid item xs={10} style={{ marginTop: '2vh' }}>
+            <TextField
+              label="Token Name"
+              value={`${props.name}`}
+              InputProps={{
+                readOnly: true
+              }}
+              fullWidth
+            />
           </Grid>
-          <Grid item xs={4} style={{ marginTop: '2vh' }}>
-            Symbol: {props.symbol}
+          <Grid item xs={2} style={{ marginTop: '2vh' }}>
+            <TextField
+              label="Ticker Symbol"
+              value={`${props.symbol}`}
+              InputProps={{
+                readOnly: true
+              }}
+              style={{ marginLeft: '30px' }}
+            />
           </Grid>
           <Grid item xs={12} style={{ marginTop: '2vh' }}>
-            Description: {props.description}
+            <TextField
+              label="Description"
+              value={`${props.description}`}
+              InputProps={{
+                readOnly: true
+              }}
+              fullWidth
+              multiline
+            />
           </Grid>
-          <Grid item xs={12} style={{ marginTop: '2vh' }}>
-            Tags: {props.tags}
+          <TextField
+            label="Tags"
+            value={`${props.tags}`}
+            InputProps={{
+              readOnly: true
+            }}
+            fullWidth
+            multiline
+          />
+          <Grid item md={10} style={{ marginTop: '2vh' }}>
+            <TextField label="Service 1" defaultValue={`${props.service0}`} fullWidth />
           </Grid>
-          <Grid item xs={12} style={{ marginTop: '2vh' }}>
-            Services: {props.tags}
+
+          <Grid item md={2} style={{ marginTop: '2vh' }}>
+            <TextField
+              label={'Price 1'}
+              defaultValue={`${props.price0} ${props.symbol}`}
+              style={{ marginLeft: '30px' }}
+              InputProps={{
+                readOnly: true
+              }}
+            />
           </Grid>
         </Grid>
       </div>

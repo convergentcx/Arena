@@ -48,6 +48,7 @@ class LaunchForm extends Component {
     this.setState({
       [name]: value
     });
+    console.log(this.state);
   };
 
   addService = () => {
@@ -235,6 +236,8 @@ class LaunchForm extends Component {
             name={this.state.name}
             description={this.state.description}
             tags={this.state.tags}
+            service0={this.state['service-0']}
+            price0={this.state['price-0']}
           />
         </StepWizard>
       </Card>
