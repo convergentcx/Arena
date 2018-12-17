@@ -11,7 +11,8 @@ const step1 = props => (
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
-        {/* Popover: This is free of cost, except transaction fees. If you are not sure if this is for you, have a look at existing personal economies. */}
+        {/* Popover: This is free of cost, except transaction fees. 
+        If you are not sure if this is for you, have a look at existing personal economies. */}
       </div>
       <Typography variant="h6" color="primary.main">
         {' '}

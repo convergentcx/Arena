@@ -70,7 +70,8 @@ const step2 = props => (
                 name="name"
                 placeholder=""
                 onChange={props.inputUpdate}
-                helperText="Choose a name that conveys the nature of the value you want to tokenize."
+                helperText="Choose a name that conveys the
+                 nature of the value you want to tokenize."
                 style={{ margin: '10px' }}
               />
             </Grid>
