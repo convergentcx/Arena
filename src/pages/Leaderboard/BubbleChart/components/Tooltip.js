@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as d3 from 'd3';
-import './Tooltip.css';
+import * as d3 from "d3";
+import "./Tooltip.css";
 
 /*
  * Creates tooltip with provided id that
@@ -12,15 +12,15 @@ function floatingTooltip(tooltipId, width) {
   // Local variable to hold tooltip div for
   // manipulation in other functions.
   const tt = d3
-    .select('body')
-    .append('div')
-    .attr('class', 'tooltip')
-    .attr('id', tooltipId)
-    .style('pointer-events', 'none');
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .attr("id", tooltipId)
+    .style("pointer-events", "none");
 
   // Set a width if it is provided.
   if (width) {
-    tt.style('width', width);
+    tt.style("width", width);
   }
 
   // Initially it is hidden.
@@ -34,7 +34,7 @@ function floatingTooltip(tooltipId, width) {
    * event is d3.event for positioning.
    */
   function showTooltip(content, event) {
-    tt.style('opacity', 1.0).html(content);
+    tt.style("opacity", 1.0).html(content);
 
     updatePosition(event);
   }
@@ -43,7 +43,7 @@ function floatingTooltip(tooltipId, width) {
    * Hide the tooltip div.
    */
   function hideTooltip() {
-    tt.style('opacity', 0.0);
+    tt.style("opacity", 0.0);
   }
 
   /*
@@ -54,8 +54,8 @@ function floatingTooltip(tooltipId, width) {
     const xOffset = 20;
     const yOffset = 10;
 
-    const ttw = tt.style('width');
-    const tth = tt.style('height');
+    const ttw = tt.style("width");
+    const tth = tt.style("height");
 
     const wscrY = window.scrollY;
     const wscrX = window.scrollX;
@@ -80,7 +80,7 @@ function floatingTooltip(tooltipId, width) {
       tttop = curY + yOffset;
     }
 
-    tt.style('top', `${tttop}px`).style('left', `${ttleft}px`);
+    tt.style("top", `${tttop}px`).style("left", `${ttleft}px`);
   }
 
   return {
@@ -90,5 +90,5 @@ function floatingTooltip(tooltipId, width) {
   };
 }
 
-const tooltip = floatingTooltip('gates_tooltip', 240);
+const tooltip = floatingTooltip("gates_tooltip", 240);
 export default tooltip;

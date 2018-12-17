@@ -3,17 +3,24 @@
  * the IPFS logic for submitting the new information to the network.
  */
 
-import React, { Component } from 'react';
-import { Button, CircularProgress, Grid, Paper, TextField, Typography } from '@material-ui/core';
-import { withSnackbar } from 'notistack';
+import React, { Component } from "react";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  Paper,
+  TextField,
+  Typography
+} from "@material-ui/core";
+import { withSnackbar } from "notistack";
 
-import EditServices from '../EditServices';
-import EditDetails from '../EditDetails';
+import EditServices from "../EditServices";
+import EditDetails from "../EditDetails";
 
-import { getBytes32FromMultihash, makeCancelable } from '../../../../util';
+import { getBytes32FromMultihash, makeCancelable } from "../../../../util";
 
-import ipfsApi from 'ipfs-api';
-const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+import ipfsApi from "ipfs-api";
+const ipfs = ipfsApi("ipfs.infura.io", "5001", { protocol: "https" });
 
 class EditColumn extends Component {
   state = {
@@ -40,17 +47,17 @@ class EditColumn extends Component {
     const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
-      if (status === 'pending' && this.state.txStatus !== 'pending') {
-        enqueueSnackbar('Waiting for transaction to be mined...');
+      if (status === "pending" && this.state.txStatus !== "pending") {
+        enqueueSnackbar("Waiting for transaction to be mined...");
         this.setState({
-          txStatus: 'pending'
+          txStatus: "pending"
         });
       }
-      if (status === 'success' && this.state.txStatus !== 'success') {
-        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+      if (status === "success" && this.state.txStatus !== "success") {
+        enqueueSnackbar("Transaction mined!", { variant: "success" });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: "success"
         });
       }
     }, 100);
@@ -65,16 +72,21 @@ class EditColumn extends Component {
 
   save = async () => {
     // First save to IPFS
-    const updatedServices = this.props.dataJson.services.map((serviceObj, index) => {
-      let what, price;
-      if (this.state[`service-${index}`] !== serviceObj.what) {
-        what = this.state[`service-${index}`];
+    const updatedServices = this.props.dataJson.services.map(
+      (serviceObj, index) => {
+        let what, price;
+        if (this.state[`service-${index}`] !== serviceObj.what) {
+          what = this.state[`service-${index}`];
+        }
+        if (this.state[`price-${index}`] !== serviceObj.price) {
+          price = this.state[`price-${index}`];
+        }
+        return {
+          what: what || serviceObj.what,
+          price: price || serviceObj.price
+        };
       }
-      if (this.state[`price-${index}`] !== serviceObj.price) {
-        price = this.state[`price-${index}`];
-      }
-      return { what: what || serviceObj.what, price: price || serviceObj.price };
-    });
+    );
 
     const newDataJson = this.props.dataJson;
     delete newDataJson.services;
@@ -92,9 +104,12 @@ class EditColumn extends Component {
         // let stackId;
         const mhash = getBytes32FromMultihash(ipfsHash[0].path);
 
-        const stackId = this.props.myContract.methods.updateData.cacheSend(mhash.digest, {
-          from: this.props.drizzleState.accounts[0]
-        });
+        const stackId = this.props.myContract.methods.updateData.cacheSend(
+          mhash.digest,
+          {
+            from: this.props.drizzleState.accounts[0]
+          }
+        );
 
         this.setState({ editing: false, loading: false });
         this.waitForMined(stackId);
@@ -129,12 +144,15 @@ class EditColumn extends Component {
           mhash={this.props.mhash}
           symbol={this.props.symbol}
         />
-        <Paper style={{ marginTop: '16px', padding: '5%' }}>
+        <Paper style={{ marginTop: "16px", padding: "5%" }}>
           <Typography color="textSecondary" gutterBottom>
             Your Story
           </Typography>
           {this.state.loading ? (
-            <Grid container style={{ height: '', padding: '5%', textAlign: 'center' }}>
+            <Grid
+              container
+              style={{ height: "", padding: "5%", textAlign: "center" }}
+            >
               <Grid item xs={12}>
                 <CircularProgress />
               </Grid>
@@ -144,7 +162,8 @@ class EditColumn extends Component {
               name="description"
               label="Description"
               placeholder={
-                this.state.description.slice(0, 27) + '...' || 'My token will give you ..'
+                this.state.description.slice(0, 27) + "..." ||
+                "My token will give you .."
               }
               helperText="Tell your contributors why you are going to the moon"
               fullWidth
@@ -163,11 +182,11 @@ class EditColumn extends Component {
         </Paper>
         <Button
           variant="contained"
-          color={this.state.editing ? 'primary' : 'secondary'}
-          style={{ width: '100%', marginTop: '16px' }}
+          color={this.state.editing ? "primary" : "secondary"}
+          style={{ width: "100%", marginTop: "16px" }}
           onClick={this.state.editing ? this.save : this.edit}
         >
-          {this.state.editing ? 'SUBMIT TO CHAIN' : 'EDIT'}
+          {this.state.editing ? "SUBMIT TO CHAIN" : "EDIT"}
         </Button>
       </div>
     );

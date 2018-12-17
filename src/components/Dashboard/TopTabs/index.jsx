@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-import { Tab, Tabs } from '@material-ui/core';
+import { Tab, Tabs } from "@material-ui/core";
 
 class TopTabs extends Component {
   state = {
@@ -20,7 +20,9 @@ class TopTabs extends Component {
           <Tab
             label={token.name}
             key={index}
-            onClick={() => this.props.history.push(`/dashboard/${token.address}`)}
+            onClick={() =>
+              this.props.history.push(`/dashboard/${token.address}`)
+            }
           />
         );
       });
@@ -29,7 +31,7 @@ class TopTabs extends Component {
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
-        style={{ paddingTop: '2%', paddingLeft: '5%', paddingRight: '5%' }}
+        style={{ paddingTop: "2%", paddingLeft: "5%", paddingRight: "5%" }}
         fullWidth
         indicatorColor="secondary"
         textColor="secondary"

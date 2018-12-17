@@ -1,5 +1,5 @@
-import React from 'react';
-import { DrizzleContext } from 'drizzle-react';
+import React from "react";
+import { DrizzleContext } from "drizzle-react";
 
 const withContext = WrappedComponent => props => (
   <DrizzleContext.Consumer>
@@ -7,11 +7,17 @@ const withContext = WrappedComponent => props => (
       const { drizzle, drizzleState, initialized } = drizzleContext;
 
       if (!initialized) {
-        return 'Loading...';
+        return "Loading...";
         // TODO: Convergent branded loading page based on the one in billboard.
       }
 
-      return <WrappedComponent {...props} drizzle={drizzle} drizzleState={drizzleState} />;
+      return (
+        <WrappedComponent
+          {...props}
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+        />
+      );
     }}
   </DrizzleContext.Consumer>
 );

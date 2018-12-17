@@ -42,5 +42,8 @@ module.exports = {
     "no-undef": [
       "warn",
     ],
-  }
+    "comma-dangle": [
+      "always-multiline",
+    ],
+  },
 };

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Chip, Grid, Paper, TextField } from '@material-ui/core';
-import Photo from '../../../Profile/Photo.jsx';
+import React, { Component } from "react";
+import { Chip, Grid, Paper, TextField } from "@material-ui/core";
+import Photo from "../../../Profile/Photo.jsx";
 
 export default class EditDetails extends Component {
   state = {
@@ -10,9 +10,9 @@ export default class EditDetails extends Component {
 
   async componentDidMount() {
     const { image } = this.props.jsonData;
-    let pic = '';
+    let pic = "";
     if (image.data) {
-      pic = Buffer.from(image.data).toString('base64');
+      pic = Buffer.from(image.data).toString("base64");
     }
     this.setState({ pic });
   }
@@ -36,12 +36,23 @@ export default class EditDetails extends Component {
       });
 
     return (
-      <Paper style={{ height: '', marginBottom: '16px' }}>
+      <Paper style={{ height: "", marginBottom: "16px" }}>
         <Grid container>
-          <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
-            <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />
+          <Grid
+            item
+            xs={4}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Photo
+              pic={"data:image/jpeg;base64," + this.state.pic}
+              width="100px"
+            />
           </Grid>
-          <Grid item xs={8} style={{ display: 'flex', justifyContent: 'center' }}>
+          <Grid
+            item
+            xs={8}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <TextField
               id="standard-read-only-input"
               value={this.state.displayName}
@@ -56,10 +67,10 @@ export default class EditDetails extends Component {
             item
             xs={12}
             style={{
-              marginTop: '8px',
-              marginBottom: '8px',
-              display: 'flex',
-              justifyContent: 'space-around'
+              marginTop: "8px",
+              marginBottom: "8px",
+              display: "flex",
+              justifyContent: "space-around"
             }}
           >
             {chips}

@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import * as d3 from "d3";
 
 /*
  * This data manipulation function takes the raw data from
@@ -55,5 +55,5 @@ export function createNodes(rawData) {
 
 export const fillColor = d3
   .scaleOrdinal()
-  .domain(['low', 'medium', 'high'])
-  .range(['#d84b2a', '#beccae', '#7aa25c']);
+  .domain(["low", "medium", "high"])
+  .range(["#d84b2a", "#beccae", "#7aa25c"]);

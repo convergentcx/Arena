@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as d3 from 'd3';
-import { fillColor } from '../utils';
-import tooltip from './Tooltip';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import * as d3 from "d3";
+import { fillColor } from "../utils";
+import tooltip from "./Tooltip";
+import { withRouter } from "react-router-dom";
 
 // export default class Bubbles extends React.Component {
 class Bubbles extends React.Component {
@@ -14,21 +14,21 @@ class Bubbles extends React.Component {
       .forceSimulation()
       .velocityDecay(0.2)
       .force(
-        'x',
+        "x",
         d3
           .forceX()
           .strength(forceStrength)
           .x(center.x)
       )
       .force(
-        'y',
+        "y",
         d3
           .forceY()
           .strength(forceStrength)
           .y(center.y)
       )
-      .force('charge', d3.forceManyBody().strength(this.charge.bind(this)))
-      .on('tick', this.ticked.bind(this))
+      .force("charge", d3.forceManyBody().strength(this.charge.bind(this)))
+      .on("tick", this.ticked.bind(this))
       .stop();
   }
 
@@ -52,14 +52,16 @@ class Bubbles extends React.Component {
   }
 
   onRef = ref => {
-    this.setState({ g: d3.select(ref) }, () => this.renderBubbles(this.props.data));
+    this.setState({ g: d3.select(ref) }, () =>
+      this.renderBubbles(this.props.data)
+    );
   };
 
   ticked() {
     this.state.g
-      .selectAll('.bubble')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y);
+      .selectAll(".bubble")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
   }
 
   charge(d) {
@@ -71,14 +73,14 @@ class Bubbles extends React.Component {
     if (groupByYear) {
       this.simulation
         .force(
-          'x',
+          "x",
           d3
             .forceX()
             .strength(forceStrength)
             .x(d => yearCenters[d.threshold].x)
         )
         .force(
-          'y',
+          "y",
           d3
             .forceY()
             .strength(forceStrength)
@@ -87,14 +89,14 @@ class Bubbles extends React.Component {
     } else {
       this.simulation
         .force(
-          'x',
+          "x",
           d3
             .forceX()
             .strength(forceStrength)
             .x(center.x)
         )
         .force(
-          'y',
+          "y",
           d3
             .forceY()
             .strength(forceStrength)
@@ -109,7 +111,7 @@ class Bubbles extends React.Component {
   };
 
   renderBubbles(data) {
-    const bubbles = this.state.g.selectAll('.bubble').data(data, d => d.id);
+    const bubbles = this.state.g.selectAll(".bubble").data(data, d => d.id);
 
     // Exit
     bubbles.exit().remove();
@@ -117,17 +119,17 @@ class Bubbles extends React.Component {
     // Enter
     const bubblesE = bubbles
       .enter()
-      .append('circle')
-      .classed('bubble', true)
-      .attr('r', 0)
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('fill', d => fillColor(d.group))
-      .attr('stroke', d => d3.rgb(fillColor(d.group)).darker())
-      .attr('stroke-width', 2)
-      .on('mouseover', showDetail) // eslint-disable-line
-      .on('mouseout', hideDetail) // eslint-disable-line
-      .on('click', d => {
+      .append("circle")
+      .classed("bubble", true)
+      .attr("r", 0)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("fill", d => fillColor(d.group))
+      .attr("stroke", d => d3.rgb(fillColor(d.group)).darker())
+      .attr("stroke-width", 2)
+      .on("mouseover", showDetail) // eslint-disable-line
+      .on("mouseout", hideDetail) // eslint-disable-line
+      .on("click", d => {
         this.goToProfile(d.address);
         hideDetail(d);
       });
@@ -135,8 +137,8 @@ class Bubbles extends React.Component {
     bubblesE
       .transition()
       .duration(2000)
-      .attr('r', d => d.radius)
-      .on('end', () => {
+      .attr("r", d => d.radius)
+      .on("end", () => {
         this.simulation
           .nodes(data)
           .alpha(1)
@@ -181,14 +183,18 @@ Bubbles.propTypes = {
  */
 export function showDetail(d) {
   // change outline to indicate hover state.
-  d3.select(this).style('cursor', 'pointer');
+  d3.select(this).style("cursor", "pointer");
 
-  d3.select(this).attr('stroke', 'black');
+  d3.select(this).attr("stroke", "black");
 
   const content =
-    `<span class="name">Name: </span><span class="value">${d.name}</span><br/>` +
+    `<span class="name">Name: </span><span class="value">${
+      d.name
+    }</span><br/>` +
     // `<span class="name">Amount: </span><span class="value">$${
-    `<span class="name">Market Cap: </span><span class="value">Ξ${d.value}</span><br/>` +
+    `<span class="name">Market Cap: </span><span class="value">Ξ${
+      d.value
+    }</span><br/>` +
     `<span class="name">Tags: </span><span class="value">${d.tags}</span>`;
 
   tooltip.showTooltip(content, d3.event);
@@ -198,10 +204,10 @@ export function showDetail(d) {
  * Hides tooltip
  */
 export function hideDetail(d) {
-  d3.select(this).style('cursor', 'default');
+  d3.select(this).style("cursor", "default");
 
   // reset outline
-  d3.select(this).attr('stroke', d3.rgb(fillColor(d.group)).darker());
+  d3.select(this).attr("stroke", d3.rgb(fillColor(d.group)).darker());
 
   tooltip.hideTooltip();
 }

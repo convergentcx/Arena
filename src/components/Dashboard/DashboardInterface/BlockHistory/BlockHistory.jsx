@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PriceChart from '../PriceChart/PriceChart';
+import React, { Component } from "react";
+import PriceChart from "../PriceChart/PriceChart";
 
 class BlockHistory extends Component {
   state = {
@@ -27,7 +27,11 @@ class BlockHistory extends Component {
     return (
       <div className="blockHistory">
         {showChart && (
-          <PriceChart events={sortedEvents} symbol={symbol} currentPrice={currentPrice} />
+          <PriceChart
+            events={sortedEvents}
+            symbol={symbol}
+            currentPrice={currentPrice}
+          />
         )}
       </div>
     );

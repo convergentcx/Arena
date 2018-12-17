@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Button, Grid, TextField } from '@material-ui/core';
-import { withSnackbar } from 'notistack';
+import React, { Component } from "react";
+import { Button, Grid, TextField } from "@material-ui/core";
+import { withSnackbar } from "notistack";
 
-import { addDecimals, removeDecimals } from '../../util';
+import { addDecimals, removeDecimals } from "../../util";
 
 class BuyAndSellButtons extends Component {
   constructor(props) {
@@ -21,10 +21,13 @@ class BuyAndSellButtons extends Component {
       return;
     }
 
-    const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
-      from: this.props.drizzleState.accounts[0],
-      value: this.state.priceInEther
-    });
+    const buyStackId = this.props.contract.methods.mint.cacheSend(
+      addDecimals(this.state.buyAmt),
+      {
+        from: this.props.drizzleState.accounts[0],
+        value: this.state.priceInEther
+      }
+    );
     this.waitForMined(buyStackId);
   };
 
@@ -42,10 +45,12 @@ class BuyAndSellButtons extends Component {
     });
 
     // Update price
-    if (name === 'buyAmt') {
+    if (name === "buyAmt") {
       let priceInEther = 0;
       if (Number(value) !== 0) {
-        priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+        priceInEther = await this.props.contract.methods
+          .priceToMint(addDecimals(value))
+          .call();
       }
       this.setState({
         priceInEther
@@ -53,10 +58,12 @@ class BuyAndSellButtons extends Component {
     }
 
     // Update reward
-    if (name === 'sellAmt') {
+    if (name === "sellAmt") {
       let rewardInEther = 0;
       if (Number(value) !== 0) {
-        rewardInEther = await this.props.contract.methods.rewardForBurn(addDecimals(value)).call();
+        rewardInEther = await this.props.contract.methods
+          .rewardForBurn(addDecimals(value))
+          .call();
       }
       this.setState({
         rewardInEther
@@ -82,17 +89,17 @@ class BuyAndSellButtons extends Component {
     const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
-      if (status === 'pending' && this.state.txStatus !== 'pending') {
-        enqueueSnackbar('Waiting for transaction to be mined...');
+      if (status === "pending" && this.state.txStatus !== "pending") {
+        enqueueSnackbar("Waiting for transaction to be mined...");
         this.setState({
-          txStatus: 'pending'
+          txStatus: "pending"
         });
       }
-      if (status === 'success' && this.state.txStatus !== 'success') {
-        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+      if (status === "success" && this.state.txStatus !== "success") {
+        enqueueSnackbar("Transaction mined!", { variant: "success" });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: "success"
         });
       }
     }, 100);
@@ -107,7 +114,12 @@ class BuyAndSellButtons extends Component {
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
+          style={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            padding: "5%"
+          }}
         >
           <TextField
             type="number"
@@ -122,7 +134,7 @@ class BuyAndSellButtons extends Component {
             color="secondary"
             variant="contained"
             onClick={this.buyHandler}
-            style={{ height: '100%' }}
+            style={{ height: "100%" }}
           >
             Buy
           </Button>
@@ -131,7 +143,12 @@ class BuyAndSellButtons extends Component {
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
+          style={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            padding: "5%"
+          }}
         >
           <TextField
             type="number"
@@ -146,7 +163,7 @@ class BuyAndSellButtons extends Component {
             color="secondary"
             variant="contained"
             onClick={this.sellHandler}
-            style={{ height: '100%' }}
+            style={{ height: "100%" }}
           >
             Sell
           </Button>

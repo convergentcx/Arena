@@ -1,21 +1,21 @@
 /* eslint-disable */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { HashRouter } from "react-router-dom";
 
 /// Drizzle
-import { Drizzle, generateStore } from 'drizzle';
-import { DrizzleContext } from 'drizzle-react';
+import { Drizzle, generateStore } from "drizzle";
+import { DrizzleContext } from "drizzle-react";
 
 /// Styles
-import './styles/index.css';
+import "./styles/index.css";
 
 /// Our components
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
 /// Contract artifacts
-import PersonalEconomyFactory from './build/contracts/PersonalEconomyFactory.json';
+import PersonalEconomyFactory from "./build/contracts/PersonalEconomyFactory.json";
 
 const options = {
   contracts: [PersonalEconomyFactory]
@@ -30,7 +30,7 @@ ReactDOM.render(
       <App />
     </HashRouter>
   </DrizzleContext.Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

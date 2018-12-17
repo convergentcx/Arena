@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Area,
   AreaChart,
@@ -8,15 +8,20 @@ import {
   Tooltip,
   XAxis,
   YAxis
-} from 'recharts';
-import { withTheme } from '@material-ui/core/styles';
+} from "recharts";
+import { withTheme } from "@material-ui/core/styles";
 
-import { getPrice, removeDecimals } from '../../util';
-import { utils } from 'web3';
+import { getPrice, removeDecimals } from "../../util";
+import { utils } from "web3";
 
 class ProfileChart extends Component {
   getChartData = () => {
-    let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
+    let {
+      currentPrice,
+      exponent,
+      inverseSlope,
+      totalSupply
+    } = this.props.curveData;
 
     // poolBalance = utils.toBN(poolBalance);
     totalSupply = utils.toBN(totalSupply);
@@ -58,8 +63,15 @@ class ProfileChart extends Component {
 
     return (
       <ResponsiveContainer height={height} width={width}>
-        <AreaChart style={{ margin: 'auto' }} data={data} margin={this.props.margin}>
-          <CartesianGrid strokeDasharray="2 2" stroke={this.props.theme.palette.secondary.main} />
+        <AreaChart
+          style={{ margin: "auto" }}
+          data={data}
+          margin={this.props.margin}
+        >
+          <CartesianGrid
+            strokeDasharray="2 2"
+            stroke={this.props.theme.palette.secondary.main}
+          />
           <XAxis
             dataKey="supply"
             type="number"
@@ -77,17 +89,17 @@ class ProfileChart extends Component {
           <Area
             isAnimationActive={false}
             dots={false}
-            stackOffset={'none'}
+            stackOffset={"none"}
             dataKey="value"
-            name={'price'}
-            key={'price'}
+            name={"price"}
+            key={"price"}
             stroke={this.props.theme.palette.secondary.main}
             fill="none"
           />
 
           <Area
             isAnimationActive={false}
-            stackOffset={'none'}
+            stackOffset={"none"}
             dataKey="sell"
             stroke={this.props.theme.palette.secondary.main}
             fill={this.props.theme.palette.secondary.main}

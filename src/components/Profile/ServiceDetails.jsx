@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Button, TextField, Typography } from '@material-ui/core';
-import { withSnackbar } from 'notistack';
+import React, { Component } from "react";
+import { Button, TextField, Typography } from "@material-ui/core";
+import { withSnackbar } from "notistack";
 
-import { addDecimals, toBN } from '../../util';
+import { addDecimals, toBN } from "../../util";
 
 class ServicePanel extends Component {
   constructor(props) {
     super(props);
-    this.state = { interval: null, message: '', txStatus: null };
+    this.state = { interval: null, message: "", txStatus: null };
   }
 
   inputUpdate = event => {
@@ -19,7 +19,7 @@ class ServicePanel extends Component {
 
   requestETH = async (serviceObj, message) => {
     if (!message) {
-      return alert('A message is required!');
+      return alert("A message is required!");
     }
 
     const amountNeeded = await this.props.contract.methods
@@ -30,7 +30,7 @@ class ServicePanel extends Component {
     ];
 
     if (toBN(yourBalance).lt(toBN(amountNeeded))) {
-      return alert('You don\'t have enough ether to do this action!');
+      return alert("You don't have enough ether to do this action!");
     }
 
     const stackId = this.props.contract.methods.requestWithEth.cacheSend(
@@ -46,14 +46,16 @@ class ServicePanel extends Component {
 
   request = async (serviceObj, message) => {
     if (!message) {
-      return alert('A message is required!');
+      return alert("A message is required!");
     }
 
     const requestorBalance = await this.props.contract.methods
       .balanceOf(this.props.drizzleState.accounts[0])
       .call();
     if (toBN(requestorBalance).lt(toBN(addDecimals(serviceObj.price)))) {
-      return alert(`You don't have enough ${this.props.dataJson.symbol} to do this action!`);
+      return alert(
+        `You don't have enough ${this.props.dataJson.symbol} to do this action!`
+      );
     }
 
     const stackId = this.props.contract.methods.requestWithToken.cacheSend(
@@ -77,17 +79,17 @@ class ServicePanel extends Component {
     const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
-      if (status === 'pending' && this.state.txStatus !== 'pending') {
-        enqueueSnackbar('Waiting for transaction to be mined...');
+      if (status === "pending" && this.state.txStatus !== "pending") {
+        enqueueSnackbar("Waiting for transaction to be mined...");
         this.setState({
-          txStatus: 'pending'
+          txStatus: "pending"
         });
       }
-      if (status === 'success' && this.state.txStatus !== 'success') {
-        enqueueSnackbar('Transaction mined!', { variant: 'success' });
+      if (status === "success" && this.state.txStatus !== "success") {
+        enqueueSnackbar("Transaction mined!", { variant: "success" });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: "success"
         });
       }
     }, 100);
@@ -97,49 +99,67 @@ class ServicePanel extends Component {
   };
 
   render() {
-    const serviceBoxes = this.props.dataJson.services.map((serviceObj, index) => {
-      const { what, price } = serviceObj;
-      return (
-        <div key={index}>
-          <Typography variant="h5" style={{ fontWeight: 'bold', color: 'primary' }}>
-            {what || 'Title'}
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            style={{ color: '#primary', fontSize: '14px', fontWeight: 'bold', marginTop: '6px' }}
-          >
-            {price || 44} {this.props.dataJson.symbol}
-          </Typography>
-          <div style={{ height: '6px' }} />
-          <TextField
-            fullWidth
-            placeholder="Type your message here..."
-            type="text"
-            name={`message-${index}`}
-            onChange={this.inputUpdate}
-          />
-          <div style={{ marginTop: '6px', textAlign: 'right' }}>
-            <Button
-              color="secondary"
-              size="small"
-              onClick={() => this.requestETH(serviceObj, this.state[`message-${index}`])}
+    const serviceBoxes = this.props.dataJson.services.map(
+      (serviceObj, index) => {
+        const { what, price } = serviceObj;
+        return (
+          <div key={index}>
+            <Typography
+              variant="h5"
+              style={{ fontWeight: "bold", color: "primary" }}
             >
-              Request with ETH
-            </Button>
-            <Button
-              color="secondary"
-              size="small"
-              onClick={() => this.request(serviceObj, this.state[`message-${index}`])}
+              {what || "Title"}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              style={{
+                color: "#primary",
+                fontSize: "14px",
+                fontWeight: "bold",
+                marginTop: "6px"
+              }}
             >
-              Request with {this.props.dataJson.symbol}
-            </Button>
+              {price || 44} {this.props.dataJson.symbol}
+            </Typography>
+            <div style={{ height: "6px" }} />
+            <TextField
+              fullWidth
+              placeholder="Type your message here..."
+              type="text"
+              name={`message-${index}`}
+              onChange={this.inputUpdate}
+            />
+            <div style={{ marginTop: "6px", textAlign: "right" }}>
+              <Button
+                color="secondary"
+                size="small"
+                onClick={() =>
+                  this.requestETH(serviceObj, this.state[`message-${index}`])
+                }
+              >
+                Request with ETH
+              </Button>
+              <Button
+                color="secondary"
+                size="small"
+                onClick={() =>
+                  this.request(serviceObj, this.state[`message-${index}`])
+                }
+              >
+                Request with {this.props.dataJson.symbol}
+              </Button>
+            </div>
+            <hr />
           </div>
-          <hr />
-        </div>
-      );
-    });
+        );
+      }
+    );
 
-    return <div style={{ display: 'flex', flexDirection: 'column' }}>{serviceBoxes}</div>;
+    return (
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {serviceBoxes}
+      </div>
+    );
   }
 }
 
