@@ -9,9 +9,8 @@ import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
-import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
-
 import {
+  BuyAndSellButtons,
   InfoCard,
   OwnerCard,
   Photo,
