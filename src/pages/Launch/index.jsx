@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  LinearProgress,
-  TextField
-} from '@material-ui/core';
-import { Add, Remove } from '@material-ui/icons';
+import { Card, Grid, TextField } from '@material-ui/core';
 import dataUriToBuffer from 'data-uri-to-buffer';
 import ipfsApi from 'ipfs-api';
-import Dropzone from 'react-dropzone';
 import { withSnackbar } from 'notistack';
-
+import StepWizard from 'react-step-wizard';
+import Welcome from './Steps/Step1';
+import NamePhoto from './Steps/Step2';
+import Description from './Steps/Step3';
+import Services from './Steps/Step4';
+import Review from './Steps/Step5';
 import withContext from '../../hoc/withContext';
 import { withRouter } from 'react-router-dom';
 
 import { getBytes32FromMultihash } from '../../util';
 
-import AttributeInput from './AttributeInput';
-
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+
+// to prevent default transitions of StepWizard:
+let custom = {
+  enterRight: 'your custom css transition classes',
+  enterLeft: 'your custom css transition classes',
+  exitRight: 'your custom css transition classes',
+  exitLeft: 'your custom css transition classes'
+};
 
 class LaunchForm extends Component {
   constructor(props) {
@@ -36,7 +37,9 @@ class LaunchForm extends Component {
       tooFew: false,
       tooMany: false,
       tags: [],
-      enteredTag: ''
+      enteredTag: '',
+      description: 'I am XYZ and this token shall represent the value of my %3@#...',
+      'price-0': 1
     };
   }
 
@@ -161,32 +164,34 @@ class LaunchForm extends Component {
     this.setState({ selectedItems });
   };
 
-  render() {
-    const { file } = this.state;
+  cancel = () => {
+    this.props.history.push('/');
+  };
 
+  render() {
     let moreServices = [];
     (() => {
       let i = 0;
       while (i < this.state.rows) {
         moreServices.push(
           <Grid container style={{ marginTop: '1vh' }}>
-            <Grid item xs={9}>
+            <Grid item xs={10}>
               <TextField
                 label="Service"
                 type="text"
                 name={`service-${i + 1}`}
                 onChange={this.inputUpdate}
-                style={{ width: '90%' }}
+                fullWidth
               />
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <TextField
-                label="Price"
+                label={`Price (${this.state.symbol})`}
                 type="text"
                 name={`price-${i + 1}`}
                 onChange={this.inputUpdate}
-                style={{ width: '100%' }}
+                style={{ marginLeft: '30px' }}
               />
             </Grid>
           </Grid>
@@ -197,165 +202,41 @@ class LaunchForm extends Component {
 
     return (
       <Card>
-        <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
-          <Grid container>
-            <Grid item sm={12} md={3} style={{ background: '' }}>
-              {/* Upload Image */}
-              <div style={{ height: '200px', width: '200px', margin: 'auto', borderRadius: '50%' }}>
-                <Dropzone
-                  accept="image/*"
-                  onDrop={this.onDrop}
-                  style={{
-                    border: 'none'
-                  }}
-                >
-                  {({ getRootProps, getInputProps }) =>
-                    file ? (
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <Avatar
-                          src={file}
-                          style={{ height: '200px', width: '200px', margin: 'auto' }}
-                        />
-                      </div>
-                    ) : (
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <Avatar
-                          style={{ height: '200px', width: '200px', margin: 'auto' }}
-                          {...getRootProps()}
-                        >
-                          Click to Upload
-                        </Avatar>
-                      </div>
-                    )
-                  }
-                </Dropzone>
-              </div>
-            </Grid>
-            <Grid item sm={12} md={9}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  label="Name"
-                  type="text"
-                  name="name"
-                  placeholder=""
-                  onChange={this.inputUpdate}
-                  style={{ width: '45%' }}
-                />
-                <TextField
-                  required
-                  label="Symbol"
-                  type="text"
-                  name="symbol"
-                  placeholder=""
-                  onChange={this.inputUpdate}
-                  style={{ width: '45%', marginLeft: '10%' }}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ marginTop: '2vh' }}>
-                <TextField
-                  multiline
-                  rows="3"
-                  rowsMax="3"
-                  label="Description"
-                  type="text"
-                  name="description"
-                  placeholder=""
-                  onChange={this.inputUpdate}
-                  style={{ width: '100%' }}
-                />
-              </Grid>
-
-              <Grid item xs={12} style={{ marginTop: '2vh' }}>
-                <AttributeInput passItems={this.getSelectedTags} />
-              </Grid>
-            </Grid>
-
-            <Grid container style={{ marginTop: '40px' }}>
-              <Grid item xs={9} style={{ paddingLeft: '' }}>
-                <TextField
-                  label="Service"
-                  type="text"
-                  name="service-0"
-                  onChange={this.inputUpdate}
-                  style={{ width: '90%' }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  label="Price"
-                  type="text"
-                  name="price-0"
-                  onChange={this.inputUpdate}
-                  style={{ width: '100%' }}
-                />
-              </Grid>
-            </Grid>
-
-            {moreServices}
-
-            <Grid item xs={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
-              <div style={{ flexGrow: 1 }} />
-              <Button onClick={this.removeService}>
-                <Remove />
-              </Button>
-              <Button onClick={this.addService}>
-                <Add />
-              </Button>
-            </Grid>
-
-            {/* Alerts */}
-            <Grid item md={12} style={{ display: 'flex', justifyContent: 'center' }}>
-              {this.state.tooMany && (
-                <div color="warning" style={{ marginBottom: '' }}>
-                  While we build{' '}
-                  <span role="img" aria-label="emoji">
-                    🛠
-                  </span>{' '}
-                  only 3 services will be available in your economy{' '}
-                  <span role="img" aria-label="emoji">
-                    💸
-                  </span>
-                </div>
-              )}
-              {this.state.tooFew && (
-                <div color="warning" style={{ marginBottom: '' }}>
-                  For your economy to work{' '}
-                  <span role="img" aria-label="emoji">
-                    👨‍💼
-                  </span>{' '}
-                  you need to offer at least one service{' '}
-                  <span role="img" aria-label="emoji">
-                    🗳
-                  </span>
-                </div>
-              )}
-            </Grid>
-
-            {/* Deploy Button */}
-            <Grid item md={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
-              <div style={{ flexGrow: 1 }} />
-              <Button size="large" variant="outlined" onClick={this.deploy}>
-                DEPLOY
-              </Button>
-            </Grid>
-
-            <Grid item md={12} style={{ marginTop: '1vh' }}>
-              {this.state.ipfsUploading && (
-                <div style={{ width: '100%' }}>
-                  <LinearProgress color="secondary" />
-                  Uploading to IPFS!{' '}
-                  <span role="img" aria-label="emoji">
-                    📡
-                  </span>
-                </div>
-              )}
-            </Grid>
-          </Grid>
-        </CardContent>
+        <StepWizard transitions={custom}>
+          <Welcome cancel={this.cancel} />
+          <NamePhoto
+            cancel={this.cancel}
+            inputUpdate={this.inputUpdate}
+            onDrop={this.onDrop}
+            file={this.state.file}
+          />
+          <Description
+            cancel={this.cancel}
+            inputUpdate={this.inputUpdate}
+            getSelectedTags={this.getSelectedTags}
+            description={this.state.description}
+          />
+          <Services
+            cancel={this.cancel}
+            inputUpdate={this.inputUpdate}
+            addService={this.addService}
+            removeService={this.removeService}
+            moreServices={moreServices}
+            tooMany={this.state.tooMany}
+            tooFew={this.state.tooFew}
+            symbol={this.state.symbol}
+            price0={this.state['price-0']}
+          />
+          <Review
+            cancel={this.cancel}
+            deploy={this.deploy}
+            ipfsUploading={this.state.ipfsUploading}
+            symbol={this.state.symbol}
+            name={this.state.name}
+            description={this.state.description}
+            tags={this.state.tags}
+          />
+        </StepWizard>
       </Card>
     );
   }
