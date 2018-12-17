@@ -4,24 +4,28 @@ import Web3 from 'web3';
 import classes from './Profile.module.css';
 
 import { Button, Collapse, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
-// import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
-import OwnerCard from '../../components/Profile/OwnerCard.jsx';
-
-import InfoCard from '../../components/Profile/QuickFacts.jsx';
-import ServicePanel from '../../components/Profile/ServicePanel.jsx';
-import ServiceDetails from '../../components/Profile/ServiceDetails.jsx';
-import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
-import Photo from '../../components/Profile/Photo.jsx';
-import ProfileChart from '../../components/Profile/ProfileChart.jsx';
+import {
+  BuyAndSellButtons,
+  InfoCard,
+  OwnerCard,
+  Photo,
+  ProfileChart,
+  ServiceDetails,
+  ServicePanel,
+} from '../../components/Profile';
 
 import { getMultihashFromBytes32, getPrice, removeDecimals, toBN } from '../../util';
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
+
+const getColor = entropy => {
+  return '#' + entropy.slice(6, 12);
+};
 
 class ProfileDetails extends Component {
   constructor(props) {
@@ -32,7 +36,7 @@ class ProfileDetails extends Component {
       dataJson: {},
       dataKeys: {
         totalSupplyKey: '',
-        yourBalanceKey: ''
+        yourBalanceKey: '',
       },
       exponent: 0,
       inverseSlope: 0,
@@ -42,7 +46,7 @@ class ProfileDetails extends Component {
       poolBalance: '',
       symbol: '',
       value: 0,
-      expanded: false
+      expanded: false,
     };
   }
 
@@ -50,7 +54,7 @@ class ProfileDetails extends Component {
     const { addr, drizzle } = this.props;
     const contractConfig = {
       contractName: addr,
-      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr)
+      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr),
     };
     const events = ['Minted', 'Burned'];
     await drizzle.addContract(contractConfig, events);
@@ -70,7 +74,7 @@ class ProfileDetails extends Component {
     const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
-      size: 32
+      size: 32,
     });
 
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
@@ -95,7 +99,7 @@ class ProfileDetails extends Component {
     this.setState({
       dataKeys: {
         totalSupplyKey,
-        yourBalanceKey
+        yourBalanceKey,
       },
       dataJson,
       description,
@@ -107,7 +111,7 @@ class ProfileDetails extends Component {
       pic,
       poolBalance,
       symbol,
-      contributors
+      contributors,
     });
   }
 
@@ -117,7 +121,7 @@ class ProfileDetails extends Component {
 
   openPopover = event => {
     this.setState({
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
@@ -152,7 +156,7 @@ class ProfileDetails extends Component {
           container
           style={{
             height: '33vh',
-            background: this.state.favoriteColor || 'rgb(216, 75, 42)'
+            background: this.state.favoriteColor || getColor(this.props.addr),
           }}
         >
           <Grid item xs={false} md={3} className={classes.NameBoxSpacer} />
@@ -161,7 +165,14 @@ class ProfileDetails extends Component {
           </Grid>
         </Grid>
 
-        <div style={{ position: 'absolute', top: '7vh', height: '40vh', width: '100%' }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: '7vh',
+            height: '40vh',
+            width: '100%',
+          }}
+        >
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={12} md={3} className={classes.PhotoBox}>
               <Photo
@@ -188,13 +199,13 @@ class ProfileDetails extends Component {
                 justifyContent: 'center',
                 alignItems: 'flex-end',
                 height: '100%',
-                width: '100%'
+                width: '100%',
               }}
             >
               <Tabs
                 style={{
                   display: 'flex',
-                  justifyContent: 'right'
+                  justifyContent: 'right',
                 }}
                 value={this.state.value}
                 indicatorColor="secondary"
@@ -233,7 +244,7 @@ class ProfileDetails extends Component {
               socials={{
                 twitter: 'https://convergent.cx',
                 facebook: 'https://convergent.cx',
-                instagram: 'https://convergent.cx'
+                instagram: 'https://convergent.cx',
               }}
               width="100%"
             />
@@ -254,7 +265,6 @@ class ProfileDetails extends Component {
                   variant="outlined"
                   style={{ marginLeft: '5%', marginBottom: '5%' }}
                   onClick={this.handleExpandClick}
-                  // onClick={this.openPopover}
                 >
                   Details
                 </Button>
@@ -266,7 +276,7 @@ class ProfileDetails extends Component {
                       textAlign: 'center',
                       color: 'primary',
                       padding: '11px',
-                      fontSize: '11px'
+                      fontSize: '11px',
                     }}
                   >
                     <Grid container>
@@ -314,13 +324,13 @@ class ProfileDetails extends Component {
                             poolBalance: this.state.poolBalance,
                             inverseSlope: this.state.inverseSlope,
                             exponent: this.state.exponent,
-                            currentPrice: currentPrice
+                            currentPrice: currentPrice,
                           }}
                           margin={{
                             top: 30,
                             right: 10,
                             bottom: 30,
-                            left: 10
+                            left: 10,
                           }}
                           width="100%"
                           height="100%"
@@ -337,18 +347,26 @@ class ProfileDetails extends Component {
                   minHeight: '50vh',
                   padding: '15px',
                   display: 'flex',
-                  flexDirection: 'column'
+                  flexDirection: 'column',
                 }}
               >
                 <Typography
                   variant="subtitle1"
-                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                  style={{
+                    color: 'primary',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}
                 >
                   {this.state.name}'s story
                 </Typography>
                 <Typography
                   variant="h6"
-                  style={{ fontWeight: 'bold', color: 'primary', height: '400px' }}
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'primary',
+                    height: '400px',
+                  }}
                 >
                   {this.state.description}
                 </Typography>
@@ -358,7 +376,11 @@ class ProfileDetails extends Component {
               <Paper style={{ minHeight: '50vh', padding: '2%' }}>
                 <Typography
                   variant="subtitle1"
-                  style={{ color: 'primary', fontSize: '12px', fontWeight: 'bold' }}
+                  style={{
+                    color: 'primary',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}
                 >
                   offered services
                 </Typography>

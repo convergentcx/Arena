@@ -7,7 +7,7 @@ import {
   CardContent,
   Grid,
   LinearProgress,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import dataUriToBuffer from 'data-uri-to-buffer';
@@ -36,14 +36,14 @@ class LaunchForm extends Component {
       tooFew: false,
       tooMany: false,
       tags: [],
-      enteredTag: ''
+      enteredTag: '',
     };
   }
 
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -62,9 +62,9 @@ class LaunchForm extends Component {
   deploy = async () => {
     const {
       drizzle: {
-        contracts: { PersonalEconomyFactory }
+        contracts: { PersonalEconomyFactory },
       },
-      drizzleState
+      drizzleState,
     } = this.props;
 
     // Check for all the required fields.
@@ -85,11 +85,14 @@ class LaunchForm extends Component {
       image: imgBuf,
       symbol: this.state.symbol,
       tags: this.state.selectedItems,
-      services: []
+      services: [],
     };
 
     for (let i = 0; i <= this.state.rows; i++) {
-      dataJson.services.push({ what: this.state[`service-${i}`], price: this.state[`price-${i}`] });
+      dataJson.services.push({
+        what: this.state[`service-${i}`],
+        price: this.state[`price-${i}`],
+      });
     }
 
     this.setState({ ipfsUploading: true });
@@ -102,7 +105,7 @@ class LaunchForm extends Component {
       this.state.name,
       this.state.symbol,
       {
-        from: drizzleState.accounts[0]
+        from: drizzleState.accounts[0],
       }
     );
     this.waitForMined(stackId);
@@ -112,7 +115,7 @@ class LaunchForm extends Component {
     const reader = new FileReader();
     reader.onload = e => {
       this.setState({
-        file: e.target.result
+        file: e.target.result,
       });
     };
 
@@ -138,14 +141,14 @@ class LaunchForm extends Component {
       if (status === 'pending' && this.state.txStatus !== 'pending') {
         enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
-          txStatus: 'pending'
+          txStatus: 'pending',
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: 'success',
         });
         setTimeout(() => {
           this.props.history.push('/leaderboard');
@@ -153,7 +156,7 @@ class LaunchForm extends Component {
       }
     }, 100);
     this.setState({
-      interval
+      interval,
     });
   };
 
@@ -201,12 +204,19 @@ class LaunchForm extends Component {
           <Grid container>
             <Grid item sm={12} md={3} style={{ background: '' }}>
               {/* Upload Image */}
-              <div style={{ height: '200px', width: '200px', margin: 'auto', borderRadius: '50%' }}>
+              <div
+                style={{
+                  height: '200px',
+                  width: '200px',
+                  margin: 'auto',
+                  borderRadius: '50%',
+                }}
+              >
                 <Dropzone
                   accept="image/*"
                   onDrop={this.onDrop}
                   style={{
-                    border: 'none'
+                    border: 'none',
                   }}
                 >
                   {({ getRootProps, getInputProps }) =>
@@ -215,14 +225,22 @@ class LaunchForm extends Component {
                         <input {...getInputProps()} />
                         <Avatar
                           src={file}
-                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                          style={{
+                            height: '200px',
+                            width: '200px',
+                            margin: 'auto',
+                          }}
                         />
                       </div>
                     ) : (
                       <div {...getRootProps()}>
                         <input {...getInputProps()} />
                         <Avatar
-                          style={{ height: '200px', width: '200px', margin: 'auto' }}
+                          style={{
+                            height: '200px',
+                            width: '200px',
+                            margin: 'auto',
+                          }}
                           {...getRootProps()}
                         >
                           Click to Upload

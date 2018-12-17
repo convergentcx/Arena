@@ -4,7 +4,7 @@ import PriceChart from '../PriceChart/PriceChart';
 class BlockHistory extends Component {
   state = {
     timestamps: {},
-    sort: []
+    sort: [],
   };
 
   handleBlockLoad(block, event) {
@@ -12,8 +12,8 @@ class BlockHistory extends Component {
       this.setState({
         timestamps: {
           ...this.state.timestamps,
-          [event.blockHash]: parseInt(block.timestamp, 10)
-        }
+          [event.blockHash]: parseInt(block.timestamp, 10),
+        },
       });
     }
   }

@@ -4,7 +4,7 @@ import { withSnackbar } from 'notistack';
 
 import { addDecimals, toBN } from '../../util';
 
-class ServicePanel extends Component {
+class ServiceDetails extends Component {
   constructor(props) {
     super(props);
     this.state = { interval: null, message: '', txStatus: null };
@@ -13,7 +13,7 @@ class ServicePanel extends Component {
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -38,7 +38,7 @@ class ServicePanel extends Component {
       addDecimals(serviceObj.price),
       {
         from: this.props.drizzleState.accounts[0],
-        value: amountNeeded
+        value: amountNeeded,
       }
     );
     this.waitForMined(stackId);
@@ -60,7 +60,7 @@ class ServicePanel extends Component {
       `Service - ${serviceObj.what} | Message - ${message}`,
       addDecimals(serviceObj.price),
       {
-        from: this.props.drizzleState.accounts[0]
+        from: this.props.drizzleState.accounts[0],
       }
     );
     this.waitForMined(stackId);
@@ -80,19 +80,19 @@ class ServicePanel extends Component {
       if (status === 'pending' && this.state.txStatus !== 'pending') {
         enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
-          txStatus: 'pending'
+          txStatus: 'pending',
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: 'success',
         });
       }
     }, 100);
     this.setState({
-      interval
+      interval,
     });
   };
 
@@ -106,7 +106,12 @@ class ServicePanel extends Component {
           </Typography>
           <Typography
             variant="subtitle1"
-            style={{ color: '#primary', fontSize: '14px', fontWeight: 'bold', marginTop: '6px' }}
+            style={{
+              color: '#primary',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              marginTop: '6px',
+            }}
           >
             {price || 44} {this.props.dataJson.symbol}
           </Typography>
@@ -143,4 +148,4 @@ class ServicePanel extends Component {
   }
 }
 
-export default withSnackbar(ServicePanel);
+export default withSnackbar(ServiceDetails);

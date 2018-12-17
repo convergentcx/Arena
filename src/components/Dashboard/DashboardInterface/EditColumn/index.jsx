@@ -20,7 +20,7 @@ class EditColumn extends Component {
     description: this.props.dataJson.description,
     editing: false,
     loading: false,
-    txStatus: null
+    txStatus: null,
   };
 
   componentWillUnmount() {
@@ -43,19 +43,19 @@ class EditColumn extends Component {
       if (status === 'pending' && this.state.txStatus !== 'pending') {
         enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
-          txStatus: 'pending'
+          txStatus: 'pending',
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: 'success',
         });
       }
     }, 100);
     this.setState({
-      interval
+      interval,
     });
   };
 
@@ -73,7 +73,10 @@ class EditColumn extends Component {
       if (this.state[`price-${index}`] !== serviceObj.price) {
         price = this.state[`price-${index}`];
       }
-      return { what: what || serviceObj.what, price: price || serviceObj.price };
+      return {
+        what: what || serviceObj.what,
+        price: price || serviceObj.price,
+      };
     });
 
     const newDataJson = this.props.dataJson;
@@ -93,7 +96,7 @@ class EditColumn extends Component {
         const mhash = getBytes32FromMultihash(ipfsHash[0].path);
 
         const stackId = this.props.myContract.methods.updateData.cacheSend(mhash.digest, {
-          from: this.props.drizzleState.accounts[0]
+          from: this.props.drizzleState.accounts[0],
         });
 
         this.setState({ editing: false, loading: false });
@@ -106,7 +109,7 @@ class EditColumn extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -153,10 +156,10 @@ class EditColumn extends Component {
               margin="normal"
               onChange={this.handleChange}
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               InputProps={{
-                readOnly: !this.state.editing
+                readOnly: !this.state.editing,
               }}
             />
           )}

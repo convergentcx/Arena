@@ -18,7 +18,7 @@ class MainStats extends Component {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          textAlign: 'center'
+          textAlign: 'center',
         }}
       >
         <Grid item xs={12} style={{ paddingBottom: '6px', height: '50%' }}>

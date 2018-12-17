@@ -9,40 +9,40 @@ import { withStyles } from '@material-ui/core/styles';
 const suggestions = [
   {
     value: 'attention',
-    label: 'Attention'
+    label: 'Attention',
   },
   {
     value: 'media',
-    label: 'Media'
+    label: 'Media',
   },
   {
     value: 'technology',
-    label: 'Technology'
+    label: 'Technology',
   },
   {
     value: 'arts',
-    label: 'Arts'
+    label: 'Arts',
   },
   {
     value: 'consulting',
-    label: 'Consulting'
+    label: 'Consulting',
   },
   {
     value: 'mentorship',
-    label: 'Mentorship'
+    label: 'Mentorship',
   },
   {
     value: 'voting',
-    label: 'Voting Rights'
+    label: 'Voting Rights',
   },
   {
     value: 'access',
-    label: 'Access Rights'
+    label: 'Access Rights',
   },
   {
     value: 'blockchain',
-    label: 'Blockchain'
-  }
+    label: 'Blockchain',
+  },
 ];
 
 function renderInput(inputProps) {
@@ -54,9 +54,9 @@ function renderInput(inputProps) {
         inputRef: ref,
         classes: {
           root: classes.inputRoot,
-          input: classes.inputInput
+          input: classes.inputInput,
         },
-        ...InputProps
+        ...InputProps,
       }}
       {...other}
     />
@@ -74,7 +74,7 @@ function renderSuggestion({ suggestion, index, itemProps, highlightedIndex, sele
       selected={isHighlighted}
       component="div"
       style={{
-        fontWeight: isSelected ? 500 : 400
+        fontWeight: isSelected ? 500 : 400,
       }}
     >
       {suggestion.label}
@@ -86,7 +86,7 @@ renderSuggestion.propTypes = {
   index: PropTypes.number,
   itemProps: PropTypes.object,
   selectedItem: PropTypes.string,
-  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
+  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired,
 };
 
 function getSuggestions(value) {
@@ -111,14 +111,14 @@ function getSuggestions(value) {
 class AttributeInput extends Component {
   state = {
     inputValue: '',
-    selectedItem: []
+    selectedItem: [],
   };
 
   handleKeyDown = event => {
     const { inputValue, selectedItem } = this.state;
     if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
       this.setState({
-        selectedItem: selectedItem.slice(0, selectedItem.length - 1)
+        selectedItem: selectedItem.slice(0, selectedItem.length - 1),
       });
     }
 
@@ -140,7 +140,7 @@ class AttributeInput extends Component {
     this.props.passItems(selectedItem);
     this.setState({
       inputValue: '',
-      selectedItem
+      selectedItem,
     });
   };
 
@@ -169,7 +169,7 @@ class AttributeInput extends Component {
           isOpen,
           inputValue: inputValue2,
           selectedItem: selectedItem2,
-          highlightedIndex
+          highlightedIndex,
         }) => (
           <div className={classes.container}>
             {renderInput({
@@ -190,9 +190,9 @@ class AttributeInput extends Component {
                   if (highlightedIndex === null) {
                     this.handleKeyDown(event);
                   }
-                }
+                },
               }),
-              label: 'Tags'
+              label: 'Tags',
             })}
             {isOpen ? (
               <Paper className={classes.paper} square>
@@ -202,7 +202,7 @@ class AttributeInput extends Component {
                     index,
                     itemProps: getItemProps({ item: suggestion.label }),
                     highlightedIndex,
-                    selectedItem: selectedItem2
+                    selectedItem: selectedItem2,
                   })
                 )}
               </Paper>
@@ -215,38 +215,38 @@ class AttributeInput extends Component {
 }
 
 AttributeInput.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250
+    height: 250,
   },
   container: {
     flexGrow: 1,
-    position: 'relative'
+    position: 'relative',
   },
   paper: {
     position: 'absolute',
     zIndex: 1,
     marginTop: theme.spacing.unit,
     left: 0,
-    right: 0
+    right: 0,
   },
   chip: {
-    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`
+    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
   },
   inputRoot: {
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   inputInput: {
     width: 'auto',
-    flexGrow: 1
+    flexGrow: 1,
   },
   divider: {
-    height: theme.spacing.unit * 2
-  }
+    height: theme.spacing.unit * 2,
+  },
 });
 
 export default withStyles(styles)(AttributeInput);

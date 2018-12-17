@@ -14,7 +14,7 @@ const heroStyle = {
   height: '100vh',
   margin: '0',
   padding: '10%',
-  paddingTop: '2%'
+  paddingTop: '2%',
 };
 
 const Hero = () => (

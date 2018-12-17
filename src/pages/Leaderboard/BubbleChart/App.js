@@ -10,20 +10,20 @@ import { width, height, center, yearCenters } from './constants';
 export default class App extends React.Component {
   state = {
     data: [],
-    grouping: 'all'
+    grouping: 'all',
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
-        data: createNodes(this.props.data)
+        data: createNodes(this.props.data),
       });
     }
   }
 
   onGroupingChanged = newGrouping => {
     this.setState({
-      grouping: newGrouping
+      grouping: newGrouping,
     });
   };
 

@@ -18,11 +18,11 @@ const { Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ComposedChart 
 class PriceChart extends React.Component {
   static contextTypes = {
     contractActions: PropTypes.object,
-    contractParams: PropTypes.object
+    contractParams: PropTypes.object,
   };
 
   state = {
-    priceInEth: true
+    priceInEth: true,
   };
 
   constructor(props) {
@@ -68,12 +68,12 @@ class PriceChart extends React.Component {
       return {
         time: timestamp - minTimestamp,
         when: new Date(timestamp * 1000).toString(),
-        value
+        value,
       };
     });
     values.push({
       time: Date.now() / 1000 - minTimestamp,
-      value
+      value,
     });
     return values;
   }
@@ -127,7 +127,7 @@ class PriceChart extends React.Component {
             label={{
               value: this.state.priceInEth ? 'ETH' : symbol,
               angle: -90,
-              position: 'insideLeft'
+              position: 'insideLeft',
             }}
             dataKey="value"
             type="number"

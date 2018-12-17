@@ -18,13 +18,13 @@ class CurveChart extends Component {
         data.push({
           supply: i,
           sell: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          value: parseFloat(price.toFixed(4)),
         });
       } else if (i >= totalSupply) {
         data.push({
           supply: i,
           buy: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          value: parseFloat(price.toFixed(4)),
         });
       }
     }

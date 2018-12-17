@@ -31,5 +31,5 @@ export default class GroupingPicker extends React.Component {
 
 GroupingPicker.propTypes = {
   onChanged: PropTypes.func.isRequired,
-  active: PropTypes.oneOf(['all', 'year']).isRequired
+  active: PropTypes.oneOf(['all', 'year']).isRequired,
 };

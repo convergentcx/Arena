@@ -12,7 +12,7 @@ class BuyAndSellButtons extends Component {
       interval: null,
       priceInEther: 0,
       rewardInEther: 0,
-      txStatus: null
+      txStatus: null,
     };
   }
 
@@ -23,7 +23,7 @@ class BuyAndSellButtons extends Component {
 
     const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
-      value: this.state.priceInEther
+      value: this.state.priceInEther,
     });
     this.waitForMined(buyStackId);
   };
@@ -38,7 +38,7 @@ class BuyAndSellButtons extends Component {
   inputUpdate = async event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
 
     // Update price
@@ -48,7 +48,7 @@ class BuyAndSellButtons extends Component {
         priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
       }
       this.setState({
-        priceInEther
+        priceInEther,
       });
     }
 
@@ -59,7 +59,7 @@ class BuyAndSellButtons extends Component {
         rewardInEther = await this.props.contract.methods.rewardForBurn(addDecimals(value)).call();
       }
       this.setState({
-        rewardInEther
+        rewardInEther,
       });
     }
   };
@@ -72,7 +72,7 @@ class BuyAndSellButtons extends Component {
     const sellStackId = this.props.contract.methods.burn.cacheSend(
       addDecimals(this.state.sellAmt),
       {
-        from: this.props.drizzleState.accounts[0]
+        from: this.props.drizzleState.accounts[0],
       }
     );
     this.waitForMined(sellStackId);
@@ -85,19 +85,19 @@ class BuyAndSellButtons extends Component {
       if (status === 'pending' && this.state.txStatus !== 'pending') {
         enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
-          txStatus: 'pending'
+          txStatus: 'pending',
         });
       }
       if (status === 'success' && this.state.txStatus !== 'success') {
         enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: 'success'
+          txStatus: 'success',
         });
       }
     }, 100);
     this.setState({
-      interval
+      interval,
     });
   };
 
@@ -107,7 +107,12 @@ class BuyAndSellButtons extends Component {
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
+          style={{
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '5%',
+          }}
         >
           <TextField
             type="number"
@@ -131,7 +136,12 @@ class BuyAndSellButtons extends Component {
         <Grid
           item
           md={6}
-          style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', padding: '5%' }}
+          style={{
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '5%',
+          }}
         >
           <TextField
             type="number"
