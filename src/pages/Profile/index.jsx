@@ -149,8 +149,6 @@ class ProfileDetails extends Component {
       this.state.exponent
     );
 
-    console.log(this.state);
-
     return (
       <div style={{ width: '100vw' }}>
         {/* Header */}
