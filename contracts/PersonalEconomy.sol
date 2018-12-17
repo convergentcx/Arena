@@ -1,54 +1,55 @@
 pragma solidity ^0.4.24;
 
-import "@convergent/arc/contracts/EthPolynomialCurvedToken.sol";
+import "@convergent/arc/contracts/Spreads/SpreadEther.sol";
 
-contract PersonalEconomy is EthPolynomialCurvedToken {
+contract PersonalEconomy is SpreadEther {
     event Requested(string message, uint256 time, address who);
 
     bytes32 public mhash;
-    address public owner;
     
     constructor(
         bytes32 _mhash,
         string _name,
         string _symbol,
         address _owner
-    )   EthPolynomialCurvedToken(
-        _name,
-        _symbol,
-        18,
-        1,
-        1000
-    )
-        public
+    )   public
     {
+        SpreadEther.initialize(
+            _name,
+            _symbol,
+            18,
+            1,
+            1,
+            3000,
+            4000
+        );
+        transferOwnership(_owner);
         mhash = _mhash;
-        owner = _owner;
     }
 
     function requestWithEth(
-        string _msg,
-        uint256 _price
+        string message,
+        uint256 reqNumTokens
     )   public
         payable
     {
-        uint256 cost = priceToMint(_price);
+        uint256 cost = price(reqNumTokens);
         require(msg.value >= cost, "Must send requisite amount to purchase.");
 
-        _mint(msg.sender, _price);
-        _transfer(msg.sender, owner, _price);
-        emit Requested(_msg, now, msg.sender);
+        _mint(msg.sender, reqNumTokens);
+        _transfer(msg.sender, owner(), reqNumTokens);
+        emit Requested(message, now, msg.sender);
     }
 
-    function requestWithToken(string _msg, uint256 _price) public {
-        _transfer(msg.sender, owner, _price);
-        emit Requested(_msg, now, msg.sender);
+    function requestWithToken(string message, uint256 reqNumTokens) public {
+        _transfer(msg.sender, owner(), reqNumTokens);
+        emit Requested(message, now, msg.sender);
     }
 
     function updateData(bytes32 _mhash)
         public returns (bool)
     {
-        require(msg.sender == owner);
+        require(msg.sender == owner());
         mhash = _mhash;
     }
 }

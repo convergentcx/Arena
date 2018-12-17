@@ -51,8 +51,8 @@ class LeaderboardList extends Component {
           });
           const raw = await ipfs.get(contentAddress);
           const dataJson = JSON.parse(raw[0].content.toString());
-          const inverseSlope = await personalEconomy.methods.inverseSlope().call();
-          const exponent = await personalEconomy.methods.exponent().call();
+          const inverseSlope = await personalEconomy.methods.buyInverseSlope().call();
+          const exponent = await personalEconomy.methods.buyExponent().call();
           const totalSupply = await personalEconomy.methods.totalSupply().call();
           const currentPrice = getPrice(inverseSlope, totalSupply, exponent);
           // console.log(currentPrice.mul(w3utils.toBN(totalSupply)))

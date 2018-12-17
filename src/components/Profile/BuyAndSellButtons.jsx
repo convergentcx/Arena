@@ -21,7 +21,7 @@ class BuyAndSellButtons extends Component {
       return;
     }
 
-    const buyStackId = this.props.contract.methods.mint.cacheSend(addDecimals(this.state.buyAmt), {
+    const buyStackId = this.props.contract.methods.buy.cacheSend(addDecimals(this.state.buyAmt), {
       from: this.props.drizzleState.accounts[0],
       value: this.state.priceInEther
     });
@@ -45,7 +45,7 @@ class BuyAndSellButtons extends Component {
     if (name === 'buyAmt') {
       let priceInEther = 0;
       if (Number(value) !== 0) {
-        priceInEther = await this.props.contract.methods.priceToMint(addDecimals(value)).call();
+        priceInEther = await this.props.contract.methods.price(addDecimals(value)).call();
       }
       this.setState({
         priceInEther
@@ -56,7 +56,7 @@ class BuyAndSellButtons extends Component {
     if (name === 'sellAmt') {
       let rewardInEther = 0;
       if (Number(value) !== 0) {
-        rewardInEther = await this.props.contract.methods.rewardForBurn(addDecimals(value)).call();
+        rewardInEther = await this.props.contract.methods.reward(addDecimals(value)).call();
       }
       this.setState({
         rewardInEther
@@ -69,7 +69,7 @@ class BuyAndSellButtons extends Component {
       return;
     }
 
-    const sellStackId = this.props.contract.methods.burn.cacheSend(
+    const sellStackId = this.props.contract.methods.sell.cacheSend(
       addDecimals(this.state.sellAmt),
       {
         from: this.props.drizzleState.accounts[0]

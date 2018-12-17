@@ -92,7 +92,7 @@ class Interface extends Component {
       contractName: address,
       web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address)
     };
-    let drizzleEvents = ['Minted', 'Burned', 'Requested'];
+    let drizzleEvents = ['CurveBuy', 'CurveSell', 'Requested'];
     await drizzle.addContract(contractConfig, drizzleEvents);
 
     const contract = this.props.drizzle.contracts[address];

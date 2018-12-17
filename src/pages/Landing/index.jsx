@@ -46,7 +46,7 @@ const Hero = () => (
       </Button>
     </NavLink>
     <div style={{ position: 'fixed', bottom: 0 }}>
-      <Typography variant="body2" color="primary.main">
+      <Typography variant="body2" color="primary">
         Check out the{' '}
         <a href="https://proto.convergent.cx" style={{ color: 'white' }}>
           {' '}
