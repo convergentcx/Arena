@@ -21,7 +21,7 @@ class SocialBar extends Component {
   render() {
     const items = Object.keys(this.props.socials).map((key, index) => {
       // TODO: destination will be external links. Not sure where exactly they should go to yet tho.
-      const destination = this.props.socials[key];
+      // const destination = this.props.socials[key];
       return (
         <IconButton key={index} color="secondary" onClick={comingSoon}>
           <PublicTwoTone />
