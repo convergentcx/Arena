@@ -1527,10 +1527,16 @@
       "links": {},
       "address": "0xE4b47C47F8438C45790049629E0d2B22b2B55CC3",
       "transactionHash": "0x002d7883612d415069f6946e3a1893c34ca792c2763dbfc468194a97bd2ec31b"
+    },
+    "1545077769639": {
+      "events": {},
+      "links": {},
+      "address": "0xE4b47C47F8438C45790049629E0d2B22b2B55CC3",
+      "transactionHash": "0x002d7883612d415069f6946e3a1893c34ca792c2763dbfc468194a97bd2ec31b"
     }
   },
   "schemaVersion": "3.0.0-beta.1",
-  "updatedAt": "2018-12-17T16:52:28.911Z",
+  "updatedAt": "2018-12-17T20:16:23.893Z",
   "devdoc": {
     "methods": {
       "create(bytes32,string,string)": {
