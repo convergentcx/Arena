@@ -23,6 +23,10 @@ import { getMultihashFromBytes32, getPrice, removeDecimals, toBN } from '../../u
 
 const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
+const getColor = entropy => {
+  return '#' + entropy.slice(6, 12);
+};
+
 class ProfileDetails extends Component {
   constructor(props) {
     super(props);
@@ -152,7 +156,7 @@ class ProfileDetails extends Component {
           container
           style={{
             height: '33vh',
-            background: this.state.favoriteColor || 'rgb(216, 75, 42)',
+            background: this.state.favoriteColor || getColor(this.props.addr),
           }}
         >
           <Grid item xs={false} md={3} className={classes.NameBoxSpacer} />
