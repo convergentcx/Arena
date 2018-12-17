@@ -151,7 +151,11 @@ class MetamaskLogin extends Component {
                       }}
                     >
                       <NavLink to="/dashboard">
-                        <Button color="secondary" variant="outlined">
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          style={{ background: 'black' }}
+                        >
                           DASHBOARD
                         </Button>
                       </NavLink>
