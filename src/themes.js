@@ -83,7 +83,7 @@ const hackerTheme = createMuiTheme({
   },
 });
 
-const achillTheme = createMuiTheme({
+const kombatTheme = createMuiTheme({
   palette: {
     type: 'dark',
     common: {
@@ -130,4 +130,4 @@ const achillTheme = createMuiTheme({
   },
 });
 
-export { slateTheme, hackerTheme, achillTheme };
+export { slateTheme, hackerTheme, kombatTheme };

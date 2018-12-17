@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { AppContainer, Dashboard } from './components';
-import Interface from './components/Dashboard/DashboardInterface';
-import { Landing, Launch, Leaderboard, Profile } from './pages';
+import AppContainer from './components/AppContainer';
+import { Dashboard, Interface, Landing, Launch, Leaderboard, Profile } from './pages';
 
 /// MUI Theme
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { slateTheme, achillTheme } from './themes';
+import { kombatTheme, slateTheme } from './themes';
 
 /// Notistack
 import { SnackbarProvider } from 'notistack';
@@ -29,7 +28,7 @@ export default class App extends Component {
           horizontal: 'center',
         }}
       >
-        <MuiThemeProvider theme={this.state.lights ? slateTheme : achillTheme}>
+        <MuiThemeProvider theme={this.state.lights ? slateTheme : kombatTheme}>
           <AppContainer>
             <Switch>
               <Route path="/" exact component={Landing} />
@@ -45,9 +44,9 @@ export default class App extends Component {
                   />
                 )}
               />
+              <Route path="/economies/:economyAddress" exact component={Profile} />
               <Route path="/launch" component={Launch} />
               <Route path="/leaderboard" component={Leaderboard} />
-              <Route path="/economies/:economyAddress" exact component={Profile} />
             </Switch>
           </AppContainer>
         </MuiThemeProvider>
