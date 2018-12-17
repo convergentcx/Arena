@@ -1,52 +1,38 @@
-import Web3 from "web3";
-import PersonalEconomy from "../../../../build/contracts/PersonalEconomy.json";
+import Web3 from 'web3';
+import PersonalEconomy from '../../../../build/contracts/PersonalEconomy.json';
 
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from "@material-ui/core";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
-import { removeDecimals } from "../../../../util";
+import { removeDecimals } from '../../../../util';
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    width: '100%',
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: 'auto',
   },
   table: {
-    minWidth: 700
-  }
+    minWidth: 700,
+  },
 });
 
 class Events extends React.Component {
   state = {
     eventsArray: [],
-    tooltipOpen: false
+    tooltipOpen: false,
   };
 
   componentDidMount() {
     const web3 = new Web3(this.props.drizzle.web3.currentProvider);
 
-    const web3Contract = new web3.eth.Contract(
-      PersonalEconomy["abi"],
-      this.props.address
-    );
+    const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], this.props.address);
     let eventsArray = [];
-    web3Contract.getPastEvents(
-      "allEvents",
-      { fromBlock: 0, toBlock: "latest" },
-      (_, events) => {
-        eventsArray.push(events);
-        this.setState({ eventsArray });
-      }
-    );
+    web3Contract.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' }, (_, events) => {
+      eventsArray.push(events);
+      this.setState({ eventsArray });
+    });
   }
 
   render() {
@@ -60,24 +46,15 @@ class Events extends React.Component {
               {row.event}
             </TableCell>
             <TableCell>
-              {row.returnValues.time &&
-                new Date(row.returnValues.time * 1000).toDateString()}
+              {row.returnValues.time && new Date(row.returnValues.time * 1000).toDateString()}
             </TableCell>
-            <TableCell>
-              {row.returnValues.who && row.returnValues.who}
-            </TableCell>
-            <TableCell>
-              {row.returnValues.message ? row.returnValues.message : ""}
+            <TableCell>{row.returnValues.who && row.returnValues.who}</TableCell>
+            <TableCell>{row.returnValues.message ? row.returnValues.message : ''}</TableCell>
+            <TableCell numeric>
+              {row.returnValues.amount ? removeDecimals(row.returnValues.amount) : ''}
             </TableCell>
             <TableCell numeric>
-              {row.returnValues.amount
-                ? removeDecimals(row.returnValues.amount)
-                : ""}
-            </TableCell>
-            <TableCell numeric>
-              {row.returnValues.totalCost
-                ? removeDecimals(row.returnValues.totalCost)
-                : ""}
+              {row.returnValues.totalCost ? removeDecimals(row.returnValues.totalCost) : ''}
             </TableCell>
           </TableRow>
         );

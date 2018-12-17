@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import TopNavbar from "./TopNavbar";
+import TopNavbar from './TopNavbar';
 
 const appStyles = {
-  minHeight: "100vh",
-  height: "100%",
+  minHeight: '100vh',
+  height: '100%',
   padding: 0,
   marginBottom: 0,
-  width: "100vw"
+  width: '100vw',
 };
 
 const AppContainer = props => (

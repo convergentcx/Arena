@@ -1,48 +1,48 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import deburr from "lodash/deburr";
-import keycode from "keycode";
-import Downshift from "downshift";
-import { Chip, MenuItem, Paper, TextField } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import deburr from 'lodash/deburr';
+import keycode from 'keycode';
+import Downshift from 'downshift';
+import { Chip, MenuItem, Paper, TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const suggestions = [
   {
-    value: "attention",
-    label: "Attention"
+    value: 'attention',
+    label: 'Attention',
   },
   {
-    value: "media",
-    label: "Media"
+    value: 'media',
+    label: 'Media',
   },
   {
-    value: "technology",
-    label: "Technology"
+    value: 'technology',
+    label: 'Technology',
   },
   {
-    value: "arts",
-    label: "Arts"
+    value: 'arts',
+    label: 'Arts',
   },
   {
-    value: "consulting",
-    label: "Consulting"
+    value: 'consulting',
+    label: 'Consulting',
   },
   {
-    value: "mentorship",
-    label: "Mentorship"
+    value: 'mentorship',
+    label: 'Mentorship',
   },
   {
-    value: "voting",
-    label: "Voting Rights"
+    value: 'voting',
+    label: 'Voting Rights',
   },
   {
-    value: "access",
-    label: "Access Rights"
+    value: 'access',
+    label: 'Access Rights',
   },
   {
-    value: "blockchain",
-    label: "Blockchain"
-  }
+    value: 'blockchain',
+    label: 'Blockchain',
+  },
 ];
 
 function renderInput(inputProps) {
@@ -54,24 +54,18 @@ function renderInput(inputProps) {
         inputRef: ref,
         classes: {
           root: classes.inputRoot,
-          input: classes.inputInput
+          input: classes.inputInput,
         },
-        ...InputProps
+        ...InputProps,
       }}
       {...other}
     />
   );
 }
 
-function renderSuggestion({
-  suggestion,
-  index,
-  itemProps,
-  highlightedIndex,
-  selectedItem
-}) {
+function renderSuggestion({ suggestion, index, itemProps, highlightedIndex, selectedItem }) {
   const isHighlighted = highlightedIndex === index;
-  const isSelected = (selectedItem || "").indexOf(suggestion.label) > -1;
+  const isSelected = (selectedItem || '').indexOf(suggestion.label) > -1;
 
   return (
     <MenuItem
@@ -80,7 +74,7 @@ function renderSuggestion({
       selected={isHighlighted}
       component="div"
       style={{
-        fontWeight: isSelected ? 500 : 400
+        fontWeight: isSelected ? 500 : 400,
       }}
     >
       {suggestion.label}
@@ -92,7 +86,7 @@ renderSuggestion.propTypes = {
   index: PropTypes.number,
   itemProps: PropTypes.object,
   selectedItem: PropTypes.string,
-  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired
+  suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired,
 };
 
 function getSuggestions(value) {
@@ -103,37 +97,32 @@ function getSuggestions(value) {
   return inputLength === 0
     ? []
     : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 &&
-          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+      const keep =
+          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
 
-        if (keep) {
-          count += 1;
-        }
+      if (keep) {
+        count += 1;
+      }
 
-        return keep;
-      });
+      return keep;
+    });
 }
 
 class AttributeInput extends Component {
   state = {
-    inputValue: "",
-    selectedItem: []
+    inputValue: '',
+    selectedItem: [],
   };
 
   handleKeyDown = event => {
     const { inputValue, selectedItem } = this.state;
-    if (
-      selectedItem.length &&
-      !inputValue.length &&
-      keycode(event) === "backspace"
-    ) {
+    if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
       this.setState({
-        selectedItem: selectedItem.slice(0, selectedItem.length - 1)
+        selectedItem: selectedItem.slice(0, selectedItem.length - 1),
       });
     }
 
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.handleChange(this.state.inputValue);
     }
   };
@@ -150,8 +139,8 @@ class AttributeInput extends Component {
     }
     this.props.passItems(selectedItem);
     this.setState({
-      inputValue: "",
-      selectedItem
+      inputValue: '',
+      selectedItem,
     });
   };
 
@@ -180,7 +169,7 @@ class AttributeInput extends Component {
           isOpen,
           inputValue: inputValue2,
           selectedItem: selectedItem2,
-          highlightedIndex
+          highlightedIndex,
         }) => (
           <div className={classes.container}>
             {renderInput({
@@ -201,9 +190,9 @@ class AttributeInput extends Component {
                   if (highlightedIndex === null) {
                     this.handleKeyDown(event);
                   }
-                }
+                },
               }),
-              label: "Tags"
+              label: 'Tags',
             })}
             {isOpen ? (
               <Paper className={classes.paper} square>
@@ -213,7 +202,7 @@ class AttributeInput extends Component {
                     index,
                     itemProps: getItemProps({ item: suggestion.label }),
                     highlightedIndex,
-                    selectedItem: selectedItem2
+                    selectedItem: selectedItem2,
                   })
                 )}
               </Paper>
@@ -226,38 +215,38 @@ class AttributeInput extends Component {
 }
 
 AttributeInput.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250
+    height: 250,
   },
   container: {
     flexGrow: 1,
-    position: "relative"
+    position: 'relative',
   },
   paper: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
     marginTop: theme.spacing.unit,
     left: 0,
-    right: 0
+    right: 0,
   },
   chip: {
-    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`
+    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
   },
   inputRoot: {
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
   inputInput: {
-    width: "auto",
-    flexGrow: 1
+    width: 'auto',
+    flexGrow: 1,
   },
   divider: {
-    height: theme.spacing.unit * 2
-  }
+    height: theme.spacing.unit * 2,
+  },
 });
 
 export default withStyles(styles)(AttributeInput);

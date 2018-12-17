@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PriceChart from "../PriceChart/PriceChart";
+import React, { Component } from 'react';
+import PriceChart from '../PriceChart/PriceChart';
 
 class BlockHistory extends Component {
   state = {
     timestamps: {},
-    sort: []
+    sort: [],
   };
 
   handleBlockLoad(block, event) {
@@ -12,8 +12,8 @@ class BlockHistory extends Component {
       this.setState({
         timestamps: {
           ...this.state.timestamps,
-          [event.blockHash]: parseInt(block.timestamp, 10)
-        }
+          [event.blockHash]: parseInt(block.timestamp, 10),
+        },
       });
     }
   }
@@ -27,11 +27,7 @@ class BlockHistory extends Component {
     return (
       <div className="blockHistory">
         {showChart && (
-          <PriceChart
-            events={sortedEvents}
-            symbol={symbol}
-            currentPrice={currentPrice}
-          />
+          <PriceChart events={sortedEvents} symbol={symbol} currentPrice={currentPrice} />
         )}
       </div>
     );

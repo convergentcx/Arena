@@ -1,22 +1,9 @@
-import React, { Component } from "react";
-import {
-  Area,
-  CartesianGrid,
-  ComposedChart,
-  ReferenceDot,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
+import React, { Component } from 'react';
+import { Area, CartesianGrid, ComposedChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts';
 
 class CurveChart extends Component {
   getChartData() {
-    let {
-      totalSupply,
-      inverseSlope,
-      exponent,
-      currentPrice
-    } = this.props.curveData;
+    let { totalSupply, inverseSlope, exponent, currentPrice } = this.props.curveData;
     // poolBalance = parseFloat(poolBalance) || 0;
     totalSupply = parseFloat(totalSupply) || 0;
 
@@ -31,13 +18,13 @@ class CurveChart extends Component {
         data.push({
           supply: i,
           sell: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          value: parseFloat(price.toFixed(4)),
         });
       } else if (i >= totalSupply) {
         data.push({
           supply: i,
           buy: price.toFixed(4),
-          value: parseFloat(price.toFixed(4))
+          value: parseFloat(price.toFixed(4)),
         });
       }
     }
@@ -50,31 +37,31 @@ class CurveChart extends Component {
     return (
       <div>
         <ComposedChart
-          style={{ margin: "auto" }}
+          style={{ margin: 'auto' }}
           width={this.props.width}
           height={this.props.height}
           data={data}
           margin={this.props.margin}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="supply" type={"number"} />
-          <YAxis dataKey="value" type={"number"} />
+          <XAxis dataKey="supply" type={'number'} />
+          <YAxis dataKey="value" type={'number'} />
           <Tooltip />
 
           <Area
             isAnimationActive={false}
             dots={false}
-            stackOffset={"none"}
+            stackOffset={'none'}
             dataKey="value"
-            name={"price"}
-            key={"price"}
+            name={'price'}
+            key={'price'}
             stroke="black"
             fill="none"
           />
 
           <Area
             isAnimationActive={false}
-            stackOffset={"none"}
+            stackOffset={'none'}
             dataKey="sell"
             stroke="black"
             fill="black"

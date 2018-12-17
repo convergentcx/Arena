@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import { AppContainer, Dashboard } from "./components";
-import Interface from "./components/Dashboard/DashboardInterface";
-import { Landing, Launch, Leaderboard, Profile } from "./pages";
+import { AppContainer, Dashboard } from './components';
+import Interface from './components/Dashboard/DashboardInterface';
+import { Landing, Launch, Leaderboard, Profile } from './pages';
 
 /// MUI Theme
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { slateTheme, achillTheme } from "./themes";
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { slateTheme, achillTheme } from './themes';
 
 /// Notistack
-import { SnackbarProvider } from "notistack";
+import { SnackbarProvider } from 'notistack';
 export default class App extends Component {
   state = {
-    lights: true
+    lights: true,
   };
 
   toggleLights = () => {
@@ -25,8 +25,8 @@ export default class App extends Component {
       <SnackbarProvider
         maxSnack={6}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center"
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
       >
         <MuiThemeProvider theme={this.state.lights ? slateTheme : achillTheme}>
@@ -47,11 +47,7 @@ export default class App extends Component {
               />
               <Route path="/launch" component={Launch} />
               <Route path="/leaderboard" component={Leaderboard} />
-              <Route
-                path="/economies/:economyAddress"
-                exact
-                component={Profile}
-              />
+              <Route path="/economies/:economyAddress" exact component={Profile} />
             </Switch>
           </AppContainer>
         </MuiThemeProvider>

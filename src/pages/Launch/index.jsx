@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import {
   Avatar,
@@ -7,43 +7,43 @@ import {
   CardContent,
   Grid,
   LinearProgress,
-  TextField
-} from "@material-ui/core";
-import { Add, Remove } from "@material-ui/icons";
-import dataUriToBuffer from "data-uri-to-buffer";
-import ipfsApi from "ipfs-api";
-import Dropzone from "react-dropzone";
-import { withSnackbar } from "notistack";
+  TextField,
+} from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
+import dataUriToBuffer from 'data-uri-to-buffer';
+import ipfsApi from 'ipfs-api';
+import Dropzone from 'react-dropzone';
+import { withSnackbar } from 'notistack';
 
-import withContext from "../../hoc/withContext";
-import { withRouter } from "react-router-dom";
+import withContext from '../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
 
-import { getBytes32FromMultihash } from "../../util";
+import { getBytes32FromMultihash } from '../../util';
 
-import AttributeInput from "./AttributeInput";
+import AttributeInput from './AttributeInput';
 
-const ipfs = ipfsApi("ipfs.infura.io", "5001", { protocol: "https" });
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 class LaunchForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      file: "",
+      file: '',
       ipfsUploading: false,
       rows: 0,
       stackId: null,
       tooFew: false,
       tooMany: false,
       tags: [],
-      enteredTag: ""
+      enteredTag: '',
     };
   }
 
   inputUpdate = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -62,19 +62,17 @@ class LaunchForm extends Component {
   deploy = async () => {
     const {
       drizzle: {
-        contracts: { PersonalEconomyFactory }
+        contracts: { PersonalEconomyFactory },
       },
-      drizzleState
+      drizzleState,
     } = this.props;
 
     // Check for all the required fields.
-    if (!this.state.name || !this.state.symbol || !this.state["service-0"]) {
-      return alert(
-        "Please fill in the required data fields: name, symbol, (at least 1) service"
-      );
+    if (!this.state.name || !this.state.symbol || !this.state['service-0']) {
+      return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
     }
 
-    let imgBuf = "";
+    let imgBuf = '';
     try {
       imgBuf = dataUriToBuffer(this.state.file);
     } catch (e) {
@@ -83,17 +81,17 @@ class LaunchForm extends Component {
 
     const dataJson = {
       name: this.state.name,
-      description: this.state.description || "",
+      description: this.state.description || '',
       image: imgBuf,
       symbol: this.state.symbol,
       tags: this.state.selectedItems,
-      services: []
+      services: [],
     };
 
     for (let i = 0; i <= this.state.rows; i++) {
       dataJson.services.push({
         what: this.state[`service-${i}`],
-        price: this.state[`price-${i}`]
+        price: this.state[`price-${i}`],
       });
     }
 
@@ -107,7 +105,7 @@ class LaunchForm extends Component {
       this.state.name,
       this.state.symbol,
       {
-        from: drizzleState.accounts[0]
+        from: drizzleState.accounts[0],
       }
     );
     this.waitForMined(stackId);
@@ -117,7 +115,7 @@ class LaunchForm extends Component {
     const reader = new FileReader();
     reader.onload = e => {
       this.setState({
-        file: e.target.result
+        file: e.target.result,
       });
     };
 
@@ -140,25 +138,25 @@ class LaunchForm extends Component {
     const { enqueueSnackbar } = this.props;
     const interval = setInterval(() => {
       const status = this.getStatus(stackId);
-      if (status === "pending" && this.state.txStatus !== "pending") {
-        enqueueSnackbar("Waiting for transaction to be mined...");
+      if (status === 'pending' && this.state.txStatus !== 'pending') {
+        enqueueSnackbar('Waiting for transaction to be mined...');
         this.setState({
-          txStatus: "pending"
+          txStatus: 'pending',
         });
       }
-      if (status === "success" && this.state.txStatus !== "success") {
-        enqueueSnackbar("Transaction mined!", { variant: "success" });
+      if (status === 'success' && this.state.txStatus !== 'success') {
+        enqueueSnackbar('Transaction mined!', { variant: 'success' });
         clearInterval(this.state.interval);
         this.setState({
-          txStatus: "success"
+          txStatus: 'success',
         });
         setTimeout(() => {
-          this.props.history.push("/leaderboard");
+          this.props.history.push('/leaderboard');
         }, 2000);
       }
     }, 100);
     this.setState({
-      interval
+      interval,
     });
   };
 
@@ -174,14 +172,14 @@ class LaunchForm extends Component {
       let i = 0;
       while (i < this.state.rows) {
         moreServices.push(
-          <Grid container style={{ marginTop: "1vh" }}>
+          <Grid container style={{ marginTop: '1vh' }}>
             <Grid item xs={9}>
               <TextField
                 label="Service"
                 type="text"
                 name={`service-${i + 1}`}
                 onChange={this.inputUpdate}
-                style={{ width: "90%" }}
+                style={{ width: '90%' }}
               />
             </Grid>
 
@@ -191,7 +189,7 @@ class LaunchForm extends Component {
                 type="text"
                 name={`price-${i + 1}`}
                 onChange={this.inputUpdate}
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
               />
             </Grid>
           </Grid>
@@ -202,23 +200,23 @@ class LaunchForm extends Component {
 
     return (
       <Card>
-        <CardContent style={{ paddingLeft: "", paddingRight: "" }}>
+        <CardContent style={{ paddingLeft: '', paddingRight: '' }}>
           <Grid container>
-            <Grid item sm={12} md={3} style={{ background: "" }}>
+            <Grid item sm={12} md={3} style={{ background: '' }}>
               {/* Upload Image */}
               <div
                 style={{
-                  height: "200px",
-                  width: "200px",
-                  margin: "auto",
-                  borderRadius: "50%"
+                  height: '200px',
+                  width: '200px',
+                  margin: 'auto',
+                  borderRadius: '50%',
                 }}
               >
                 <Dropzone
                   accept="image/*"
                   onDrop={this.onDrop}
                   style={{
-                    border: "none"
+                    border: 'none',
                   }}
                 >
                   {({ getRootProps, getInputProps }) =>
@@ -228,9 +226,9 @@ class LaunchForm extends Component {
                         <Avatar
                           src={file}
                           style={{
-                            height: "200px",
-                            width: "200px",
-                            margin: "auto"
+                            height: '200px',
+                            width: '200px',
+                            margin: 'auto',
                           }}
                         />
                       </div>
@@ -239,9 +237,9 @@ class LaunchForm extends Component {
                         <input {...getInputProps()} />
                         <Avatar
                           style={{
-                            height: "200px",
-                            width: "200px",
-                            margin: "auto"
+                            height: '200px',
+                            width: '200px',
+                            margin: 'auto',
                           }}
                           {...getRootProps()}
                         >
@@ -262,7 +260,7 @@ class LaunchForm extends Component {
                   name="name"
                   placeholder=""
                   onChange={this.inputUpdate}
-                  style={{ width: "45%" }}
+                  style={{ width: '45%' }}
                 />
                 <TextField
                   required
@@ -271,10 +269,10 @@ class LaunchForm extends Component {
                   name="symbol"
                   placeholder=""
                   onChange={this.inputUpdate}
-                  style={{ width: "45%", marginLeft: "10%" }}
+                  style={{ width: '45%', marginLeft: '10%' }}
                 />
               </Grid>
-              <Grid item xs={12} style={{ marginTop: "2vh" }}>
+              <Grid item xs={12} style={{ marginTop: '2vh' }}>
                 <TextField
                   multiline
                   rows="3"
@@ -284,23 +282,23 @@ class LaunchForm extends Component {
                   name="description"
                   placeholder=""
                   onChange={this.inputUpdate}
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                 />
               </Grid>
 
-              <Grid item xs={12} style={{ marginTop: "2vh" }}>
+              <Grid item xs={12} style={{ marginTop: '2vh' }}>
                 <AttributeInput passItems={this.getSelectedTags} />
               </Grid>
             </Grid>
 
-            <Grid container style={{ marginTop: "40px" }}>
-              <Grid item xs={9} style={{ paddingLeft: "" }}>
+            <Grid container style={{ marginTop: '40px' }}>
+              <Grid item xs={9} style={{ paddingLeft: '' }}>
                 <TextField
                   label="Service"
                   type="text"
                   name="service-0"
                   onChange={this.inputUpdate}
-                  style={{ width: "90%" }}
+                  style={{ width: '90%' }}
                 />
               </Grid>
 
@@ -310,18 +308,14 @@ class LaunchForm extends Component {
                   type="text"
                   name="price-0"
                   onChange={this.inputUpdate}
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                 />
               </Grid>
             </Grid>
 
             {moreServices}
 
-            <Grid
-              item
-              xs={12}
-              style={{ display: "flex", paddingLeft: "5vw", marginTop: "2vh" }}
-            >
+            <Grid item xs={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
               <div style={{ flexGrow: 1 }} />
               <Button onClick={this.removeService}>
                 <Remove />
@@ -332,30 +326,26 @@ class LaunchForm extends Component {
             </Grid>
 
             {/* Alerts */}
-            <Grid
-              item
-              md={12}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
+            <Grid item md={12} style={{ display: 'flex', justifyContent: 'center' }}>
               {this.state.tooMany && (
-                <div color="warning" style={{ marginBottom: "" }}>
-                  While we build{" "}
+                <div color="warning" style={{ marginBottom: '' }}>
+                  While we build{' '}
                   <span role="img" aria-label="emoji">
                     🛠
-                  </span>{" "}
-                  only 3 services will be available in your economy{" "}
+                  </span>{' '}
+                  only 3 services will be available in your economy{' '}
                   <span role="img" aria-label="emoji">
                     💸
                   </span>
                 </div>
               )}
               {this.state.tooFew && (
-                <div color="warning" style={{ marginBottom: "" }}>
-                  For your economy to work{" "}
+                <div color="warning" style={{ marginBottom: '' }}>
+                  For your economy to work{' '}
                   <span role="img" aria-label="emoji">
                     👨‍💼
-                  </span>{" "}
-                  you need to offer at least one service{" "}
+                  </span>{' '}
+                  you need to offer at least one service{' '}
                   <span role="img" aria-label="emoji">
                     🗳
                   </span>
@@ -364,22 +354,18 @@ class LaunchForm extends Component {
             </Grid>
 
             {/* Deploy Button */}
-            <Grid
-              item
-              md={12}
-              style={{ display: "flex", paddingLeft: "5vw", marginTop: "2vh" }}
-            >
+            <Grid item md={12} style={{ display: 'flex', paddingLeft: '5vw', marginTop: '2vh' }}>
               <div style={{ flexGrow: 1 }} />
               <Button size="large" variant="outlined" onClick={this.deploy}>
                 DEPLOY
               </Button>
             </Grid>
 
-            <Grid item md={12} style={{ marginTop: "1vh" }}>
+            <Grid item md={12} style={{ marginTop: '1vh' }}>
               {this.state.ipfsUploading && (
-                <div style={{ width: "100%" }}>
+                <div style={{ width: '100%' }}>
                   <LinearProgress color="secondary" />
-                  Uploading to IPFS!{" "}
+                  Uploading to IPFS!{' '}
                   <span role="img" aria-label="emoji">
                     📡
                   </span>
@@ -393,12 +379,10 @@ class LaunchForm extends Component {
   }
 }
 
-const LaunchFormContextualized = withSnackbar(
-  withContext(withRouter(LaunchForm))
-);
+const LaunchFormContextualized = withSnackbar(withContext(withRouter(LaunchForm)));
 
 const Launch = props => (
-  <div style={{ padding: "10%", paddingTop: "5%" }}>
+  <div style={{ padding: '10%', paddingTop: '5%' }}>
     <LaunchFormContextualized history={props.history} />
   </div>
 );

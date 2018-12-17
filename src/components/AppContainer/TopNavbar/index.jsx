@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { withTheme } from "@material-ui/core/styles";
+import { withTheme } from '@material-ui/core/styles';
 
-import { AppBar, CssBaseline, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
 
-import MetamaskLogin from "./MetamaskLogin";
+import MetamaskLogin from './MetamaskLogin';
 
-import Logo from "../../../assets/logo.png";
-import WhiteLogo from "../../../assets/logo_white.png";
+import Logo from '../../../assets/logo.png';
+import WhiteLogo from '../../../assets/logo_white.png';
 
 class TopNav extends Component {
   render() {
@@ -19,14 +19,12 @@ class TopNav extends Component {
           position="static"
           elevation={3}
           color="inherit"
-          style={{ paddingLeft: "4%", paddingRight: "4%" }}
+          style={{ paddingLeft: '4%', paddingRight: '4%' }}
         >
           <Toolbar>
-            <NavLink to={"/"}>
+            <NavLink to={'/'}>
               <img
-                src={
-                  this.props.theme.palette.type === "dark" ? WhiteLogo : Logo
-                }
+                src={this.props.theme.palette.type === 'dark' ? WhiteLogo : Logo}
                 alt="Convergent"
                 width="40px"
                 height="40px"

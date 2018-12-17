@@ -1,15 +1,9 @@
-import React, { Component } from "react";
-import {
-  CircularProgress,
-  Grid,
-  Paper,
-  TextField,
-  Typography
-} from "@material-ui/core";
+import React, { Component } from 'react';
+import { CircularProgress, Grid, Paper, TextField, Typography } from '@material-ui/core';
 
 class Services extends Component {
   state = {
-    dataJson: this.props.dataJson
+    dataJson: this.props.dataJson,
   };
 
   render() {
@@ -18,33 +12,33 @@ class Services extends Component {
         <Grid container key={index}>
           <Grid item xs={9}>
             <TextField
-              label={"Service"}
+              label={'Service'}
               name={`service-${index}`}
               defaultValue={serviceObj.what}
               onChange={this.props.handleChange}
               type="text"
               margin="normal"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               InputProps={{
-                readOnly: !this.props.editing
+                readOnly: !this.props.editing,
               }}
             />
           </Grid>
           <Grid item xs={3}>
             <TextField
-              label={"Price"}
+              label={'Price'}
               name={`price-${index}`}
               defaultValue={serviceObj.price}
               onChange={this.props.handleChange}
               type="number"
               margin="normal"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               InputProps={{
-                readOnly: !this.props.editing
+                readOnly: !this.props.editing,
               }}
             />
           </Grid>
@@ -53,16 +47,13 @@ class Services extends Component {
     });
 
     return (
-      <Paper style={{ display: "flex", flexDirection: "column" }}>
-        <Grid container style={{ padding: "5%" }}>
+      <Paper style={{ display: 'flex', flexDirection: 'column' }}>
+        <Grid container style={{ padding: '5%' }}>
           <Typography color="textSecondary" gutterBottom>
             Your Services
           </Typography>
           {this.props.loading ? (
-            <Grid
-              container
-              style={{ height: "30vh", padding: "5%", textAlign: "center" }}
-            >
+            <Grid container style={{ height: '30vh', padding: '5%', textAlign: 'center' }}>
               <Grid item xs={12}>
                 Saving to IPFS
               </Grid>

@@ -1,88 +1,88 @@
-import React, { Component } from "react";
-import withContext from "../../../hoc/withContext";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import withContext from '../../../hoc/withContext';
+import { withRouter } from 'react-router-dom';
 
-import Events from "./Events/Events";
-import PersonalEconomy from "../../../build/contracts/PersonalEconomy.json";
+import Events from './Events/Events';
+import PersonalEconomy from '../../../build/contracts/PersonalEconomy.json';
 
-import EditColumn from "./EditColumn";
+import EditColumn from './EditColumn';
 
-import MainStats from "./Stats/MainStats/index.jsx";
-import SmallStats from "./Stats/SmallStats/index.jsx";
+import MainStats from './Stats/MainStats/index.jsx';
+import SmallStats from './Stats/SmallStats/index.jsx';
 
-import ProfileChart from "../../Profile/ProfileChart.jsx";
+import ProfileChart from '../../Profile/ProfileChart.jsx';
 
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from '@material-ui/core/styles';
 
-import { Grid, Paper, Switch, Tab, Tabs, Typography } from "@material-ui/core";
+import { Grid, Paper, Switch, Tab, Tabs, Typography } from '@material-ui/core';
 
-import { getMultihashFromBytes32, getPrice, toBN } from "../../../util";
+import { getMultihashFromBytes32, getPrice, toBN } from '../../../util';
 
-import ipfsApi from "ipfs-api";
-const ipfs = ipfsApi("ipfs.infura.io", "5001", { protocol: "https" });
+import ipfsApi from 'ipfs-api';
+const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   card: {
     minWidth: 200,
-    position: "relative"
+    position: 'relative',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   bigAvatar: {
     margin: 10,
     width: 60,
-    height: 60
+    height: 60,
   },
   chip: {
-    margin: theme.spacing.unit / 2
+    margin: theme.spacing.unit / 2,
   },
   editButton: {
-    position: "absolute",
-    right: "2%",
-    top: "3%"
-  }
+    position: 'absolute',
+    right: '2%',
+    top: '3%',
+  },
 });
 
 class Interface extends Component {
   state = {
     dataKeys: {
-      totalSupplyKey: "",
-      yourBalanceKey: ""
+      totalSupplyKey: '',
+      yourBalanceKey: '',
     },
     editing: false,
     exponent: 0,
     inverseSlope: 0,
     loading: false,
-    mhash: "",
-    name: "",
-    owner: "",
-    poolBalance: "",
-    symbol: "",
+    mhash: '',
+    name: '',
+    owner: '',
+    poolBalance: '',
+    symbol: '',
     popover: false,
-    value: 0
+    value: 0,
   };
 
   async componentDidMount() {
@@ -90,12 +90,9 @@ class Interface extends Component {
     const address = this.props.match.params.tokenAddress;
     const contractConfig = {
       contractName: address,
-      web3Contract: new drizzle.web3.eth.Contract(
-        PersonalEconomy["abi"],
-        address
-      )
+      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address),
     };
-    let drizzleEvents = ["Minted", "Burned", "Requested"];
+    let drizzleEvents = ['Minted', 'Burned', 'Requested'];
     await drizzle.addContract(contractConfig, drizzleEvents);
 
     const contract = this.props.drizzle.contracts[address];
@@ -117,19 +114,17 @@ class Interface extends Component {
     const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
-      size: 32
+      size: 32,
     });
 
-    const dataJson = JSON.parse(
-      (await ipfs.get(multihash))[0].content.toString()
-    );
+    const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
 
     this.setState({
       contract,
       dataJson,
       dataKeys: {
         totalSupplyKey,
-        yourBalanceKey
+        yourBalanceKey,
       },
       exponent,
       inverseSlope,
@@ -137,12 +132,12 @@ class Interface extends Component {
       name,
       owner,
       poolBalance,
-      symbol
+      symbol,
     });
   }
 
   showDetails = () => {
-    this.props.history.push("/economies/" + this.props.address);
+    this.props.history.push('/economies/' + this.props.address);
   };
 
   handleTabChange = (_, value) => {
@@ -167,10 +162,8 @@ class Interface extends Component {
       return <div>Still Loading...</div>;
     }
 
-    const totalSupply =
-      contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
-    const yourBalance =
-      contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
+    const totalSupply = contract.totalSupply[this.state.dataKeys.totalSupplyKey].value;
+    const yourBalance = contract.balanceOf[this.state.dataKeys.yourBalanceKey].value;
 
     const currentPrice = getPrice(
       this.state.inverseSlope,
@@ -178,11 +171,7 @@ class Interface extends Component {
       this.state.exponent
     );
     return (
-      <Grid
-        container
-        spacing={16}
-        style={{ padding: "16px", paddingTop: "2%" }}
-      >
+      <Grid container spacing={16} style={{ padding: '16px', paddingTop: '2%' }}>
         <Grid item xs={12} md={4}>
           <EditColumn
             address={address}
@@ -203,26 +192,18 @@ class Interface extends Component {
             indicatorColor="secondary"
             textColor="primary"
             onChange={this.handleTabChange}
-            style={{ marginBottom: "16px" }}
+            style={{ marginBottom: '16px' }}
           >
             <Tab label="Inbox" />
             <Tab label="Stats" />
             <Tab label="Settings" />
           </Tabs>
           {this.state.value === 0 && (
-            <Paper style={{ padding: "3%" }}>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
+            <Paper style={{ padding: '3%' }}>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
                 Requests and Transactions
               </Typography>
-              <Events
-                date={this.props.date}
-                address={address}
-                drizzle={this.props.drizzle}
-              />
+              <Events date={this.props.date} address={address} drizzle={this.props.drizzle} />
             </Paper>
           )}
           {this.state.value === 1 && (
@@ -230,25 +211,25 @@ class Interface extends Component {
               <Typography
                 className={classes.title}
                 color="textSecondary"
-                style={{ marginLeft: "16px" }}
+                style={{ marginLeft: '16px' }}
                 gutterBottom
               >
                 Bonding curve
               </Typography>
-              <div style={{ width: "100%", height: "400px" }}>
+              <div style={{ width: '100%', height: '400px' }}>
                 <ProfileChart
                   curveData={{
                     totalSupply: totalSupply,
                     poolBalance: this.state.poolBalance,
                     inverseSlope: this.state.inverseSlope,
                     exponent: this.state.exponent,
-                    currentPrice: currentPrice
+                    currentPrice: currentPrice,
                   }}
                   margin={{
                     top: 30,
                     right: 10,
                     bottom: 30,
-                    left: 10
+                    left: 10,
                   }}
                   width="100%"
                   height="100%"
@@ -276,17 +257,13 @@ class Interface extends Component {
                 item
                 xs={4}
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  alignItems: "center"
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
               >
-                <Typography
-                  variant="subtitle1"
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                   Lights
                 </Typography>
                 <Switch

@@ -43,6 +43,7 @@ module.exports = {
       "warn",
     ],
     "comma-dangle": [
+      "error",
       "always-multiline",
     ],
   },

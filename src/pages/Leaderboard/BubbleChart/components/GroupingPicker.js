@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classes from "./GroupingPicker.module.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classes from './GroupingPicker.module.css';
 
 export default class GroupingPicker extends React.Component {
   onBtnClick = event => {
@@ -11,14 +11,14 @@ export default class GroupingPicker extends React.Component {
     return (
       <div className={classes.GroupingPicker}>
         <button
-          className={`${classes.button} ${active === "all" && classes.active}`}
+          className={`${classes.button} ${active === 'all' && classes.active}`}
           name="all"
           onClick={this.onBtnClick}
         >
           The Economy
         </button>
         <button
-          className={`${classes.button} ${active === "year" && classes.active}`}
+          className={`${classes.button} ${active === 'year' && classes.active}`}
           name="year"
           onClick={this.onBtnClick}
         >
@@ -31,5 +31,5 @@ export default class GroupingPicker extends React.Component {
 
 GroupingPicker.propTypes = {
   onChanged: PropTypes.func.isRequired,
-  active: PropTypes.oneOf(["all", "year"]).isRequired
+  active: PropTypes.oneOf(['all', 'year']).isRequired,
 };

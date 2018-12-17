@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function YearsTitles({ yearCenters }) {
   return (
@@ -24,7 +24,7 @@ YearsTitles.propTypes = {
   yearCenters: PropTypes.objectOf(
     PropTypes.shape({
       x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
+      y: PropTypes.number.isRequired,
     }).isRequired
-  ).isRequired
+  ).isRequired,
 };
