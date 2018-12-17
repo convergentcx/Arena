@@ -56,3 +56,8 @@
     margin-top: 20px;
     margin-bottom: 0px;
 }
+
+.ReviewBox {
+    border: white dotted 0.8px;
+    padding: 20px;
+}

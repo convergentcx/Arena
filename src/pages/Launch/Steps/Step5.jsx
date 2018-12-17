@@ -33,7 +33,7 @@ const step3 = props => (
           . You can edit everything later, except for the token name and the token symbol.
         </Typography>
       </div>
-      <div className={classes.FormBox}>
+      <div className={`${classes.FormBox} ${classes.ReviewBox}`}>
         <Grid container>
           <Grid item xs={10} style={{ marginTop: '2vh' }}>
             <TextField
@@ -76,13 +76,13 @@ const step3 = props => (
             multiline
           />
           <Grid item md={10} style={{ marginTop: '2vh' }}>
-            <TextField label="Service 1" defaultValue={`${props.service0}`} fullWidth />
+            <TextField label="Service 1" value={`${props.service0}`} fullWidth />
           </Grid>
 
           <Grid item md={2} style={{ marginTop: '2vh' }}>
             <TextField
               label={'Price 1'}
-              defaultValue={`${props.price0} ${props.symbol}`}
+              value={`${props.price0} ${props.symbol}`}
               style={{ marginLeft: '30px' }}
               InputProps={{
                 readOnly: true

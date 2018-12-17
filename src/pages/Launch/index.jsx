@@ -36,7 +36,6 @@ class LaunchForm extends Component {
       stackId: null,
       tooFew: false,
       tooMany: false,
-      tags: [],
       enteredTag: '',
       description: 'I am XYZ and this token shall represent the value of my %3@#...',
       'price-0': 1
@@ -234,7 +233,7 @@ class LaunchForm extends Component {
             symbol={this.state.symbol}
             name={this.state.name}
             description={this.state.description}
-            tags={this.state.tags}
+            tags={this.state.selectedItems}
             service0={this.state['service-0']}
             price0={this.state['price-0']}
           />
