@@ -8,7 +8,7 @@ export const addDecimals = tokens => {
 };
 
 export const getPrice = (inverseSlope, supply, exp) => {
-  return toBN((1 / inverseSlope) * supply ** exp);
+  return toBN(Math.floor((1 / inverseSlope) * supply ** exp));
 };
 
 export const removeDecimals = tokens => {

@@ -23,7 +23,7 @@ class ServiceDetails extends Component {
     }
 
     const amountNeeded = await this.props.contract.methods
-      .priceToMint(addDecimals(serviceObj.price))
+      .price(addDecimals(serviceObj.price))
       .call();
     const yourBalance = this.props.drizzleState.accountBalances[
       this.props.drizzleState.accounts[0]

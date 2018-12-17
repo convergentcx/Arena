@@ -56,7 +56,7 @@ class ProfileDetails extends Component {
       contractName: addr,
       web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy.abi, addr),
     };
-    const events = ['Minted', 'Burned'];
+    const events = ['CurveBuy', 'CurveSell'];
     await drizzle.addContract(contractConfig, events);
     const contract = this.props.drizzle.contracts[this.props.addr];
 
@@ -65,11 +65,11 @@ class ProfileDetails extends Component {
       this.props.drizzleState.accounts[0]
     );
 
-    const exponent = await contract.methods.exponent().call();
-    const inverseSlope = await contract.methods.inverseSlope().call();
+    const exponent = await contract.methods.buyExponent().call();
+    const inverseSlope = await contract.methods.buyInverseSlope().call();
     const mhash = await contract.methods.mhash().call();
     const owner = await contract.methods.owner().call();
-    const poolBalance = await contract.methods.poolBalance().call();
+    const poolBalance = await contract.methods.reserve().call();
 
     const multihash = getMultihashFromBytes32({
       digest: mhash,
@@ -89,9 +89,13 @@ class ProfileDetails extends Component {
     const web3Contract = new web3.eth.Contract(PersonalEconomy['abi'], addr);
     let eventsArray = [];
 
-    await web3Contract.getPastEvents('Minted', { fromBlock: 0, toBlock: 'latest' }, (_, event) => {
-      event[0] && eventsArray.push(event[0].address);
-    });
+    await web3Contract.getPastEvents(
+      'CurveBuy',
+      { fromBlock: 0, toBlock: 'latest' },
+      (_, event) => {
+        event[0] && eventsArray.push(event[0].address);
+      }
+    );
 
     let unique = [...new Set(eventsArray)];
     let contributors = unique.length;

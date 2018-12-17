@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import TextLoop from 'react-text-loop';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, Tooltip } from '@material-ui/core';
 
 const heroStyle = {
   backgroundSize: 'cover',
@@ -34,17 +34,27 @@ const Hero = () => (
       </TextLoop>
     </Typography>
     <div style={{ height: '12%' }} />
-    <NavLink to={'/launch'}>
+    <Tooltip title="Not enabled, yet. Only selected economies on mainnet.">
       <Button size="large" variant="outlined" color="primary">
         Launch
       </Button>
-    </NavLink>
+    </Tooltip>
     &nbsp;&nbsp;
     <NavLink to={'/leaderboard'}>
       <Button color="secondary" size="large" variant="outlined">
-        Browse
+        Browse Mainnet Economies
       </Button>
     </NavLink>
+    <div style={{ position: 'fixed', bottom: 0 }}>
+      <Typography variant="body2" color="primary">
+        Check out the{' '}
+        <a href="https://proto.convergent.cx" style={{ color: 'white' }}>
+          {' '}
+          Rinkeby testnet version{' '}
+        </a>{' '}
+        of this dapp.
+      </Typography>
+    </div>
   </div>
 );
 

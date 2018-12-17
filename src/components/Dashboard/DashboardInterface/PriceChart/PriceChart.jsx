@@ -53,13 +53,13 @@ class PriceChart extends React.Component {
     let minTimestamp = events[0][1];
     let values = events.map(([event, timestamp]) => {
       switch (event.event) {
-      case 'Minted':
+      case 'CurveBuy':
         value += toNumber(
           priceInEth ? event.returnValues.totalCost : event.returnValues.amount,
           18
         );
         break;
-      case 'Burned':
+      case 'CurveSell':
         value -= toNumber(priceInEth ? event.returnValues.reward : event.returnValues.amount, 18);
         break;
       default:
