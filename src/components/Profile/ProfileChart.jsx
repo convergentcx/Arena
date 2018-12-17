@@ -18,7 +18,6 @@ class ProfileChart extends Component {
   getChartData = () => {
     let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
 
-    // poolBalance = utils.toBN(poolBalance);
     totalSupply = utils.toBN(totalSupply);
 
     const currentPoint = {

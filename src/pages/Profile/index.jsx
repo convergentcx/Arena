@@ -4,20 +4,21 @@ import Web3 from 'web3';
 import classes from './Profile.module.css';
 
 import { Button, Collapse, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
-// import { KeyboardBackspace } from '@material-ui/icons';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
 import withContext from '../../hoc/withContext';
 
-import OwnerCard from '../../components/Profile/OwnerCard.jsx';
-
-import InfoCard from '../../components/Profile/QuickFacts.jsx';
-import ServicePanel from '../../components/Profile/ServicePanel.jsx';
-import ServiceDetails from '../../components/Profile/ServiceDetails.jsx';
 import BuyAndSellButtons from '../../components/Profile/BuyAndSellButtons.jsx';
-import Photo from '../../components/Profile/Photo.jsx';
-import ProfileChart from '../../components/Profile/ProfileChart.jsx';
+
+import {
+  InfoCard,
+  OwnerCard,
+  Photo,
+  ProfileChart,
+  ServiceDetails,
+  ServicePanel,
+} from '../../components/Profile';
 
 import { getMultihashFromBytes32, getPrice, removeDecimals, toBN } from '../../util';
 
@@ -261,7 +262,6 @@ class ProfileDetails extends Component {
                   variant="outlined"
                   style={{ marginLeft: '5%', marginBottom: '5%' }}
                   onClick={this.handleExpandClick}
-                  // onClick={this.openPopover}
                 >
                   Details
                 </Button>

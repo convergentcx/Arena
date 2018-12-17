@@ -4,7 +4,7 @@ import { withSnackbar } from 'notistack';
 
 import { addDecimals, toBN } from '../../util';
 
-class ServicePanel extends Component {
+class ServiceDetails extends Component {
   constructor(props) {
     super(props);
     this.state = { interval: null, message: '', txStatus: null };
@@ -148,4 +148,4 @@ class ServicePanel extends Component {
   }
 }
 
-export default withSnackbar(ServicePanel);
+export default withSnackbar(ServiceDetails);

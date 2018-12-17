@@ -13,15 +13,18 @@
 import React, { Component } from 'react';
 
 import { Button, IconButton, Paper, Typography } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { PublicTwoTone } from '@material-ui/icons';
+
+const comingSoon = () => alert('Coming soon! 🌈');
 
 class SocialBar extends Component {
   render() {
     const items = Object.keys(this.props.socials).map((key, index) => {
+      // TODO: destination will be external links. Not sure where exactly they should go to yet tho.
       const destination = this.props.socials[key];
       return (
-        <IconButton key={index} color="secondary" onClick={() => window.open(destination)}>
-          <Delete />
+        <IconButton key={index} color="secondary" onClick={comingSoon}>
+          <PublicTwoTone />
         </IconButton>
       );
     });
@@ -50,19 +53,11 @@ const QuickFacts = props => (
       {props.marketCap} ETH
     </Typography>
     <div style={{ marginTop: '12px' }}>
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={() => window.open('https://convergent.cx')}
-      >
+      <Button variant="outlined" color="secondary" onClick={comingSoon}>
         WATCH
       </Button>
       &nbsp;&nbsp;
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={() => window.open('https://convergent.cx')}
-      >
+      <Button variant="outlined" color="secondary" onClick={comingSoon}>
         SHARE
       </Button>
     </div>

@@ -32,7 +32,7 @@ const Photo = props => {
           src={props.pic}
           style={{
             borderStyle: 'solid',
-            borderColor: '#FFF',
+            borderColor: '#000',
             borderWidth: '3px',
             position: 'static',
             height: '100%',

@@ -13,7 +13,7 @@ import { slateTheme, achillTheme } from './themes';
 import { SnackbarProvider } from 'notistack';
 export default class App extends Component {
   state = {
-    lights: true,
+    lights: false,
   };
 
   toggleLights = () => {
