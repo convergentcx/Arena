@@ -5,11 +5,12 @@ import {
   Grid,
   LinearProgress,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import classes from './Steps.module.css';
 import { Close } from '@material-ui/icons';
 import { HelpOutline } from '@material-ui/icons';
+import HelpTooltip from './HelpTooltip';
 
 const step3 = props => (
   <div className={classes.StepBox}>
@@ -19,7 +20,16 @@ const step3 = props => (
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
-        <HelpOutline color="secondary" className={classes.HelpButton} />
+        <HelpTooltip
+          text="By deploying this contract, you state your intention to provide the listed services
+          in exchange for payment in your personal token. This is in no way legally binding and you can 
+          always change your mind about what services you offer at what prices. However, if you want people to buy your
+          token helping you raise funds, you need to assure them that you will continue to back its value. 
+          You can demonstrate that you will honor your token by trying your best to provide the promised services
+          whenever they are requested and paid for."
+        >
+          <HelpOutline color="secondary" className={classes.HelpButton} />
+        </HelpTooltip>
       </div>
       <Typography variant="h6" color="primary.main">
         Review
@@ -40,7 +50,7 @@ const step3 = props => (
               label="Token Name"
               value={`${props.name}`}
               InputProps={{
-                readOnly: true
+                readOnly: true,
               }}
               fullWidth
             />
@@ -50,7 +60,7 @@ const step3 = props => (
               label="Ticker Symbol"
               value={`${props.symbol}`}
               InputProps={{
-                readOnly: true
+                readOnly: true,
               }}
               style={{ marginLeft: '30px' }}
             />
@@ -60,7 +70,7 @@ const step3 = props => (
               label="Description"
               value={`${props.description}`}
               InputProps={{
-                readOnly: true
+                readOnly: true,
               }}
               fullWidth
               multiline
@@ -70,13 +80,21 @@ const step3 = props => (
             label="Tags"
             value={`${props.tags}`}
             InputProps={{
-              readOnly: true
+              readOnly: true,
             }}
             fullWidth
             multiline
           />
+          {/* Services */}
           <Grid item md={10} style={{ marginTop: '2vh' }}>
-            <TextField label="Service 1" value={`${props.service0}`} fullWidth />
+            <TextField
+              label="Service 1"
+              value={`${props.service0}`}
+              InputProps={{
+                readOnly: true,
+              }}
+              fullWidth
+            />
           </Grid>
 
           <Grid item md={2} style={{ marginTop: '2vh' }}>
@@ -85,10 +103,60 @@ const step3 = props => (
               value={`${props.price0} ${props.symbol}`}
               style={{ marginLeft: '30px' }}
               InputProps={{
-                readOnly: true
+                readOnly: true,
               }}
             />
           </Grid>
+          {props.service1 && (
+            <Grid container>
+              <Grid item md={10} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label="Service 2"
+                  value={`${props.service1}`}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item md={2} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label={'Price 1'}
+                  value={`${props.price1} ${props.symbol}`}
+                  style={{ marginLeft: '30px' }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          )}
+          {props.service2 && (
+            <Grid container>
+              <Grid item md={10} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label="Service 3"
+                  value={`${props.service2}`}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item md={2} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label={'Price 1'}
+                  value={`${props.price2} ${props.symbol}`}
+                  style={{ marginLeft: '30px' }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </div>
       <Grid item md={12} style={{ marginTop: '2vh' }}>

@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import classes from './Steps.module.css';
 import { Close } from '@material-ui/icons';
 import { HelpOutline } from '@material-ui/icons';
+import HelpTooltip from './HelpTooltip';
 
 const step2 = props => (
   <div className={classes.StepBox}>
@@ -13,7 +14,13 @@ const step2 = props => (
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
-        <HelpOutline color="secondary" className={classes.HelpButton} />
+        <HelpTooltip
+          text="These are the only two inputs that are required to launch your token,
+         because they get written to the blockchain. They cannot be changed later. All other information 
+         is linked to your token contract via IPFS and can be added or updated at any time."
+        >
+          <HelpOutline color="secondary" className={classes.HelpButton} />
+        </HelpTooltip>
       </div>
       <Typography variant="h6" color="primary.main">
         Name and Photo
@@ -33,7 +40,7 @@ const step2 = props => (
                 accept="image/*"
                 onDrop={props.onDrop}
                 style={{
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 {({ getRootProps, getInputProps }) =>

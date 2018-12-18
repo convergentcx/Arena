@@ -22,7 +22,7 @@ let custom = {
   enterRight: 'your custom css transition classes',
   enterLeft: 'your custom css transition classes',
   exitRight: 'your custom css transition classes',
-  exitLeft: 'your custom css transition classes'
+  exitLeft: 'your custom css transition classes',
 };
 
 class LaunchForm extends Component {
@@ -38,7 +38,7 @@ class LaunchForm extends Component {
       tooMany: false,
       enteredTag: '',
       description: 'I am XYZ and this token shall represent the value of my %3@#...',
-      'price-0': 1
+      'price-0': 1,
     };
   }
 
@@ -239,6 +239,10 @@ class LaunchForm extends Component {
             tags={this.state.selectedItems}
             service0={this.state['service-0']}
             price0={this.state['price-0']}
+            service1={this.state['service-1']}
+            price1={this.state['price-1']}
+            service2={this.state['service-2']}
+            price2={this.state['price-2']}
           />
         </StepWizard>
       </Card>

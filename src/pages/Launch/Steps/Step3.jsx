@@ -4,6 +4,7 @@ import { Button, CardContent, Grid, TextField, Typography } from '@material-ui/c
 import classes from './Steps.module.css';
 import { Close } from '@material-ui/icons';
 import { HelpOutline } from '@material-ui/icons';
+import HelpTooltip from './HelpTooltip';
 
 const step3 = props => (
   <div className={classes.StepBox}>
@@ -13,7 +14,13 @@ const step3 = props => (
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
-        <HelpOutline color="secondary" className={classes.HelpButton} />
+        <HelpTooltip
+          text="This is your chance to explain to the market why your token will be valuable.
+          Tell people about the part of yourself or of your work that you want to tokenize, and explain 
+          why they can trust that you will honor your token."
+        >
+          <HelpOutline color="secondary" className={classes.HelpButton} />
+        </HelpTooltip>
       </div>
       <Typography variant="h6" color="primary.main">
         Purpose.
