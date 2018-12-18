@@ -66,48 +66,58 @@ const step3 = props => (
               style={{ marginLeft: '30px' }}
             />
           </Grid>
-          <Grid item xs={12} style={{ marginTop: '2vh' }}>
-            <TextField
-              label="Description"
-              value={`${props.description}`}
-              InputProps={{
-                readOnly: true,
-              }}
-              fullWidth
-              multiline
-            />
-          </Grid>
-          <TextField
-            label="Tags"
-            value={`${props.tags}`}
-            InputProps={{
-              readOnly: true,
-            }}
-            fullWidth
-            multiline
-          />
+          {props.description && (
+            <div style={{ marginTop: '2vh', width: '100%' }}>
+              <TextField
+                label="Description"
+                value={`${props.description}`}
+                InputProps={{
+                  readOnly: true,
+                }}
+                fullWidth
+                multiline
+              />
+            </div>
+          )}
+          {props.tags && (
+            <div style={{ marginTop: '2vh', width: '100%' }}>
+              <TextField
+                label="Tags"
+                value={`${props.tags}`}
+                InputProps={{
+                  readOnly: true,
+                }}
+                fullWidth
+                multiline
+              />
+            </div>
+          )}
           {/* Services */}
-          <Grid item md={10} style={{ marginTop: '2vh' }}>
-            <TextField
-              label="Service 1"
-              value={`${props.service0}`}
-              InputProps={{
-                readOnly: true,
-              }}
-              fullWidth
-            />
-          </Grid>
+          {props.service0 && (
+            <Grid container>
+              <Grid item md={10} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label="Service 1"
+                  value={`${props.service0}`}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  fullWidth
+                />
+              </Grid>
 
-          <Grid item md={2} style={{ marginTop: '2vh' }}>
-            <TextField
-              label={'Price 1'}
-              value={`${props.price0} ${props.symbol}`}
-              style={{ marginLeft: '30px' }}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          </Grid>
+              <Grid item md={2} style={{ marginTop: '2vh' }}>
+                <TextField
+                  label={'Price 1'}
+                  value={`${props.price0} ${props.symbol}`}
+                  style={{ marginLeft: '30px' }}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          )}
           {props.service1 && (
             <Grid container>
               <Grid item md={10} style={{ marginTop: '2vh' }}>

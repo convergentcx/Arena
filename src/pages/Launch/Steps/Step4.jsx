@@ -24,12 +24,11 @@ const step3 = props => (
         </HelpTooltip>{' '}
       </div>
       <Typography variant="h6" color="primary.main">
-        Services.
+        Services
       </Typography>
       <div className={classes.ExplainBox}>
         <Typography color="primary.main">
-          Tell the market what real-world values can be purchased with this token. What is backing
-          your personal cryptocurrency?
+          What real-world values can be purchased from you using this token?
         </Typography>
       </div>
       <div className={classes.FormBox}>

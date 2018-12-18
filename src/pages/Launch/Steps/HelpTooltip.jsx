@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Grow, Grid, Tooltip, Typography } from '@material-ui/core';
+import { Grow, Tooltip, Typography } from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 
 const styles = theme => {

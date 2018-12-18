@@ -24,13 +24,10 @@ const step2 = props => (
         </HelpTooltip>
       </div>
       <Typography variant="h6" color="primary.main">
-        Name and Photo
+        Basics
       </Typography>
       <div className={classes.ExplainBox}>
-        <Typography color="primary.main">
-          Give your token a name and a visual identity (from here you can go straight to deploy and
-          add the remaining details later).
-        </Typography>
+        <Typography color="primary.main">Give your token a name and a visual identity.</Typography>
       </div>
       <div className={classes.FormBox}>
         <Grid container>
@@ -69,7 +66,7 @@ const step2 = props => (
             </div>
           </Grid>
           <Grid item sm={12} md={9}>
-            <Grid item xs={12}>
+            <div>
               <TextField
                 fullWidth
                 required
@@ -79,11 +76,9 @@ const step2 = props => (
                 placeholder=""
                 onChange={props.inputUpdate}
                 helperText="Choose a name that conveys the
-                 nature of the value you want to tokenize."
+                 nature of the value you want to tokenize"
                 style={{ margin: '10px' }}
               />
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 fullWidth
                 required
@@ -92,10 +87,11 @@ const step2 = props => (
                 name="symbol"
                 placeholder=""
                 onChange={props.inputUpdate}
-                helperText="This will be the shorthand identifier for your token."
+                helperText="This will be the shorthand identifier for your token"
                 style={{ margin: '10px' }}
+                InputProps={{ inputProps: { maxLength: 5, style: { textTransform: 'uppercase' } } }}
               />
-            </Grid>
+            </div>
           </Grid>
         </Grid>
       </div>
@@ -106,6 +102,11 @@ const step2 = props => (
           </Button>
         </div>
         <div className={classes.ForwardButtons}>
+          <div className={classes.SkipNote}>
+            <Typography>
+              You can go straight to deploy from here and add the remaining details later.
+            </Typography>
+          </div>
           <Button
             variant="outlined"
             color="primary"
@@ -117,7 +118,13 @@ const step2 = props => (
           <Button
             variant="contained"
             color="primary"
-            onClick={props.nextStep}
+            onClick={() => {
+              if (!props.name || !props.symbol) {
+                return alert('Please enter a token name and symbol.');
+              } else {
+                return props.nextStep();
+              }
+            }}
             className={classes.NextButton}
             style={{ marginLeft: '20px' }}
           >

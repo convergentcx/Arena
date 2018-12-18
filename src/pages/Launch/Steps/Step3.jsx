@@ -23,12 +23,10 @@ const step3 = props => (
         </HelpTooltip>
       </div>
       <Typography variant="h6" color="primary.main">
-        Purpose.
+        Details
       </Typography>
       <div className={classes.ExplainBox}>
-        <Typography color="primary.main">
-          Describe your economic identity and the intended purpose of your token.
-        </Typography>
+        <Typography color="primary.main">Who are you? And why this token?</Typography>
       </div>
       <div className={classes.FormBox}>
         <Grid container>
@@ -43,6 +41,9 @@ const step3 = props => (
               value={props.description}
               onChange={props.inputUpdate}
               style={{ width: '100%' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} style={{ marginTop: '2vh' }}>

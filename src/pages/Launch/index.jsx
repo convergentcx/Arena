@@ -37,7 +37,7 @@ class LaunchForm extends Component {
       tooFew: false,
       tooMany: false,
       enteredTag: '',
-      description: 'I am XYZ and this token shall represent the value of my %3@#...',
+      description: '',
       'price-0': 1,
     };
   }
@@ -204,13 +204,18 @@ class LaunchForm extends Component {
 
     return (
       <Card>
-        <StepWizard transitions={custom}>
+        <StepWizard
+          transitions={custom}
+          /* nav={<NavComponent />} */
+        >
           <Welcome cancel={this.cancel} />
           <NamePhoto
             cancel={this.cancel}
             inputUpdate={this.inputUpdate}
             onDrop={this.onDrop}
             file={this.state.file}
+            name={this.state.name}
+            symbol={this.state.symbol}
           />
           <Description
             cancel={this.cancel}
