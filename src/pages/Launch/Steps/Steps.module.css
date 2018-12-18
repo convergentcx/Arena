@@ -1,0 +1,63 @@
+.Header {
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.CloseButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.HelpButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.CloseButton:hover {
+    cursor: pointer;
+}
+
+.HelpButton:hover {
+    cursor: pointer;
+}
+
+.ExplainBox {
+    padding: 10px 0;
+}
+
+.FormBox {
+    padding: 20px 0;
+}
+
+.ButtonBar {
+    margin: 50px 0px 0 0;
+    display: flex;
+    justify-content: space-between
+}
+
+
+.AddRemoveButtons {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.SkipButton {
+    width: 150px;
+}
+
+.NextButton {
+    width: 150px;
+}
+
+.AddRemoveWarnings {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.ReviewBox {
+    border: white dotted 0.8px;
+    padding: 20px;
+}

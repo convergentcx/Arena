@@ -1564,6 +1564,12 @@ async-eventemitter@^0.2.4:
   dependencies:
     async "^2.4.0"
 
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
+  version "0.2.3"
+  resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
+  dependencies:
+    async "^2.4.0"
+
 async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
@@ -11013,6 +11019,16 @@ react-smooth@~1.0.0:
     prop-types "^15.6.0"
     raf "^3.4.0"
     react-transition-group "^2.5.0"
+
+react-step-wizard@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-step-wizard/-/react-step-wizard-4.4.0.tgz#b899de307550e0f39c5b66b1d891267d6c4a52e0"
+  integrity sha512-8K78Q/pWXCQ1PKmZGVHdG4a2I8UwPY3rXLpn0vRyIsnJEmUbSFMJ1vtEj+NYA7ec0s3WDlKTRPSXVSYjlzd3lg==
+
+react-stepzilla@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/react-stepzilla/-/react-stepzilla-4.8.0.tgz#b775801fcc39b9852945473e5ce2410a98a0df66"
+  integrity sha512-+yA3Hn+SvFFV402ZL+tQly8PW+9axlYFWkl8EOPooZ0YuL2OgF3uOUfXV729MMDYb6JMsSe85UhBPE80crNzDw==
 
 react-text-loop@1.1.0:
   version "1.1.0"

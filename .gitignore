@@ -9,6 +9,9 @@
 # production
 /build
 
+# network-id issue
+/src/build
+
 # misc
 .DS_Store
 .env.local
