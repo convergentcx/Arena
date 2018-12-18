@@ -22,11 +22,12 @@ const step3 = props => (
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
         <HelpTooltip
           text="By deploying this contract, you state your intention to provide the listed services
-          in exchange for payment in your personal token. This is in no way legally binding and you can 
-          always change your mind about what services you offer at what prices. However, if you want people to buy your
-          token helping you raise funds, you need to assure them that you will continue to back its value. 
-          You can demonstrate that you will honor your token by trying your best to provide the promised services
-          whenever they are requested and paid for."
+          in exchange for payment in your personal token. This is in no way legally binding and you
+          can always change your mind about what services you offer at what prices. However, if you
+          want people to buy your token helping you raise funds, you need to assure them that you 
+          will continue to back its value. You can demonstrate that you will honor your token by 
+          trying your best to provide the promised services whenever they are requested and paid 
+          for."
         >
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>

@@ -15,9 +15,10 @@ const step3 = props => (
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
         <HelpTooltip
           text="
-          Your art, your craft, your time, your expertise, your influence, your care and attention ... there are 
-          countless things that only you can offer. Many of these things are currently not on the market,
-          because they are not yet valued! Here is your chance to offer future versions of these goods and services."
+          Your art, your craft, your time, your expertise, your influence, your care and attention
+          ... there are countless things that only you can offer. Many of these things are currently
+          not on the market, because they are not yet valued! Here is your chance to offer 
+          future versions of these goods and services."
         >
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>{' '}

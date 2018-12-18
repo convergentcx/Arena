@@ -16,8 +16,9 @@ const step2 = props => (
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
         <HelpTooltip
           text="These are the only two inputs that are required to launch your token,
-         because they get written to the blockchain. They cannot be changed later. All other information 
-         is linked to your token contract via IPFS and can be added or updated at any time."
+         because they get written to the blockchain. They cannot be changed later. 
+         All other information is linked to your token contract via IPFS and can be 
+         added or updated at any time."
         >
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>

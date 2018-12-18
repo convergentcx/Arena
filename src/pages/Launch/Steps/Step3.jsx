@@ -16,8 +16,8 @@ const step3 = props => (
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
         <HelpTooltip
           text="This is your chance to explain to the market why your token will be valuable.
-          Tell people about the part of yourself or of your work that you want to tokenize, and explain 
-          why they can trust that you will honor your token."
+          Tell people about the part of yourself or of your work that you want to tokenize, 
+          and explain why they can trust that you will honor your token."
         >
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>
