@@ -11,17 +11,17 @@ const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto'
+    overflowX: 'auto',
   },
   table: {
-    minWidth: 700
-  }
+    minWidth: 700,
+  },
 });
 
 class Events extends React.Component {
   state = {
     eventsArray: [],
-    tooltipOpen: false
+    tooltipOpen: false,
   };
 
   componentDidMount() {

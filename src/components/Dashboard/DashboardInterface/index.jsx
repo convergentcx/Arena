@@ -23,54 +23,54 @@ const ipfs = ipfsApi('ipfs.infura.io', '5001', { protocol: 'https' });
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   card: {
     minWidth: 200,
-    position: 'relative'
+    position: 'relative',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   bigAvatar: {
     margin: 10,
     width: 60,
-    height: 60
+    height: 60,
   },
   chip: {
-    margin: theme.spacing.unit / 2
+    margin: theme.spacing.unit / 2,
   },
   editButton: {
     position: 'absolute',
     right: '2%',
-    top: '3%'
-  }
+    top: '3%',
+  },
 });
 
 class Interface extends Component {
   state = {
     dataKeys: {
       totalSupplyKey: '',
-      yourBalanceKey: ''
+      yourBalanceKey: '',
     },
     editing: false,
     exponent: 0,
@@ -82,7 +82,7 @@ class Interface extends Component {
     poolBalance: '',
     symbol: '',
     popover: false,
-    value: 0
+    value: 0,
   };
 
   async componentDidMount() {
@@ -90,7 +90,7 @@ class Interface extends Component {
     const address = this.props.match.params.tokenAddress;
     const contractConfig = {
       contractName: address,
-      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address)
+      web3Contract: new drizzle.web3.eth.Contract(PersonalEconomy['abi'], address),
     };
     let drizzleEvents = ['Minted', 'Burned', 'Requested'];
     await drizzle.addContract(contractConfig, drizzleEvents);
@@ -114,7 +114,7 @@ class Interface extends Component {
     const multihash = getMultihashFromBytes32({
       digest: mhash,
       hashFunction: 18,
-      size: 32
+      size: 32,
     });
 
     const dataJson = JSON.parse((await ipfs.get(multihash))[0].content.toString());
@@ -124,7 +124,7 @@ class Interface extends Component {
       dataJson,
       dataKeys: {
         totalSupplyKey,
-        yourBalanceKey
+        yourBalanceKey,
       },
       exponent,
       inverseSlope,
@@ -132,7 +132,7 @@ class Interface extends Component {
       name,
       owner,
       poolBalance,
-      symbol
+      symbol,
     });
   }
 
@@ -223,13 +223,13 @@ class Interface extends Component {
                     poolBalance: this.state.poolBalance,
                     inverseSlope: this.state.inverseSlope,
                     exponent: this.state.exponent,
-                    currentPrice: currentPrice
+                    currentPrice: currentPrice,
                   }}
                   margin={{
                     top: 30,
                     right: 10,
                     bottom: 30,
-                    left: 10
+                    left: 10,
                   }}
                   width="100%"
                   height="100%"
@@ -260,7 +260,7 @@ class Interface extends Component {
                   display: 'flex',
                   justifyContent: 'center',
                   flexDirection: 'column',
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
               >
                 <Typography variant="subtitle1" color="textSecondary" gutterBottom>

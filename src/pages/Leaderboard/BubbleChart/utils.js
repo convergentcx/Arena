@@ -43,7 +43,7 @@ export function createNodes(rawData) {
       tags: d.tags,
       threshold: d.threshold,
       x: Math.random() * 900,
-      y: Math.random() * 800
+      y: Math.random() * 800,
     };
   });
 

@@ -3,7 +3,7 @@ import { CircularProgress, Grid, Paper, TextField, Typography } from '@material-
 
 class Services extends Component {
   state = {
-    dataJson: this.props.dataJson
+    dataJson: this.props.dataJson,
   };
 
   render() {
@@ -19,10 +19,10 @@ class Services extends Component {
               type="text"
               margin="normal"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               InputProps={{
-                readOnly: !this.props.editing
+                readOnly: !this.props.editing,
               }}
             />
           </Grid>
@@ -35,10 +35,10 @@ class Services extends Component {
               type="number"
               margin="normal"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               InputProps={{
-                readOnly: !this.props.editing
+                readOnly: !this.props.editing,
               }}
             />
           </Grid>

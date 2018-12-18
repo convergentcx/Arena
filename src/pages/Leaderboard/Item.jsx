@@ -8,7 +8,12 @@ import { removeDecimals } from '../../util';
 const Item = props => (
   <Paper
     elevation={6}
-    style={{ borderRadius: '50%', height: '', background: '#FFF', marginBottom: '10px' }}
+    style={{
+      borderRadius: '50%',
+      height: '',
+      background: '#FFF',
+      marginBottom: '10px',
+    }}
   >
     <Grid container style={{ background: '', padding: '8px' }}>
       <Grid
@@ -19,7 +24,7 @@ const Item = props => (
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-around',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <div />
@@ -35,7 +40,11 @@ const Item = props => (
           <Grid
             item
             xs={12}
-            style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
           >
             <Typography style={{ marginTop: '2%' }}>{props.name}</Typography>
             <Typography style={{ marginTop: '2%' }}>
@@ -61,7 +70,7 @@ const Item = props => (
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-around',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Link to={`tokens/${props.address}`}>

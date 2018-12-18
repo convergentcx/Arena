@@ -10,7 +10,7 @@ import TopTabs from './TopTabs';
 
 class Dashboard extends Component {
   state = {
-    tokens: null
+    tokens: null,
   };
 
   componentDidMount = () => {

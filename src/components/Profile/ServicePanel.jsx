@@ -13,7 +13,12 @@ class ServicePanel extends Component {
           </Typography>
           <Typography
             variant="subtitle1"
-            style={{ color: '#primary', fontSize: '14px', fontWeight: 'bold', marginTop: '6px' }}
+            style={{
+              color: '#primary',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              marginTop: '6px',
+            }}
           >
             {price || 44} {this.props.dataJson.symbol}
           </Typography>

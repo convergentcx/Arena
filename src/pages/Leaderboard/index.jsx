@@ -20,19 +20,19 @@ class LeaderboardList extends Component {
 
     this.state = {
       events: [],
-      personalEconomies: []
+      personalEconomies: [],
     };
   }
 
   componentDidMount() {
     const {
       contracts: { PersonalEconomyFactory },
-      web3
+      web3,
     } = this.props.drizzle;
 
     this._sub = PersonalEconomyFactory.events
       .Created({
-        fromBlock: 0
+        fromBlock: 0,
       })
       .on('data', async event => {
         const { id } = event;
@@ -47,7 +47,7 @@ class LeaderboardList extends Component {
           const contentAddress = getMultihashFromBytes32({
             digest: mhash,
             hashFunction: 18,
-            size: 32
+            size: 32,
           });
           const raw = await ipfs.get(contentAddress);
           const dataJson = JSON.parse(raw[0].content.toString());
@@ -63,11 +63,11 @@ class LeaderboardList extends Component {
             marketCap: currentPrice.mul(w3utils.toBN(totalSupply)),
             services: dataJson.services,
             tags: dataJson.tags,
-            totalSupply
+            totalSupply,
           };
           const list = [...this.state.personalEconomies, newEconomy];
           this.setState({
-            personalEconomies: list
+            personalEconomies: list,
           });
         } else {
           // console.log('aleady has ' + id);
@@ -81,7 +81,7 @@ class LeaderboardList extends Component {
 
   render() {
     let data = [];
-    this.state.personalEconomies.forEach((economy, index) => {
+    this.state.personalEconomies.forEach((economy, _) => {
       data.push({
         label: economy.address,
         marketCap: Number(removeDecimals(removeDecimals(economy.marketCap.toString()))),
@@ -94,7 +94,7 @@ class LeaderboardList extends Component {
               ? '5'
               : '10',
         group: 'low',
-        tags: (economy.tags && economy.tags.join(', ')) || ''
+        tags: (economy.tags && economy.tags.join(', ')) || '',
       });
     });
 

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 /// Drizzle
 import { Drizzle, generateStore } from 'drizzle';
@@ -18,7 +18,7 @@ import * as serviceWorker from './serviceWorker';
 import PersonalEconomyFactory from './build/contracts/PersonalEconomyFactory.json';
 
 const options = {
-  contracts: [PersonalEconomyFactory]
+  contracts: [PersonalEconomyFactory],
 };
 
 const drizzleStore = generateStore(options);
@@ -26,9 +26,9 @@ const drizzle = new Drizzle(options, drizzleStore);
 
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </DrizzleContext.Provider>,
   document.getElementById('root')
 );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import { fillColor } from '../utils';
 import tooltip from './Tooltip';
 import { withRouter } from 'react-router-dom';
 
@@ -33,7 +32,7 @@ class Bubbles extends React.Component {
   }
 
   state = {
-    g: null
+    g: null,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -122,8 +121,8 @@ class Bubbles extends React.Component {
       .attr('r', 0)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('fill', d => fillColor(d.group))
-      .attr('stroke', d => d3.rgb(fillColor(d.group)).darker())
+      .attr('fill', d => '#' + d.address.slice(6, 12)) //fillColor(d.group))
+      .attr('stroke', d => '#' + d.address.slice(6, 12)) //d3.rgb(fillColor(d.group)).darker())
       .attr('stroke-width', 2)
       .on('mouseover', showDetail) // eslint-disable-line
       .on('mouseout', hideDetail) // eslint-disable-line
@@ -154,14 +153,14 @@ export default withRouter(Bubbles);
 Bubbles.propTypes = {
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
   }),
   forceStrength: PropTypes.number.isRequired,
   groupByYear: PropTypes.bool.isRequired,
   yearCenters: PropTypes.objectOf(
     PropTypes.shape({
       x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
+      y: PropTypes.number.isRequired,
     }).isRequired
   ).isRequired,
   data: PropTypes.arrayOf(
@@ -170,9 +169,9 @@ Bubbles.propTypes = {
       id: PropTypes.string,
       radius: PropTypes.number.isRequired,
       value: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
     })
-  )
+  ),
 };
 
 /*
@@ -201,7 +200,7 @@ export function hideDetail(d) {
   d3.select(this).style('cursor', 'default');
 
   // reset outline
-  d3.select(this).attr('stroke', d3.rgb(fillColor(d.group)).darker());
+  d3.select(this).attr('stroke', '#' + d.address.slice(6, 12));
 
   tooltip.hideTooltip();
 }

@@ -5,7 +5,7 @@ import Photo from '../../../Profile/Photo.jsx';
 export default class EditDetails extends Component {
   state = {
     editingProfile: false,
-    displayName: this.props.jsonData.name
+    displayName: this.props.jsonData.name,
   };
 
   async componentDidMount() {
@@ -24,7 +24,7 @@ export default class EditDetails extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -48,7 +48,7 @@ export default class EditDetails extends Component {
               onChange={this.handleChange}
               margin="normal"
               InputProps={{
-                readOnly: !this.state.editingProfile
+                readOnly: !this.state.editingProfile,
               }}
             />
           </Grid>
@@ -59,7 +59,7 @@ export default class EditDetails extends Component {
               marginTop: '8px',
               marginBottom: '8px',
               display: 'flex',
-              justifyContent: 'space-around'
+              justifyContent: 'space-around',
             }}
           >
             {chips}

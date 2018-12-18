@@ -24,7 +24,7 @@ YearsTitles.propTypes = {
   yearCenters: PropTypes.objectOf(
     PropTypes.shape({
       x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
+      y: PropTypes.number.isRequired,
     }).isRequired
-  ).isRequired
+  ).isRequired,
 };

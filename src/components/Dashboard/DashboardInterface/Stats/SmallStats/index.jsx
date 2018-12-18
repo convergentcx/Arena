@@ -16,7 +16,12 @@ class Stats extends Component {
           <Grid item xs={12} style={{ height: '50%', display: 'flex', paddingBottom: '6px' }}>
             <Card
               className={classes.smallCard}
-              style={{ margin: '0', marginRight: '6px', width: '95%', boxSizing: 'border-box' }}
+              style={{
+                margin: '0',
+                marginRight: '6px',
+                width: '95%',
+                boxSizing: 'border-box',
+              }}
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -31,7 +36,12 @@ class Stats extends Component {
             {/* 2 */}
             <Card
               className={classes.smallCard}
-              style={{ margin: '0', marginLeft: '6px', width: '95%', boxSizing: 'border-box' }}
+              style={{
+                margin: '0',
+                marginLeft: '6px',
+                width: '95%',
+                boxSizing: 'border-box',
+              }}
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -46,7 +56,12 @@ class Stats extends Component {
           <Grid item sm={12} style={{ height: '50%', display: 'flex', paddingTop: '6px' }}>
             <Card
               className={classes.smallCard}
-              style={{ margin: '0', marginRight: '6px', width: '95%', boxSizing: 'border-box' }}
+              style={{
+                margin: '0',
+                marginRight: '6px',
+                width: '95%',
+                boxSizing: 'border-box',
+              }}
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -60,7 +75,12 @@ class Stats extends Component {
 
             <Card
               className={classes.smallCard}
-              style={{ margin: '0', marginLeft: '6px', width: '95%', boxSizing: 'border-box' }}
+              style={{
+                margin: '0',
+                marginLeft: '6px',
+                width: '95%',
+                boxSizing: 'border-box',
+              }}
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>

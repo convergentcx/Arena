@@ -21,7 +21,7 @@ export const getBytes32FromMultihash = mhash => {
   return {
     digest: `0x${decoded.slice(2).toString('hex')}`,
     hashFunction: decoded[0],
-    size: decoded[1]
+    size: decoded[1],
   };
 };
 
@@ -52,7 +52,7 @@ export const makeCancelable = promise => {
     promise: wrappedPromise,
     cancel() {
       hasCanceled_ = true;
-    }
+    },
   };
 };
 

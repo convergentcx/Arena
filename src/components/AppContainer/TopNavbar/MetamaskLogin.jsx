@@ -20,7 +20,7 @@ const styles = theme => {
     arrowTool: {
       background: bg,
       padding: '5%',
-      width: '250px'
+      width: '250px',
     },
     arrowPopper: {
       '&[x-placement*="bottom"] $arrowArrow': {
@@ -31,8 +31,8 @@ const styles = theme => {
         height: '1em',
         '&::before': {
           borderWidth: '0 1em 1em 1em',
-          borderColor: `transparent transparent ${bg} transparent`
-        }
+          borderColor: `transparent transparent ${bg} transparent`,
+        },
       },
       '&[x-placement*="top"] $arrowArrow': {
         bottom: 0,
@@ -42,8 +42,8 @@ const styles = theme => {
         height: '1em',
         '&::before': {
           borderWidth: '1em 1em 0 1em',
-          borderColor: `${bg} transparent transparent transparent`
-        }
+          borderColor: `${bg} transparent transparent transparent`,
+        },
       },
       '&[x-placement*="right"] $arrowArrow': {
         left: 0,
@@ -52,8 +52,8 @@ const styles = theme => {
         width: '1em',
         '&::before': {
           borderWidth: '1em 1em 1em 0',
-          borderColor: `transparent ${bg} transparent transparent`
-        }
+          borderColor: `transparent ${bg} transparent transparent`,
+        },
       },
       '&[x-placement*="left"] $arrowArrow': {
         right: 0,
@@ -62,9 +62,9 @@ const styles = theme => {
         width: '1em',
         '&::before': {
           borderWidth: '1em 0 1em 1em',
-          borderColor: `transparent transparent transparent ${bg}`
-        }
-      }
+          borderColor: `transparent transparent transparent ${bg}`,
+        },
+      },
     },
     arrowArrow: {
       position: 'absolute',
@@ -77,20 +77,20 @@ const styles = theme => {
         display: 'block',
         width: 0,
         height: 0,
-        borderStyle: 'solid'
-      }
-    }
+        borderStyle: 'solid',
+      },
+    },
   };
 };
 
 class MetamaskLogin extends Component {
   state = {
-    arrowRef: null
+    arrowRef: null,
   };
 
   handleArrowRef = node => {
     this.setState({
-      arrowRef: node
+      arrowRef: node,
     });
   };
 
@@ -144,10 +144,18 @@ class MetamaskLogin extends Component {
                     <Grid
                       item
                       xs={12}
-                      style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                      }}
                     >
                       <NavLink to="/dashboard">
-                        <Button color="secondary" variant="outlined">
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          style={{ background: 'black' }}
+                        >
                           DASHBOARD
                         </Button>
                       </NavLink>
@@ -156,16 +164,19 @@ class MetamaskLogin extends Component {
                   <span className={classes.arrowArrow} ref={this.handleArrowRef} />
                 </React.Fragment>
               }
-              classes={{ popper: classes.arrowPopper, tooltip: classes.arrowTool }}
+              classes={{
+                popper: classes.arrowPopper,
+                tooltip: classes.arrowTool,
+              }}
               PopperProps={{
                 popperOptions: {
                   modifiers: {
                     arrow: {
                       enabled: Boolean(this.state.arrowRef),
-                      element: this.state.arrowRef
-                    }
-                  }
-                }
+                      element: this.state.arrowRef,
+                    },
+                  },
+                },
               }}
             >
               <NavLink to="/dashboard">

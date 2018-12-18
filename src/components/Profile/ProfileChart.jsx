@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from 'recharts';
 import { withTheme } from '@material-ui/core/styles';
 
@@ -18,12 +18,11 @@ class ProfileChart extends Component {
   getChartData = () => {
     let { currentPrice, exponent, inverseSlope, totalSupply } = this.props.curveData;
 
-    // poolBalance = utils.toBN(poolBalance);
     totalSupply = utils.toBN(totalSupply);
 
     const currentPoint = {
       x: parseFloat(removeDecimals(totalSupply.toString())).toFixed(4),
-      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4)
+      y: parseFloat(removeDecimals(currentPrice.toString())).toFixed(4),
     };
 
     let data = [{ supply: 0, sell: 0, value: 0 }];
@@ -35,20 +34,20 @@ class ProfileChart extends Component {
         data.push({
           supply: parseFloat(removeDecimals(i)).toFixed(4),
           sell: parseFloat(removeDecimals(price)).toFixed(4),
-          value: parseFloat(removeDecimals(price)).toFixed(4)
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
       } else if (i.gt(totalSupply)) {
         data.push({
           supply: parseFloat(removeDecimals(i)).toFixed(4),
           buy: parseFloat(removeDecimals(price)).toFixed(4),
-          value: parseFloat(removeDecimals(price)).toFixed(4)
+          value: parseFloat(removeDecimals(price)).toFixed(4),
         });
       }
     }
 
     return {
       data,
-      currentPoint
+      currentPoint,
     };
   };
 
