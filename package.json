@@ -16,7 +16,7 @@
     "drizzle-react": "1.2.0",
     "eth-sig-util": "^2.1.0",
     "ethereum-blockies-base64": "1.0.2",
-    "ganache-cli": "6.2.4",
+    "ganache-cli": "6.2.5",
     "notistack": "0.4.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.3",
