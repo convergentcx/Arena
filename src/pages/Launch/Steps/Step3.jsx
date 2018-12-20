@@ -26,7 +26,9 @@ const step3 = props => (
         Details
       </Typography>
       <div className={classes.ExplainBox}>
-        <Typography color="primary.main">Who are you? And why this token?</Typography>
+        <Typography color="primary.main">
+          Describe the part of yourself that you are planning to tokenize.
+        </Typography>
       </div>
       <div className={classes.FormBox}>
         <Grid container>

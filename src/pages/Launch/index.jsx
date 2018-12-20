@@ -69,8 +69,8 @@ class LaunchForm extends Component {
       drizzleState,
     } = this.props;
 
-    // Check for all the required fields.
-    if (!this.state.name || !this.state.symbol || !this.state['service-0']) {
+    // Check one more time for all the required fields.
+    if (!this.state.name || !this.state.symbol) {
       return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
     }
 

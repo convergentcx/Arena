@@ -1,10 +1,5 @@
 .ContributeBox {
     display: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%
 }
 
 .Name {
@@ -48,7 +43,12 @@
 
 @media (min-width: 960px) { 
     .ContributeBox {
-        display: flex
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100%;
+        width: 100%
     }
     .PhotoBox {
         padding-bottom: 7vh;

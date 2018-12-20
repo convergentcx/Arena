@@ -124,6 +124,7 @@ class AttributeInput extends Component {
 
     if (event.key === 'Enter') {
       this.handleChange(this.state.inputValue);
+      this.setState({ inputValue: '' });
     }
   };
 
@@ -193,6 +194,7 @@ class AttributeInput extends Component {
                 },
               }),
               label: 'Tags',
+              helperText: 'Press enter to add multiple tags',
             })}
             {isOpen ? (
               <Paper className={classes.paper} square>
