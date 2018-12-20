@@ -35,7 +35,12 @@
 .ButtonBar {
     margin: 50px 0px 0 0;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.ForwardButtons {
+    text-align: right;
 }
 
 
@@ -46,6 +51,12 @@
 
 .SkipButton {
     width: 150px;
+}
+
+.SkipNote {
+    width: 320px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .NextButton {

@@ -32,6 +32,18 @@ class SocialBar extends Component {
   }
 }
 
+/* way to get contributor count (number of token holders) on  
+mainnet using ethplorer (will only work for mainnet at this point):
+componentDidMount() {
+  axios({
+    url: 'http://api.ethplorer.io/getTokenInfo/' + tokenAddress + '?apiKey=freekey', 
+    method: 'GET'
+  // authenticate the user with firebase and give them token specific permissions
+  }).then((response) => {
+    console.log(response.data.holdersCount)})
+}
+*/
+
 const QuickFacts = props => (
   <Paper style={{ padding: '12px', width: props.width || '350px' }}>
     <Typography

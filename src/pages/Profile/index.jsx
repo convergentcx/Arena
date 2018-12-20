@@ -185,7 +185,7 @@ class ProfileDetails extends Component {
           </Grid>
         </div>
 
-        <Paper square style={{ background: 'primary', height: '12vh' }}>
+        <Paper square style={{ background: 'primary', height: '12vh', padding: '0 4%' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={false} md={3} />
 
@@ -219,6 +219,8 @@ class ProfileDetails extends Component {
               </Tabs>
             </Grid>
             <Grid item md={3} className={classes.ContributeBox}>
+              <OwnerCard symbol={this.state.symbol} tokenBalance={yourBalance} />
+
               <Button
                 color="secondary"
                 size="large"
@@ -393,8 +395,6 @@ class ProfileDetails extends Component {
             )}
           </Grid>
           <Grid item xs={12} md={3} className={classes.Box3}>
-            <OwnerCard symbol={this.state.symbol} tokenBalance={yourBalance} />
-
             <ServicePanel
               dataJson={this.state.dataJson}
               contract={this.props.drizzle.contracts[this.props.addr]}

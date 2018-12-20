@@ -22,7 +22,7 @@ let custom = {
   enterRight: 'your custom css transition classes',
   enterLeft: 'your custom css transition classes',
   exitRight: 'your custom css transition classes',
-  exitLeft: 'your custom css transition classes'
+  exitLeft: 'your custom css transition classes',
 };
 
 class LaunchForm extends Component {
@@ -37,8 +37,8 @@ class LaunchForm extends Component {
       tooFew: false,
       tooMany: false,
       enteredTag: '',
-      description: 'I am XYZ and this token shall represent the value of my %3@#...',
-      'price-0': 1
+      description: '',
+      'price-0': 1,
     };
   }
 
@@ -69,8 +69,8 @@ class LaunchForm extends Component {
       drizzleState,
     } = this.props;
 
-    // Check for all the required fields.
-    if (!this.state.name || !this.state.symbol || !this.state['service-0']) {
+    // Check one more time for all the required fields.
+    if (!this.state.name || !this.state.symbol) {
       return alert('Please fill in the required data fields: name, symbol, (at least 1) service');
     }
 
@@ -204,13 +204,18 @@ class LaunchForm extends Component {
 
     return (
       <Card>
-        <StepWizard transitions={custom}>
+        <StepWizard
+          transitions={custom}
+          /* nav={<NavComponent />} */
+        >
           <Welcome cancel={this.cancel} />
           <NamePhoto
             cancel={this.cancel}
             inputUpdate={this.inputUpdate}
             onDrop={this.onDrop}
             file={this.state.file}
+            name={this.state.name}
+            symbol={this.state.symbol}
           />
           <Description
             cancel={this.cancel}
@@ -239,6 +244,10 @@ class LaunchForm extends Component {
             tags={this.state.selectedItems}
             service0={this.state['service-0']}
             price0={this.state['price-0']}
+            service1={this.state['service-1']}
+            price1={this.state['price-1']}
+            service2={this.state['service-2']}
+            price2={this.state['price-2']}
           />
         </StepWizard>
       </Card>

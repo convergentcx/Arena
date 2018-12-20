@@ -3,6 +3,7 @@ import { Button, CardContent, Grid, TextField, Typography } from '@material-ui/c
 import classes from './Steps.module.css';
 import { Close } from '@material-ui/icons';
 import { HelpOutline } from '@material-ui/icons';
+import HelpTooltip from './HelpTooltip';
 
 const step3 = props => (
   <div className={classes.StepBox}>
@@ -12,15 +13,22 @@ const step3 = props => (
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
-        <HelpOutline color="secondary" className={classes.HelpButton} />
+        <HelpTooltip
+          text="
+          Your art, your craft, your time, your expertise, your influence, your care and attention
+          ... there are countless things that only you can offer. Many of these things are currently
+          not on the market, because they are not yet valued! Here is your chance to offer 
+          future versions of these goods and services."
+        >
+          <HelpOutline color="secondary" className={classes.HelpButton} />
+        </HelpTooltip>{' '}
       </div>
       <Typography variant="h6" color="primary.main">
-        Services.
+        Services
       </Typography>
       <div className={classes.ExplainBox}>
         <Typography color="primary.main">
-          Tell the market what real-world values can be purchased with this token. What is backing
-          your personal cryptocurrency?
+          What real-world values can be purchased from you using this token?
         </Typography>
       </div>
       <div className={classes.FormBox}>
