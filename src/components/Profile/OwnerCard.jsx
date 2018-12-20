@@ -11,7 +11,7 @@
 import React from 'react';
 import { removeDecimals } from '../../util';
 
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const OwnerCard = props => (
   <div style={{ padding: '12px' }}>
