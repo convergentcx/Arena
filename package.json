@@ -22,7 +22,7 @@
     "react-dom": "^16.6.3",
     "react-router-dom": "4.3.1",
     "react-router-hash-link": "1.2.1",
-    "react-scripts": "2.1.1",
+    "react-scripts": "2.1.2",
     "react-step-wizard": "^5.0.0",
     "react-stepzilla": "^4.8.0",
     "react-text-loop": "1.1.0",
