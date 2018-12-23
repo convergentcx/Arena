@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Used to detect if user is accessing from a mobile device.
 // Shamelessly ripped from https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 // Ref - http://detectmobilebrowsers.com/

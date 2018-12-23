@@ -32,7 +32,7 @@ const ethereum = window.ethereum;
 //       }
 //     },
 //     config: {
-//       Bootstrap: [], // it's ok to connect to more peers than this, but currently leaving it out due to noise.
+//       Bootstrap: [],
 //       Addresses: {
 //        //Swarm: ['/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star']
 //       }
