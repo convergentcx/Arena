@@ -37,7 +37,7 @@ class Web3Provider extends React.Component {
   fetchAccounts() {
     web3.eth.getAccounts((err, accounts) => {
       if (err) {
-        console.error(err);
+        // console.error(err);
       } else {
         this.handleAccounts(accounts);
       }
