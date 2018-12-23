@@ -10,10 +10,15 @@ import { kombatTheme, slateTheme } from './themes';
 
 /// Notistack
 import { SnackbarProvider } from 'notistack';
+
 export default class App extends Component {
   state = {
     lights: false,
   };
+
+  componentDidMount() {
+    // window.addEventListener
+  }
 
   toggleLights = () => {
     this.setState({ lights: !this.state.lights });

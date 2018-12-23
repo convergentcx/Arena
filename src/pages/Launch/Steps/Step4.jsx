@@ -9,7 +9,7 @@ const step3 = props => (
   <div className={classes.StepBox}>
     <CardContent>
       <div className={classes.Header}>
-        <Typography variant="h5" color="primary.main">
+        <Typography variant="h5" color="textPrimary">
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
@@ -23,11 +23,11 @@ const step3 = props => (
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>{' '}
       </div>
-      <Typography variant="h6" color="primary.main">
+      <Typography variant="h6" color="textPrimary">
         Services
       </Typography>
       <div className={classes.ExplainBox}>
-        <Typography color="primary.main">
+        <Typography color="textPrimary">
           What real-world values can be purchased from you using this token?
         </Typography>
       </div>

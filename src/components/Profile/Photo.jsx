@@ -18,6 +18,7 @@ const Photo = props => {
       padding-bottom: 100%;
     }
   `;
+
   const ImgDiv = styled.div`
     position: absolute;
     width: 100%;
@@ -32,7 +33,7 @@ const Photo = props => {
           src={props.pic}
           style={{
             borderStyle: 'solid',
-            borderColor: '#000',
+            borderColor: '#232346',
             borderWidth: '3px',
             position: 'static',
             height: '100%',

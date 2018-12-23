@@ -1,18 +1,22 @@
 import React from 'react';
+// import styled from 'styled-components';
+import { CssBaseline } from '@material-ui/core';
 
-import TopNavbar from './TopNavbar';
+import Topbar from './Topbar';
 
-const appStyles = {
-  minHeight: '100vh',
-  height: '100%',
-  padding: 0,
-  marginBottom: 0,
-  width: '100vw',
-};
+// const Container = styled.div`
+//   height: 100%'
+//   marginBottom: 0;
+//   min-height: 100vh;
+//   padding: 0;
+//   width: 100vw;
+// `;
 
 const AppContainer = props => (
-  <div style={appStyles}>
-    <TopNavbar content={props.children} />
+  <div>
+    <CssBaseline />
+    <Topbar />
+    {props.children}
   </div>
 );
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Chip, Grid, Paper, TextField } from '@material-ui/core';
 import Photo from '../../../Profile/Photo.jsx';
 
+import makeBlockie from 'ethereum-blockies-base64';
+
 export default class EditDetails extends Component {
   state = {
     editingProfile: false,
@@ -32,16 +34,27 @@ export default class EditDetails extends Component {
     const chips =
       this.props.jsonData.tags &&
       this.props.jsonData.tags.map((tag, index) => {
-        return <Chip key={index} label={tag} />;
+        return <Chip key={index} label={tag} style={{ marginRight: '5px' }} />;
       });
 
     return (
-      <Paper style={{ height: '', marginBottom: '16px' }}>
-        <Grid container>
-          <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
-            <Photo pic={'data:image/jpeg;base64,' + this.state.pic} width="100px" />
+      <Paper style={{ marginBottom: '16px' }}>
+        <Grid container style={{ padding: '16px 0 16px 0' }}>
+          <Grid
+            item
+            xs={4}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Photo
+              pic={
+                this.state.pic
+                  ? 'data:image/jpeg;base64,' + this.state.pic
+                  : makeBlockie(this.props.address)
+              }
+              width="100px"
+            />
           </Grid>
-          <Grid item xs={8} style={{ display: 'flex', justifyContent: 'center' }}>
+          <Grid item xs={8} style={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
               id="standard-read-only-input"
               value={this.state.displayName}
@@ -50,19 +63,9 @@ export default class EditDetails extends Component {
               InputProps={{
                 readOnly: !this.state.editingProfile,
               }}
+              style={{ width: '60%' }}
             />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              marginTop: '8px',
-              marginBottom: '8px',
-              display: 'flex',
-              justifyContent: 'space-around',
-            }}
-          >
-            {chips}
+            <div style={{ marginTop: '8px', marginBottom: '8px', display: 'flex' }}>{chips}</div>
           </Grid>
         </Grid>
       </Paper>

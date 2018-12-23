@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/convergentcx/Arena.svg?branch=master)](https://travis-ci.org/convergentcx/Arena) [![Greenkeeper badge](https://badges.greenkeeper.io/convergentcx/Arena.svg)](https://greenkeeper.io/)
 
-# Arena (WIP)
+# Arena (prototype phase)
 
-Arena is the DApp component of the [Convergent](https://convergent.cx) ecosystem.
+Arena is the platform component of the [Convergent](https://convergent.cx) ecosystem.
 It facilitates the creation and discovery of [personal economies](https://ipfs.io/ipfs/QmYDfuvC5yDLSRJWcZNfVnSMLSBgPkaKoWjgEYKjwXZrA3).
 
 ## Features

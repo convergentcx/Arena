@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import classes from './Profile.module.css';
 
 import { Button, Collapse, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import makeBlockie from 'ethereum-blockies-base64';
 
 import PersonalEconomy from '../../build/contracts/PersonalEconomy.json';
 
@@ -155,28 +156,34 @@ class ProfileDetails extends Component {
         <Grid
           container
           style={{
-            height: '33vh',
+            height: '25vh',
             background: this.state.favoriteColor || getColor(this.props.addr),
           }}
         >
           <Grid item xs={false} md={3} className={classes.NameBoxSpacer} />
-          <Grid item xs={12} md={9} className={classes.NameBox}>
-            <h1 className={classes.Name}>{this.state.name}</h1>
+          <Grid item xs={false} sm={9} className={classes.NameBox}>
+            <Typography variant="h3" style={{ color: '#232346' }}>
+              {this.state.name}
+            </Typography>
           </Grid>
         </Grid>
 
         <div
           style={{
             position: 'absolute',
-            top: '7vh',
-            height: '40vh',
+            top: '5vh',
+            height: '33vh',
             width: '100%',
           }}
         >
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={12} md={3} className={classes.PhotoBox}>
               <Photo
-                pic={'data:image/jpeg;base64,' + this.state.pic}
+                pic={
+                  this.state.pic
+                    ? 'data:image/jpeg;base64,' + this.state.pic
+                    : makeBlockie(this.props.addr)
+                }
                 width="55%"
                 className={classes.Photo}
               />
@@ -185,7 +192,7 @@ class ProfileDetails extends Component {
           </Grid>
         </div>
 
-        <Paper square style={{ background: 'primary', height: '12vh', padding: '0 4%' }}>
+        <Paper square style={{ background: 'primary', height: '8vh', padding: '0 4%' }}>
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={false} md={3} />
 
