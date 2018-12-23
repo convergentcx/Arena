@@ -10,7 +10,7 @@ const step2 = props => (
   <div className={classes.StepBox}>
     <CardContent>
       <div className={classes.Header}>
-        <Typography variant="h5" color="primary.main">
+        <Typography variant="h5" color="textPrimary">
           Step {props.currentStep} / {props.totalSteps}
         </Typography>
         <Close color="secondary" className={classes.CloseButton} onClick={props.cancel} />
@@ -23,11 +23,11 @@ const step2 = props => (
           <HelpOutline color="secondary" className={classes.HelpButton} />
         </HelpTooltip>
       </div>
-      <Typography variant="h6" color="primary.main">
+      <Typography variant="h6" color="textPrimary">
         Basics
       </Typography>
       <div className={classes.ExplainBox}>
-        <Typography color="primary.main">Give your token a name and a visual identity.</Typography>
+        <Typography color="textPrimary">Give your token a name and a visual identity.</Typography>
       </div>
       <div className={classes.FormBox}>
         <Grid container>

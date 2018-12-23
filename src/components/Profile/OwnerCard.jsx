@@ -17,7 +17,7 @@ const OwnerCard = props => (
   <div style={{ padding: '12px' }}>
     <Typography
       variant="subtitle1"
-      color="primary.main"
+      color="textPrimary"
       style={{ fontSize: '12px', fontWeight: 'bold' }}
     >
       you own

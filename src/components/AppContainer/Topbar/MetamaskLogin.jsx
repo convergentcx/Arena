@@ -183,7 +183,7 @@ class MetamaskLogin extends Component {
                 <img
                   src={blockie}
                   alt="blockie"
-                  style={{ borderRadius: '50%', width: '40px', height: '40px' }}
+                  style={{ borderRadius: '50%', width: '25px', height: '25px' }}
                 />
               </NavLink>
             </Tooltip>

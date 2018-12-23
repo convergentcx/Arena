@@ -120,7 +120,7 @@ class EditColumn extends Component {
   render() {
     return (
       <div>
-        <EditDetails jsonData={this.props.dataJson} />
+        <EditDetails jsonData={this.props.dataJson} address={this.props.myContract.address} />
         <EditServices
           editing={this.state.editing}
           handleChange={this.handleChange}
