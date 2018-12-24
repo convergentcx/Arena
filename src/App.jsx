@@ -11,14 +11,13 @@ import { kombatTheme, slateTheme } from './themes';
 /// Notistack
 import { SnackbarProvider } from 'notistack';
 
+// Router
+import { ConnectedRouter } from 'connected-react-router';
+
 export default class App extends Component {
   state = {
     lights: false,
   };
-
-  componentDidMount() {
-    // window.addEventListener
-  }
 
   toggleLights = () => {
     this.setState({ lights: !this.state.lights });
@@ -34,26 +33,28 @@ export default class App extends Component {
         }}
       >
         <MuiThemeProvider theme={this.state.lights ? slateTheme : kombatTheme}>
-          <AppContainer>
-            <Switch>
-              <Route path="/" exact component={Landing} />
-              <Route path="/dashboard" exact component={Dashboard} />
-              <Route
-                path="/dashboard/:tokenAddress"
-                exact
-                render={props => (
-                  <Interface
-                    key={props.match.params.tokenAddress}
-                    lights={this.state.lights}
-                    toggleLights={this.toggleLights}
-                  />
-                )}
-              />
-              <Route path="/economies/:economyAddress" exact component={Profile} />
-              <Route path="/launch" component={Launch} />
-              <Route path="/leaderboard" component={Leaderboard} />
-            </Switch>
-          </AppContainer>
+          <ConnectedRouter history={this.props.history}>
+            <AppContainer>
+              <Switch>
+                <Route path="/" exact component={Landing} />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route
+                  path="/dashboard/:tokenAddress"
+                  exact
+                  render={props => (
+                    <Interface
+                      key={props.match.params.tokenAddress}
+                      lights={this.state.lights}
+                      toggleLights={this.toggleLights}
+                    />
+                  )}
+                />
+                <Route path="/economies/:economyAddress" exact component={Profile} />
+                <Route path="/launch" component={Launch} />
+                <Route path="/leaderboard" component={Leaderboard} />
+              </Switch>
+            </AppContainer>
+          </ConnectedRouter>
         </MuiThemeProvider>
       </SnackbarProvider>
     );
