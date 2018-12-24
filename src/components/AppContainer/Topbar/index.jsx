@@ -8,7 +8,7 @@ import { withTheme } from '@material-ui/core/styles';
 import Web3Panel from './Web3StatusBar';
 
 import Logo from '../../../assets/logo.png';
-// import WhiteLogo from '../../../assets/logo_white.png';
+import WhiteLogo from '../../../assets/logo_white.png';
 
 const Bar = styled.div`
   position: static;
@@ -18,14 +18,14 @@ const Bar = styled.div`
   padding: 0 4% 0 4%;
   display: flex;
   flex-flow: row wrap;
-  background: #c3c3c3;
+  background: ${props => props.bg};
 `;
 
 const Topbar = props => (
-  <Bar>
+  <Bar bg={props.theme.palette.type === 'dark' ? '#151515' : '#FFF'}>
     <NavLink to={'/'}>
       <img
-        src={props.theme.palette.type === 'dark' ? Logo : Logo}
+        src={props.theme.palette.type === 'dark' ? WhiteLogo : Logo}
         alt="Convergent"
         width="25px"
         height="25px"

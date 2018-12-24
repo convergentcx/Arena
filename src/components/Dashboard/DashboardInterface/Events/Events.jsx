@@ -50,10 +50,10 @@ class Events extends React.Component {
             </TableCell>
             <TableCell>{row.returnValues.who && row.returnValues.who}</TableCell>
             <TableCell>{row.returnValues.message ? row.returnValues.message : ''}</TableCell>
-            <TableCell numeric>
+            <TableCell>
               {row.returnValues.amount ? removeDecimals(row.returnValues.amount) : ''}
             </TableCell>
-            <TableCell numeric>
+            <TableCell>
               {row.returnValues.totalCost ? removeDecimals(row.returnValues.totalCost) : ''}
             </TableCell>
           </TableRow>

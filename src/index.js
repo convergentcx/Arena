@@ -1,11 +1,15 @@
 /* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+// import { HashRouter } from 'react-router-dom';
 
 /// Drizzle
 import { Drizzle, generateStore } from 'drizzle';
 import { DrizzleContext } from 'drizzle-react';
+
+/// Redux
+import { Provider } from 'react-redux';
+import { history, store } from './store';
 
 /// Styles
 import './styles/index.css';
@@ -26,9 +30,9 @@ const drizzle = new Drizzle(options, drizzleStore);
 
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
-    <HashRouter>
-      <App />
-    </HashRouter>
+    <Provider store={store}>
+      <App history={history} />
+    </Provider>
   </DrizzleContext.Provider>,
   document.getElementById('root')
 );
