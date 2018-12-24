@@ -9,6 +9,8 @@ import makeBlockie from 'ethereum-blockies-base64';
 
 import { removeDecimals } from '../../../util';
 
+import Web3 from 'web3';
+
 const styles = theme => {
   let bg = '#464646';
 
@@ -94,6 +96,20 @@ class MetamaskLogin extends Component {
     });
   };
 
+  handleSignMessage = (publicAddress, nonce) => {
+    const web3 = new Web3(window.web3.currentProvider);
+    return new Promise((resolve, reject) =>
+      web3.eth.personal.sign(
+        web3.utils.fromUtf8(`I am signing my one-time nonce: ${nonce}`),
+        publicAddress,
+        (err, signature) => {
+          if (err) return reject(err);
+          return resolve({ publicAddress, signature });
+        }
+      )
+    );
+  };
+
   render() {
     const { classes, theme } = this.props;
 
@@ -159,6 +175,12 @@ class MetamaskLogin extends Component {
                           DASHBOARD
                         </Button>
                       </NavLink>
+                      <Button
+                        color="primary"
+                        onClick={() => this.handleSignMessage(drizzleState.accounts[0], 'hallo')}
+                      >
+                        SIGN
+                      </Button>
                     </Grid>
                   </Grid>
                   <span className={classes.arrowArrow} ref={this.handleArrowRef} />
