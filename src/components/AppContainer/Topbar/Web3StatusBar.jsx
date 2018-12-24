@@ -27,7 +27,7 @@ const ColorIndicatorIcon = styled(FontAwesomeIcon)`
 
 class EthStatus extends React.Component {
   state = {
-    enabled: false,
+    enabled: true,
   };
 
   // componentDidMount() {
