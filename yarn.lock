@@ -11163,10 +11163,10 @@ react-stepzilla@^4.8.0:
   resolved "https://registry.yarnpkg.com/react-stepzilla/-/react-stepzilla-4.8.0.tgz#b775801fcc39b9852945473e5ce2410a98a0df66"
   integrity sha512-+yA3Hn+SvFFV402ZL+tQly8PW+9axlYFWkl8EOPooZ0YuL2OgF3uOUfXV729MMDYb6JMsSe85UhBPE80crNzDw==
 
-react-text-loop@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-text-loop/-/react-text-loop-2.0.0.tgz#4e576aa6748563412c3804343da84b707132bfe8"
-  integrity sha512-19Rw7gkNi5pZxprmZ+BDUI14ve+St63Jb3nJ138CskCD1G46wAgChA9Jd9ww+wF+noAobSrWDgJ8oOHtCfkJOA==
+react-text-loop@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-text-loop/-/react-text-loop-2.0.1.tgz#7dc17109aa751e64d7782b7d68ccb319ccfcdd30"
+  integrity sha512-FuqCbJyopNNzDVDzqRm/WDNgVr82kGX8sn0xKod9zmFwO8IfZ6v/hd4WxtSM0nt8zYTXbG9FN3G4QwCz9QOLQg==
   dependencies:
     cxs "^6.2.0"
     prop-types "^15.6.2"
