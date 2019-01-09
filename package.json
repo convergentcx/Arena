@@ -7,7 +7,7 @@
   "homepage": "https://proto.convergent.cx",
   "dependencies": {
     "@material-ui/core": "3.8.3",
-    "@material-ui/icons": "3.0.1",
+    "@material-ui/icons": "3.0.2",
     "axios": "^0.18.0",
     "d3": "4.10.0",
     "d3-scale": "2.1.2",
